@@ -30,7 +30,9 @@ const page = () => {
                       bg-gradient-to-r from-[#FF6340] via-[#6279ecd2] to-[#ffbd5a84]
                       rounded-[135px] transform rotate-45 shadow-custom-shadow"
       ></div>
-      <LoginBox />
+      <div className="h-full flex items-start justify-start mt-20 ml-20 ">
+        <LoginBox />
+      </div>
     </section>
   );
 };
