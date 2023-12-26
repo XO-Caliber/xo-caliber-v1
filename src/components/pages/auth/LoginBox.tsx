@@ -20,7 +20,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/Card";
-import { Linkedin } from "lucide-react";
 import googleLogo from "../../../../public/images/google-logo.svg";
 import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
@@ -42,7 +41,7 @@ export const LoginBox = () => {
   const handleSubmit = () => {};
 
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] z-50">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <CardHeader>

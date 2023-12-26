@@ -54,7 +54,7 @@ export const SignupBox = () => {
   const handleSubmit = () => {};
 
   return (
-    <Card className="w-[500px]">
+    <Card className="w-[500px] z-50">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <CardHeader>
