@@ -1,6 +1,7 @@
 import { LoginBox } from "@/components/pages/auth/LoginBox";
 import logo from "../../../../public/images/LOGO_Trans.png";
 import Image from "next/image";
+import Link from "next/link";
 const page = () => {
   return (
     <section
@@ -8,7 +9,9 @@ const page = () => {
                 w-full h-full overflow-hidden
                 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-rose-200 to-white"
     >
-      <Image className="absolute m-4" priority src={logo} alt="Logo" width={250} height={200} />
+      <Link href={"/"}>
+        <Image className="absolute m-4" priority src={logo} alt="Logo" width={250} height={200} />
+      </Link>
 
       {/* Hide on mobile, show on larger screens | Top one */}
       <div

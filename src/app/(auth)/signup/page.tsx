@@ -1,6 +1,7 @@
 import { SignupBox } from "@/components/pages/auth/SignupBox";
 import logo from "../../../../public/images/LOGO_Trans.png";
 import Image from "next/image";
+import Link from "next/link";
 
 const page = () => {
   return (
@@ -9,14 +10,16 @@ const page = () => {
                 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-rose-200 to-white
                 "
     >
-      <Image
-        className="absolute m-4 right-0"
-        priority
-        src={logo}
-        alt="Logo"
-        width={250}
-        height={200}
-      />
+      <Link href={"/"}>
+        <Image
+          className="absolute m-4 mr-72 right-0"
+          priority
+          src={logo}
+          alt="Logo"
+          width={200}
+          height={200}
+        />
+      </Link>
 
       {/* Hide on mobile, show on larger screens | Top large one */}
       <div

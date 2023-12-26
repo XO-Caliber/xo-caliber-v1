@@ -23,6 +23,7 @@ import {
 import googleLogo from "../../../../public/images/google-logo.svg";
 import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -96,7 +97,7 @@ export const LoginBox = () => {
             />
           </CardContent>
           <CardFooter className="flex justify-between ">
-            <Button className="w-full mx-2" variant={"secondary"}>
+            <Button className="w-full" variant={"secondary"}>
               Cancel
             </Button>
             <button
@@ -109,6 +110,17 @@ export const LoginBox = () => {
               Sumbit
             </Button> */}
           </CardFooter>
+          <div className="w-full px-6 pb-6 flex justify-between">
+            <p>
+              Dont have an account?
+              <Link className="text-primary underline underline-offset-2 pl-1" href={"/signup"}>
+                Sign Up
+              </Link>
+            </p>
+            <Link className="text-primary mr-2" href={"/signup"}>
+              Reset password
+            </Link>
+          </div>
         </form>
       </Form>
     </Card>

@@ -24,6 +24,7 @@ import googleLogo from "../../../../public/images/google-logo.svg";
 import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
+import Link from "next/link";
 
 const formSchema = z
   .object({
@@ -133,7 +134,7 @@ export const SignupBox = () => {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between ">
-            <Button className="w-full mx-2" variant={"secondary"}>
+            <Button className="w-full" variant={"secondary"}>
               Cancel
             </Button>
             <button
@@ -146,6 +147,14 @@ export const SignupBox = () => {
               Sumbit
             </Button> */}
           </CardFooter>
+          <div className="w-full px-6 pb-6 flex justify-between">
+            <p>
+              Have an account already?
+              <Link className="text-primary underline underline-offset-2 pl-1" href={"/signup"}>
+                Log In
+              </Link>
+            </p>
+          </div>
         </form>
       </Form>
     </Card>
