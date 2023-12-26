@@ -1,4 +1,4 @@
-import { LoginBox } from '@/components/pages/login/LoginBox';
+import { LoginBox } from '@/components/pages/auth/LoginBox';
 import logo from '../../../../public/images/LOGO_Trans.png';
 import Image from 'next/image';
 const page = () => {
