@@ -2,6 +2,8 @@ import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
 import { Input } from "./ui/Input";
 import { ArrowDown, BellIcon, HomeIcon, SearchIcon } from "lucide-react";
+import Link from "next/link";
+import { Button } from "./ui/Button";
 
 export const Navbar = () => {
   return (
@@ -41,6 +43,16 @@ export const Navbar = () => {
           <p className="text-muted text-base mx-1 hover:text-black">Show more</p>
         </li>
       </ul>
+      <footer className="absolute bottom-0 w-full h-max p-2 border-t-2 border-border">
+        <div className="flex items-center justify-between">
+          <Button variant={"secondary"}>
+            <Link href={"/signup"}>Sign Up</Link>
+          </Button>
+          <Button variant={"dark"} className="px-5">
+            <Link href={"/login"}>Log In</Link>
+          </Button>
+        </div>
+      </footer>
     </nav>
   );
 };
