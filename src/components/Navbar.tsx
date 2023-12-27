@@ -1,7 +1,7 @@
 import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
 import { Input } from "./ui/Input";
-import { ArrowDown, BellIcon, HomeIcon } from "lucide-react";
+import { ArrowDown, BellIcon, HomeIcon, SearchIcon } from "lucide-react";
 
 export const Navbar = () => {
   return (
@@ -10,29 +10,39 @@ export const Navbar = () => {
         <Image src={navLogo} width={160} height={40} alt="LOGO" />
       </div>
       <ul className="p-2">
-        <li className="pb-2">
+        <li className="pb-2 flex justify-center items-center relative">
           <Input placeholder="Search..." className="border-2 h-9" />
+          <SearchIcon
+            size={17}
+            className="absolute right-0 mr-2 cursor-pointer text-muted 
+                      transition-colors duration-300 
+                      hover:text-primary focus:text-primary"
+          />
         </li>
         <li
-          className="flex items-center rounded-md py-2 cursor-pointer
-                    hover:bg-primary"
+          className="flex items-center rounded-md py-2 cursor-pointer transition-all duration-500
+                      hover:bg-primary"
         >
           <HomeIcon color="var(--muted)" size={16} className="mx-2" />
           <p className="text-muted text-base mx-1 hover:text-black">Home</p>
         </li>
         <li
-          className="flex items-center rounded-md py-2 cursor-pointer
+          className="flex items-center rounded-md py-2 cursor-pointer transition-all duration-500
                     hover:bg-primary"
         >
           <BellIcon color="var(--muted)" size={16} className="mx-2" />
-          <p className="text-muted text-base mx-1 hover:text-black">Notifications</p>
+          <p className="text-muted text-base mx-1 hover:text-black">
+            Notifications
+          </p>
         </li>
         <li
-          className="flex items-center rounded-md py-2 cursor-pointer
+          className="flex items-center rounded-md py-2 cursor-pointer transition-all duration-500
                     hover:bg-primary"
         >
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
-          <p className="text-muted text-base mx-1 hover:text-black">Show more</p>
+          <p className="text-muted text-base mx-1 hover:text-black">
+            Show more
+          </p>
         </li>
       </ul>
     </nav>
