@@ -52,7 +52,9 @@ export const SignupBox = () => {
     }
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log({ values });
+  };
 
   return (
     <Card className="w-[500px] z-50">

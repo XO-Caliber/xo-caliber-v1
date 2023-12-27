@@ -5,7 +5,7 @@ import { ArrowDown, BellIcon, HomeIcon, SearchIcon } from "lucide-react";
 
 export const Navbar = () => {
   return (
-    <nav className="w-52 h-screen border-r-2 border-border">
+    <nav className="absolute w-52 h-screen border-r-2 border-border">
       <div className="p-2 border-b-2">
         <Image src={navLogo} width={160} height={40} alt="LOGO" />
       </div>
@@ -31,18 +31,14 @@ export const Navbar = () => {
                     hover:bg-primary"
         >
           <BellIcon color="var(--muted)" size={16} className="mx-2" />
-          <p className="text-muted text-base mx-1 hover:text-black">
-            Notifications
-          </p>
+          <p className="text-muted text-base mx-1 hover:text-black">Notifications</p>
         </li>
         <li
           className="flex items-center rounded-md py-2 cursor-pointer transition-all duration-500
                     hover:bg-primary"
         >
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
-          <p className="text-muted text-base mx-1 hover:text-black">
-            Show more
-          </p>
+          <p className="text-muted text-base mx-1 hover:text-black">Show more</p>
         </li>
       </ul>
     </nav>
