@@ -25,6 +25,7 @@ import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -43,6 +44,8 @@ const formSchema = z
   );
 
 export const SignupBox = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,14 +55,37 @@ export const SignupBox = () => {
     }
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
+  // FOR TESTING
+  const registerUser = async (values: z.infer<typeof formSchema>) => {
+    // console.log({ values });
+    try {
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ values })
+      });
+
+      if (!response.ok) {
+        // Handle error
+        console.error("Registration failed");
+        return;
+      }
+
+      const userInfo = await response.json();
+      console.log(userInfo);
+      router.push("/login");
+    } catch (error) {
+      // Handle unexpected errors
+      console.error("An unexpected error occurred", error);
+    }
   };
 
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(registerUser)}>
           <CardHeader>
             <CardTitle>Sign Up</CardTitle>
             <CardDescription>Enter your email & password to login</CardDescription>
