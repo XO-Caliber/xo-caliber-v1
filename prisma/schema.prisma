@@ -37,7 +37,7 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
-  // name          String?
+  name          String?
   email         String?   @unique
   hashedPassword String?
   accounts      Account[]

@@ -10,13 +10,14 @@ export const appRouter = router({
   register: publiceProcedure
     .input(
       z.object({
+        name: z.string().min(4).max(20),
         emailAddress: z.string().email(),
         password: z.string(),
         passwordConfirm: z.string()
       })
     )
     .mutation(async (userData) => {
-      const { emailAddress, password, passwordConfirm } = userData.input;
+      const { name, emailAddress, password, passwordConfirm } = userData.input;
 
       const exist = await db.user.findUnique({
         where: {
@@ -31,6 +32,7 @@ export const appRouter = router({
       if (!exist) {
         await prisma.user.create({
           data: {
+            name: name,
             email: emailAddress,
             hashedPassword: hashedPassword
           }
