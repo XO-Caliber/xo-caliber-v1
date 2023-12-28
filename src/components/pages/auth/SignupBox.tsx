@@ -53,9 +53,16 @@ export const SignupBox = () => {
     }
   });
 
-  const { mutate: registerUser } = trpc.register.useMutation();
+  const { mutate: registerUser } = trpc.register.useMutation({
+    onSuccess() {
+      console.log("success");
+    },
+    onError() {
+      console.log("User exist");
+    }
+  });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     // console.log({ values });
     console.log("hello from client");
 
