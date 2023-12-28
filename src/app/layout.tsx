@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/Navbar";
+import Providers from "@/components/Providers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
-        <header>
-          <Navbar />
-        </header>
-        {children}
-      </body>
+      <Providers>
+        <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
+          <header>
+            <Navbar />
+          </header>
+          {children}
+        </body>
+      </Providers>
     </html>
   );
 }

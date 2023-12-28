@@ -53,11 +53,14 @@ export const SignupBox = () => {
     }
   });
 
-  const handleSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log({ values });
-  };
+  const { mutate: registerUser } = trpc.register.useMutation();
 
-  const { data } = trpc.test.useQuery;
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    // console.log({ values });
+    console.log("hello from client");
+
+    registerUser(values);
+  };
 
   return (
     <Card className="z-50 w-[500px]">

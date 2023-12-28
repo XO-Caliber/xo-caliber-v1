@@ -8,7 +8,7 @@ import { httpBatchLink } from "@trpc/client";
 const Providers = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(() => new QueryClient());
   const [trpcClient] = useState(() =>
-    trpc({
+    trpc.createClient({
       links: [
         httpBatchLink({
           url: "http://localhost:3000/api/trpc"
@@ -19,7 +19,7 @@ const Providers = ({ children }: PropsWithChildren) => {
 
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={trpcClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     </trpc.Provider>
   );
 };
