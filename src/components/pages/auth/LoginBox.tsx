@@ -24,7 +24,7 @@ import googleLogo from "../../../../public/images/google-logo.svg";
 import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import Link from "next/link";
-import { SignInResponse, signIn } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
