@@ -25,6 +25,7 @@ import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
+import { trpc } from "@/app/_trpc/client";
 
 const formSchema = z
   .object({
@@ -55,6 +56,8 @@ export const SignupBox = () => {
   const handleSubmit = (values: z.infer<typeof formSchema>) => {
     console.log({ values });
   };
+
+  const { data } = trpc.test.useQuery;
 
   return (
     <Card className="z-50 w-[500px]">
