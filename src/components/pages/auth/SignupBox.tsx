@@ -25,10 +25,12 @@ import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
+
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
+
 
 const formSchema = z
   .object({
@@ -60,6 +62,7 @@ export const SignupBox = () => {
       passwordConfirm: ""
     }
   });
+
 
   const { mutate: registerUser } = trpc.register.useMutation({
     onSuccess({ success }) {
@@ -128,7 +131,7 @@ export const SignupBox = () => {
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(registerUser)}>
           <CardHeader>
             <CardTitle>Sign Up</CardTitle>
             <CardDescription>Enter your email & password to login</CardDescription>
