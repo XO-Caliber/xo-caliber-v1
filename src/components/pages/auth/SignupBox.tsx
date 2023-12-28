@@ -128,7 +128,7 @@ export const SignupBox = () => {
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(registerUser)}>
+        <form onSubmit={form.handleSubmit(handleSubmit)}>
           <CardHeader>
             <CardTitle>Sign Up</CardTitle>
             <CardDescription>Enter your email & password to login</CardDescription>
