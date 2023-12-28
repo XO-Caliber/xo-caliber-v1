@@ -25,12 +25,16 @@ import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
+import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/Toast";
 
 const formSchema = z
   .object({
+    name: z.string().min(4).max(20),
     emailAddress: z.string().email(),
-    password: z.string().min(3),
+    password: z.string().min(5),
     passwordConfirm: z.string()
   })
   .refine(
@@ -44,43 +48,82 @@ const formSchema = z
   );
 
 export const SignupBox = () => {
+  const { toast } = useToast();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       emailAddress: "",
       password: "",
       passwordConfirm: ""
     }
   });
 
-  // FOR TESTING
-  const registerUser = async (values: z.infer<typeof formSchema>) => {
-    // console.log({ values });
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ values })
-      });
-
-      if (!response.ok) {
-        // Handle error
-        console.error("Registration failed");
-        return;
+  const { mutate: registerUser } = trpc.register.useMutation({
+    onSuccess({ success }) {
+      console.log("User created successfully");
+      if (success) {
+        //Login user here
+        router.push("/login");
+        toast({
+          title: "Registered successfully",
+          description: "Please wait"
+        });
       }
-
-      const userInfo = await response.json();
-      console.log(userInfo);
-      router.push("/login");
-    } catch (error) {
-      // Handle unexpected errors
-      console.error("An unexpected error occurred", error);
+    },
+    onError(err) {
+      if (err.data?.code === "UNAUTHORIZED") {
+        toast({
+          title: "User already exist",
+          description: "Please login",
+          variant: "destructive",
+          action: (
+            <ToastAction altText="Login">
+              <Link href={"/login"}>Login</Link>
+            </ToastAction>
+          )
+        });
+      }
+      console.log("User exist");
     }
+  });
+
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log({ values });
+
+    //commented for testing
+    registerUser(values);
   };
+
+  //BELOW IS BY USING WITHOUT TRCP | Use it for reference!
+  // const registerUser = async (values: z.infer<typeof formSchema>) => {
+  //   // console.log({ values });
+  //   console.log("hello from client");
+  //   try {
+  //     const response = await fetch("/api/register", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({ values })
+  //     });
+
+  //     if (!response.ok) {
+  //       // Handle error
+  //       console.error("Registration failed");
+  //       return;
+  //     }
+
+  //     const userInfo = await response.json();
+  //     console.log(userInfo);
+  //     router.push("/login");
+  //   } catch (error) {
+  //     // Handle unexpected errors
+  //     console.error("An unexpected error occurred", error);
+  //   }
+  // };
 
   return (
     <Card className="z-50 w-[500px]">
@@ -106,6 +149,21 @@ export const SignupBox = () => {
             <div className="my-4 w-full border-t border-muted"></div>
           </div>
           <CardContent>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel>Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Name" type="text" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
             <FormField
               control={form.control}
               name="emailAddress"
@@ -151,6 +209,7 @@ export const SignupBox = () => {
                 );
               }}
             />
+            {/* Terms and conditions checkbox implement if wanted, IT GIVES SOME BUGS!! 
             <div className="flex items-center space-x-2 pt-3">
               <Checkbox id="terms" />
               <label
@@ -159,12 +218,14 @@ export const SignupBox = () => {
               >
                 Accept terms and conditions
               </label>
-            </div>
+            </div> */}
           </CardContent>
           <CardFooter className="flex justify-between ">
-            <Button className="w-full" variant={"secondary"}>
-              Cancel
-            </Button>
+            <Link href={"/"} className="w-full">
+              <Button type="reset" className="w-full" variant={"secondary"}>
+                Cancel
+              </Button>
+            </Link>
             <button
               type="submit"
               className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
