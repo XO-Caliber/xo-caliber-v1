@@ -26,6 +26,7 @@ import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
 import { trpc } from "@/app/_trpc/client";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -53,6 +54,8 @@ export const SignupBox = () => {
     }
   });
 
+  const router = useRouter();
+
   const { mutate: registerUser } = trpc.register.useMutation({
     onSuccess() {
       console.log("success");
@@ -64,10 +67,36 @@ export const SignupBox = () => {
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     // console.log({ values });
-    console.log("hello from client");
 
     registerUser(values);
   };
+
+  // const registerUser = async (values: z.infer<typeof formSchema>) => {
+  //   // console.log({ values });
+  //   console.log("hello from client");
+  //   try {
+  //     const response = await fetch("/api/register", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json"
+  //       },
+  //       body: JSON.stringify({ values })
+  //     });
+
+  //     if (!response.ok) {
+  //       // Handle error
+  //       console.error("Registration failed");
+  //       return;
+  //     }
+
+  //     const userInfo = await response.json();
+  //     console.log(userInfo);
+  //     router.push("/login");
+  //   } catch (error) {
+  //     // Handle unexpected errors
+  //     console.error("An unexpected error occurred", error);
+  //   }
+  // };
 
   return (
     <Card className="z-50 w-[500px]">

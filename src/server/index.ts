@@ -18,24 +18,24 @@ export const appRouter = router({
     .mutation(async (userData) => {
       const { emailAddress, password, passwordConfirm } = userData.input;
 
-      // const exist = await db.user.findUnique({
-      //   where: {
-      //     email: emailAddress
-      //   }
-      // });
-      // if (exist) {
-      //   throw new TRPCError({ code: "UNAUTHORIZED" });
-      // }
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // if (!exist) {
-      await prisma.user.create({
-        data: {
-          email: emailAddress,
-          hashedPassword: hashedPassword
+      const exist = await db.user.findUnique({
+        where: {
+          email: emailAddress
         }
       });
-      // }
+      if (exist) {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      if (!exist) {
+        await prisma.user.create({
+          data: {
+            email: emailAddress,
+            hashedPassword: hashedPassword
+          }
+        });
+      }
       return { success: true };
     })
 });
