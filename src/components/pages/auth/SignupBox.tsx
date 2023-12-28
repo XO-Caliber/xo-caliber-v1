@@ -29,23 +29,17 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
+import { user } from "@/types/user";
 
-const formSchema = z
-  .object({
-    name: z.string().min(4).max(20),
-    emailAddress: z.string().email(),
-    password: z.string().min(5),
-    passwordConfirm: z.string()
-  })
-  .refine(
-    (data) => {
-      return data.password === data.passwordConfirm;
-    },
-    {
-      message: "Password do not match",
-      path: ["passwordConfirm"]
-    }
-  );
+const formSchema = user.refine(
+  (data) => {
+    return data.password === data.passwordConfirm;
+  },
+  {
+    message: "Passwords do not match",
+    path: ["passwordConfirm"]
+  }
+);
 
 export const SignupBox = () => {
   const { toast } = useToast();
@@ -85,15 +79,17 @@ export const SignupBox = () => {
             </ToastAction>
           )
         });
+        console.log("User exist");
       }
-      console.log("User exist");
     }
   });
 
-  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+  const handleSignup = (values: z.infer<typeof formSchema>) => {
+    // e.preventDefault(); // Prevent the default form submission behavior
+
     console.log({ values });
 
-    //commented for testing
+    // Commented for testing
     registerUser(values);
   };
 
@@ -128,7 +124,7 @@ export const SignupBox = () => {
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(handleSignup)}>
           <CardHeader>
             <CardTitle>Sign Up</CardTitle>
             <CardDescription>Enter your email & password to login</CardDescription>

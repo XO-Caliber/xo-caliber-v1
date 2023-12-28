@@ -24,13 +24,17 @@ import googleLogo from "../../../../public/images/google-logo.svg";
 import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
 import Image from "next/image";
 import Link from "next/link";
+import { SignInResponse, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
-  password: z.string().min(3)
+  password: z.string().min(5)
 });
 
 export const LoginBox = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,12 +43,33 @@ export const LoginBox = () => {
     }
   });
 
-  const handleSubmit = () => {};
+  const loginUser = async (data: z.infer<typeof formSchema>) => {
+    console.log("Hello from client");
+    const result = await signIn("credentials", {
+      ...data,
+      redirect: false
+    });
+
+    if (result?.ok) {
+      router.push("/");
+    } else if (result?.error) {
+      console.error("Sign-in failed");
+    } else {
+      console.error("Something went wrong");
+    }
+  };
+
+  const handleLogin = (values: z.infer<typeof formSchema>) => {
+    console.log("Hello from onclick");
+    console.log({ values });
+    // Commented for testing
+    loginUser(values);
+  };
 
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <form onSubmit={form.handleSubmit(handleLogin)}>
           <CardHeader>
             <CardTitle>Individual Login</CardTitle>
             <CardDescription>Enter your email & password to login</CardDescription>
@@ -97,7 +122,7 @@ export const LoginBox = () => {
             />
           </CardContent>
           <CardFooter className="flex justify-between ">
-            <Button className="w-full" variant={"secondary"}>
+            <Button type="reset" className="w-full" variant={"secondary"}>
               Cancel
             </Button>
             <button

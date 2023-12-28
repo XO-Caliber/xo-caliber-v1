@@ -10,10 +10,35 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        username: { label: "Username", type: "text", placeholder: "jsmith" },
+        emailAddress: { label: "Email address", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials, req) {}
+      async authorize(credentials) {
+        console.log(credentials);
+        console.log("Hello from server");
+        if (!credentials?.emailAddress || !credentials.password) {
+          console.log("Nothing");
+          return null;
+        }
+
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials.emailAddress
+          }
+        });
+
+        if (!user) {
+          console.log("User does not exist");
+          return null;
+        }
+        const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+        if (!passwordMatch) {
+          console.log("Wrong password");
+          return null;
+        }
+
+        return user;
+      }
     })
   ],
   session: {
