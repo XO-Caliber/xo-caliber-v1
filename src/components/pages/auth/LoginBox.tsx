@@ -27,6 +27,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/Toast";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -64,13 +65,29 @@ export const LoginBox = () => {
           title: "Logged In successfully",
           description: "Please wait"
         });
+      } else if (result?.error === "user does not exist") {
+        toast({
+          title: "User does not exist",
+          description: "Please Sign Up",
+          variant: "destructive",
+          action: (
+            <ToastAction altText="Signup">
+              <Link href={"/signup"}>Sign Up</Link>
+            </ToastAction>
+          )
+        });
       } else {
         console.error("Sign-in failed");
-        alert(`Sign-in failed: ${getErrorMessage(result?.error)}`);
+        toast({
+          title: "Sign In failed",
+          description: `${result?.error}`,
+          variant: "destructive"
+        });
+        // alert(`Sign-in failed: ${result?.error}`);
       }
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");
-      alert(`An unknown error occurred: ${getErrorMessage(error)}`);
+      alert(`An unknown error occurred: ${error}`);
     }
   };
 
