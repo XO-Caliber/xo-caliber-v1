@@ -61,6 +61,7 @@ export const SignupBox = () => {
       if (success) {
         //Login user here
         router.push("/login");
+        router.refresh();
         toast({
           title: "Registered successfully",
           description: "Please wait"

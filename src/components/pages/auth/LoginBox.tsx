@@ -46,11 +46,6 @@ export const LoginBox = () => {
     }
   });
 
-  function getErrorMessage(error: unknown) {
-    if (error instanceof Error) return error.message;
-    return String(error);
-  }
-
   const loginUser = async (data: z.infer<typeof formSchema>) => {
     console.log("Hello from client");
     try {
@@ -61,6 +56,7 @@ export const LoginBox = () => {
 
       if (result?.ok) {
         router.push("/");
+        router.refresh();
         toast({
           title: "Logged In successfully",
           description: "Please wait"

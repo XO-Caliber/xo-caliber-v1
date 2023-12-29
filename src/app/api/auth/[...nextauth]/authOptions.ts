@@ -1,9 +1,8 @@
-import type { NextAuthOptions } from "next-auth";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -51,3 +50,5 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_URL,
   debug: process.env.NODE_ENV === "development"
 };
+
+export const getAuthSession = () => getServerSession(authOptions);
