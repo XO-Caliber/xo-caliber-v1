@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "./ui/Dropdown-menu";
+import Logout from "./pages/auth/Logout";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -74,7 +75,7 @@ export const Navbar = async () => {
                   <AvatarFallback></AvatarFallback>
                 </Avatar>
                 <ul className="overflow-hidden text-ellipsis pl-4 ">
-                  <li className="text-sm font-medium">{session.user?.name}Amethesh</li>
+                  <li className="text-sm font-medium">{session.user?.name}</li>
                   <li className="text-sm text-muted">{session.user?.email}</li>
                 </ul>
               </div>
@@ -84,7 +85,9 @@ export const Navbar = async () => {
               <DropdownMenuSeparator className="bg-border" />
               <DropdownMenuItem>View Profile</DropdownMenuItem>
               <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-              <DropdownMenuItem>Log Out</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
+                <Logout />
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
