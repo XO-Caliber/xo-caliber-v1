@@ -2,8 +2,16 @@ import { SignupBox } from "@/components/pages/auth/SignupBox";
 import logo from "../../../../public/images/LOGO_Trans.png";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
-const page = () => {
+const page = async () => {
+  //Protect login page from logged user
+  const session = await getServerSession();
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <section
       className="absolute left-0 top-0 h-full w-full overflow-hidden
