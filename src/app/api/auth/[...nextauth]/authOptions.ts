@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -18,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         console.log("Hello from server");
         if (!credentials?.emailAddress || !credentials.password) {
           console.log("Nothing");
-          return null;
+          throw new Error("Missing credentials");
         }
 
         const user = await db.user.findUnique({
@@ -29,12 +30,12 @@ export const authOptions: NextAuthOptions = {
 
         if (!user) {
           console.log("User does not exist");
-          return null;
+          throw new Error("user does not exist");
         }
         const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
         if (!passwordMatch) {
           console.log("Wrong password");
-          return null;
+          throw new Error("wrong password");
         }
 
         return user;

@@ -26,6 +26,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -34,6 +35,7 @@ const formSchema = z.object({
 
 export const LoginBox = () => {
   const router = useRouter();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,19 +45,32 @@ export const LoginBox = () => {
     }
   });
 
+  function getErrorMessage(error: unknown) {
+    if (error instanceof Error) return error.message;
+    return String(error);
+  }
+
   const loginUser = async (data: z.infer<typeof formSchema>) => {
     console.log("Hello from client");
-    const result = await signIn("credentials", {
-      ...data,
-      redirect: false
-    });
+    try {
+      const result = await signIn("credentials", {
+        ...data,
+        redirect: false
+      });
 
-    if (result?.ok) {
-      router.push("/");
-    } else if (result?.error) {
-      console.error("Sign-in failed");
-    } else {
-      console.error("Something went wrong");
+      if (result?.ok) {
+        router.push("/");
+        toast({
+          title: "Logged In successfully",
+          description: "Please wait"
+        });
+      } else {
+        console.error("Sign-in failed");
+        alert(`Sign-in failed: ${getErrorMessage(result?.error)}`);
+      }
+    } catch (error) {
+      console.error("An unknown error occurred during sign-in.");
+      alert(`An unknown error occurred: ${getErrorMessage(error)}`);
     }
   };
 
