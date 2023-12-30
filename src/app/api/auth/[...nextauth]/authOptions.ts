@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
+import { trpc } from "@/app/_trpc/client";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -53,8 +54,27 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login"
   },
   callbacks: {
-    async signIn(params) {
-      console.log("User", params.user);
+    async signIn(args) {
+      if (args.account?.type === "credentials") return true;
+
+      if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+        if (args.account.provider === "linkedin" || args.account.provider === "google") {
+          const user = await db.user.findUnique({
+            where: {
+              email: args.user.email
+            }
+          });
+          if (!user) {
+            const { mutate: registerUser } = trpc.register.useMutation({});
+          }
+        } else return false; // only google and linkedin for now
+      }
+
+      console.log("Hello from server");
+      console.log("User", args.user);
+      console.log("Account", args.account);
+
+      return args.user;
     }
   },
   secret: process.env.NEXTAUTH_URL,

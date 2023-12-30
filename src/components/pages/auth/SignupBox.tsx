@@ -201,7 +201,7 @@ export const SignupBox = () => {
           <div className="flex w-full justify-between px-6 pb-6">
             <p>
               Have an account already?
-              <Link className="pl-1 text-primary underline underline-offset-2" href={"/signup"}>
+              <Link className="pl-1 text-primary underline underline-offset-2" href={"/login"}>
                 Log In
               </Link>
             </p>

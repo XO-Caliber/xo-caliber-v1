@@ -14,8 +14,8 @@ export const GoogleAuth = () => {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      // await signIn("google");
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log("Hello from client");
+      await signIn("google");
     } catch (error) {
       // toast notification
       toast({
