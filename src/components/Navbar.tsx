@@ -55,6 +55,7 @@ export const Navbar = async () => {
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
         </li>
+        <li>{session?.user?.image}</li>
       </ul>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
@@ -72,7 +73,7 @@ export const Navbar = async () => {
               <div className="flex cursor-pointer items-center justify-around rounded-md p-2 hover:bg-secondary">
                 <Avatar className="h-9 w-9">
                   <AvatarImage
-                    src={session.user?.image || "https://default-image-url.com"}
+                    src="https://media.licdn.com/dms/image/D5603AQFMbYqtwykwpw/profile-displayphoto-shrink_100_100/0/1697086240786?e=2147483647&v=beta&t=QGVTmX-KlAosjG95vHIWBmwfyrOeFlJv7-wNBn-d2x8"
                     alt="profile"
                   />
                   <AvatarFallback>
