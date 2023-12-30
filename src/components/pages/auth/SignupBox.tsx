@@ -29,6 +29,7 @@ import { ToastAction } from "@/components/ui/Toast";
 import { user } from "@/types/user";
 import { GoogleAuth } from "./GoogleAuth";
 import { LinkedinAuth } from "./LinkedinAuth";
+import { useState } from "react";
 
 const formSchema = user.refine(
   (data) => {
@@ -43,6 +44,7 @@ const formSchema = user.refine(
 export const SignupBox = () => {
   const { toast } = useToast();
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +55,6 @@ export const SignupBox = () => {
       passwordConfirm: ""
     }
   });
-
   const { mutate: registerUser } = trpc.register.useMutation({
     onSuccess({ success }) {
       console.log("User created successfully");
@@ -63,7 +64,7 @@ export const SignupBox = () => {
         router.refresh();
         toast({
           title: "Registered successfully",
-          description: "Please wait"
+          description: "Please Login"
         });
       }
     },
@@ -81,16 +82,23 @@ export const SignupBox = () => {
         });
         console.log("User exist");
       }
+    },
+    onSettled() {
+      // This block will be executed regardless of success or error
+      setIsLoading(false);
     }
   });
 
   const handleSignup = (values: z.infer<typeof formSchema>) => {
-    // e.preventDefault(); // Prevent the default form submission behavior
-
+    setIsLoading(true);
     console.log({ values });
-
     // Commented for testing
-    registerUser(values);
+    try {
+      registerUser(values);
+    } catch (error) {
+      console.error("An unknown error occurred during sign-in.");
+      alert(`An unknown error occurred: ${error}`);
+    }
   };
 
   return (
@@ -188,15 +196,15 @@ export const SignupBox = () => {
                 Cancel
               </Button>
             </Link>
-            <button
+            {/* <button
               type="submit"
               className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
             >
               Create account
-            </button>
-            {/* <Button type="submit" variant={"primary"}>
-              Sumbit
-            </Button> */}
+            </button> */}
+            <Button type="submit" variant={"color"} isLoading={isLoading}>
+              Submit
+            </Button>
           </CardFooter>
           <div className="flex w-full justify-between px-6 pb-6">
             <p>

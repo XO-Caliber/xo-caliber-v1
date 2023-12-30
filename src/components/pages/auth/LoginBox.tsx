@@ -20,9 +20,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/Card";
-import googleLogo from "../../../../public/images/google-logo.svg";
-import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
-import Image from "next/image";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -30,6 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
 import { GoogleAuth } from "./GoogleAuth";
 import { LinkedinAuth } from "./LinkedinAuth";
+import { useState } from "react";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -39,6 +37,7 @@ const formSchema = z.object({
 export const LoginBox = () => {
   const router = useRouter();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,6 +48,7 @@ export const LoginBox = () => {
   });
 
   const loginUser = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
     console.log("Hello from client");
     try {
       const result = await signIn("credentials", {
@@ -57,6 +57,7 @@ export const LoginBox = () => {
       });
 
       if (result?.ok) {
+        setIsLoading(false);
         router.push("/");
         router.refresh();
         toast({
@@ -64,6 +65,7 @@ export const LoginBox = () => {
           description: "Please wait"
         });
       } else if (result?.error === "user does not exist") {
+        setIsLoading(false);
         toast({
           title: "User does not exist",
           description: "Please Sign Up",
@@ -75,6 +77,7 @@ export const LoginBox = () => {
           )
         });
       } else {
+        setIsLoading(false);
         console.error("Sign-in failed");
         toast({
           title: "Sign In failed",
@@ -86,6 +89,8 @@ export const LoginBox = () => {
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");
       alert(`An unknown error occurred: ${error}`);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -149,15 +154,15 @@ export const LoginBox = () => {
             <Button type="reset" className="w-full" variant={"secondary"}>
               Cancel
             </Button>
-            <button
+            {/* <button
               type="submit"
               className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
             >
               Login
-            </button>
-            {/* <Button type="submit" variant={"primary"}>
-              Sumbit
-            </Button> */}
+            </button> */}
+            <Button type="submit" variant={"color"} isLoading={isLoading}>
+              Login
+            </Button>
           </CardFooter>
           <div className="flex w-full justify-between px-6 pb-6">
             <p>
