@@ -3,8 +3,9 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/Navbar";
-import Providers from "@/components/Providers";
+import Providers from "@/components/trpc/Providers";
 import { Toaster } from "@/components/ui/Toaster";
+import { NextAuthProvider } from "@/components/next-auth/Providers";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      {/* <NextAuthProvider> */}
       <Providers>
         <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
           <Navbar />
@@ -26,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Toaster />
         </body>
       </Providers>
+      {/* </NextAuthProvider> */}
     </html>
   );
 }

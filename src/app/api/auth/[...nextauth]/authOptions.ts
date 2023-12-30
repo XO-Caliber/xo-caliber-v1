@@ -78,7 +78,6 @@ export const authOptions: NextAuthOptions = {
               }
             });
           }
-
           console.log("User exist logging In");
 
           return args.user;
