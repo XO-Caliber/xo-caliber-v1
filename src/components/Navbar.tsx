@@ -71,10 +71,15 @@ export const Navbar = async () => {
             <DropdownMenuTrigger asChild>
               <div className="flex cursor-pointer items-center justify-around rounded-md p-2 hover:bg-secondary">
                 <Avatar className="h-9 w-9">
-                  <AvatarImage src="https://github.com/shadcn.png" alt="profile" />
-                  <AvatarFallback></AvatarFallback>
+                  <AvatarImage
+                    src={session.user?.image || "https://default-image-url.com"}
+                    alt="profile"
+                  />
+                  <AvatarFallback>
+                    {session.user?.name ? session.user.name.slice(0, 2).toUpperCase() : null}
+                  </AvatarFallback>
                 </Avatar>
-                <ul className="overflow-hidden text-ellipsis pl-4 ">
+                <ul className="overflow-hidden text-ellipsis pl-4">
                   <li className="text-sm font-medium">{session.user?.name}</li>
                   <li className="text-sm text-muted">{session.user?.email}</li>
                 </ul>
@@ -85,9 +90,7 @@ export const Navbar = async () => {
               <DropdownMenuSeparator className="bg-border" />
               <DropdownMenuItem>View Profile</DropdownMenuItem>
               <DropdownMenuItem>Edit Profile</DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
-                <Logout />
-              </DropdownMenuItem>
+              <Logout />
             </DropdownMenuContent>
           </DropdownMenu>
         )}
