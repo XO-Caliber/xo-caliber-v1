@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { user } from "@/types/user";
+import { oauthUserValidator } from "@/types/oauthUser";
 
 export const appRouter = router({
   register: publiceProcedure.input(user).mutation(async (userData) => {
