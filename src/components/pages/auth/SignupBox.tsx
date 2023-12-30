@@ -20,9 +20,6 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/Card";
-import googleLogo from "../../../../public/images/google-logo.svg";
-import linkedinLogo from "../../../../public/images/circle-linkedin.svg";
-import Image from "next/image";
 import { Checkbox } from "@/components/ui/Checkbox";
 import Link from "next/link";
 import { trpc } from "@/app/_trpc/client";
@@ -30,6 +27,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
 import { user } from "@/types/user";
+import { GoogleAuth } from "./GoogleAuth";
+import { LinkedinAuth } from "./LinkedinAuth";
 
 const formSchema = user.refine(
   (data) => {
@@ -94,34 +93,6 @@ export const SignupBox = () => {
     registerUser(values);
   };
 
-  //BELOW IS BY USING WITHOUT TRCP | Use it for reference!
-  // const registerUser = async (values: z.infer<typeof formSchema>) => {
-  //   // console.log({ values });
-  //   console.log("hello from client");
-  //   try {
-  //     const response = await fetch("/api/register", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json"
-  //       },
-  //       body: JSON.stringify({ values })
-  //     });
-
-  //     if (!response.ok) {
-  //       // Handle error
-  //       console.error("Registration failed");
-  //       return;
-  //     }
-
-  //     const userInfo = await response.json();
-  //     console.log(userInfo);
-  //     router.push("/login");
-  //   } catch (error) {
-  //     // Handle unexpected errors
-  //     console.error("An unexpected error occurred", error);
-  //   }
-  // };
-
   return (
     <Card className="z-50 w-[500px]">
       <Form {...form}>
@@ -131,14 +102,8 @@ export const SignupBox = () => {
             <CardDescription>Enter your email & password to login</CardDescription>
           </CardHeader>
           <div className="flex w-full items-center justify-between px-4">
-            <Button className="mx-2 w-full" variant={"outline"} size={"lg"}>
-              <Image className="mx-3" src={googleLogo} width={14} alt="Google" />
-              <p className="text-md">Google</p>
-            </Button>
-            <Button className="mx-2 w-full" variant={"outline"} size={"lg"}>
-              <Image className="mx-3" src={linkedinLogo} width={20} alt="Google" />
-              <p>LinkedIn</p>
-            </Button>
+            <GoogleAuth />
+            <LinkedinAuth />
           </div>
           <div className="flex items-center px-6 py-1">
             <div className="my-4 w-full border-t border-muted"></div>

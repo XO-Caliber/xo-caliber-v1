@@ -1,5 +1,6 @@
 import { getServerSession, type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
@@ -39,6 +40,10 @@ export const authOptions: NextAuthOptions = {
 
         return user;
       }
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!
     })
   ],
   session: {
@@ -46,6 +51,11 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/login"
+  },
+  callbacks: {
+    async signIn(params) {
+      console.log("User", params.user);
+    }
   },
   secret: process.env.NEXTAUTH_URL,
   debug: process.env.NODE_ENV === "development"

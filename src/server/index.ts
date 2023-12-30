@@ -2,7 +2,6 @@ import { publiceProcedure, router } from "./trpc";
 import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
-import { PrismaClient } from "@prisma/client";
 import { user } from "@/types/user";
 
 export const appRouter = router({
