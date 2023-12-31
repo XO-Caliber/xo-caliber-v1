@@ -171,7 +171,7 @@ export const LoginBox = () => {
                 Sign Up
               </Link>
             </p>
-            <Link className="mr-2 text-primary" href={"/signup"}>
+            <Link className="mr-2 text-primary" href={"/reset-password"}>
               Reset password
             </Link>
           </div>

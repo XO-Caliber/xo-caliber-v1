@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { user } from "@/types/user";
-import { oauthUserValidator } from "@/types/oauthUser";
+import { sendVerificationRequest } from "@/lib/resend/sendVerificationRequest";
 
 export const appRouter = router({
   register: publiceProcedure.input(user).mutation(async (userData) => {
@@ -18,7 +18,7 @@ export const appRouter = router({
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-
+    const url = "asdiuofvhgewuiyogfhbqweiuohfuiqewoguy";
     await db.user.create({
       data: {
         name: name,
@@ -26,7 +26,6 @@ export const appRouter = router({
         hashedPassword: hashedPassword
       }
     });
-
     return { success: true };
   })
 });

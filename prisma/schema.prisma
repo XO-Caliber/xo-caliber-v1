@@ -42,6 +42,13 @@ model User {
   emailVerified DateTime?
   hashedPassword String?
   image         String?
+
+  resetPasswordToken String? @unique
+  resetPasswordTokenExpiry DateTime?
+
+  isEmailVerified Boolean @default(false)
+  emailVerificationToken String? @unique
+
   accounts      Account[]
   sessions      Session[]
 }

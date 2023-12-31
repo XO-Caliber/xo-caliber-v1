@@ -5,6 +5,7 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
+import { sendVerificationRequest } from "@/lib/resend/sendVerificationRequest";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),

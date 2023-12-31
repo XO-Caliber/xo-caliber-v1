@@ -21,6 +21,7 @@
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-toast": "^1.1.5",
+    "@react-email/components": "^0.0.12",
     "@tanstack/react-query": "^4.36.1",
     "@trpc/client": "^10.45.0",
     "@trpc/next": "^10.45.0",
@@ -35,8 +36,10 @@
     "radix-ui": "^1.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-email": "^1.10.0",
     "react-hook-form": "^7.49.2",
     "react-resizable-panels": "^1.0.5",
+    "resend": "^2.1.0",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
