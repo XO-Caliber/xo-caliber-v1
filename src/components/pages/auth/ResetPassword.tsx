@@ -1,18 +1,28 @@
 "use client";
 import { useState } from "react";
-import { resetPassword } from "@/app/actions/users/resetpassword";
 import { Button } from "@/components/ui/Button";
+import { trpc } from "@/app/_trpc/client";
 
 const ResetPasswordPage = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const { mutate: resetpassword } = trpc.resetPassword.useMutation({
+    onSuccess() {
+      setMessage("Password reset is sent to your email");
+    },
+    onError(err) {
+      if (err.data?.code === "UNAUTHORIZED") {
+        setMessage("User does not exist");
+      }
+    }
+  });
+
   const handleResetPassword = async () => {
     try {
       setIsLoading(true);
-      const message = await resetPassword(email);
-      setMessage(message);
+      resetpassword({ email });
       // You might want to navigate the user or show a success message here
     } catch (error) {
       console.error("Password reset request failed", error);

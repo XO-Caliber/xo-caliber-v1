@@ -1,25 +1,25 @@
-"use server";
+"use client";
+import { trpc } from "@/app/_trpc/client";
 import { ChangePasswordForm } from "@/components/pages/auth/ChangePasswordForm";
 import ResetPasswordPage from "@/components/pages/auth/ResetPassword";
-import { db } from "@/lib/db";
-import React from "react";
 
 interface ResetPasswordProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const page = async ({ searchParams }: ResetPasswordProps) => {
+const page = ({ searchParams }: ResetPasswordProps) => {
   if (searchParams.token) {
-    const user = await db.user.findUnique({
-      where: {
-        resetPasswordToken: searchParams.token as string
-      }
-    });
-    if (!user) {
+    const result = trpc.verifyPasswordToken.useQuery(
+      searchParams.token as unknown as void | undefined
+    );
+
+    // Check if the user exists
+    if (result.data?.success) {
+      return <ChangePasswordForm resetPasswordToken={searchParams.token as string} />;
+    } else {
+      // If the user does not exist, return an error message
       return <div>Invalid token</div>;
     }
-
-    return <ChangePasswordForm resetPasswordToken={searchParams.token as string} />;
   } else {
     return <ResetPasswordPage />;
   }

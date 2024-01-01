@@ -1,4 +1,3 @@
-import { EmailTextProps } from "@/types/emailProps";
 import {
   Body,
   Container,
@@ -12,10 +11,10 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-export const MagicLinkEmail = (url: string) => (
+export const VerifyEmailTemplate = (email: string, url: string) => (
   <Html>
     <Head />
-    <Preview>Log in with this magic link</Preview>
+    <Preview>Email verification for ${email}</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>Login to XO Caliber</Heading>
@@ -37,8 +36,6 @@ export const MagicLinkEmail = (url: string) => (
     </Body>
   </Html>
 );
-
-export default MagicLinkEmail;
 
 const main = {
   backgroundColor: "#ffffff"

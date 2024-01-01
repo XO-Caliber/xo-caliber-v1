@@ -1,7 +1,7 @@
 import { EmailReactProps, EmailTextProps } from "@/types/emailProps";
 import { resend } from "./resend";
-import { MagicLinkEmail } from "@/components/resend/MagicLinkEmail";
-import { VerifyEmailTemplate } from "@/components/resend/VerifyEmail";
+import { VerifyEmailTemplate } from "@/components/Emails/VerifyEmail";
+import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
 
 export async function sendPasswordResetRequest(userEmail: string, token: string) {
   try {
@@ -10,7 +10,7 @@ export async function sendPasswordResetRequest(userEmail: string, token: string)
       to: [userEmail],
       subject: `Log in to... `,
       //   text: text({ token, host }),
-      react: MagicLinkEmail(token)
+      react: ResetPasswordEmail(token)
     });
     return { success: true, data };
   } catch (error) {

@@ -1,6 +1,7 @@
 // ChangePasswordForm.tsx
 "use client";
-import { changePassword } from "@/app/actions/users/changePassword";
+import { trpc } from "@/app/_trpc/client";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 interface ChangePasswordFormProps {
@@ -11,13 +12,36 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [message, setMessage] = useState("");
+  const router = useRouter();
+
+  const { mutate: changePassword } = trpc.changePassword.useMutation({
+    onSuccess() {
+      setMessage("Password changed successfully");
+      // router.push("/login");
+    },
+    onError(err) {
+      if (err.data?.code === "UNAUTHORIZED") {
+        setMessage("Invalid Token: Token used once");
+      } else if (err.data?.code === "BAD_REQUEST") {
+        setMessage("Your reset token expired");
+      } else if (err.data?.code === "NOT_FOUND") {
+        setMessage("Token not found");
+      }
+    }
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle password change logic here
     console.log("Password:", password);
     console.log("Confirm Password:", confirmPassword);
-    const message = await changePassword(resetPasswordToken, password);
+    try {
+      const message = changePassword({ resetPasswordToken, password });
+    } catch (error) {
+      console.error("Error:", error);
+      setMessage("Something went wrong!");
+    }
   };
 
   return (
@@ -95,6 +119,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
               placeholder="Confirm your new password"
               required
             />
+            <p>{message && <div className="mt-4 text-sm text-gray-600">{message}</div>}</p>
           </div>
           <button
             type="submit"
