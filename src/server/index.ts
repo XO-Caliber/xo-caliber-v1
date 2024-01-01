@@ -3,7 +3,8 @@ import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
 import { user } from "@/types/user";
-import { sendVerificationRequest } from "@/lib/resend/sendVerificationRequest";
+import { sendEmailVerificationRequest } from "@/lib/resend/sendVerificationRequest";
+import crypto from "crypto";
 
 export const appRouter = router({
   register: publiceProcedure.input(user).mutation(async (userData) => {
@@ -14,18 +15,25 @@ export const appRouter = router({
         email: emailAddress
       }
     });
+
     if (exist) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
+
+    const emailVerificationToken = crypto.randomBytes(32).toString("base64url");
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const url = "asdiuofvhgewuiyogfhbqweiuohfuiqewoguy";
     await db.user.create({
       data: {
         name: name,
         email: emailAddress,
-        hashedPassword: hashedPassword
+        hashedPassword: hashedPassword,
+        emailVerificationToken
       }
     });
+
+    await sendEmailVerificationRequest(emailAddress, emailVerificationToken);
+
     return { success: true };
   })
 });

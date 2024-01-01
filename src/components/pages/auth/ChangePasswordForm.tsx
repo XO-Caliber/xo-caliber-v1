@@ -17,7 +17,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
     // Handle password change logic here
     console.log("Password:", password);
     console.log("Confirm Password:", confirmPassword);
-    await changePassword(resetPasswordToken, password);
+    const message = await changePassword(resetPasswordToken, password);
   };
 
   return (

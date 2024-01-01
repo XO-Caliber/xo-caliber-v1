@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { sendVerificationRequest } from "@/lib/resend/sendVerificationRequest";
+import { sendPasswordResetRequest } from "@/lib/resend/sendVerificationRequest";
 import crypto from "crypto";
 
 export const resetPassword = async (email: string) => {
@@ -31,6 +31,6 @@ export const resetPassword = async (email: string) => {
     }
   });
 
-  await sendVerificationRequest(email, resetPasswordToken);
+  await sendPasswordResetRequest(email, resetPasswordToken);
   return "Password reset is sent";
 };

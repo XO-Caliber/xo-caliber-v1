@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export const changePassword = async (resetPasswordToken: string, password: string) => {
   const user = await db.user.findUnique({

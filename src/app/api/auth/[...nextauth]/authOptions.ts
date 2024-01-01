@@ -55,6 +55,10 @@ export const authOptions: NextAuthOptions = {
           console.log("User does not exist");
           throw new Error("user does not exist");
         }
+        if (!user.isEmailVerified) {
+          console.log("Email is not verified");
+          throw new Error("Email is not verified");
+        }
         const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
         if (!passwordMatch) {
           console.log("Wrong password");
