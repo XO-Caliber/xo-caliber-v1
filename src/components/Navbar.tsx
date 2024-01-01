@@ -73,7 +73,7 @@ export const Navbar = async () => {
               <div className="flex cursor-pointer items-center justify-around rounded-md p-2 hover:bg-secondary">
                 <Avatar className="h-9 w-9">
                   <AvatarImage
-                    src="https://media.licdn.com/dms/image/D5603AQFMbYqtwykwpw/profile-displayphoto-shrink_100_100/0/1697086240786?e=2147483647&v=beta&t=QGVTmX-KlAosjG95vHIWBmwfyrOeFlJv7-wNBn-d2x8"
+                    src={session.user?.image || "Insert default photos here"}
                     alt="profile"
                   />
                   <AvatarFallback>
