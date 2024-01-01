@@ -7,8 +7,8 @@ export async function sendVerificationRequest(userEmail: string, url: string) {
 
   try {
     const data = await resend.emails.send({
-      from: "<onboarding@resend.dev>", //! FOR TESTING CHANGE TO DOMAIN NAME
-      to: "ametheshlgp@gmail.com", //! FOR TESTING CHANGE TO userEmail
+      from: "Admin <rohnu@extrao1.com>", //! FOR TESTING CHANGE TO DOMAIN NAME
+      to: [userEmail], //! FOR TESTING CHANGE TO userEmail
       subject: `Log in to... `,
       //   text: text({ url, host }),
       react: MagicLinkEmail(url)

@@ -19,8 +19,9 @@ export const MagicLinkEmail = (url: string) => (
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>Login to XO Caliber</Heading>
-        <a href={`https://localhost:3000/email/reset-password?token${url}`}></a>
-        Click here to log in with this magic link
+        <Link href={`https://localhost:3000/reset-password?token=${url}`}>
+          Click here to log in with this magic link
+        </Link>
         <Text
           style={{
             ...text,
