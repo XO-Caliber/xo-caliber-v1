@@ -8,6 +8,7 @@ datasource db {
   relationMode = "prisma"
 }
 
+
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -42,6 +43,13 @@ model User {
   emailVerified DateTime?
   hashedPassword String?
   image         String?
+
+  resetPasswordToken String? @unique
+  resetPasswordTokenExpiry DateTime?
+
+  isEmailVerified Boolean @default(false)
+  emailVerificationToken String? @unique
+
   accounts      Account[]
   sessions      Session[]
 }
@@ -52,4 +60,32 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Domain {
+  id       String         @id @default(cuid())
+  name     String
+  questions DomainQuestion[]
+}
+
+model Question {
+  id        String         @id @default(cuid())
+  text      String
+  answers   Answer[]
+  domains   DomainQuestion[]
+}
+
+model DomainQuestion {
+  id        String         @id @default(cuid())
+  domainId  String
+  questionId String
+  domain    Domain         @relation(fields: [domainId], references: [id])
+  question  Question       @relation(fields: [questionId], references: [id])
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  text       String
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 }
