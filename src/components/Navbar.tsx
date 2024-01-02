@@ -55,7 +55,6 @@ export const Navbar = async () => {
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
         </li>
-        <li>{session?.user?.image}</li>
       </ul>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
