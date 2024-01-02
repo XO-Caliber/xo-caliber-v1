@@ -1,38 +1,23 @@
-import { db } from "@/lib/db";
+"use client";
+import { trpc } from "@/app/_trpc/client";
 import React from "react";
 
 interface VerifyEmailPageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-const VerifyEmailPage = async ({ searchParams }: VerifyEmailPageProps) => {
+const VerifyEmailPage = ({ searchParams }: VerifyEmailPageProps) => {
   if (searchParams.token) {
-    const user = await db.user.findUnique({
-      where: {
-        emailVerificationToken: searchParams.token as string
-      }
-    });
-    if (!user) {
+    const result = trpc.verifyEmail.useQuery(searchParams.token as unknown as void | undefined);
+    if (result.data?.success) {
+      return (
+        <div>
+          <h1>Email verified !</h1>
+        </div>
+      );
+    } else {
       return <div>Invalid token</div>;
     }
-
-    await db.user.update({
-      where: {
-        emailVerificationToken: searchParams.token as string
-      },
-      data: {
-        isEmailVerified: true,
-        emailVerificationToken: null
-      }
-    });
-
-    return (
-      <div>
-        <h1>
-          Email verified for <b>{user.email}</b>!
-        </h1>
-      </div>
-    );
   } else {
     return (
       <div>

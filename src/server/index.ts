@@ -6,11 +6,12 @@ import { user } from "@/types/user";
 import {
   sendEmailVerificationRequest,
   sendPasswordResetRequest
-} from "@/lib/resend/sendVerificationRequest";
+} from "@/lib/resend/sendEmailRequest";
 import crypto from "crypto";
 import { z } from "zod";
 
 export const appRouter = router({
+  // REGISTER USER -------------------------------------------------------
   register: publiceProcedure.input(user).mutation(async (userData) => {
     const { name, emailAddress, password } = userData.input;
 
@@ -40,6 +41,7 @@ export const appRouter = router({
 
     return { success: true };
   }),
+  //RESET PASSWORD -------------------------------------------------------
   resetPassword: publiceProcedure
     .input(
       z.object({
@@ -78,6 +80,7 @@ export const appRouter = router({
       await sendPasswordResetRequest(email, resetPasswordToken);
       return { success: true };
     }),
+  //VERIFY PASSWORD TOKEN -------------------------------------------------------
   verifyPasswordToken: publiceProcedure.input(z.string().nullish()).query(async (userData) => {
     const token = userData.input;
 
@@ -92,6 +95,7 @@ export const appRouter = router({
 
     return { success: true };
   }),
+  // CHNAGE PASSWORD -------------------------------------------------------
   changePassword: publiceProcedure
     .input(
       z.object({
@@ -137,7 +141,32 @@ export const appRouter = router({
       });
 
       return { success: true };
-    })
+    }),
+  verifyEmail: publiceProcedure.input(z.string().nullish()).query(async (userData) => {
+    const token = userData.input;
+
+    const user = await db.user.findUnique({
+      where: {
+        emailVerificationToken: token as string
+      }
+    });
+
+    if (!user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    await db.user.update({
+      where: {
+        emailVerificationToken: token as string
+      },
+      data: {
+        isEmailVerified: true,
+        emailVerificationToken: null
+      }
+    });
+
+    return { success: true };
+  })
 });
 
 export type AppRouter = typeof appRouter;
