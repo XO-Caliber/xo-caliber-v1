@@ -64,7 +64,7 @@ export const SignupBox = () => {
         router.refresh();
         toast({
           title: "Registered successfully",
-          description: "Please Login"
+          description: "Please verify your email and login"
         });
       }
     },

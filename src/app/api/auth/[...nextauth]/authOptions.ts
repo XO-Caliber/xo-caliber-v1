@@ -5,6 +5,7 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
+// import { sendVerificationRequest } from "@/lib/resend/sendEmailRequest";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -53,6 +54,15 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           console.log("User does not exist");
           throw new Error("user does not exist");
+        }
+
+        if (!user.hashedPassword) {
+          throw new Error("Please login using Google or LinkedIn");
+        }
+
+        if (!user.isEmailVerified) {
+          console.log("Email is not verified");
+          throw new Error("Email is not verified");
         }
         const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
         if (!passwordMatch) {
