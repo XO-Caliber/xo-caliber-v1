@@ -2,6 +2,9 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { trpc } from "@/app/_trpc/client";
+import Link from "next/link";
+import Image from "next/image";
+import logo from "../../../../public/images/LOGO_Trans.png";
 
 const ResetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -39,6 +42,9 @@ const ResetPasswordPage = () => {
                 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-rose-200 to-white
                 "
     >
+      <Link href={"/"}>
+        <Image className="absolute m-4" priority src={logo} alt="Logo" width={250} height={200} />
+      </Link>
       <div className="flex min-h-screen items-center justify-center">
         <div className="rounded-md bg-white p-8 shadow-md">
           <h1 className="mb-4 text-2xl font-bold">Reset Password Page</h1>

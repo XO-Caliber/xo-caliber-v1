@@ -1,6 +1,8 @@
 // ChangePasswordForm.tsx
 "use client";
 import { trpc } from "@/app/_trpc/client";
+import { Button } from "@/components/ui/Button";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -18,7 +20,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
   const { mutate: changePassword } = trpc.changePassword.useMutation({
     onSuccess() {
       setMessage("Password changed successfully");
-      // router.push("/login");
+      router.push("/login");
     },
     onError(err) {
       if (err.data?.code === "UNAUTHORIZED") {
@@ -50,7 +52,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
                 bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-rose-200 to-white
                 "
     >
-      <div className="mx-auto mt-8 max-w-md rounded-md bg-white p-6 shadow-md">
+      <div className="mx-auto mt-8 max-w-md rounded-lg border-2 border-border bg-white p-6 shadow-md">
         <h2 className="mb-6 text-2xl font-semibold">Change Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="relative mb-4">
@@ -70,39 +72,9 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 focus:outline-none"
+              className="absolute inset-y-0 right-0 top-6 flex items-center pr-3 focus:outline-none"
             >
-              <svg
-                className="h-5 w-5 cursor-pointer text-gray-500"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                {showPassword ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                ) : (
-                  <>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    ></path>
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M2 12s3 9 10 9 10-9 10-9"
-                    ></path>
-                  </>
-                )}
-              </svg>
+              {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
             </button>
           </div>
           <div className="mb-6">
@@ -121,12 +93,9 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
             />
             <p>{message && <div className="mt-4 text-sm text-gray-600">{message}</div>}</p>
           </div>
-          <button
-            type="submit"
-            className="w-full rounded bg-blue-500 p-3 text-white hover:bg-blue-600 focus:border-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
-          >
+          <Button type="submit" variant={"primary"} className="w-full">
             Change Password
-          </button>
+          </Button>
         </form>
       </div>
     </section>
