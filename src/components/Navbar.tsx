@@ -18,11 +18,10 @@ import Logout from "./pages/auth/Logout";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
-
   return (
     <nav className="absolute h-screen w-52 border-r-2 border-border">
-      <div className="border-b-2 p-2">
-        <Image src={navLogo} width={160} height={40} alt="LOGO" />
+      <div className="border-b-2 p-2 pl-4">
+        <Image src={navLogo} width={130} height={41} alt="LOGO" />
       </div>
       <ul className="p-2">
         <li className="relative flex items-center justify-center pb-2">
@@ -34,6 +33,7 @@ export const Navbar = async () => {
                       hover:text-primary focus:text-primary"
           />
         </li>
+        <Link href="/">
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                       hover:bg-primary "
@@ -41,6 +41,7 @@ export const Navbar = async () => {
           <HomeIcon color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Home</p>
         </li>
+        </Link>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                     hover:bg-primary"
@@ -56,6 +57,15 @@ export const Navbar = async () => {
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
         </li>
       </ul>
+      <Link href="/dashboard">
+      <div className="hover:bg-gray-200 border-2 border-r-0 border-l-0 t cursor-pointer" >
+        <div className="m-4 text-muted ">
+          
+          <p className="rounded ">Dashboard</p>
+          
+        </div>
+      </div>
+      </Link>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
           <div className="flex items-center justify-between">

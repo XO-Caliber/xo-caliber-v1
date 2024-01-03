@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        asscent:"#FFC0B1",
         border: 'var(--border)',
         input: 'var(--input)',
         ring: 'var(--ring)',
