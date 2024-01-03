@@ -1,40 +1,46 @@
-"use client"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+// SingleQA.jsx
+"use client";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/Select"
-import { buttonVariants } from "@/components/ui/Button"
-import { useState } from "react"
-import { log } from "console"
-import { Value } from "@radix-ui/react-select"
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
+import { useState } from "react";
 
-export const SingleQA = () => {
-    const [visitedValue,setVisitedValue]=useState("select")
-    console.log(visitedValue)
-    return (
-        <div className="absolute pl-12 mt-32 h-screen ml-56 bg-white">
-            <div className=" flex border w-[1279px] h-16 items-center justify-center bg-slate-200 rounded-lg">
-                <div className="pl-4 w-92 mr-12 ">Have you independently contributed to original research that has gained national and/or international recognition over the past five years? dsfSEDGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG </div>
-                <div className="mr-4">
-                    <Select >
-                        <SelectTrigger className={`${visitedValue=="yes"?"bg-black":""} ${visitedValue==="no"?"bg-[#64748B":""} w-[150px]` }>
-                            <SelectValue placeholder="Select" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="yes" onClick={()=>setVisitedValue("yes")}>Yes</SelectItem>
-                            <SelectItem value="no" onClick={()=>setVisitedValue("no")}>No</SelectItem>
-                        </SelectContent>
-                    </Select>
-
-                </div>
-
-            </div>
-        </div>
-    )
+interface SingleQAProps {
+  className: string;
+  question: string;
+  questionNumber:number;
 }
 
-export default SingleQA
+export const SingleQA: React.FC<SingleQAProps> = ({ className, question,questionNumber }) => {
+  const [selectedValue, setSelectedValue] = useState("");
+
+
+
+  return (
+    <div className={`flex border-2 w-[1279px] h-16 items-center justify-center rounded-lg mt-2 ${className}`}>
+        <div className="pl-4 w-[30px] mr-4 text-center text-white">{questionNumber}</div>
+      <div className="pl-4 w-[1030px] mr-12">{question}</div>
+      <div className="mr-4">
+        <Select>
+          <SelectTrigger 
+            className={`w-[150px] ${selectedValue === "yes" ? "bg-black text-white" : ""} ${
+              selectedValue === "no" ? "bg-muted_gray text-white" : "bg-black text-white"
+            }`}
+          >
+            <SelectValue placeholder="Select" />
+          </SelectTrigger>
+          <SelectContent >
+            <SelectItem value="yes" onClick={()=>setSelectedValue("yes")}>Yes</SelectItem>
+            <SelectItem value="no" onClick={()=>setSelectedValue("no")}>No</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    </div>
+  );
+};
+
+export default SingleQA;

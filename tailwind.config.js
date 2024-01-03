@@ -18,6 +18,7 @@ module.exports = {
     },
     extend: {
       colors: {
+        muted_gray:"#64748B",
         border: 'var(--border)',
         input: 'var(--input)',
         ring: 'var(--ring)',
