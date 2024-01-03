@@ -1,94 +1,92 @@
 import {
   Body,
+  Button,
   Container,
   Head,
-  Heading,
+  Hr,
   Html,
   Img,
-  Link,
   Preview,
+  Section,
   Text
 } from "@react-email/components";
+import LOGO from "../../../public/images/LOGO_Trans.png";
 import * as React from "react";
 
-export const VerifyEmailTemplate = (email: string, url: string) => (
+const baseUrl = process.env.PRODUCTION_URL
+  ? `https://${process.env.PRODUCTION_URL}`
+  : "http://localhost:3000";
+
+export const VerifyEmailTemplate = (email: string, token: string) => (
   <Html>
     <Head />
-    <Preview>Email verification for ${email}</Preview>
+    <Preview>The sales intelligence platform that helps you uncover qualified leads.</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Login to XO Caliber</Heading>
-        <Link href={`https://localhost:3000/reset-password?token=${url}`}>
-          Click here to log in with this magic link
-        </Link>
-        <Text
-          style={{
-            ...text,
-            color: "#ababab",
-            marginTop: "12px",
-            marginBottom: "38px"
-          }}
-        >
-          Hint: You can set a permanent password in Settings & members → My account.
+        <Img src={LOGO} width="170" height="50" alt="Koala" style={logo} />
+        <Text style={paragraph}>Hey,</Text>
+        <Text style={paragraph}>
+          Welcome to XO Caliber, Please verify your Email {email} by pressing this button
         </Text>
-        <Img src={"public/images/LOGO_Trans.png"} width="32" height="32" alt="Logo" />
+        <Section style={btnContainer}>
+          <Button pX={12} pY={12} style={button} href={`${baseUrl}/reset-password?token=${token}`}>
+            Verify Email
+          </Button>
+        </Section>
+        <Text style={paragraph}>
+          Best,
+          <br />
+          The XO Caliber team
+        </Text>
+        <Hr style={hr} />
+        <Text style={footer}>Address here | Token will expire once used</Text>
       </Container>
     </Body>
   </Html>
 );
 
+export default VerifyEmailTemplate;
+
 const main = {
-  backgroundColor: "#ffffff"
+  backgroundColor: "#ffffff",
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
 };
 
 const container = {
-  paddingLeft: "12px",
-  paddingRight: "12px",
+  margin: "0 auto",
+  padding: "20px 0 48px"
+};
+
+const logo = {
   margin: "0 auto"
 };
 
-const h1 = {
-  color: "#333",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "24px",
-  fontWeight: "bold",
-  margin: "40px 0",
-  padding: "0"
+const paragraph = {
+  fontSize: "16px",
+  lineHeight: "26px"
 };
 
-const link = {
-  color: "#2754C5",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  textDecoration: "underline"
+const btnContainer = {
+  textAlign: "center" as const
 };
 
-const text = {
-  color: "#333",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  margin: "24px 0"
+const button = {
+  backgroundColor: "#5F51E8",
+  borderRadius: "3px",
+  color: "#fff",
+  fontSize: "16px",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  display: "block"
+};
+
+const hr = {
+  borderColor: "#cccccc",
+  margin: "20px 0"
 };
 
 const footer = {
-  color: "#898989",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "12px",
-  lineHeight: "22px",
-  marginTop: "12px",
-  marginBottom: "24px"
-};
-
-const code = {
-  display: "inline-block",
-  padding: "16px 4.5%",
-  width: "90.5%",
-  backgroundColor: "#f4f4f4",
-  borderRadius: "5px",
-  border: "1px solid #eee",
-  color: "#333"
+  color: "#8898aa",
+  fontSize: "12px"
 };

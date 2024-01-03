@@ -1,14 +1,13 @@
-import { EmailReactProps, EmailTextProps } from "@/types/emailProps";
 import { resend } from "./resend";
-import { VerifyEmailTemplate } from "@/components/Emails/VerifyEmail";
-import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
+import { VerifyEmailTemplate } from "@/components/emails/VerifyEmail";
+import { ResetPasswordEmail } from "@/components/emails/ResetPasswordEmail";
 
 export async function sendPasswordResetRequest(userEmail: string, token: string) {
   try {
     const data = await resend.emails.send({
-      from: "Admin <rohnu@extrao1.com>",
+      from: "XO Caliber <rohnu@extrao1.com>",
       to: [userEmail],
-      subject: `Log in to... `,
+      subject: `Password reset request`,
       //   text: text({ token, host }),
       react: ResetPasswordEmail(token)
     });
@@ -21,9 +20,9 @@ export async function sendPasswordResetRequest(userEmail: string, token: string)
 export async function sendEmailVerificationRequest(userEmail: string, token: string) {
   try {
     const data = await resend.emails.send({
-      from: "Admin <rohnu@extrao1.com>",
+      from: "XO Caliber <rohnu@extrao1.com>",
       to: [userEmail],
-      subject: `Log in to... `,
+      subject: `Verify Email request `,
       //   text: text({ url, host }),
       react: VerifyEmailTemplate(userEmail, token)
     });

@@ -1,94 +1,85 @@
 import {
   Body,
+  Button,
   Container,
   Head,
-  Heading,
   Html,
   Img,
   Link,
   Preview,
+  Section,
   Text
 } from "@react-email/components";
+import LOGO from "../../../public/images/LOGO_Trans.png";
 import * as React from "react";
 
-export const ResetPasswordEmail = (url: string) => (
+const baseUrl = process.env.PRODUCTION_URL
+  ? `https://${process.env.PRODUCTION_URL}`
+  : "http://localhost:3000";
+
+export const ResetPasswordEmail = (token: string) => (
   <Html>
     <Head />
-    <Preview>Log in with this magic link</Preview>
+    <Preview>Dropbox reset your password</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Login to XO Caliber</Heading>
-        <Link href={`https://localhost:3000/reset-password?token=${url}`}>
-          Click here to log in with this magic link
-        </Link>
-        <Text
-          style={{
-            ...text,
-            color: "#ababab",
-            marginTop: "12px",
-            marginBottom: "38px"
-          }}
-        >
-          Hint: You can set a permanent password in Settings & members → My account.
-        </Text>
-        <Img src={"public/images/LOGO_Trans.png"} width="32" height="32" alt="Logo" />
+        <Img src={`${LOGO}`} width="40" height="33" alt="Dropbox" />
+        <Section>
+          <Text style={text}>Hey,</Text>
+          <Text style={text}>
+            Someone recently requested a password change for your XO Caliber account. If this was
+            you, you can set a new password here:
+          </Text>
+          <Button style={button} href={`${baseUrl}/reset-password?token=${token}`}>
+            Reset password
+          </Button>
+          <Text style={text}>
+            If you don&apos;t want to change your password or didn&apos;t request this, just ignore
+            and delete this message.
+          </Text>
+
+          <Text style={text}>Happy Day!</Text>
+        </Section>
       </Container>
     </Body>
   </Html>
 );
 
+export default ResetPasswordEmail;
+
 const main = {
-  backgroundColor: "#ffffff"
+  backgroundColor: "#f6f9fc",
+  padding: "10px 0"
 };
 
 const container = {
-  paddingLeft: "12px",
-  paddingRight: "12px",
-  margin: "0 auto"
-};
-
-const h1 = {
-  color: "#333",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "24px",
-  fontWeight: "bold",
-  margin: "40px 0",
-  padding: "0"
-};
-
-const link = {
-  color: "#2754C5",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  textDecoration: "underline"
+  backgroundColor: "#ffffff",
+  border: "1px solid #f0f0f0",
+  padding: "45px"
 };
 
 const text = {
-  color: "#333",
+  fontSize: "16px",
   fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "14px",
-  margin: "24px 0"
+    "'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
+  fontWeight: "300",
+  color: "#404040",
+  lineHeight: "26px"
 };
 
-const footer = {
-  color: "#898989",
-  fontFamily:
-    "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
-  fontSize: "12px",
-  lineHeight: "22px",
-  marginTop: "12px",
-  marginBottom: "24px"
+const button = {
+  backgroundColor: "#007ee6",
+  borderRadius: "4px",
+  color: "#fff",
+  fontFamily: "'Open Sans', 'Helvetica Neue', Arial",
+  fontSize: "15px",
+  textDecoration: "none",
+  textAlign: "center" as const,
+  display: "block",
+  width: "210px",
+  padding: "14px 7px"
 };
 
-const code = {
-  display: "inline-block",
-  padding: "16px 4.5%",
-  width: "90.5%",
-  backgroundColor: "#f4f4f4",
-  borderRadius: "5px",
-  border: "1px solid #eee",
-  color: "#333"
+const anchor = {
+  textDecoration: "underline"
 };
