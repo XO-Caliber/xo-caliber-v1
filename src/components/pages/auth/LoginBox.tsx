@@ -108,6 +108,7 @@ export const LoginBox = () => {
 
   const handleTabChange = (value: string) => {
     console.log(value);
+    form.reset();
     setType(value);
   };
 
