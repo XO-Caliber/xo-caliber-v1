@@ -79,7 +79,7 @@ hover:bg-primary"
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="flex cursor-pointer items-center justify-around rounded-md p-2 hover:bg-secondary">
+              <div className="flex cursor-pointer items-center justify-around rounded-md p-2 text-black hover:bg-secondary">
                 <Avatar className="h-9 w-9">
                   <AvatarImage
                     src={session.user?.image || "Insert default photos here"}

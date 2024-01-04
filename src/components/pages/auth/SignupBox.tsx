@@ -64,7 +64,7 @@ export const SignupBox = () => {
         router.refresh();
         toast({
           title: "Registered successfully",
-          description: "Please Login"
+          description: "Please verify your email and login"
         });
       }
     },
@@ -81,6 +81,12 @@ export const SignupBox = () => {
           )
         });
         console.log("User exist");
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: `Error:  ${err.data}`,
+          variant: "destructive"
+        });
       }
     },
     onSettled() {

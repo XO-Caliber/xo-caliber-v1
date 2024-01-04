@@ -5,6 +5,7 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
+// import { sendVerificationRequest } from "@/lib/resend/sendEmailRequest";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -34,7 +35,8 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {
         emailAddress: { label: "Email address", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        type: { label: "Types", type: "type" }
       },
       async authorize(credentials) {
         console.log(credentials);
@@ -43,16 +45,40 @@ export const authOptions: NextAuthOptions = {
           console.log("Nothing");
           throw new Error("Missing credentials");
         }
-
-        const user = await db.user.findUnique({
-          where: {
-            email: credentials.emailAddress
-          }
-        });
+        let user;
+        if (credentials.type === "individual") {
+          user = await db.user.findUnique({
+            where: {
+              email: credentials.emailAddress
+            }
+          });
+        } else if (credentials.type === "firm") {
+          user = await db.firm.findUnique({
+            where: {
+              email: credentials.emailAddress
+            }
+          });
+        } else if (credentials.type === "assistant") {
+          user = await db.assistant.findUnique({
+            where: {
+              email: credentials.emailAddress
+            }
+          });
+        } else {
+          throw new Error("User type doesnt exist");
+        }
 
         if (!user) {
           console.log("User does not exist");
           throw new Error("user does not exist");
+        }
+
+        if (!user.hashedPassword) {
+          throw new Error("Please login using Google or LinkedIn");
+        }
+        if (!user.isEmailVerified) {
+          console.log("Email is not verified");
+          throw new Error("Email is not verified");
         }
         const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
         if (!passwordMatch) {
@@ -71,40 +97,43 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login"
   },
   //! FOOL OF ME TO WRITE THESE CODE !
-  // callbacks: {
-  //   async signIn(args) {
-  //     if (args.account?.type === "credentials") return true;
+  callbacks: {
+    async signIn(args) {
+      if (args.account?.type === "credentials") return true;
 
-  //     if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-  //       if (args.account.provider === "linkedin" || args.account.provider === "google") {
-  //         console.log("Hello from server");
-  //         console.log("User", args.user);
-  //         console.log("Account", args.account);
+      if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+        if (args.account.provider === "linkedin" || args.account.provider === "google") {
+          console.log("Hello from server");
+          console.log("User", args.user);
+          console.log("Account", args.account);
+          console.log("Credentials", args.credentials);
+          console.log("Profile", args.profile);
+          console.log("Email", args.email);
 
-  //         const user = await db.user.findUnique({
-  //           where: {
-  //             email: args.user.email
-  //           }
-  //         });
+          // const isRole;
 
-  //         if (!user) {
-  //           console.log("Creating user");
-  //           await db.user.create({
-  //             data: {
-  //               name: args.user.name,
-  //               email: args.user.email,
-  //               image: args.user.image
-  //             }
-  //           });
-  //         }
-  //         console.log("User exist logging In");
-
-  //         return args.user;
-  //       } else return false; // only google and linkedin for now
-  //     }
-  //     // return args.user;
-  //   }
-  // },
+          // const user = await db.firm.findUnique({
+          //   where: {
+          //     email: args.user.email
+          //   }
+          // });
+          // if (!user) {
+          //   console.log("Creating user");
+          //   await db.user.create({
+          //     data: {
+          //       name: args.user.name,
+          //       email: args.user.email,
+          //       image: args.user.image
+          //     }
+          //   });
+          // }
+          // console.log("User exist logging In");
+          // return args.user;
+        } else return false; // only google and linkedin for now
+      }
+      // return args.user;
+    }
+  },
   secret: process.env.NEXTAUTH_URL,
   debug: process.env.NODE_ENV === "development"
 };
