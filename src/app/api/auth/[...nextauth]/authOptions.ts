@@ -110,28 +110,52 @@ export const authOptions: NextAuthOptions = {
           console.log("Profile", args.profile);
           console.log("Email", args.email);
 
-          // const isRole;
+          const isUserExist = await db.user.findUnique({
+            where: { email: args.profile?.email }
+          });
 
-          // const user = await db.firm.findUnique({
-          //   where: {
-          //     email: args.user.email
-          //   }
-          // });
-          // if (!user) {
-          //   console.log("Creating user");
-          //   await db.user.create({
-          //     data: {
-          //       name: args.user.name,
-          //       email: args.user.email,
-          //       image: args.user.image
-          //     }
-          //   });
-          // }
-          // console.log("User exist logging In");
-          // return args.user;
+          if (isUserExist) {
+            console.log("INDIVIDUAL");
+            const newuser = { ...args.user, Role: "Assistant" };
+            return newuser;
+          }
+
+          if (!isUserExist) {
+            const isFirmExist = await db.firm.findUnique({
+              where: { email: args.profile?.email }
+            });
+
+            if (isFirmExist) {
+              console.log("FIRM");
+              return true;
+            }
+
+            const isAssistantExist = await db.assistant.findUnique({
+              where: { email: args.profile?.email }
+            });
+
+            if (isAssistantExist) {
+              console.log("ASSISTANT");
+              const newuser = { ...args.user, Role: "Assistant" };
+              return newuser;
+            }
+
+            if (!isUserExist && !isFirmExist && !isAssistantExist) {
+              console.log("NEW USER");
+              return true;
+            }
+          }
         } else return false; // only google and linkedin for now
       }
       // return args.user;
+    },
+    async jwt({ token, user, session }) {
+      console.log("jwt callbacks", { token, user, session });
+      return token;
+    },
+    async session({ session, token, user }) {
+      console.log("session callbacks", { session, token, user });
+      return session;
     }
   },
   secret: process.env.NEXTAUTH_URL,
