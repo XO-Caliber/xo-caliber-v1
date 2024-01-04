@@ -93,6 +93,9 @@ export const authOptions: NextAuthOptions = {
           console.log("Credentials", args.credentials);
           console.log("Profile", args.profile);
           console.log("Email", args.email);
+
+          // const isRole;
+
           // const user = await db.firm.findUnique({
           //   where: {
           //     email: args.user.email

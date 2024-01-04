@@ -81,6 +81,12 @@ export const SignupBox = () => {
           )
         });
         console.log("User exist");
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: `Error:  ${err.data}`,
+          variant: "destructive"
+        });
       }
     },
     onSettled() {
