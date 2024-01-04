@@ -1,6 +1,6 @@
 import { resend } from "./resend";
-import { VerifyEmailTemplate } from "@/components/emails/VerifyEmail";
-import { ResetPasswordEmail } from "@/components/emails/ResetPasswordEmail";
+import { VerifyEmailTemplate } from "@/components/Emails/VerifyEmail";
+import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
 
 export async function sendPasswordResetRequest(userEmail: string, token: string) {
   try {
