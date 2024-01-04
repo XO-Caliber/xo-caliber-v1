@@ -3,24 +3,24 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -36,54 +36,55 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
-  emailVerified DateTime?
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
+  emailVerified  DateTime?
   hashedPassword String?
-  image         String?
+  image          String?
 
-  resetPasswordToken String? @unique
+  resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
 
-  isEmailVerified Boolean @default(false)
+  isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
 
-  firm Firm @relation(fields: [id], references: [firmId],  map: "user_firm_fk")
-  assistant Assistant @relation(fields: [id], references: [assistantId])
-
-  accounts      Account[]
-  sessions      Session[]
+  accounts             Account[]
+  sessions             Session[]
+  Firm                 Firm?      @relation(fields: [firmFirmId], references: [firmId])
+  firmFirmId           String?
+  Assistant            Assistant? @relation(fields: [assistantAssistantId], references: [assistantId])
+  assistantAssistantId String?
 }
-model Firm {
-  firmId            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
-  emailVerified DateTime?
-  hashedPassword String?
-  image         String?
 
-  resetPasswordToken String? @unique
+model Firm {
+  firmId                   String    @id @default(cuid())
+  name                     String?
+  email                    String    @unique
+  emailVerified            DateTime?
+  hashedPassword           String?
+  image                    String?
+  isEmailVerified          Boolean   @default(true)
+  resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
 
-  user User[]
   assistant Assistant[]
+  User      User[]
 }
 
 model Assistant {
-  assistantId            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
-  emailVerified DateTime?
-  hashedPassword String?
-  image         String?
-
-  resetPasswordToken String? @unique
+  assistantId              String    @id @default(cuid())
+  name                     String?
+  email                    String    @unique
+  emailVerified            DateTime?
+  hashedPassword           String?
+  image                    String?
+  isEmailVerified          Boolean   @default(true)
+  resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
 
-  user User[]
-  firm Firm @relation(fields: [assistantId], references: [firmId])
-
+  firm Firm?  @relation(fields: [assistantId], references: [firmId])
+  User User[]
 }
 
 model VerificationToken {
