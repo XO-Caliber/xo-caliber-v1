@@ -81,40 +81,40 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login"
   },
   //! FOOL OF ME TO WRITE THESE CODE !
-  // callbacks: {
-  //   async signIn(args) {
-  //     if (args.account?.type === "credentials") return true;
+  callbacks: {
+    async signIn(args) {
+      if (args.account?.type === "credentials") return true;
 
-  //     if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-  //       if (args.account.provider === "linkedin" || args.account.provider === "google") {
-  //         console.log("Hello from server");
-  //         console.log("User", args.user);
-  //         console.log("Account", args.account);
-
-  //         const user = await db.user.findUnique({
-  //           where: {
-  //             email: args.user.email
-  //           }
-  //         });
-
-  //         if (!user) {
-  //           console.log("Creating user");
-  //           await db.user.create({
-  //             data: {
-  //               name: args.user.name,
-  //               email: args.user.email,
-  //               image: args.user.image
-  //             }
-  //           });
-  //         }
-  //         console.log("User exist logging In");
-
-  //         return args.user;
-  //       } else return false; // only google and linkedin for now
-  //     }
-  //     // return args.user;
-  //   }
-  // },
+      if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+        if (args.account.provider === "linkedin" || args.account.provider === "google") {
+          console.log("Hello from server");
+          console.log("User", args.user);
+          console.log("Account", args.account);
+          console.log("Credentials", args.credentials);
+          console.log("Profile", args.profile);
+          console.log("Email", args.email);
+          // const user = await db.firm.findUnique({
+          //   where: {
+          //     email: args.user.email
+          //   }
+          // });
+          // if (!user) {
+          //   console.log("Creating user");
+          //   await db.user.create({
+          //     data: {
+          //       name: args.user.name,
+          //       email: args.user.email,
+          //       image: args.user.image
+          //     }
+          //   });
+          // }
+          // console.log("User exist logging In");
+          // return args.user;
+        } else return false; // only google and linkedin for now
+      }
+      // return args.user;
+    }
+  },
   secret: process.env.NEXTAUTH_URL,
   debug: process.env.NODE_ENV === "development"
 };
