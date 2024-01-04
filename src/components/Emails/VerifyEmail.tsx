@@ -10,7 +10,6 @@ import {
   Section,
   Text
 } from "@react-email/components";
-import LOGO from "../../../public/images/LOGO_Trans.png";
 import * as React from "react";
 
 const baseUrl = process.env.PRODUCTION_URL
@@ -23,13 +22,18 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
     <Preview>The sales intelligence platform that helps you uncover qualified leads.</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Img src={LOGO} width="170" height="50" alt="Koala" style={logo} />
+        <Img
+          src="https://i.postimg.cc/Ls2FCWvJ/LOGO-Trans.png"
+          width="170"
+          alt="XO caliber"
+          style={logo}
+        />
         <Text style={paragraph}>Hey,</Text>
         <Text style={paragraph}>
           Welcome to XO Caliber, Please verify your Email {email} by pressing this button
         </Text>
         <Section style={btnContainer}>
-          <Button pX={12} pY={12} style={button} href={`${baseUrl}/reset-password?token=${token}`}>
+          <Button style={button} href={`${baseUrl}/reset-password?token=${token}`}>
             Verify Email
           </Button>
         </Section>
@@ -78,7 +82,8 @@ const button = {
   fontSize: "16px",
   textDecoration: "none",
   textAlign: "center" as const,
-  display: "block"
+  display: "block",
+  padding: "10px"
 };
 
 const hr = {

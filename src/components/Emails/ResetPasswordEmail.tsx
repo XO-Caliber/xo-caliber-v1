@@ -10,7 +10,6 @@ import {
   Section,
   Text
 } from "@react-email/components";
-import LOGO from "../../../public/images/LOGO_Trans.png";
 import * as React from "react";
 
 const baseUrl = process.env.PRODUCTION_URL
@@ -20,10 +19,10 @@ const baseUrl = process.env.PRODUCTION_URL
 export const ResetPasswordEmail = (token: string) => (
   <Html>
     <Head />
-    <Preview>Dropbox reset your password</Preview>
+    <Preview>XO Caliber reset your password</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Img src={`${LOGO}`} width="40" height="33" alt="Dropbox" />
+        <Img src="https://i.postimg.cc/Ls2FCWvJ/LOGO-Trans.png" width="80" alt="Dropbox" />
         <Section>
           <Text style={text}>Hey,</Text>
           <Text style={text}>
@@ -68,7 +67,7 @@ const text = {
 };
 
 const button = {
-  backgroundColor: "#007ee6",
+  backgroundColor: "#FFC0B1",
   borderRadius: "4px",
   color: "#fff",
   fontFamily: "'Open Sans', 'Helvetica Neue', Arial",

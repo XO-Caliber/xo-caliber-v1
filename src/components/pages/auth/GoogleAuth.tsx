@@ -15,7 +15,16 @@ export const GoogleAuth = () => {
     setIsLoading(true);
     try {
       console.log("Hello from client");
-      await signIn("google");
+      const result = await signIn("google");
+      if (result?.ok) {
+        setIsLoading(false);
+      } else if (result?.error) {
+        toast({
+          title: "There was a problem",
+          description: result.error,
+          variant: "destructive"
+        });
+      }
     } catch (error) {
       // toast notification
       toast({
