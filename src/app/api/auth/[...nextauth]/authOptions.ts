@@ -116,8 +116,7 @@ export const authOptions: NextAuthOptions = {
 
           if (isUserExist) {
             console.log("INDIVIDUAL");
-            const newuser = { ...args.user, Role: "Assistant" };
-            return newuser;
+            return true;
           }
 
           if (!isUserExist) {
@@ -127,7 +126,7 @@ export const authOptions: NextAuthOptions = {
 
             if (isFirmExist) {
               console.log("FIRM");
-              return true;
+              return false;
             }
 
             const isAssistantExist = await db.assistant.findUnique({
@@ -151,10 +150,24 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, session }) {
       console.log("jwt callbacks", { token, user, session });
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          role: user.role
+        };
+      }
       return token;
     },
     async session({ session, token, user }) {
       console.log("session callbacks", { session, token, user });
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+      }
+
       return session;
     }
   },

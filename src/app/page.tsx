@@ -9,6 +9,7 @@ export default async function Home() {
       <Button variant={"secondary"}>signup</Button>
       <h1>{session?.user?.name}</h1>
       <h1>{session?.user?.email}</h1>
+      <h1>{session?.user.role}</h1>
     </div>
   );
 }
