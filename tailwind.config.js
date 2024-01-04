@@ -1,98 +1,88 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'],
+  darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}'
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}"
   ],
-  prefix: '',
+  prefix: "",
   theme: {
     container: {
       center: true,
-      padding: '2rem',
+      padding: "2rem",
       screens: {
-        '2xl': '1400px'
+        "2xl": "1400px"
       }
     },
     extend: {
       colors: {
-        asscent:"#FFC0B1",
-        border: 'var(--border)',
-        input: 'var(--input)',
-        ring: 'var(--ring)',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         primary: {
-          DEFAULT: 'var(--primary)',
-          foreground: 'var(--primary-foreground)'
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)"
         },
         secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground:
-            'var(--secondary-foreground)'
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)"
         },
         destructive: {
-          DEFAULT: 'var(--destructive)',
-          foreground:
-            'var(--destructive-foreground)'
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)"
         },
         muted: {
-          DEFAULT: 'var(--muted)',
-          foreground: 'var(--muted-foreground)'
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)"
         },
         accent: {
-          DEFAULT: 'var(--accent)',
-          foreground: 'var(--accent-foreground)'
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)"
         },
         popover: {
-          DEFAULT: 'var(--popover)',
-          foreground: 'var(--popover-foreground)'
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)"
         },
         card: {
-          DEFAULT: 'var(--card)',
-          foreground: 'var(--card-foreground)'
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)"
         }
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)'
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)"
       },
       keyframes: {
-        'accordion-down': {
-          from: { height: '0' },
+        "accordion-down": {
+          from: { height: "0" },
           to: {
-            height:
-              'var(--radix-accordion-content-height'
+            height: "var(--radix-accordion-content-height"
           }
         },
-        'accordion-up': {
+        "accordion-up": {
           from: {
-            height:
-              'var(--radix-accordion-content-height'
+            height: "var(--radix-accordion-content-height"
           },
-          to: { height: '0' }
+          to: { height: "0" }
         }
       },
       animation: {
-        'accordion-down':
-          'accordion-down 0.2s ease-out',
-        'accordion-up':
-          'accordion-up 0.2s ease-out'
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out"
       },
       backgroundImage: {
-        'gradient-radial':
-          'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
       },
       boxShadow: {
-        'custom-shadow':
-          '8px 0px 30px -1px rgba(0, 0, 0, 0.2);'
+        "custom-shadow": "8px 0px 30px -1px rgba(0, 0, 0, 0.2);"
       }
     }
   },
-  plugins: [require('tailwindcss-animate')]
+  plugins: [require("tailwindcss-animate")]
 };

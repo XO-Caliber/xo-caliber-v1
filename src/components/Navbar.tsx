@@ -15,11 +15,12 @@ import {
   DropdownMenuTrigger
 } from "./ui/Dropdown-menu";
 import Logout from "./pages/auth/Logout";
+import WorkSpace from "./ui/WorkSpace";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
   return (
-    <nav className="absolute h-screen w-52 border-r-2 border-border">
+    <nav className="absolute h-screen w-56 border-r-2 border-border">
       <div className="border-b-2 p-2 pl-4">
         <Image src={navLogo} width={130} height={41} alt="LOGO" />
       </div>
@@ -29,42 +30,41 @@ export const Navbar = async () => {
           <SearchIcon
             size={17}
             className="absolute right-0 mr-2 cursor-pointer text-muted 
-                      transition-colors duration-300 
-                      hover:text-primary focus:text-primary"
+transition-colors duration-300 
+hover:text-primary focus:text-primary"
           />
         </li>
         <Link href="/">
-        <li
-          className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                      hover:bg-primary "
-        >
-          <HomeIcon color="var(--muted)" size={16} className="mx-2" />
-          <p className="mx-1 text-base text-muted hover:text-black">Home</p>
-        </li>
+          <li
+            className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
+hover:bg-primary "
+          >
+            <HomeIcon color="var(--muted)" size={16} className="mx-2" />
+            <p className="mx-1 text-base text-muted hover:text-black">Home</p>
+          </li>
         </Link>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                    hover:bg-primary"
+hover:bg-primary"
         >
           <BellIcon color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Notifications</p>
         </li>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                    hover:bg-primary"
+hover:bg-primary"
         >
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
         </li>
       </ul>
       <Link href="/dashboard">
-      <div className="hover:bg-gray-200 border-2 border-r-0 border-l-0 t cursor-pointer" >
-        <div className="m-4 text-muted ">
-          
-          <p className="rounded ">Dashboard</p>
-          
+        <div className=" cursor-pointer border-2 border-l-0 border-r-0  hover:border-primary hover:bg-primary">
+          <div className="m-4 text-muted hover:text-black">
+            <p>Dashboard</p>
+          </div>
         </div>
-      </div>
+        <WorkSpace />
       </Link>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
