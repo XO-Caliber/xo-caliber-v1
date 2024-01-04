@@ -24,8 +24,6 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  firm Firm @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   @@unique([provider, providerAccountId])
 }
 
@@ -51,11 +49,14 @@ model User {
   isEmailVerified Boolean @default(false)
   emailVerificationToken String? @unique
 
+  firm Firm @relation(fields: [id], references: [firmId],  map: "user_firm_fk")
+  assistant Assistant @relation(fields: [id], references: [assistantId])
+
   accounts      Account[]
   sessions      Session[]
 }
 model Firm {
-  id            String    @id @default(cuid())
+  firmId            String    @id @default(cuid())
   name          String?
   email         String   @unique
   emailVerified DateTime?
@@ -65,8 +66,24 @@ model Firm {
   resetPasswordToken String? @unique
   resetPasswordTokenExpiry DateTime?
 
-  accounts      Account[]
-  sessions      Session[]
+  user User[]
+  assistant Assistant[]
+}
+
+model Assistant {
+  assistantId            String    @id @default(cuid())
+  name          String?
+  email         String   @unique
+  emailVerified DateTime?
+  hashedPassword String?
+  image         String?
+
+  resetPasswordToken String? @unique
+  resetPasswordTokenExpiry DateTime?
+
+  user User[]
+  firm Firm @relation(fields: [assistantId], references: [firmId])
+
 }
 
 model VerificationToken {
