@@ -49,23 +49,23 @@ model User {
   isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
 
-  assistant   Assistant? @relation(fields: [assistantId], references: [assistantId])
-  assistantId String?
   Firm        Firm?      @relation(fields: [firmId], references: [firmId])
   firmId      String?
+  Assistant   Assistant? @relation(fields: [assistantId], references: [assistantId])
+  assistantId String?
 
   accounts Account[]
   sessions Session[]
 }
 
 model Firm {
-  firmId         String    @id @default(cuid())
-  name           String?
-  email          String    @unique
-  emailVerified  DateTime?
-  hashedPassword String?
-  image          String?
-
+  firmId                   String    @id @default(cuid())
+  name                     String?
+  email                    String    @unique
+  emailVerified            DateTime?
+  hashedPassword           String?
+  image                    String?
+  isEmailVerified          Boolean   @default(true)
   resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
 
@@ -74,17 +74,17 @@ model Firm {
 }
 
 model Assistant {
-  assistantId    String    @id @default(cuid())
-  name           String?
-  email          String    @unique
-  emailVerified  DateTime?
-  hashedPassword String?
-  image          String?
-
+  assistantId              String    @id @default(cuid())
+  name                     String?
+  email                    String    @unique
+  emailVerified            DateTime?
+  hashedPassword           String?
+  image                    String?
+  isEmailVerified          Boolean   @default(true)
   resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
 
-  firm Firm   @relation(fields: [assistantId], references: [firmId])
+  firm Firm?  @relation(fields: [assistantId], references: [firmId])
   User User[]
 }
 
