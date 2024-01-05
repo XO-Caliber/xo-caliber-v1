@@ -71,12 +71,14 @@ hover:bg-primary"
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
           <div className="flex items-center justify-between">
-            <Button variant={"secondary"}>
-              <Link href={"/signup"}>Sign Up</Link>
-            </Button>
-            <Button variant={"dark"} className="px-5">
-              <Link href={"/login"}>Log In</Link>
-            </Button>
+            <Link href={"/signup"}>
+              <Button variant={"secondary"}>Sign Up</Button>
+            </Link>
+            <Link href={"/login"}>
+              <Button variant={"dark"} className="px-5">
+                Log In
+              </Button>
+            </Link>
           </div>
         ) : (
           <DropdownMenu>
