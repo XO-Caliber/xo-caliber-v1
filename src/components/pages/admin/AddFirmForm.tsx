@@ -41,17 +41,43 @@ export const AddFirmForm = () => {
         //Login user here
         router.refresh();
         toast({
-          title: "Upgraded user successfully",
-          description: "firm created"
+          title: "Firm created",
+          description: "User upgraded to firm successfully"
         });
       }
     },
     onError(err) {
-      toast({
-        title: "Something went wrong",
-        description: `Error:  ${err.data}`,
-        variant: "destructive"
-      });
+      if (err.data?.code === "NOT_FOUND") {
+        toast({
+          title: "User does not exist",
+          description: "Make them signup",
+          variant: "destructive"
+        });
+      } else if (err.data?.code === "BAD_REQUEST") {
+        toast({
+          title: "User already a firm or assistant",
+          description: "Only works on user",
+          variant: "destructive"
+        });
+      } else if (err.data?.code === "FORBIDDEN") {
+        toast({
+          title: "User didnt verify their email",
+          description: "Make thme verify their email",
+          variant: "destructive"
+        });
+      } else if (err.data?.code === "CONFLICT") {
+        toast({
+          title: "User already exist in firm table",
+          description: "Only works on user",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: `Error:  ${err.data}`,
+          variant: "destructive"
+        });
+      }
     },
     onSettled() {
       // This block will be executed regardless of success or error

@@ -176,10 +176,12 @@ export const appRouter = router({
       }
     });
 
-    if (!user || !user.isEmailVerified) {
+    if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
     } else if (user.role === "FIRM" || user.role === "ASSISTANT") {
       throw new TRPCError({ code: "BAD_REQUEST" });
+    } else if (!user.isEmailVerified) {
+      throw new TRPCError({ code: "FORBIDDEN" });
     }
     const makeFirm = await db.firm.findUnique({
       where: {
