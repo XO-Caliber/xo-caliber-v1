@@ -1,4 +1,4 @@
-import { publiceProcedure, router } from "./trpc";
+import { adminProcedure, authProcedure, publiceProcedure, router } from "./trpc";
 import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
@@ -165,6 +165,48 @@ export const appRouter = router({
       }
     });
 
+    return { success: true };
+  }),
+  addFirm: adminProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+    const email = input;
+
+    const user = await db.user.findUnique({
+      where: {
+        email
+      }
+    });
+
+    if (!user || !user.isEmailVerified) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    } else if (user.role === "FIRM" || user.role === "ASSISTANT") {
+      throw new TRPCError({ code: "BAD_REQUEST" });
+    }
+    const makeFirm = await db.firm.findUnique({
+      where: {
+        email
+      }
+    });
+
+    if (makeFirm) {
+      throw new TRPCError({ code: "CONFLICT" });
+    }
+
+    await db.firm.create({
+      data: {
+        firmId: user.id,
+        name: user.name,
+        email: user.email
+      }
+    });
+
+    await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        role: "FIRM"
+      }
+    });
     return { success: true };
   })
 });
