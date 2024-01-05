@@ -100,7 +100,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Wrong password");
           }
           console.log(user);
-          if (user.role !== "FIRM") return user;
+          if (user.role !== "FIRM" && user.role !== "ASSISTANT") return user;
           else {
             throw new Error("User not Found");
           }
