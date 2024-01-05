@@ -47,28 +47,28 @@ const WorkSpace = () => {
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-muted duration-300 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-caliberq&a")}
         >
-          <CheckSquare className="bi bi-bookmark-fill" />
+          <CheckSquare size={18} className="bi bi-bookmark-fill" />
           <h1 className="hover ml-4 text-muted hover:text-black">XO Caliber Q&A</h1>
         </div>
         <div
           className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-muted duration-300 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-coverletter")}
         >
-          <FileEdit className="bi bi-bookmark-fill" />
+          <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-muted hover:text-black">XO Cover Letter</h1>
         </div>
         <div
           className="flex cursor-pointer items-center rounded-md p-2.5 px-4 text-muted duration-300 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-mindmap")}
         >
-          <Wind className="bi bi-bookmark-fill" />
+          <Wind size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-muted hover:text-black">XO Mind Map</h1>
         </div>
         <div
           className="mb-2 flex cursor-pointer items-center rounded-md p-2.5 px-4 text-muted duration-300 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-spidergraph")}
         >
-          <CheckSquare className="bi bi-bookmark-fill" />
+          <CheckSquare size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-muted hover:text-black">XO Spider Graph</h1>
         </div>
       </div>

@@ -35,6 +35,13 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum Role {
+  INDIVIDUAL
+  FIRM
+  ASSISTANT
+  ADMIN
+}
+
 model User {
   id             String    @id @default(cuid())
   name           String?
@@ -45,6 +52,8 @@ model User {
 
   resetPasswordToken       String?   @unique
   resetPasswordTokenExpiry DateTime?
+
+  role Role @default(INDIVIDUAL)
 
   isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
@@ -59,33 +68,29 @@ model User {
 }
 
 model Firm {
-  firmId                   String    @id @default(cuid())
-  name                     String?
-  email                    String    @unique
-  emailVerified            DateTime?
-  hashedPassword           String?
-  image                    String?
-  isEmailVerified          Boolean   @default(true)
-  resetPasswordToken       String?   @unique
-  resetPasswordTokenExpiry DateTime?
+  firmId String  @id @default(cuid())
+  name   String?
+  email  String  @unique
 
   assistant Assistant[]
   User      User[]
+  userCount Int         @default(35)
 }
 
 model Assistant {
-  assistantId              String    @id @default(cuid())
-  name                     String?
-  email                    String    @unique
-  emailVerified            DateTime?
-  hashedPassword           String?
-  image                    String?
-  isEmailVerified          Boolean   @default(true)
-  resetPasswordToken       String?   @unique
-  resetPasswordTokenExpiry DateTime?
+  assistantId String  @id @default(cuid())
+  name        String?
+  email       String  @unique
 
   firm Firm?  @relation(fields: [assistantId], references: [firmId])
   User User[]
+}
+
+model Admin {
+  adminId        String @id @default(cuid())
+  name           String
+  email          String @unique
+  hashedPassword String
 }
 
 model VerificationToken {
