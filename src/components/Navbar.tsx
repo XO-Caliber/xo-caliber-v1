@@ -58,25 +58,35 @@ hover:bg-primary"
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
         </li>
       </ul>
-      <Link href="/dashboard">
-        <div className=" cursor-pointer border-2 border-l-0 border-r-0  hover:border-primary hover:bg-primary">
+
+      <Link href={"/favorites"}>
+        <div className=" cursor-pointer border-2 border-x-0  hover:bg-primary">
           <div className="m-4 w-20 text-muted hover:text-black">
-            <span className="mr-0 flex">Dashboard</span>
+            <span className="mr-0 flex">Favorites</span>
           </div>
         </div>
       </Link>
       <div className="cursor-pointer">
         <WorkSpace />
       </div>
+      <Link href={"/dashboard"}>
+        <div className=" cursor-pointer border-2 border-x-0 hover:bg-primary">
+          <div className="m-4 w-20 text-muted hover:text-black">
+            <span className="mr-0 flex">Dashboard</span>
+          </div>
+        </div>
+      </Link>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
           <div className="flex items-center justify-between">
-            <Button variant={"secondary"}>
-              <Link href={"/signup"}>Sign Up</Link>
-            </Button>
-            <Button variant={"dark"} className="px-5">
-              <Link href={"/login"}>Log In</Link>
-            </Button>
+            <Link href={"/signup"}>
+              <Button variant={"secondary"}>Sign Up</Button>
+            </Link>
+            <Link href={"/login"}>
+              <Button variant={"dark"} className="px-5">
+                Log In
+              </Button>
+            </Link>
           </div>
         ) : (
           <DropdownMenu>

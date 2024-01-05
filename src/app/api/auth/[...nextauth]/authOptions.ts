@@ -27,7 +27,8 @@ export const authOptions: NextAuthOptions = {
           id: profile.sub,
           name: profile.name,
           email: profile.email,
-          image: profile.picture
+          image: profile.picture,
+          role: profile.role
         };
       }
     }),
@@ -46,12 +47,13 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing credentials");
         }
 
+        if (credentials.type === "individual") {
+        }
         const user = await db.user.findUnique({
           where: {
             email: credentials.emailAddress
           }
         });
-
         if (!user) {
           console.log("User does not exist");
           throw new Error("user does not exist");
@@ -65,15 +67,45 @@ export const authOptions: NextAuthOptions = {
           console.log("Email is not verified");
           throw new Error("Email is not verified");
         }
-        const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
-
-        if (!passwordMatch) {
-          console.log("Wrong password");
-          throw new Error("Wrong password");
+        if (user) {
+          if (credentials.type === "firm") {
+            const firm = await db.firm.findUnique({
+              where: {
+                email: credentials.emailAddress
+              }
+            });
+            if (!firm) {
+              console.log("Firm doesn't exist");
+              throw new Error("Firm doesn't exist");
+            } else {
+              return user;
+            }
+          }
+          if (credentials.type === "assistant") {
+            const assistant = await db.assistant.findUnique({
+              where: {
+                email: credentials.emailAddress
+              }
+            });
+            if (!assistant) {
+              console.log("Assistant doesn't exist");
+              throw new Error("Assistant doesn't exist");
+            } else {
+              return user;
+            }
+          }
+          const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+          if (!passwordMatch) {
+            console.log("Wrong password");
+            throw new Error("Wrong password");
+          }
+          console.log(user);
+          if (user.role !== "FIRM" && user.role !== "ASSISTANT" && user.role !== "ADMIN")
+            return user;
+          else {
+            throw new Error("User doesn't exist");
+          }
         }
-        const { hashedPassword: newUserPassword, ...rest } = user;
-        console.log(rest);
-        return rest;
       }
     })
   ],
@@ -85,56 +117,75 @@ export const authOptions: NextAuthOptions = {
   },
   //! FOOL OF ME TO WRITE THESE CODE !
   callbacks: {
-    // async signIn(args) {
-    //   if (args.account?.type === "credentials") return true;
+    async signIn(args) {
+      if (args.account?.type === "credentials") return true;
 
-    //   if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-    //     if (args.account.provider === "linkedin" || args.account.provider === "google") {
-    //       console.log("Hello from server");
-    //       console.log("User", args.user);
-    //       console.log("Account", args.account);
-    //       console.log("Credentials", args.credentials);
-    //       console.log("Profile", args.profile);
-    //       console.log("Email", args.email);
+      //   if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+      //     if (args.account.provider === "linkedin" || args.account.provider === "google") {
+      //       console.log("Hello from server");
+      //       console.log("User", args.user);
+      //       console.log("Account", args.account);
+      //       console.log("Credentials", args.credentials);
+      //       console.log("Profile", args.profile);
+      //       console.log("Email", args.email);
 
-    //       const isUserExist = await db.user.findUnique({
-    //         where: { email: args.profile?.email }
-    //       });
+      const isUserExist = await db.user.findUnique({
+        where: { email: args.profile?.email }
+      });
 
-    //       if (isUserExist) {
-    //         console.log("INDIVIDUAL");
-    //         return true;
-    //       }
+      if (!isUserExist) {
+        console.log("User doesnt exist");
+        return false;
+      }
+      if (isUserExist) {
+        if (args.user.role === "FIRM") {
+          const firm = await db.firm.findUnique({
+            where: {
+              email: args.profile?.email
+            }
+          });
+          if (!firm) return false;
+        }
+        if (args.user.role === "ASSISTANT") {
+          const assistant = await db.firm.findUnique({
+            where: {
+              email: args.profile?.email
+            }
+          });
+          if (!assistant) return false;
+        }
+        return true;
+      }
 
-    //       if (!isUserExist) {
-    //         const isFirmExist = await db.firm.findUnique({
-    //           where: { email: args.profile?.email }
-    //         });
+      //       if (!isUserExist) {
+      //         const isFirmExist = await db.firm.findUnique({
+      //           where: { email: args.profile?.email }
+      //         });
 
-    //         if (isFirmExist) {
-    //           console.log("FIRM");
-    //           return true;
-    //         }
+      //         if (isFirmExist) {
+      //           console.log("FIRM");
+      //           return true;
+      //         }
 
-    //         const isAssistantExist = await db.assistant.findUnique({
-    //           where: { email: args.profile?.email }
-    //         });
+      //         const isAssistantExist = await db.assistant.findUnique({
+      //           where: { email: args.profile?.email }
+      //         });
 
-    //         if (isAssistantExist) {
-    //           console.log("ASSISTANT");
-    //           const newuser = { ...args.user, Role: "Assistant" };
-    //           return newuser;
-    //         }
+      //         if (isAssistantExist) {
+      //           console.log("ASSISTANT");
+      //           const newuser = { ...args.user, Role: "Assistant" };
+      //           return newuser;
+      //         }
 
-    //         if (!isUserExist && !isFirmExist && !isAssistantExist) {
-    //           console.log("NEW USER");
-    //           return true;
-    //         }
-    //       }
-    //     } else return false; // only google and linkedin for now
-    //   }
-    //   // return args.user;
-    // },
+      //         if (!isUserExist && !isFirmExist && !isAssistantExist) {
+      //           console.log("NEW USER");
+      //           return true;
+      //         }
+      //       }
+      //     } else return false; // only google and linkedin for now
+      //   }
+      //   // return args.user;
+    },
     async jwt({ token, user, session }) {
       // console.log("jwt callbacks", { token, user, session });
       if (user) {
