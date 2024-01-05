@@ -45,28 +45,12 @@ export const authOptions: NextAuthOptions = {
           console.log("Nothing");
           throw new Error("Missing credentials");
         }
-        let user;
-        if (credentials.type === "individual") {
-          user = await db.user.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else if (credentials.type === "firm") {
-          user = await db.firm.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else if (credentials.type === "assistant") {
-          user = await db.assistant.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else {
-          throw new Error("User type doesnt exist");
-        }
+
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials.emailAddress
+          }
+        });
 
         if (!user) {
           console.log("User does not exist");
@@ -76,6 +60,7 @@ export const authOptions: NextAuthOptions = {
         if (!user.hashedPassword) {
           throw new Error("Please login using Google or LinkedIn");
         }
+
         if (!user.isEmailVerified) {
           console.log("Email is not verified");
           throw new Error("Email is not verified");
@@ -100,40 +85,77 @@ export const authOptions: NextAuthOptions = {
   },
   //! FOOL OF ME TO WRITE THESE CODE !
   callbacks: {
-    async signIn(args) {
-      if (args.account?.type === "credentials") return true;
+    // async signIn(args) {
+    //   if (args.account?.type === "credentials") return true;
 
-      if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-        if (args.account.provider === "linkedin" || args.account.provider === "google") {
-          console.log("Hello from server");
-          console.log("User", args.user);
-          console.log("Account", args.account);
-          console.log("Credentials", args.credentials);
-          console.log("Profile", args.profile);
-          console.log("Email", args.email);
+    //   if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+    //     if (args.account.provider === "linkedin" || args.account.provider === "google") {
+    //       console.log("Hello from server");
+    //       console.log("User", args.user);
+    //       console.log("Account", args.account);
+    //       console.log("Credentials", args.credentials);
+    //       console.log("Profile", args.profile);
+    //       console.log("Email", args.email);
 
-          // const isRole;
+    //       const isUserExist = await db.user.findUnique({
+    //         where: { email: args.profile?.email }
+    //       });
 
-          // const user = await db.firm.findUnique({
-          //   where: {
-          //     email: args.user.email
-          //   }
-          // });
-          // if (!user) {
-          //   console.log("Creating user");
-          //   await db.user.create({
-          //     data: {
-          //       name: args.user.name,
-          //       email: args.user.email,
-          //       image: args.user.image
-          //     }
-          //   });
-          // }
-          // console.log("User exist logging In");
-          // return args.user;
-        } else return false; // only google and linkedin for now
+    //       if (isUserExist) {
+    //         console.log("INDIVIDUAL");
+    //         return true;
+    //       }
+
+    //       if (!isUserExist) {
+    //         const isFirmExist = await db.firm.findUnique({
+    //           where: { email: args.profile?.email }
+    //         });
+
+    //         if (isFirmExist) {
+    //           console.log("FIRM");
+    //           return true;
+    //         }
+
+    //         const isAssistantExist = await db.assistant.findUnique({
+    //           where: { email: args.profile?.email }
+    //         });
+
+    //         if (isAssistantExist) {
+    //           console.log("ASSISTANT");
+    //           const newuser = { ...args.user, Role: "Assistant" };
+    //           return newuser;
+    //         }
+
+    //         if (!isUserExist && !isFirmExist && !isAssistantExist) {
+    //           console.log("NEW USER");
+    //           return true;
+    //         }
+    //       }
+    //     } else return false; // only google and linkedin for now
+    //   }
+    //   // return args.user;
+    // },
+    async jwt({ token, user, session }) {
+      // console.log("jwt callbacks", { token, user, session });
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          role: user.role
+        };
       }
-      // return args.user;
+      return token;
+    },
+    async session({ session, token, user }) {
+      // console.log("session callbacks", { session, token, user });
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+      }
+
+      return session;
     }
   },
   secret: process.env.NEXTAUTH_URL,
