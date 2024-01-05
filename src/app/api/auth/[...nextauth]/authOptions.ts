@@ -45,28 +45,12 @@ export const authOptions: NextAuthOptions = {
           console.log("Nothing");
           throw new Error("Missing credentials");
         }
-        let user;
-        if (credentials.type === "individual") {
-          user = await db.user.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else if (credentials.type === "firm") {
-          user = await db.firm.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else if (credentials.type === "assistant") {
-          user = await db.assistant.findUnique({
-            where: {
-              email: credentials.emailAddress
-            }
-          });
-        } else {
-          throw new Error("User type doesnt exist");
-        }
+
+        const user = await db.user.findUnique({
+          where: {
+            email: credentials.emailAddress
+          }
+        });
 
         if (!user) {
           console.log("User does not exist");
@@ -76,6 +60,7 @@ export const authOptions: NextAuthOptions = {
         if (!user.hashedPassword) {
           throw new Error("Please login using Google or LinkedIn");
         }
+
         if (!user.isEmailVerified) {
           console.log("Email is not verified");
           throw new Error("Email is not verified");
