@@ -67,34 +67,18 @@ model User {
 }
 
 model Firm {
-  firmId                   String    @id @default(cuid())
-  name                     String?
-  email                    String    @unique
-  emailVerified            DateTime?
-  hashedPassword           String?
-  image                    String?
-  isEmailVerified          Boolean   @default(true)
-  resetPasswordToken       String?   @unique
-  resetPasswordTokenExpiry DateTime?
-
-  role Role @default(FIRM)
+  firmId String  @id @default(cuid())
+  name   String?
+  email  String  @unique
 
   assistant Assistant[]
   User      User[]
 }
 
 model Assistant {
-  assistantId              String    @id @default(cuid())
-  name                     String?
-  email                    String    @unique
-  emailVerified            DateTime?
-  hashedPassword           String?
-  image                    String?
-  isEmailVerified          Boolean   @default(true)
-  resetPasswordToken       String?   @unique
-  resetPasswordTokenExpiry DateTime?
-
-  role Role @default(ASSISTANT)
+  assistantId String  @id @default(cuid())
+  name        String?
+  email       String  @unique
 
   firm Firm?  @relation(fields: [assistantId], references: [firmId])
   User User[]

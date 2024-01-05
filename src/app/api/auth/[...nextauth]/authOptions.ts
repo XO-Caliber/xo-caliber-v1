@@ -98,58 +98,58 @@ export const authOptions: NextAuthOptions = {
   },
   //! FOOL OF ME TO WRITE THESE CODE !
   callbacks: {
-    async signIn(args) {
-      if (args.account?.type === "credentials") return true;
+    // async signIn(args) {
+    //   if (args.account?.type === "credentials") return true;
 
-      if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-        if (args.account.provider === "linkedin" || args.account.provider === "google") {
-          console.log("Hello from server");
-          console.log("User", args.user);
-          console.log("Account", args.account);
-          console.log("Credentials", args.credentials);
-          console.log("Profile", args.profile);
-          console.log("Email", args.email);
+    //   if (args.account?.type === "oauth" && args.user.email && args.user.name) {
+    //     if (args.account.provider === "linkedin" || args.account.provider === "google") {
+    //       console.log("Hello from server");
+    //       console.log("User", args.user);
+    //       console.log("Account", args.account);
+    //       console.log("Credentials", args.credentials);
+    //       console.log("Profile", args.profile);
+    //       console.log("Email", args.email);
 
-          const isUserExist = await db.user.findUnique({
-            where: { email: args.profile?.email }
-          });
+    //       const isUserExist = await db.user.findUnique({
+    //         where: { email: args.profile?.email }
+    //       });
 
-          if (isUserExist) {
-            console.log("INDIVIDUAL");
-            return true;
-          }
+    //       if (isUserExist) {
+    //         console.log("INDIVIDUAL");
+    //         return true;
+    //       }
 
-          if (!isUserExist) {
-            const isFirmExist = await db.firm.findUnique({
-              where: { email: args.profile?.email }
-            });
+    //       if (!isUserExist) {
+    //         const isFirmExist = await db.firm.findUnique({
+    //           where: { email: args.profile?.email }
+    //         });
 
-            if (isFirmExist) {
-              console.log("FIRM");
-              return false;
-            }
+    //         if (isFirmExist) {
+    //           console.log("FIRM");
+    //           return true;
+    //         }
 
-            const isAssistantExist = await db.assistant.findUnique({
-              where: { email: args.profile?.email }
-            });
+    //         const isAssistantExist = await db.assistant.findUnique({
+    //           where: { email: args.profile?.email }
+    //         });
 
-            if (isAssistantExist) {
-              console.log("ASSISTANT");
-              const newuser = { ...args.user, Role: "Assistant" };
-              return newuser;
-            }
+    //         if (isAssistantExist) {
+    //           console.log("ASSISTANT");
+    //           const newuser = { ...args.user, Role: "Assistant" };
+    //           return newuser;
+    //         }
 
-            if (!isUserExist && !isFirmExist && !isAssistantExist) {
-              console.log("NEW USER");
-              return true;
-            }
-          }
-        } else return false; // only google and linkedin for now
-      }
-      // return args.user;
-    },
+    //         if (!isUserExist && !isFirmExist && !isAssistantExist) {
+    //           console.log("NEW USER");
+    //           return true;
+    //         }
+    //       }
+    //     } else return false; // only google and linkedin for now
+    //   }
+    //   // return args.user;
+    // },
     async jwt({ token, user, session }) {
-      console.log("jwt callbacks", { token, user, session });
+      // console.log("jwt callbacks", { token, user, session });
       if (user) {
         return {
           ...token,
@@ -160,7 +160,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log("session callbacks", { session, token, user });
+      // console.log("session callbacks", { session, token, user });
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
