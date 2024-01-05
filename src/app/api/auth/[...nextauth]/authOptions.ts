@@ -81,12 +81,14 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email is not verified");
         }
         const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+
         if (!passwordMatch) {
           console.log("Wrong password");
           throw new Error("Wrong password");
         }
-
-        return user;
+        const { hashedPassword: newUserPassword, ...rest } = user;
+        console.log(rest);
+        return rest;
       }
     })
   ],

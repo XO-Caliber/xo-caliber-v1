@@ -66,7 +66,8 @@ export const LoginBox = () => {
         router.refresh();
         toast({
           title: "Logged In successfully",
-          description: "Please wait"
+          description: "Please wait",
+          variant: "success"
         });
       } else if (result?.error === "user does not exist") {
         setIsLoading(false);
@@ -114,15 +115,23 @@ export const LoginBox = () => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Tabs defaultValue="individual" className="flex w-full items-center justify-center pb-4">
-        <TabsList>
-          <TabsTrigger value="individual" onClick={() => handleTabChange("individual")}>
+      <Tabs defaultValue="individual" className=" w-full  pb-2">
+        <TabsList className="w-[302px]">
+          <TabsTrigger
+            className="w-full"
+            value="individual"
+            onClick={() => handleTabChange("individual")}
+          >
             Individual
           </TabsTrigger>
-          <TabsTrigger value="firm" onClick={() => handleTabChange("firm")}>
+          <TabsTrigger className="w-full" value="firm" onClick={() => handleTabChange("firm")}>
             Firm
           </TabsTrigger>
-          <TabsTrigger value="assistant" onClick={() => handleTabChange("assistant")}>
+          <TabsTrigger
+            className="w-full"
+            value="assistant"
+            onClick={() => handleTabChange("assistant")}
+          >
             Assistant
           </TabsTrigger>
         </TabsList>

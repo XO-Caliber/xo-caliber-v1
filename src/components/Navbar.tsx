@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger
 } from "./ui/Dropdown-menu";
 import Logout from "./pages/auth/Logout";
-import WorkSpace from "./ui/WorkSpace";
+import WorkSpace from "./pages/workspaces/WorkSpace";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -60,12 +60,14 @@ hover:bg-primary"
       </ul>
       <Link href="/dashboard">
         <div className=" cursor-pointer border-2 border-l-0 border-r-0  hover:border-primary hover:bg-primary">
-          <div className="m-4 text-muted hover:text-black">
-            <p>Dashboard</p>
+          <div className="m-4 w-20 text-muted hover:text-black">
+            <span className="mr-0 flex">Dashboard</span>
           </div>
         </div>
-        <WorkSpace />
       </Link>
+      <div className="cursor-pointer">
+        <WorkSpace />
+      </div>
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
           <div className="flex items-center justify-between">
