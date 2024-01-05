@@ -40,6 +40,7 @@ export const AddFirmForm = () => {
       if (success) {
         //Login user here
         router.refresh();
+        form.reset();
         toast({
           title: "Firm created",
           description: "User upgraded to firm successfully"
