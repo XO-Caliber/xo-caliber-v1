@@ -1,4 +1,5 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
+import Header from "@/components/Header";
 import { CardTitle } from "@/components/ui/Card";
 import { Home } from "lucide-react";
 import React from "react";
@@ -19,10 +20,8 @@ const XOCoverLetter = async () => {
           </div>
         </div>
       ) : (
-        <div className="ml-56 h-screen">
-          <div className="h-[65px] border-2 border-l-0">
-            <p className="m-4 font-bold text-muted">XO Cover Letter</p>
-          </div>
+        <div>
+          <Header>XO Cover Letter</Header>
           <Home />
         </div>
       )}

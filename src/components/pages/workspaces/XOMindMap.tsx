@@ -2,6 +2,7 @@ import React from "react";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Home from "@/app/page";
 import { CardTitle } from "@/components/ui/Card";
+import Header from "@/components/Header";
 
 const XOMindMap = async () => {
   const session = await getAuthSession();
@@ -19,10 +20,8 @@ const XOMindMap = async () => {
           </div>
         </div>
       ) : (
-        <div className="ml-56 h-screen">
-          <div className="h-[65px] border-2 border-l-0">
-            <p className="m-4 font-bold text-muted">XO Mind Map</p>
-          </div>
+        <div>
+          <Header>XO Mind Map</Header>
           <Home />
         </div>
       )}
