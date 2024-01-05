@@ -75,8 +75,8 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!firm) {
-              console.log("Firm doesnt exist");
-              throw new Error("Firm doesnt exist");
+              console.log("Firm doesn't exist");
+              throw new Error("Firm doesn't exist");
             } else {
               return user;
             }
@@ -88,8 +88,8 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!assistant) {
-              console.log("Assistant doesnt exist");
-              throw new Error("Assistant doesnt exist");
+              console.log("Assistant doesn't exist");
+              throw new Error("Assistant doesn't exist");
             } else {
               return user;
             }
@@ -100,9 +100,10 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Wrong password");
           }
           console.log(user);
-          if (user.role !== "FIRM" && user.role !== "ASSISTANT") return user;
+          if (user.role !== "FIRM" && user.role !== "ASSISTANT" && user.role !== "ADMIN")
+            return user;
           else {
-            throw new Error("User not Found");
+            throw new Error("User doesn't exist");
           }
         }
       }

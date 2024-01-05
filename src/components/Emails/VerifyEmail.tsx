@@ -33,7 +33,7 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
           Welcome to XO Caliber, Please verify your Email {email} by pressing this button
         </Text>
         <Section style={btnContainer}>
-          <Button style={button} href={`${baseUrl}/reset-password?token=${token}`}>
+          <Button style={button} href={`${baseUrl}/verify-email?token=${token}`}>
             Verify Email
           </Button>
         </Section>
