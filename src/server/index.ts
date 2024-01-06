@@ -1,4 +1,4 @@
-import { adminProcedure, authProcedure, publiceProcedure, router } from "./trpc";
+import { adminProcedure, authProcedure, firmProcedure, publiceProcedure, router } from "./trpc";
 import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
@@ -178,7 +178,7 @@ export const appRouter = router({
 
     if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
-    } else if (user.role === "FIRM" || user.role === "ASSISTANT") {
+    } else if (user.role === "FIRM" || user.role === "ASSISTANT" || user.role === "ADMIN") {
       throw new TRPCError({ code: "BAD_REQUEST" });
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
@@ -210,7 +210,105 @@ export const appRouter = router({
       }
     });
     return { success: true };
+  }),
+  addAssistant: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+    const email = input;
+    const user = await db.user.findUnique({
+      where: {
+        email
+      }
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    } else if (user.role === "FIRM" || user.role === "ASSISTANT" || user.role === "ADMIN") {
+      throw new TRPCError({ code: "BAD_REQUEST" });
+    } else if (!user.isEmailVerified) {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+    const makeAssistant = await db.assistant.findUnique({
+      where: {
+        email
+      }
+    });
+    if (makeAssistant) {
+      throw new TRPCError({ code: "CONFLICT" });
+    }
+    await db.assistant.create({
+      data: {
+        assistantId: user.id,
+        name: user.name,
+        email: user.email
+      }
+    });
+
+    await db.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        role: "ASSISTANT"
+      }
+    });
+    return { success: true };
   })
+  // addClient: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+  //   const email = input;
+  //   const user = await db.user.findUnique({
+  //     where: {
+  //       email
+  //     }
+  //   });
+  //   if (!user) {
+  //     throw new TRPCError({ code: "NOT_FOUND" });
+  //   } else if (user.Firm || user.firmId) {
+  //     throw new TRPCError({ code: "BAD_REQUEST" });
+  //   } else if (!user.isEmailVerified) {
+  //     throw new TRPCError({ code: "FORBIDDEN" });
+  //   }
+
+  //   const firm = await db.firm.findUnique({
+  //     where: {
+  //       email: user.email
+  //     },
+  //     include: {
+  //       User: true
+  //     }
+  //   });
+
+  //   if (!firm) {
+  //     throw new TRPCError({ code: "NOT_FOUND" });
+  //   }
+
+  //   const isUserInFirm = firm.User.some((u: { id: string }) => u.id === user.id);
+  //   if (isUserInFirm) {
+  //     throw new TRPCError({ code: "CONFLICT", message: "User is already in the firm." });
+  //   }
+
+  //   if (isUserInFirm) {
+  //     throw new TRPCError({ code: "CONFLICT" });
+  //   }
+  //   await db.user.update({
+  //     where: {
+  //       id: user.id
+  //     },
+  //     data: {
+  //       firmId: firm.firmId,
+  //       Firm:firm
+  //     }
+  //   });
+  //   await db.firm.update({
+  //     where: {
+  //       email: user.email
+  //     },
+  //     data: {
+  //       User: {
+  //         connect: {
+  //           id: user.id
+  //         }
+  //       }
+  //     }
+  //   });
+  // })
 });
 
 export type AppRouter = typeof appRouter;

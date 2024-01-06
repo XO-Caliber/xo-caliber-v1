@@ -7,8 +7,8 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
   return (
     <div className={`ml-56  ${className}`}>
-      <div className="h-[65px] border-2 border-l-0">
-        <p className="m-4 font-bold text-muted">{children}</p>
+      <div className="h-[68px] border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">{children}</p>
       </div>
     </div>
   );

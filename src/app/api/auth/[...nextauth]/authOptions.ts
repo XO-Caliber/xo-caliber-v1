@@ -36,8 +36,8 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {
         emailAddress: { label: "Email address", type: "email" },
-        password: { label: "Password", type: "password" },
-        role: { label: "Types", type: "type" }
+        password: { label: "Password", type: "password" }
+        // role: { label: "Types", type: "type" }
       },
       async authorize(credentials) {
         console.log(credentials);
@@ -47,13 +47,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing credentials");
         }
 
-        if (credentials.role === "individual") {
-        }
         const user = await db.user.findUnique({
           where: {
             email: credentials.emailAddress
           }
         });
+
         if (!user) {
           console.log("User does not exist");
           throw new Error("user does not exist");
@@ -68,42 +67,46 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email is not verified");
         }
         if (user) {
-          if (credentials.role === "firm") {
-            const firm = await db.firm.findUnique({
+          const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+          if (user.role === "FIRM") {
+            const isFirm = await db.firm.findUnique({
               where: {
                 email: credentials.emailAddress
               }
             });
-            if (!firm) {
+            if (!isFirm) {
               console.log("Firm doesn't exist");
               throw new Error("Firm doesn't exist");
-            } else {
-              return user;
             }
+            if (!passwordMatch) {
+              console.log("Wrong password");
+              throw new Error("Wrong password");
+            }
+            return user;
           }
-          if (credentials.role === "assistant") {
-            const assistant = await db.assistant.findUnique({
+          if (user.role === "ASSISTANT") {
+            const isAssistant = await db.assistant.findUnique({
               where: {
                 email: credentials.emailAddress
               }
             });
-            if (!assistant) {
+            if (!isAssistant) {
               console.log("Assistant doesn't exist");
               throw new Error("Assistant doesn't exist");
-            } else {
-              return user;
             }
+            if (!passwordMatch) {
+              console.log("Wrong password");
+              throw new Error("Wrong password");
+            }
+            return user;
           }
-          const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword);
+
           if (!passwordMatch) {
             console.log("Wrong password");
             throw new Error("Wrong password");
           }
           console.log(user);
-          if (user.role !== "FIRM" && user.role !== "ASSISTANT") return user;
-          else {
-            throw new Error("User doesn't exist");
-          }
+          return user;
         }
         return Promise.resolve(null);
       }
