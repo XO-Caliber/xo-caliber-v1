@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         emailAddress: { label: "Email address", type: "email" },
         password: { label: "Password", type: "password" },
-        type: { label: "Types", type: "type" }
+        role: { label: "Types", type: "type" }
       },
       async authorize(credentials) {
         console.log(credentials);
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing credentials");
         }
 
-        if (credentials.type === "individual") {
+        if (credentials.role === "individual") {
         }
         const user = await db.user.findUnique({
           where: {
@@ -68,7 +68,7 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Email is not verified");
         }
         if (user) {
-          if (credentials.type === "firm") {
+          if (credentials.role === "firm") {
             const firm = await db.firm.findUnique({
               where: {
                 email: credentials.emailAddress
@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
               return user;
             }
           }
-          if (credentials.type === "assistant") {
+          if (credentials.role === "assistant") {
             const assistant = await db.assistant.findUnique({
               where: {
                 email: credentials.emailAddress
@@ -106,6 +106,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("User doesn't exist");
           }
         }
+        return Promise.resolve(null);
       }
     })
   ],
@@ -185,6 +186,7 @@ export const authOptions: NextAuthOptions = {
       //     } else return false; // only google and linkedin for now
       //   }
       //   // return args.user;
+      return Promise.resolve(false);
     },
     async jwt({ token, user, session }) {
       // console.log("jwt callbacks", { token, user, session });
