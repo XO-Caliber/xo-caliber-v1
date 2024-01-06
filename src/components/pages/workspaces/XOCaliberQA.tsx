@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Header from "@/components/Header";
 import { CardTitle } from "@/components/ui/Card";
-import { Home } from "lucide-react";
+import Home from "@/app/page";
 import React from "react";
 
 const XOCaliberQA = async () => {
