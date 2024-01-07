@@ -14,7 +14,9 @@ const Providers = ({ children }: PropsWithChildren) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${baseUrl}/api/trpc`
+          url: process.env.PRODUCTION_URL
+            ? "https://xo-caliber-v1-xi.vercel.app/api/trpc"
+            : "http://localhost:3000/api/trpc"
         })
       ]
     })
