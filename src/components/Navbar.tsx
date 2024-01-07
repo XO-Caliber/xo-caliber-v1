@@ -20,7 +20,7 @@ import WorkSpace from "./pages/workspaces/WorkSpace";
 export const Navbar = async () => {
   const session = await getAuthSession();
   return (
-    <nav className="absolute h-screen w-56 border-r-2 border-border">
+    <nav className="absolute h-screen w-56 border-r-2 border-border ">
       <Link href={"/"}>
         <div className="border-b-2 p-2 pl-8">
           <Image src={navLogo} width={140} height={41} alt="LOGO" />
