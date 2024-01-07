@@ -21,9 +21,11 @@ export const Navbar = async () => {
   const session = await getAuthSession();
   return (
     <nav className="absolute h-screen w-56 border-r-2 border-border">
-      <div className="border-b-2 p-2 pl-4">
-        <Image src={navLogo} width={130} height={41} alt="LOGO" />
-      </div>
+      <Link href={"/"}>
+        <div className="border-b-2 p-2 pl-8">
+          <Image src={navLogo} width={140} height={41} alt="LOGO" />
+        </div>
+      </Link>
       <ul className="p-2">
         <li className="relative flex items-center justify-center pb-2">
           <Input placeholder="Search..." className="h-9 border-2" />

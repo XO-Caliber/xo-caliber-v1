@@ -103,19 +103,19 @@ export const LoginBox = () => {
     console.log("Hello from onclick");
     console.log({ values });
 
-    values.type = type;
+    // values.type = type;
     loginUser(values);
   };
 
-  const handleTabChange = (value: string) => {
-    console.log(value);
-    form.reset();
-    setType(value);
-  };
+  // const handleTabChange = (value: string) => {
+  //   console.log(value);
+  //   form.reset();
+  //   setType(value);
+  // };
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <Tabs defaultValue="individual" className=" w-full  pb-2">
+      {/* <Tabs defaultValue="individual" className=" w-full  pb-2">
         <TabsList className="w-[302px]">
           <TabsTrigger
             className="w-full"
@@ -135,15 +135,16 @@ export const LoginBox = () => {
             Assistant
           </TabsTrigger>
         </TabsList>
-      </Tabs>
+      </Tabs> */}
       <Card className="z-50 w-[500px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleLogin)}>
             <CardHeader>
               <CardTitle>
-                {type === "individual" && "Individual Login"}
+                {/* {type === "individual" && "Individual Login"}
                 {type === "firm" && "Firm Login"}
-                {type === "assistant" && "Assistant Login"}
+                {type === "assistant" && "Assistant Login"} */}
+                Individual Login
               </CardTitle>
               <CardDescription>Enter your email & password to login</CardDescription>
             </CardHeader>

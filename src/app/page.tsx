@@ -11,6 +11,7 @@ export default async function Home() {
         <div className="flex  flex-col items-center pt-4 ">
           <Button variant={"primary"}>login</Button>
           <Button variant={"secondary"}>signup</Button>
+          <h1>{session?.user.role}</h1>
         </div>
       </div>
     </div>
