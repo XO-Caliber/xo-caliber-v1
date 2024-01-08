@@ -9,12 +9,12 @@ const XOMindMap = async () => {
   return (
     <div>
       {session ? (
-        <div className="ml-56 h-screen">
+        <div className="h-screen">
           <div>
             <Header className="ml-0">XO Mindmap</Header>
           </div>
           <div className="absolute m-4 text-xl ">
-            <div className="font-extrabold">
+            <div className="ml-56 font-extrabold">
               <CardTitle>Welcome {session?.user?.name?.toLowerCase()}</CardTitle>
             </div>
           </div>
