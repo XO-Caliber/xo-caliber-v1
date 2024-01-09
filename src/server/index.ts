@@ -378,7 +378,8 @@ export const appRouter = router({
       }
     });
     return { success: true };
-  })
+  }),
+  getAllFirm: adminProcedure.input(z.number()).query(async (pages) => {})
 });
 
 export type AppRouter = typeof appRouter;

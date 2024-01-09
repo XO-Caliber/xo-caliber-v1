@@ -16,6 +16,8 @@ import {
 } from "./ui/Dropdown-menu";
 import Logout from "./pages/auth/Logout";
 import WorkSpace from "./pages/workspaces/WorkSpace";
+import { UserProfile } from "./utils/UserProfile";
+import { user } from "@/types/user";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -93,21 +95,11 @@ hover:bg-primary"
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="flex cursor-pointer items-center justify-around rounded-md p-2 text-black hover:bg-secondary">
-                <Avatar className="h-9 w-9">
-                  <AvatarImage
-                    src={session.user?.image || "Insert default photos here"}
-                    alt="profile"
-                  />
-                  <AvatarFallback>
-                    {session.user?.name ? session.user.name.slice(0, 2).toUpperCase() : null}
-                  </AvatarFallback>
-                </Avatar>
-                <ul className="overflow-hidden text-ellipsis pl-4">
-                  <li className="text-sm font-medium">{session.user?.name}</li>
-                  <li className="text-sm text-muted">{session.user?.email}</li>
-                </ul>
-              </div>
+              <UserProfile
+                email={session.user.email}
+                name={session.user.name}
+                image={session.user.image}
+              />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-48">
               <DropdownMenuLabel>My Profile</DropdownMenuLabel>

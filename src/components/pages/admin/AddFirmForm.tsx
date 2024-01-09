@@ -103,11 +103,11 @@ export const AddFirmForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 rounded-lg border-2 p-8 pl-8"
+        className="w-full space-y-2 rounded-lg border-2 p-8"
       >
         <CardTitle>Make Firm</CardTitle>
         <CardDescription>Add your firm details here</CardDescription>
-        <div className="pt-4">
+        <div className="pt-5">
           <FormField
             control={form.control}
             name="emailAddress"
@@ -122,7 +122,7 @@ export const AddFirmForm = () => {
             )}
           />
         </div>
-        <div className="flex w-full flex-col pt-4">
+        <div className="flex w-full flex-col pb-3 pt-5">
           <Button type="submit" variant={"dark"} isLoading={isLoading}>
             Submit
           </Button>
