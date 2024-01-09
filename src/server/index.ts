@@ -167,7 +167,7 @@ export const appRouter = router({
 
     return { success: true };
   }),
-  addFirm: adminProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+  addFirm: publiceProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
     const email = input;
 
     const user = await db.user.findUnique({
@@ -183,6 +183,7 @@ export const appRouter = router({
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }
+
     const makeFirm = await db.firm.findUnique({
       where: {
         email

@@ -17,7 +17,6 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { CardDescription, CardTitle } from "@/components/ui/Card";
 
 const formSchema = z.object({
   emailAddress: z.string().email()
@@ -73,13 +72,14 @@ export const AddFirmForm = () => {
           description: "Only works on user",
           variant: "destructive"
         });
-      } else {
-        toast({
-          title: "Something went wrong",
-          description: `Error:  ${err.data}`,
-          variant: "destructive"
-        });
       }
+      // else {
+      //   toast({
+      //     title: "Something went wrong",
+      //     description: `Error:  ${err.data?.path}`,
+      //     variant: "destructive"
+      //   });
+      // }
     },
     onSettled() {
       // This block will be executed regardless of success or error
@@ -89,44 +89,36 @@ export const AddFirmForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log({ values });
+    console.log("User data is", { values });
     // Commented for testing
-    try {
-      addfirm(values.emailAddress);
-    } catch (error) {
-      console.error("An unknown error occurred during sign-in.");
-      alert(`An unknown error occurred: ${error}`);
-    }
+    addfirm(values.emailAddress);
+    // try {
+    // } catch (error) {
+    //   console.error("An unknown error occurred during sign-in.");
+    //   alert(`An unknown error occurred: ${error}`);
+    // }
   };
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 rounded-lg border-2 p-8 pl-8"
-      >
-        <CardTitle>Make Firm</CardTitle>
-        <CardDescription>Add your firm details here</CardDescription>
-        <div className="pt-4">
-          <FormField
-            control={form.control}
-            name="emailAddress"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="shadcn" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="flex w-full flex-col pt-4">
-          <Button type="submit" variant={"dark"} isLoading={isLoading}>
-            Submit
-          </Button>
-        </div>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+        <FormField
+          control={form.control}
+          name="emailAddress"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
+              <FormDescription>By this you will promote and user to firm</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" variant="primary" isLoading={isLoading}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
