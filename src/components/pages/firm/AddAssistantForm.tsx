@@ -57,7 +57,7 @@ export const AddAssistantForm = () => {
         });
       } else if (err.data?.code === "BAD_REQUEST") {
         toast({
-          title: "User already a assistant",
+          title: "User already a assistant or firm",
           description: "Only works on user",
           variant: "destructive"
         });
