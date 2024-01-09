@@ -9,6 +9,8 @@ import {
 } from "@/lib/resend/sendEmailRequest";
 import crypto from "crypto";
 import { z } from "zod";
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
+import { use } from "react";
 
 export const appRouter = router({
   // REGISTER USER -------------------------------------------------------
@@ -89,6 +91,7 @@ export const appRouter = router({
         resetPasswordToken: token as string
       }
     });
+
     if (!user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
@@ -167,7 +170,7 @@ export const appRouter = router({
 
     return { success: true };
   }),
-  addFirm: publiceProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+  addFirm: adminProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
     const email = input;
 
     const user = await db.user.findUnique({
@@ -183,7 +186,6 @@ export const appRouter = router({
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }
-
     const makeFirm = await db.firm.findUnique({
       where: {
         email
@@ -213,32 +215,90 @@ export const appRouter = router({
     return { success: true };
   }),
   addAssistant: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+    const session = await getAuthSession();
     const email = input;
     const user = await db.user.findUnique({
       where: {
         email
       }
     });
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "BAD_REQUEST", message: "Invalid session email" });
+    }
     if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
-    } else if (user.role === "FIRM" || user.role === "ASSISTANT" || user.role === "ADMIN") {
+    } else if (user.role === "ADMIN" || user.role === "FIRM") {
       throw new TRPCError({ code: "BAD_REQUEST" });
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }
+
     const makeAssistant = await db.assistant.findUnique({
       where: {
         email
       }
     });
+    const firm = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      }
+    });
+    console.log(user);
+
+    console.log(session?.user.email);
+    console.log(makeAssistant?.email);
+
+    const isFirmPresent = await db.assistant.findUnique({
+      where: {
+        email: user.email
+      },
+      include: {
+        firm: true
+      }
+    });
+    console.log(isFirmPresent);
     if (makeAssistant) {
+      if (isFirmPresent) {
+        throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+      } else {
+        await db.firm.update({
+          where: {
+            firmId: firm?.firmId
+          },
+          data: {
+            assistant: {
+              connect: {
+                email: user.email
+              }
+            }
+          }
+        });
+      }
       throw new TRPCError({ code: "CONFLICT" });
     }
-    await db.assistant.create({
+
+    const assistant = await db.assistant.create({
       data: {
         assistantId: user.id,
         name: user.name,
         email: user.email
+      }
+    });
+    if (!assistant) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    console.log(firm);
+
+    await db.firm.update({
+      where: {
+        firmId: firm?.firmId
+      },
+      data: {
+        assistant: {
+          connect: {
+            assistantId: assistant.assistantId
+          }
+        }
       }
     });
 
@@ -251,65 +311,68 @@ export const appRouter = router({
       }
     });
     return { success: true };
+  }),
+  addClient: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const email = input;
+    const user = await db.user.findUnique({
+      where: {
+        email
+      }
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    } else if (user.role === "ADMIN" || user.role === "ASSISTANT" || user.role === "FIRM") {
+      throw new TRPCError({ code: "BAD_REQUEST" });
+    } else if (!user.isEmailVerified) {
+      throw new TRPCError({ code: "FORBIDDEN" });
+    }
+
+    // const firm = await db.firm.findUnique({
+    //   where: {
+    //     email: user.email
+    //   },
+    //   include: {
+    //     User: true
+    //   }
+    // });
+
+    // if (!firm) {
+
+    // }
+
+    // const isUserInFirm = firm.User.some((u: { id: string }) => u.id === user.id);
+    const isHavingFirm = await db.user.findUnique({
+      where: {
+        email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    console.log(isHavingFirm);
+
+    if (isHavingFirm?.Firm) {
+      throw new TRPCError({ code: "CONFLICT" });
+    }
+
+    await db.firm.update({
+      where: {
+        email: session.user.email
+      },
+      data: {
+        User: {
+          connect: {
+            id: user.id
+          }
+        }
+      }
+    });
+    return { success: true };
   })
-  // addClient: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
-  //   const email = input;
-  //   const user = await db.user.findUnique({
-  //     where: {
-  //       email
-  //     }
-  //   });
-  //   if (!user) {
-  //     throw new TRPCError({ code: "NOT_FOUND" });
-  //   } else if (user.Firm || user.firmId) {
-  //     throw new TRPCError({ code: "BAD_REQUEST" });
-  //   } else if (!user.isEmailVerified) {
-  //     throw new TRPCError({ code: "FORBIDDEN" });
-  //   }
-
-  //   const firm = await db.firm.findUnique({
-  //     where: {
-  //       email: user.email
-  //     },
-  //     include: {
-  //       User: true
-  //     }
-  //   });
-
-  //   if (!firm) {
-  //     throw new TRPCError({ code: "NOT_FOUND" });
-  //   }
-
-  //   const isUserInFirm = firm.User.some((u: { id: string }) => u.id === user.id);
-  //   if (isUserInFirm) {
-  //     throw new TRPCError({ code: "CONFLICT", message: "User is already in the firm." });
-  //   }
-
-  //   if (isUserInFirm) {
-  //     throw new TRPCError({ code: "CONFLICT" });
-  //   }
-  //   await db.user.update({
-  //     where: {
-  //       id: user.id
-  //     },
-  //     data: {
-  //       firmId: firm.firmId,
-  //       Firm:firm
-  //     }
-  //   });
-  //   await db.firm.update({
-  //     where: {
-  //       email: user.email
-  //     },
-  //     data: {
-  //       User: {
-  //         connect: {
-  //           id: user.id
-  //         }
-  //       }
-  //     }
-  //   });
-  // })
 });
 
 export type AppRouter = typeof appRouter;

@@ -23,7 +23,7 @@ const formSchema = z.object({
   emailAddress: z.string().email()
 });
 
-export const AddAssistantForm = () => {
+export const AddClientForm = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,16 +35,14 @@ export const AddAssistantForm = () => {
     }
   });
 
-  const { mutate: addAssistant } = trpc.addAssistant.useMutation({
+  const { mutate: addClient } = trpc.addClient.useMutation({
     onSuccess({ success }) {
-      console.log("User created successfully");
       if (success) {
-        //Login user here
         router.refresh();
         form.reset();
         toast({
-          title: "Assistant created",
-          description: "User upgraded to assistant successfully"
+          title: "Client created",
+          description: "Client was added succesfully"
         });
       }
     },
@@ -57,7 +55,7 @@ export const AddAssistantForm = () => {
         });
       } else if (err.data?.code === "BAD_REQUEST") {
         toast({
-          title: "User may be firm or admin",
+          title: "User can be firm/assistant/admin",
           description: "Try on assistant or user",
           variant: "destructive"
         });
@@ -69,14 +67,8 @@ export const AddAssistantForm = () => {
         });
       } else if (err.data?.code === "CONFLICT") {
         toast({
-          title: "User already exist in assistant table",
+          title: "User can be already under a firm",
           description: "Only works on user",
-          variant: "destructive"
-        });
-      } else if (err.data?.code === "TOO_MANY_REQUESTS") {
-        toast({
-          title: "Assistant is already under a firm",
-          description: "Only works for users",
           variant: "destructive"
         });
       } else {
@@ -102,7 +94,7 @@ export const AddAssistantForm = () => {
     console.log({ values });
     // Commented for testing
     try {
-      addAssistant(values.emailAddress);
+      addClient(values.emailAddress);
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");
       alert(`An unknown error occurred: ${error}`);
@@ -115,8 +107,8 @@ export const AddAssistantForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-2 rounded-lg border-2 p-8 pl-8"
       >
-        <CardTitle>Add Assistant</CardTitle>
-        <CardDescription>Add your assistant details here</CardDescription>
+        <CardTitle>Add Client</CardTitle>
+        <CardDescription>Add your client details here</CardDescription>
         <div className="pt-4">
           <FormField
             control={form.control}
