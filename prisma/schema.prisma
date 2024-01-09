@@ -82,8 +82,9 @@ model Assistant {
   name        String?
   email       String  @unique
 
-  firm Firm?  @relation(fields: [assistantId], references: [firmId])
-  User User[]
+  firm   Firm?   @relation(fields: [firmId], references: [firmId])
+  User   User[]
+  firmId String?
 }
 
 model Admin {

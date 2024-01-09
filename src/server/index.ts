@@ -214,6 +214,7 @@ export const appRouter = router({
     });
     return { success: true };
   }),
+
   addAssistant: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
     const session = await getAuthSession();
     const email = input;
@@ -258,7 +259,7 @@ export const appRouter = router({
     });
     console.log(isFirmPresent);
     if (makeAssistant) {
-      if (isFirmPresent) {
+      if (isFirmPresent?.firm) {
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
       } else {
         await db.firm.update({
@@ -274,44 +275,49 @@ export const appRouter = router({
           }
         });
       }
-      throw new TRPCError({ code: "CONFLICT" });
-    }
-
-    const assistant = await db.assistant.create({
-      data: {
-        assistantId: user.id,
-        name: user.name,
-        email: user.email
+      if (!isFirmPresent) {
+        throw new TRPCError({ code: "CONFLICT" });
       }
-    });
-    if (!assistant) {
-      throw new TRPCError({ code: "NOT_FOUND" });
     }
-    console.log(firm);
+    if (!makeAssistant) {
+      const assistant = await db.assistant.create({
+        data: {
+          assistantId: user.id,
+          name: user.name,
+          email: user.email
+        }
+      });
+      if (!assistant) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      console.log(firm);
 
-    await db.firm.update({
-      where: {
-        firmId: firm?.firmId
-      },
-      data: {
-        assistant: {
-          connect: {
-            assistantId: assistant.assistantId
+      await db.firm.update({
+        where: {
+          email: session.user.email
+        },
+        data: {
+          assistant: {
+            connect: {
+              assistantId: assistant.assistantId
+            }
           }
         }
-      }
-    });
+      });
 
-    await db.user.update({
-      where: {
-        id: user.id
-      },
-      data: {
-        role: "ASSISTANT"
-      }
-    });
+      await db.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          role: "ASSISTANT"
+        }
+      });
+    }
+
     return { success: true };
   }),
+
   addClient: firmProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
     const session = await getAuthSession();
     if (!session?.user.email) {
