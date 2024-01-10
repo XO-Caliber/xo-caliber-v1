@@ -382,9 +382,9 @@ export const appRouter = router({
   getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 
-    const results = await db.firm.findMany({
-      // skip: page - 10,
-      take: page * 10
+    const results = await db.user.findMany({
+      skip: (page - 1) * 10, // Adjusting skip based on page number
+      take: 14 // Always take 10 items per page
     });
 
     return results;

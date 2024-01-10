@@ -1,16 +1,21 @@
 import React from "react";
 import { AddFirmForm } from "./AddFirmForm";
 import { FirmList } from "../firm/FirmList";
+import { string } from "zod";
 
-const AdminDashboard = () => {
+interface userProps {
+  user: string | undefined | null;
+}
+
+const AdminDashboard = ({ user }: userProps) => {
   return (
-    <section className="grid w-full grid-flow-col">
-      <ul className=" flex w-full flex-col justify-start">
-        <li className="m-4 w-full font-bold">
-          <h1 className="text-2xl font-semibold ">Welcome </h1>
+    <section className="flex flex-row">
+      <ul className="flex w-1/2 flex-col items-center justify-start">
+        <li className="ml-4 w-full pl-4 pt-4 font-bold">
+          <h1 className="text-2xl font-semibold ">Welcome {user}</h1>
           <h2 className="text-sm font-normal ">All details of your clients</h2>
         </li>
-        <li className="w-[350px]  p-4">
+        <li className="mt-4 w-[350px] justify-self-center p-4">
           <AddFirmForm />
         </li>
       </ul>

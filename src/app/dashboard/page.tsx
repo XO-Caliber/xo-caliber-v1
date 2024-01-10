@@ -15,11 +15,11 @@ const Dashboard = async () => {
           <div>
             <Header className="ml-0">Dashboard</Header>
           </div>
-          <div className="m-4 ml-56">
-            <div className="m-4">
+          <div className=" ml-56">
+            <div className="">
               {session.user.role === "ADMIN" ? (
                 <div>
-                  <AdminDashboard />
+                  <AdminDashboard user={session.user.name} />
                 </div>
               ) : (
                 <></>
