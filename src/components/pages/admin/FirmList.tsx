@@ -10,7 +10,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious
-} from "@/components/ui/pagination";
+} from "@/components/ui/Pagination";
 
 export const FirmList = () => {
   const [page, setpage] = useState(1.6);

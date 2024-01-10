@@ -1,9 +1,9 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Home from "@/app/page";
 import Header from "@/components/Header";
-import AdminDashboard from "@/components/pages/admin/AdminDashboard";
-import { AddAssistantForm } from "@/components/pages/firm/AddAssistantForm";
-import { AddClientForm } from "@/components/pages/firm/AddClientForm";
+import AdminDashboard from "@/components/pages/dashboard/AdminDashboard";
+import { FirmDashboard } from "@/components/pages/dashboard/FirmDashboard";
+import { UserDashboard } from "@/components/pages/dashboard/UserDashboard";
 import React from "react";
 
 const Dashboard = async () => {
@@ -24,21 +24,13 @@ const Dashboard = async () => {
               ) : (
                 <></>
               )}
-              {session.user.role === "FIRM" ? (
-                <div className="flex w-full items-center justify-center">
-                  <AddAssistantForm />
-                  <AddClientForm />
-                </div>
-              ) : (
-                <></>
-              )}
+              {session.user.role === "FIRM" ? <FirmDashboard user={session.user.name} /> : <></>}
             </div>
           </div>
         </div>
       ) : (
         <div>
-          <Header>Dashboard</Header>
-          <Home />
+          <UserDashboard />
         </div>
       )}
     </div>

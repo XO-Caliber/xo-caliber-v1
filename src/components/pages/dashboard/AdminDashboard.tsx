@@ -1,7 +1,6 @@
 import React from "react";
-import { AddFirmForm } from "./AddFirmForm";
-import { FirmList } from "../firm/FirmList";
-import { string } from "zod";
+import { AddFirmForm } from "../admin/AddFirmForm";
+import { FirmList } from "../admin/FirmList";
 
 interface userProps {
   user: string | undefined | null;

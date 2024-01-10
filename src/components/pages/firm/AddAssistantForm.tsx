@@ -125,7 +125,7 @@ export const AddAssistantForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="assistant@gmail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
