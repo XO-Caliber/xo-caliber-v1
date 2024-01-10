@@ -1,5 +1,4 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import Home from "@/app/page";
 import Header from "@/components/Header";
 import AdminDashboard from "@/components/pages/dashboard/AdminDashboard";
 import { FirmDashboard } from "@/components/pages/dashboard/FirmDashboard";

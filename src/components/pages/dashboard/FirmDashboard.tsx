@@ -1,5 +1,6 @@
 import React from "react";
-import { AddAssistantForm } from "../firm/AddAssistantForm";
+import { AddAssistantForm } from "./firm/AddAssistantForm";
+import { AssistantList } from "./firm/AssistantList";
 
 interface userProps {
   user: string | undefined | null;
@@ -17,7 +18,9 @@ export const FirmDashboard = ({ user }: userProps) => {
           <AddAssistantForm />
         </li>
       </ul>
-      <div className="mr-4"></div>
+      <div className="mr-4">
+        <AssistantList />
+      </div>
     </section>
   );
 };

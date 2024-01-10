@@ -1,6 +1,6 @@
 import React from "react";
-import { AddFirmForm } from "../admin/AddFirmForm";
-import { FirmList } from "../admin/FirmList";
+import { AddFirmForm } from "./admin/AddFirmForm";
+import { FirmList } from "./admin/FirmList";
 
 interface userProps {
   user: string | undefined | null;

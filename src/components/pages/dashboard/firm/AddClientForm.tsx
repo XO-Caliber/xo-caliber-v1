@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -117,7 +116,7 @@ export const AddClientForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="firm@gmail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
