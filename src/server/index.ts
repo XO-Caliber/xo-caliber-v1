@@ -379,7 +379,16 @@ export const appRouter = router({
     });
     return { success: true };
   }),
-  getAllFirm: adminProcedure.input(z.number()).query(async (pages) => {})
+  getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
+    const page = input;
+
+    const results = await db.firm.findMany({
+      // skip: page - 10,
+      take: page * 10
+    });
+
+    return results;
+  })
 });
 
 export type AppRouter = typeof appRouter;

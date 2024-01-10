@@ -16,10 +16,6 @@ const Dashboard = async () => {
             <Header className="ml-0">Dashboard</Header>
           </div>
           <div className="m-4 ml-56">
-            <div className="m-4 w-full font-bold">
-              <h1 className="text-2xl font-semibold ">Welcome {session?.user?.name}</h1>
-              <h2 className="text-sm font-normal ">All details of your clients</h2>
-            </div>
             <div className="m-4">
               {session.user.role === "ADMIN" ? (
                 <div>
