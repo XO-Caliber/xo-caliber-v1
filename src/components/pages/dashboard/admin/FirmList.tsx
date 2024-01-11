@@ -31,7 +31,7 @@ export const FirmList = () => {
           <Pagination className="pt-6">
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious onClick={() => setpage(page - 1)} />
+                <PaginationPrevious onClick={() => setpage(page > 1 ? page - 1 : 1)} />
               </PaginationItem>
               <PaginationItem>
                 <PaginationLink onClick={() => setpage(1)}>1</PaginationLink>

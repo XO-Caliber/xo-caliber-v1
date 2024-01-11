@@ -13,14 +13,14 @@ import {
 } from "@/components/ui/Pagination";
 
 export const AssistantList = () => {
-  const [page, setpage] = useState(1.6);
+  const [page, setpage] = useState(1);
   const assistantList = trpc.getAllAssistant.useQuery(page);
 
   if (assistantList.data) {
     return (
-      <section className="flex h-full w-[500px] flex-col items-center  border-l-2 border-border ">
+      <section className="flex h-full w-[500px] flex-col items-center   ">
         <div className=" m-4 ml-6">
-          <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2>
+          {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
           <div className="grid w-full grid-cols-2 gap-x-10 gap-y-5">
             {assistantList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
@@ -31,7 +31,7 @@ export const AssistantList = () => {
           <Pagination className="pt-6">
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious onClick={() => setpage(page - 1)} />
+                <PaginationPrevious onClick={() => setpage(page > 1 ? page - 1 : 1)} />
               </PaginationItem>
               <PaginationItem>
                 <PaginationLink onClick={() => setpage(1)}>1</PaginationLink>
