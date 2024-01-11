@@ -11,7 +11,7 @@ interface userProps {
 
 export const FirmDashboard = ({ user }: userProps) => {
   return (
-    <section className="flex flex-row items-center justify-normal ">
+    <section className="flex flex-row items-start justify-normal ">
       <ul className="flex w-1/2 flex-col  justify-start">
         <li className="ml-4 w-full pl-4 pt-4 font-bold">
           <h1 className="text-2xl font-semibold ">Welcome {user}</h1>

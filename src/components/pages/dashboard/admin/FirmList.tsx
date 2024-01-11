@@ -11,6 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious
 } from "@/components/ui/Pagination";
+import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
 export const FirmList = () => {
   const [page, setpage] = useState(1.6);
@@ -56,14 +57,16 @@ export const FirmList = () => {
   } else {
     // If the user does not exist, return an error message
     return (
-      // <section
-      //   className="absolute left-0 top-0 flex h-full w-full
-      // items-center justify-center overflow-hidden
-      // bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-100 to-white"
-      // >
-      <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
-        Loading...
+      <div className="grid w-full grid-cols-2 gap-x-52 gap-y-5">
+        {[...Array(10)].map((_, index) => (
+          <div key={index} className="h-[55px] w-[200px] rounded-md bg-secondary">
+            <UserProfileLoading />
+          </div>
+        ))}
       </div>
+      // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
+      //   Loading...
+      // </div>
     );
   }
 };
