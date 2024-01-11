@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar";
 interface userProfile {
   name: string | null | undefined;
   email: string | null | undefined;
-  image?: string | undefined;
+  image?: string | undefined | null;
 }
 
 export const UserProfile = ({ name, email, image }: userProfile) => {

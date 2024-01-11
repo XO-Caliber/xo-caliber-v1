@@ -3,6 +3,7 @@ import { AddAssistantForm } from "./firm/AddAssistantForm";
 import { AssistantList } from "./firm/AssistantList";
 import { AddClientForm } from "./firm/AddClientForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { UserList } from "./firm/UserList";
 
 interface userProps {
   user: string | undefined | null;
@@ -23,16 +24,20 @@ export const FirmDashboard = ({ user }: userProps) => {
               <TabsTrigger value="users">Users</TabsTrigger>
             </TabsList>
             <TabsContent value="assistant">
+              {/* Assistant List */}
               <AssistantList />
             </TabsContent>
             <TabsContent value="users">
-              {/* <AssistantList /> */}
-              Users List
+              {/* Users List */}
+              <UserList />
             </TabsContent>
           </Tabs>
         </li>
       </ul>
-      {/* <span className="h-full border-l-2 border-border"></span> */}
+      <span
+        className=" border-l-2 border-border pr-4"
+        style={{ height: "calc(100vh - 100px)" }}
+      ></span>
       <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">
         <AddClientForm />
         <br />

@@ -34,14 +34,14 @@ export const Navbar = async () => {
           <SearchIcon
             size={17}
             className="absolute right-0 mr-2 cursor-pointer text-muted 
-transition-colors duration-300 
-hover:text-primary focus:text-primary"
+                        transition-colors duration-300 
+                        hover:text-primary focus:text-primary"
           />
         </li>
         <Link href="/">
           <li
             className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-hover:bg-primary "
+                        hover:bg-primary "
           >
             <HomeIcon color="var(--muted)" size={16} className="mx-2" />
             <p className="mx-1 text-base text-muted hover:text-black">Home</p>
@@ -49,14 +49,14 @@ hover:bg-primary "
         </Link>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-hover:bg-primary"
+                        hover:bg-primary"
         >
           <BellIcon color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Notifications</p>
         </li>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-hover:bg-primary"
+                        hover:bg-primary"
         >
           <ArrowDown color="var(--muted)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-muted hover:text-black">Show more</p>

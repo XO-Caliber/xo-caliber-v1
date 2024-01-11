@@ -394,7 +394,7 @@ export const appRouter = router({
 
     const results = await db.assistant.findMany({
       skip: (page - 1) * 10,
-      take: 14
+      take: 12
     });
 
     return results;
@@ -404,7 +404,7 @@ export const appRouter = router({
 
     const results = await db.user.findMany({
       skip: (page - 1) * 10,
-      take: 14
+      take: 12
     });
 
     return results;
