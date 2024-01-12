@@ -5,6 +5,8 @@ import Home from "@/app/page";
 import React from "react";
 import { GetListQA } from "../q&a/GetListQA";
 
+import AdminQA from "./admin/AdminQA";
+
 const XOCaliberQA = async () => {
   const session = await getAuthSession();
   return (
@@ -14,17 +16,11 @@ const XOCaliberQA = async () => {
           <div>
             <Header className="ml-0">XO Caliber Q&A</Header>
           </div>
-          <div className="absolute m-4  text-xl">
-            <div className="ml-56 font-extrabold">
-              <CardTitle>Welcome {session?.user?.name?.toLowerCase()}</CardTitle>
-            </div>
-            {session.user.role === "INDIVIDUAL" ? <GetListQA /> : <></>}
-          </div>
+          {session.user.role === "ADMIN" ? <AdminQA /> : <GetListQA />}
         </div>
       ) : (
         <div>
           <Header>XO Caliber Q&A</Header>
-          <Home />
         </div>
       )}
     </div>
