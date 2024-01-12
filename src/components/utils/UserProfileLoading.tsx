@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar";
+import { Avatar } from "../ui/Avatar";
 
 export const UserProfileLoading = () => {
   return (
