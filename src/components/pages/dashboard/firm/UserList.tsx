@@ -13,9 +13,19 @@ import {
 } from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
-export const UserList = () => {
+interface userListProps {
+  userId?: string | undefined;
+}
+
+export const UserList = ({ userId }: userListProps) => {
   const [page, setpage] = useState(1);
-  const userList = trpc.getAllUser.useQuery(page);
+  let userList;
+
+  if (userId) {
+    userList = trpc.getFirmUser.useQuery(userId);
+  } else {
+    userList = trpc.getAllUser.useQuery(page);
+  }
 
   if (userList.data) {
     return (

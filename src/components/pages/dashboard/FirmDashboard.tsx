@@ -4,12 +4,15 @@ import { AssistantList } from "./firm/AssistantList";
 import { AddClientForm } from "./firm/AddClientForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { UserList } from "./firm/UserList";
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 
 interface userProps {
   user: string | undefined | null;
 }
 
-export const FirmDashboard = ({ user }: userProps) => {
+export const FirmDashboard = async ({ user }: userProps) => {
+  const session = await getAuthSession();
+
   return (
     <section className="flex flex-row items-start justify-normal ">
       <ul className="flex w-1/2 flex-col  justify-start">
@@ -29,7 +32,7 @@ export const FirmDashboard = ({ user }: userProps) => {
             </TabsContent>
             <TabsContent value="users">
               {/* Users List */}
-              <UserList />
+              <UserList userId={session?.user.id} />
             </TabsContent>
           </Tabs>
         </li>

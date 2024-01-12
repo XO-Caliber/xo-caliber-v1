@@ -399,6 +399,17 @@ export const appRouter = router({
 
     return results;
   }),
+  getFirmUser: firmProcedure.input(z.string()).query(async ({ input }) => {
+    const firmId = input;
+
+    const results = await db.user.findMany({
+      where: {
+        firmId: firmId
+      }
+    });
+
+    return results;
+  }),
   getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 
