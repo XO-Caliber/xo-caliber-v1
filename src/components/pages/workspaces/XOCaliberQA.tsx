@@ -1,10 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Header from "@/components/Header";
-import { CardTitle } from "@/components/ui/Card";
-import Home from "@/app/page";
 import React from "react";
 import { GetListQA } from "../q&a/GetListQA";
-
 import AdminQA from "./admin/AdminQA";
 
 const XOCaliberQA = async () => {

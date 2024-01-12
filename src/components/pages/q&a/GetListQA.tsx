@@ -38,7 +38,7 @@ export const GetListQA = () => {
     const filteredQuestions = data.find((set) => set.category === selectedTab)?.questions || [];
 
     return (
-      <div className="m-24 ml-60 flex items-center justify-center">
+      <div className="relative right-[550px] m-24  flex items-center justify-center">
         <Tabs
           defaultValue="originality"
           className="flex  w-[200px] flex-col"
