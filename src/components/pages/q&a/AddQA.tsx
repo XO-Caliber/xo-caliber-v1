@@ -50,7 +50,7 @@ export const AddQA: React.FC<AddQAProps> = ({
           className={`${
             questionNumber % 2 == 0 ? "border-2 border-border bg-white" : "border bg-border"
           }  mt-2 flex h-16 w-[50px] items-center justify-center rounded-lg
-           text-xl text-black `}
+            text-xl text-black `}
         >
           {mark}
         </div>
