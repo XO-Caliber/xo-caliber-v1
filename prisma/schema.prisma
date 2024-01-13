@@ -77,7 +77,7 @@ model Firm {
   userCount Int         @default(1)
 
   category   Category[]
-  categoryId String
+  categoryId String?
 }
 
 model Assistant {
@@ -97,7 +97,7 @@ model Admin {
   hashedPassword String
 
   category   Category[]
-  categoryId String
+  categoryId String?
 }
 
 model VerificationToken {
