@@ -6,9 +6,16 @@ interface AddQAProps {
   questionNumber: number;
   question: string;
   mark: string;
-  handleDelete: (index: number) => void;
+  id: number;
+  handleDelete: (questionNumber: number) => void;
 }
-export const AddQA: React.FC<AddQAProps> = ({ questionNumber, question, mark, handleDelete }) => {
+export const AddQA: React.FC<AddQAProps> = ({
+  questionNumber,
+  question,
+  mark,
+  id,
+  handleDelete
+}) => {
   return (
     <div className={``}>
       <div className="ml-60 flex ">
@@ -35,7 +42,7 @@ export const AddQA: React.FC<AddQAProps> = ({ questionNumber, question, mark, ha
             className={`mr-8 cursor-pointer text-red-700 hover:text-red-400 ${
               questionNumber % 2 == 0 ? "bg-white" : "bg-border"
             }`}
-            onClick={() => handleDelete(questionNumber)}
+            onClick={() => handleDelete(id)}
           />
         </div>
 

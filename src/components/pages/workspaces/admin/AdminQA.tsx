@@ -6,19 +6,27 @@ import AddQA from "@/components/pages/q&a/AddQA";
 
 const AdminQA = () => {
   const [data, setData] = useState({
-    questions: [{}]
+    questions: [
+      {
+        id: 0,
+        question: "",
+        mark: 10
+      }
+    ]
   });
+
   const [popOpen, setPopOpen] = useState(false);
-  console.log(data.questions.length);
+  // console.log(data.questions.length);
 
   const handleAddData = (values: any) => {
     setData((prevData) => ({
       questions: [...prevData.questions, values]
     }));
+    console.log(data.questions);
   };
-  const handleDelete = (questionId: number) => {
+  const handleDelete = (id: number) => {
     setData((prevData) => ({
-      questions: prevData.questions.filter((items) => items !== questionId)
+      questions: prevData.questions.filter((item) => item.id !== id)
     }));
   };
 
@@ -35,24 +43,23 @@ const AdminQA = () => {
       </div>
       {popOpen ? (
         <div className="absolute left-[400px] ">
-          <QAPopUp handleOpen={handleOpen} handleData={handleAddData} />
+          <QAPopUp handleOpen={handleOpen} handleData={handleAddData} questions={data.questions} />
         </div>
       ) : (
         <></>
       )}
-      {data.questions.length ? (
-        data.questions.map((questions: any, index: any) => (
-          <AddQA
-            key={index}
-            questionNumber={index + 1}
-            question={questions.question}
-            handleDelete={handleDelete}
-            mark={questions.mark}
-          />
-        ))
-      ) : (
-        <></>
-      )}
+      {data.questions.length > 0
+        ? data.questions.map((questions: any, index: any) => (
+            <AddQA
+              key={index}
+              questionNumber={index + 1}
+              question={questions.question}
+              handleDelete={handleDelete}
+              mark={questions.mark}
+              id={questions.id}
+            />
+          ))
+        : null}
     </div>
   );
 };

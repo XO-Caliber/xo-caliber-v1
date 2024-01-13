@@ -12,20 +12,23 @@ import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
 import React, { useState } from "react";
 import { CardHeader, CardTitle } from "@/components/ui/Card";
+import { string } from "zod";
 
 interface QAProps {
   handleOpen: () => void;
   handleData: (values: any) => void;
+  questions: { id: number; question: string; mark: number }[];
 }
 
-const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData }) => {
+const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, questions }) => {
   const [mark, setMark] = useState("10");
   const [question, setQuestion] = useState("");
+
   const checkLength = () => {
     if (question.length < 10) {
       return;
     }
-    handleData({ question, mark });
+    handleData({ question, mark, id: questions[questions.length - 1].id + 1 });
   };
   return (
     <div className="absolute">
@@ -52,9 +55,9 @@ const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData }) => {
               </SelectTrigger>
               <SelectContent className="w-[50px]  bg-border ">
                 <SelectItem value={"20"}>20</SelectItem>
-                <SelectItem value={"20"}>30</SelectItem>
-                <SelectItem value={"20"}>40</SelectItem>
-                <SelectItem value={"20"}>50</SelectItem>
+                <SelectItem value={"30"}>30</SelectItem>
+                <SelectItem value={"40"}>40</SelectItem>
+                <SelectItem value={"50"}>50</SelectItem>
               </SelectContent>
             </Select>
           </div>
