@@ -5,9 +5,8 @@ import {
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-  Value
-} from "@radix-ui/react-select";
+  SelectValue
+} from "@/components/ui/Select";
 import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
 import React, { useState } from "react";
@@ -17,10 +16,10 @@ import { string } from "zod";
 interface QAProps {
   handleOpen: () => void;
   handleData: (values: any) => void;
-  questions: { id: number; question: string; mark: number }[];
+  datas: { category: string; questions: { id: number; question: string; mark: string }[] }[];
 }
 
-const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, questions }) => {
+const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, datas }) => {
   const [mark, setMark] = useState("10");
   const [question, setQuestion] = useState("");
 
@@ -28,8 +27,10 @@ const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, questions }) => {
     if (question.length < 10) {
       return;
     }
-    handleData({ question, mark, id: questions[questions.length - 1].id + 1 });
+    handleData({ question, mark, id: datas[datas.length - 1].questions.length });
   };
+  // console.log(question, mark);
+
   return (
     <div className="absolute">
       <div className="overflow relative z-10 h-[270px] w-[1000px] rounded-lg border border-t-0 border-white bg-secondary-foreground shadow-2xl">
@@ -38,7 +39,7 @@ const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, questions }) => {
           className="absolute left-[970px] h-[28px] cursor-pointer pt-1 text-white hover:text-red-400"
           onClick={handleOpen}
         />
-        <div className="h-8 rounded-tl-md rounded-tr-md border border-l-0 border-r-0 border-white bg-slate-900"></div>
+        <div className="h-8 rounded-tl-md rounded-tr-md border border-l-0 border-r-0 border-white"></div>
         <CardTitle className="ml-4 pt-4 text-white">Question</CardTitle>
         <div className="flex p-4 pt-4">
           <Input
@@ -50,7 +51,7 @@ const QAPopUp: React.FC<QAProps> = ({ handleOpen, handleData, questions }) => {
           <div className="ml-4  flex w-[190px] items-center justify-center rounded-lg border border-white bg-border p-4">
             <p className="mr-4 text-sm">Select Mark:</p>
             <Select onValueChange={(value) => setMark(value)}>
-              <SelectTrigger className="h-[45px]  w-[50px] rounded-md bg-white text-black">
+              <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-white text-black">
                 <SelectValue placeholder="10" />
               </SelectTrigger>
               <SelectContent className="w-[50px]  bg-border ">

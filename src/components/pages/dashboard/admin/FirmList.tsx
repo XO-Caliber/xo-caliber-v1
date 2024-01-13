@@ -14,7 +14,7 @@ import {
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
 export const FirmList = () => {
-  const [page, setpage] = useState(1.6);
+  const [page, setpage] = useState(1);
   const firmList = trpc.getAllFirm.useQuery(page);
 
   if (firmList.data) {

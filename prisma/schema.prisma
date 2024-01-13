@@ -74,7 +74,10 @@ model Firm {
 
   assistant Assistant[]
   User      User[]
-  userCount Int         @default(35)
+  userCount Int         @default(1)
+
+  category   Category[]
+  categoryId String
 }
 
 model Assistant {
@@ -92,6 +95,9 @@ model Admin {
   name           String
   email          String @unique
   hashedPassword String
+
+  category   Category[]
+  categoryId String
 }
 
 model VerificationToken {
@@ -100,4 +106,28 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Answers {
+  YES
+  NO
+}
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String
+  questions Question[]
+
+  Firm    Firm?   @relation(fields: [firmId], references: [firmId])
+  firmId  String?
+  Admin   Admin?  @relation(fields: [adminId], references: [adminId])
+  adminId String?
+}
+
+model Question {
+  id         String   @id @default(cuid())
+  question   String
+  mark       Int
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
 }
