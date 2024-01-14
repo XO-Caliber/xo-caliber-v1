@@ -166,7 +166,12 @@ export const LoginBox = () => {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Email address" type="email" {...field} />
+                        <Input
+                          placeholder="Email address"
+                          type="email"
+                          {...field}
+                          autoComplete="true"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -181,7 +186,12 @@ export const LoginBox = () => {
                     <FormItem>
                       <FormLabel>Password </FormLabel>
                       <FormControl>
-                        <Input placeholder="Password" type="password" {...field} />
+                        <Input
+                          placeholder="Password"
+                          type="password"
+                          {...field}
+                          autoComplete="true"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

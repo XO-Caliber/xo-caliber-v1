@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import AdminDashboard from "@/components/pages/dashboard/AdminDashboard";
 import { FirmDashboard } from "@/components/pages/dashboard/FirmDashboard";
 import { UserDashboard } from "@/components/pages/dashboard/UserDashboard";
+import LeaveFirmForm from "@/components/pages/dashboard/client/LeaveFirmForm";
 import React from "react";
 
 const Dashboard = async () => {
@@ -24,6 +25,7 @@ const Dashboard = async () => {
                 <></>
               )}
               {session.user.role === "FIRM" ? <FirmDashboard user={session.user.name} /> : <></>}
+              {session.user.role === "INDIVIDUAL" ? <LeaveFirmForm /> : <></>}
             </div>
           </div>
         </div>

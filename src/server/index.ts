@@ -35,6 +35,7 @@ export const appRouter = router({
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
+        isEmailVerified: false,
         emailVerificationToken
       }
     });
@@ -287,6 +288,14 @@ export const appRouter = router({
           email: user.email
         }
       });
+      await db.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          role: "ASSISTANT"
+        }
+      });
       if (!assistant) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
@@ -302,15 +311,6 @@ export const appRouter = router({
               assistantId: assistant.assistantId
             }
           }
-        }
-      });
-
-      await db.user.update({
-        where: {
-          id: user.id
-        },
-        data: {
-          role: "ASSISTANT"
         }
       });
     }
@@ -337,15 +337,17 @@ export const appRouter = router({
       throw new TRPCError({ code: "FORBIDDEN" });
     }
 
-    // const firm = await db.firm.findUnique({
-    //   where: {
-    //     email: user.email
-    //   },
-    //   include: {
-    //     User: true
-    //   }
-    // });
-
+    const firm = await db.firm.findUnique({
+      where: {
+        email: user.email
+      },
+      include: {
+        User: true
+      }
+    });
+    if (firm?.User.length) {
+      throw new TRPCError({ code: "CLIENT_CLOSED_REQUEST" });
+    }
     // if (!firm) {
 
     // }
@@ -375,6 +377,29 @@ export const appRouter = router({
             id: user.id
           }
         }
+      }
+    });
+    return { success: true };
+  }),
+  leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    const user = await db.user.findUnique({
+      where: {
+        email: session.user.email || ""
+      }
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    await db.user.update({
+      where: {
+        email: session.user.email || ""
+      },
+      data: {
+        firmId: null
       }
     });
     return { success: true };
