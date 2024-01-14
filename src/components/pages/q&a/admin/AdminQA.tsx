@@ -9,6 +9,17 @@ import { Tabs } from "@radix-ui/react-tabs";
 import QATabsList from "../QATabsList";
 import CategoryPopUp from "../CategoryPopUp";
 import QATabsContent from "../QATabsContent";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
+import { Label } from "@/components/ui/Label";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/Select";
 
 const AdminQA = () => {
   const [data, setData] = useState({
@@ -68,11 +79,24 @@ const AdminQA = () => {
     setPopOpen(!popOpen);
   };
   return (
-    <div className={` m-4  text-xl `}>
-      <div className={`ml-56 flex font-extrabold `}>
+    <div className="m-4 ml-56 text-xl ">
+      <div className="flex items-center justify-around">
+        <div className="px-4">
+          <h1 className="text-2xl font-bold">Welcome back!</h1>
+          <p className="text-sm font-normal text-muted">Here’s a list of Bonny davis’s cases</p>
+        </div>
+        <Button
+          variant="outline"
+          className="ml-4 border-dashed border-gray-400 font-medium hover:border"
+          onClick={handleOpen}
+          size={"sm"}
+        >
+          <PlusSquare size={16} />
+          <p className="ml-2">Assign Assistant</p>
+        </Button>
         <Button
           variant={"dark"}
-          className="ml-4 border-dashed border-gray-400 hover:border"
+          className="ml-4 border-dashed border-gray-400 font-medium hover:border"
           onClick={handleOpen}
           size={"sm"}
         >
@@ -88,6 +112,30 @@ const AdminQA = () => {
           <PlusSquare size={16} />
           <p className="ml-2">Create Category</p>
         </Button>
+        <div className="flex flex-row items-center justify-center gap-2 px-4">
+          <Avatar className="h-9 w-9">
+            <AvatarImage
+              src="https://i.pinimg.com/1200x/75/d6/37/75d637661bf2d7f114be2376d75e7886.jpg"
+              alt="profile"
+            />
+            {/* <AvatarFallback>{name ? name.slice(0, 2).toUpperCase() : null}</AvatarFallback> */}
+          </Avatar>
+          <Label className="text-base font-semibold">Luffy D Monkey</Label>
+          <Select>
+            <SelectTrigger className="w-[116px]">
+              <SelectValue placeholder="Change" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="apple">Apple</SelectItem>
+                <SelectItem value="banana">Banana</SelectItem>
+                <SelectItem value="blueberry">Blueberry</SelectItem>
+                <SelectItem value="grapes">Grapes</SelectItem>
+                <SelectItem value="pineapple">Pineapple</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       {data.categories.length > 0 ? (
         <div className="absolute left-[400px] ">
