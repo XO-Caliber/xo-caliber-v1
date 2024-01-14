@@ -3,23 +3,23 @@ import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
 import QAPopUp from "@/components/pages/q&a/QAPopUp";
 import AddQA from "@/components/pages/q&a/AddQA";
-import { PlusSquare } from "lucide-react";
-
+import { PlusSquare, UserPlus } from "lucide-react";
 import { Tabs } from "@radix-ui/react-tabs";
 import QATabsList from "../QATabsList";
 import CategoryPopUp from "../CategoryPopUp";
 import QATabsContent from "../QATabsContent";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/Avatar";
 import { Label } from "@/components/ui/Label";
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/Input";
+import UserSelectList from "@/components/utils/UserSelectList";
 
 const AdminQA = () => {
   const [data, setData] = useState({
@@ -66,18 +66,22 @@ const AdminQA = () => {
       ]
     }));
   };
+
   const createCategory = (values: string) => {
     setData((prevData) => ({
       categories: [...prevData.categories, values],
       datas: [...prevData.datas]
     }));
   };
+
   const handleCategoryPopOpen = () => {
     setCategoryPopOpen(!categoryPopOpen);
   };
+
   const handleOpen = () => {
     setPopOpen(!popOpen);
   };
+
   return (
     <div className="m-4 ml-56 text-xl ">
       <div className="flex items-center justify-around">
@@ -85,24 +89,75 @@ const AdminQA = () => {
           <h1 className="text-2xl font-bold">Welcome back!</h1>
           <p className="text-sm font-normal text-muted">Here’s a list of Bonny davis’s cases</p>
         </div>
-        <Button
-          variant="outline"
-          className="ml-4 border-dashed border-gray-400 font-medium hover:border"
-          onClick={handleOpen}
-          size={"sm"}
-        >
-          <PlusSquare size={16} />
-          <p className="ml-2">Assign Assistant</p>
-        </Button>
-        <Button
-          variant={"dark"}
-          className="ml-4 border-dashed border-gray-400 font-medium hover:border"
-          onClick={handleOpen}
-          size={"sm"}
-        >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Q&A</p>
-        </Button>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant="outline"
+              className="ml-4 border-gray-400 font-medium hover:border"
+              // onClick={handleOpen}
+              size={"sm"}
+            >
+              <UserPlus size={16} />
+              <p className="ml-2">Assign Assistant</p>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add assistant to this user</DialogTitle>
+              <DialogDescription>Select an assistant from the below list:</DialogDescription>
+              <div className="flex flex-col items-start gap-2">
+                <div className="flex w-full items-center justify-between py-4">
+                  <Label htmlFor="name" className="text-right">
+                    For User:
+                  </Label>
+                  {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}
+                  <UserSelectList />
+                </div>
+                <div className="flex w-full items-center justify-between py-4">
+                  <Label htmlFor="username" className="text-right">
+                    Assign Assistant:
+                  </Label>
+                  {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
+                  <UserSelectList />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button type="submit" className="mt-4" variant="primary">
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button
+              variant={"dark"}
+              className="ml-4 border-dashed border-gray-400 font-medium hover:border"
+              // onClick={handleOpen}
+              size={"sm"}
+            >
+              <PlusSquare size={16} />
+              <p className="ml-2">Create Q&A</p>
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add assistant to this user</DialogTitle>
+              <DialogDescription>Select an assistant from the below list:</DialogDescription>
+
+              <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} />
+              <DialogFooter>
+                <Button type="submit" className="mt-4" variant="primary">
+                  Save changes
+                </Button>
+              </DialogFooter>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
+
         <Button
           variant={"dark"}
           className="ml-4 border-dashed border-gray-400 hover:border"
@@ -112,30 +167,7 @@ const AdminQA = () => {
           <PlusSquare size={16} />
           <p className="ml-2">Create Category</p>
         </Button>
-        <div className="flex flex-row items-center justify-center gap-2 px-4">
-          <Avatar className="h-9 w-9">
-            <AvatarImage
-              src="https://i.pinimg.com/1200x/75/d6/37/75d637661bf2d7f114be2376d75e7886.jpg"
-              alt="profile"
-            />
-            {/* <AvatarFallback>{name ? name.slice(0, 2).toUpperCase() : null}</AvatarFallback> */}
-          </Avatar>
-          <Label className="text-base font-semibold">Luffy D Monkey</Label>
-          <Select>
-            <SelectTrigger className="w-[116px]">
-              <SelectValue placeholder="Change" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <UserSelectList />
       </div>
       {data.categories.length > 0 ? (
         <div className="absolute left-[400px] ">
