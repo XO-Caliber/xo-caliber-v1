@@ -1,25 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
-import QAPopUp from "@/components/pages/q&a/QAPopUp";
-import AddQA from "@/components/pages/q&a/AddQA";
 import { PlusSquare, UserPlus } from "lucide-react";
 import { Tabs } from "@radix-ui/react-tabs";
 import QATabsList from "../QATabsList";
-import CategoryPopUp from "../CategoryPopUp";
 import QATabsContent from "../QATabsContent";
-import { Label } from "@/components/ui/Label";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/Input";
 import UserSelectList from "@/components/utils/UserSelectList";
+import { AssistantDialog } from "../AssistantDialog";
+import AddQADiaglog from "../AddQADiaglog";
+import AddCategoryDialog from "../AddCategoryDialog";
 
 const AdminQA = () => {
   const [data, setData] = useState({
@@ -89,84 +78,9 @@ const AdminQA = () => {
           <h1 className="text-2xl font-bold">Welcome back!</h1>
           <p className="text-sm font-normal text-muted">Here’s a list of Bonny davis’s cases</p>
         </div>
-
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              className="ml-4 border-gray-400 font-medium hover:border"
-              // onClick={handleOpen}
-              size={"sm"}
-            >
-              <UserPlus size={16} />
-              <p className="ml-2">Assign Assistant</p>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add assistant to this user</DialogTitle>
-              <DialogDescription>Select an assistant from the below list:</DialogDescription>
-              <div className="flex flex-col items-start gap-2">
-                <div className="flex w-full items-center justify-between py-4">
-                  <Label htmlFor="name" className="text-right">
-                    For User:
-                  </Label>
-                  {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}
-                  <UserSelectList />
-                </div>
-                <div className="flex w-full items-center justify-between py-4">
-                  <Label htmlFor="username" className="text-right">
-                    Assign Assistant:
-                  </Label>
-                  {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
-                  <UserSelectList />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit" className="mt-4" variant="primary">
-                  Save changes
-                </Button>
-              </DialogFooter>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant={"dark"}
-              className="ml-4 border-dashed border-gray-400 font-medium hover:border"
-              // onClick={handleOpen}
-              size={"sm"}
-            >
-              <PlusSquare size={16} />
-              <p className="ml-2">Create Q&A</p>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Add assistant to this user</DialogTitle>
-              <DialogDescription>Select an assistant from the below list:</DialogDescription>
-
-              <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} />
-              <DialogFooter>
-                <Button type="submit" className="mt-4" variant="primary">
-                  Save changes
-                </Button>
-              </DialogFooter>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-
-        <Button
-          variant={"dark"}
-          className="ml-4 border-dashed border-gray-400 hover:border"
-          size={"sm"}
-          onClick={handleCategoryPopOpen}
-        >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Category</p>
-        </Button>
+        <AssistantDialog />
+        <AddQADiaglog />
+        <AddCategoryDialog />
         <UserSelectList />
       </div>
       {data.categories.length > 0 ? (
@@ -180,17 +94,17 @@ const AdminQA = () => {
 
       {popOpen ? (
         <div className="absolute left-[400px] top-[300px]">
-          <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} />
+          {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
         </div>
       ) : (
         <></>
       )}
       {categoryPopOpen ? (
         <div className="absolute left-[400px] top-[300px]">
-          <CategoryPopUp
+          {/* <CategoryPopUp
             handleCategoryPopOpen={handleCategoryPopOpen}
             createCategory={createCategory}
-          />
+          /> */}
         </div>
       ) : (
         <></>
