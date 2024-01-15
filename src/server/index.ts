@@ -11,6 +11,7 @@ import crypto from "crypto";
 import { z } from "zod";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { use } from "react";
+import { getRandomImageUrl } from "@/components/utils/RandomProfileGenerator";
 
 export const appRouter = router({
   // REGISTER USER -------------------------------------------------------
@@ -28,14 +29,15 @@ export const appRouter = router({
     }
 
     const emailVerificationToken = crypto.randomBytes(32).toString("base64url");
-
+    const RandomProfile = getRandomImageUrl();
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.user.create({
       data: {
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
-        emailVerificationToken
+        emailVerificationToken,
+        image: RandomProfile
       }
     });
 

@@ -71,6 +71,7 @@ model Firm {
   firmId String  @id @default(cuid())
   name   String?
   email  String  @unique
+  image  String?
 
   assistant Assistant[]
   User      User[]
@@ -84,6 +85,7 @@ model Assistant {
   assistantId String  @id @default(cuid())
   name        String?
   email       String  @unique
+  image       String?
 
   firm   Firm?   @relation(fields: [firmId], references: [firmId])
   User   User[]
@@ -91,10 +93,11 @@ model Assistant {
 }
 
 model Admin {
-  adminId        String @id @default(cuid())
+  adminId        String  @id @default(cuid())
   name           String
-  email          String @unique
+  email          String  @unique
   hashedPassword String
+  image          String?
 
   category   Category[]
   categoryId String?

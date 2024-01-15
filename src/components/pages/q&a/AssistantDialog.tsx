@@ -49,14 +49,14 @@ export const AssistantDialog = ({ firmId }: AssistantDialogprops) => {
                   For User:
                 </Label>
                 {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}
-                <UserSelectList />
+                <UserSelectList users={userList.data} />
               </div>
               <div className="flex w-full items-center justify-between py-4">
                 <Label htmlFor="username" className="text-right">
                   Assign Assistant:
                 </Label>
                 {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
-                <UserSelectList />
+                <UserSelectList users={assistnatList.data} />
               </div>
             </div>
             <DialogFooter>
