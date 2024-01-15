@@ -383,12 +383,12 @@ export const appRouter = router({
   }),
   leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
     const session = await getAuthSession();
-    if (!session) {
-      throw new TRPCError({ code: "NOT_FOUND" });
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
     }
     const user = await db.user.findUnique({
       where: {
-        email: session.user.email || ""
+        email: session.user.email
       }
     });
     if (!user) {
@@ -396,7 +396,7 @@ export const appRouter = router({
     }
     await db.user.update({
       where: {
-        email: session.user.email || ""
+        email: session.user.email
       },
       data: {
         firmId: null
@@ -443,6 +443,24 @@ export const appRouter = router({
       take: 12
     });
 
+    return results;
+  }),
+  getClientFirm: publiceProcedure.query(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const results = await db.user.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    if (!results) {
+      throw new Error("No Firm was found");
+    }
     return results;
   })
 });
