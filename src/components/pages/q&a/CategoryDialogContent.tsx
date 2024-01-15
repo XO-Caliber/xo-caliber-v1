@@ -2,7 +2,7 @@ import { CardTitle } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { X } from "lucide-react";
 
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { Input } from "@/components/ui/Input";
 
 interface CategoryDialogContentProps {
@@ -13,7 +13,7 @@ const CategoryDialogContent: React.FC<CategoryDialogContentProps> = ({
   handleCategoryPopOpen,
   createCategory
 }) => {
-  const [category, setCatory] = useState("");
+  // const [category, setCatory] = useState("");
   return (
     <Input placeholder="New category" />
     // <div className="absolute">

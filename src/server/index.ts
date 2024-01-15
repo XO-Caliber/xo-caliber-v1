@@ -379,6 +379,16 @@ export const appRouter = router({
     });
     return { success: true };
   }),
+  getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
+    const page = input;
+
+    const results = await db.user.findMany({
+      skip: (page - 1) * 10,
+      take: 12
+    });
+
+    return results;
+  }),
   getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 
@@ -410,16 +420,21 @@ export const appRouter = router({
 
     return results;
   }),
-  getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
-    const page = input;
+  getFirmAssistant: firmProcedure.input(z.string()).query(async ({ input }) => {
+    const firmId = input;
+    if (!firmId) {
+      throw new TRPCError({ code: "BAD_REQUEST" });
+    }
 
-    const results = await db.user.findMany({
-      skip: (page - 1) * 10,
-      take: 12
+    const results = await db.assistant.findMany({
+      where: {
+        firmId: firmId
+      }
     });
 
     return results;
   })
+  // AssignAssistant: firmProcedure
 });
 
 export type AppRouter = typeof appRouter;
