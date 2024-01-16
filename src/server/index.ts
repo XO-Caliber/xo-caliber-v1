@@ -2,7 +2,7 @@ import { adminProcedure, authProcedure, firmProcedure, publiceProcedure, router 
 import { db } from "@/lib/db";
 import { TRPCError } from "@trpc/server";
 import bcrypt from "bcrypt";
-import { user } from "@/types/user";
+import { firmUser, user } from "@/types/user";
 import {
   sendEmailVerificationRequest,
   sendPasswordResetRequest
@@ -467,6 +467,26 @@ export const appRouter = router({
       throw new Error("No Firm was found");
     }
     return results;
+  }),
+  changeClientCount: adminProcedure.input(firmUser).mutation(async (userData) => {
+    const { count, email } = userData.input;
+    const clientCount = await db.firm.findUnique({
+      where: {
+        email
+      }
+    });
+    if (clientCount?.userCount === count) {
+      throw new TRPCError({ code: "CONFLICT" });
+    }
+    await db.firm.update({
+      where: {
+        email: email
+      },
+      data: {
+        userCount: count
+      }
+    });
+    return { success: true };
   })
   // addImage: publiceProcedure.input(z.string().email()).mutation(async ({ input }) => {
   //   const imageLink = getRandomImageUrl();

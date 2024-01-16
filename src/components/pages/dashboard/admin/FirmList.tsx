@@ -1,6 +1,5 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { UserProfile } from "@/components/utils/UserProfile";
 import { useState } from "react";
 import {
   Pagination,
@@ -12,7 +11,7 @@ import {
   PaginationPrevious
 } from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
-import { GetUserProfile } from "@/components/utils/GetUserProfile";
+import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 
 export const FirmList = () => {
   const [page, setpage] = useState(1);
@@ -26,7 +25,12 @@ export const FirmList = () => {
           <div className="grid w-full grid-cols-2 gap-x-10 gap-y-5">
             {firmList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <GetUserProfile email={user.email} name={user.name} image={user.image} />
+                <GetFirmProfile
+                  email={user.email}
+                  name={user.name}
+                  image={user.image}
+                  userCount={user.userCount}
+                />
               </div>
             ))}
           </div>
