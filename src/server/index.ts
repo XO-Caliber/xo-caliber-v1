@@ -11,6 +11,7 @@ import crypto from "crypto";
 import { z } from "zod";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { use } from "react";
+import { getRandomImageUrl } from "@/components/utils/RandomProfileGenerator";
 
 export const appRouter = router({
   // REGISTER USER -------------------------------------------------------
@@ -28,13 +29,14 @@ export const appRouter = router({
     }
 
     const emailVerificationToken = crypto.randomBytes(32).toString("base64url");
-
+    const RandomImage = getRandomImageUrl();
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.user.create({
       data: {
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
+        image: RandomImage,
         isEmailVerified: false,
         emailVerificationToken
       }
@@ -201,7 +203,8 @@ export const appRouter = router({
       data: {
         firmId: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        image: user.image
       }
     });
 
@@ -281,24 +284,23 @@ export const appRouter = router({
       }
     }
     if (!makeAssistant) {
-      const assistant = await db.assistant.create({
-        data: {
-          assistantId: user.id,
-          name: user.name,
-          email: user.email
-        }
-      });
       await db.user.update({
         where: {
-          id: user.id
+          email: user.email
         },
         data: {
           role: "ASSISTANT"
         }
       });
-      if (!assistant) {
-        throw new TRPCError({ code: "NOT_FOUND" });
-      }
+      const assistant = await db.assistant.create({
+        data: {
+          assistantId: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image
+        }
+      });
+
       console.log(firm);
 
       await db.firm.update({
@@ -389,6 +391,9 @@ export const appRouter = router({
     const user = await db.user.findUnique({
       where: {
         email: session.user.email
+      },
+      include: {
+        Firm: true
       }
     });
     if (!user) {
@@ -463,6 +468,30 @@ export const appRouter = router({
     }
     return results;
   })
+  // addImage: publiceProcedure.input(z.string().email()).mutation(async ({ input }) => {
+  //   const imageLink = getRandomImageUrl();
+  //   const email = input;
+  //   const user = await db.user.findUnique({
+  //     where: {
+  //       email: email
+  //     }
+  //   });
+  //   if (!user) {
+  //     throw new TRPCError({ code: "NOT_FOUND" });
+  //   }
+  //   if (user?.image) {
+  //     throw new TRPCError({ code: "CONFLICT" });
+  //   }
+  //   await db.user.update({
+  //     where: {
+  //       email: user.email
+  //     },
+  //     data: {
+  //       image: imageLink
+  //     }
+  //   });
+  //   return { success: true };
+  // })
 });
 
 export type AppRouter = typeof appRouter;

@@ -1,8 +1,19 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
 import { Button } from "@/components/ui/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/Dialog";
 import { toast } from "@/hooks/use-toast";
+import { Label } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
+import { Input } from "postcss";
 import React, { useState } from "react";
 
 const LeaveFirmForm = () => {
@@ -35,9 +46,25 @@ const LeaveFirmForm = () => {
 
   return (
     <div>
-      <Button variant={"destructive"} isLoading={isLoading} onClick={() => onSubmit()}>
-        Leave Firm
-      </Button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button variant={"destructive"} isLoading={isLoading}>
+            Leave Firm
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Leave Firm</DialogTitle>
+            <DialogDescription>Do you want to really leave this firm</DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button type="submit" onClick={() => onSubmit()}>
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

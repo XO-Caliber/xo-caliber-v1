@@ -11,7 +11,7 @@ const ClientFirmList = () => {
   if (clientFirmList.data?.Firm) {
     return (
       <div>
-        <Card className="m-8  h-[300px] w-[250px] items-center justify-center">
+        <Card className="m-8  h-[300px] w-[250px] p-2">
           <CardHeader className="text-xl font-bold">Your Firm</CardHeader>
           <CardContent>
             <UserProfile
@@ -27,9 +27,9 @@ const ClientFirmList = () => {
     );
   } else {
     return (
-      <div className="m-8 flex">
-        <Card className="h-[300px] w-[250px]">
-          <CardHeader className="text-xl">Your Firm</CardHeader>
+      <div className="m-8 flex ">
+        <Card className="h-[300px] w-[250px] p-2">
+          <CardHeader className="text-xl font-bold">Your Firm</CardHeader>
           <UserProfileLoading />
         </Card>
       </div>
