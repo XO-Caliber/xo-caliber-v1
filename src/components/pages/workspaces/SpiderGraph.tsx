@@ -1,9 +1,16 @@
 "use client";
 import { useEffect } from "react";
-import { Chart } from "chart.js";
+import { Chart, LineElement, PointElement, RadarController, RadialLinearScale } from "chart.js";
+
+interface DataItem {
+  id: number;
+  question: string;
+  mark: number;
+  category: string;
+}
 
 function SpiderGraph() {
-  const data = [
+  const data: DataItem[] = [
     { id: 1, question: "Hey", mark: 90, category: "originality" },
     { id: 2, question: "", mark: 40, category: "humanity" },
     { id: 2, question: "", mark: 50, category: "humanity" },
@@ -12,13 +19,27 @@ function SpiderGraph() {
     { id: 3, question: "", mark: 90, category: "love" },
     { id: 3, question: "", mark: 20, category: "punctuality" },
     { id: 3, question: "", mark: 70, category: "nationality" },
-    { id: 3, question: "", mark: 30, category: "sex" },
-    { id: 3, question: "", mark: 90, category: "lesbian" },
-    { id: 3, question: "", mark: 40, category: "a" },
-    { id: 3, question: "", mark: 90, category: "e" }
+    { id: 3, question: "", mark: 30, category: "f" },
+    { id: 3, question: "", mark: 90, category: "Productivity" }
   ];
 
   useEffect(() => {
+    const canvas = document.getElementById("myChart") as HTMLCanvasElement;
+
+    if (!canvas) {
+      console.error("Canvas element with ID 'myChart' not found.");
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      console.error("Unable to get 2D rendering context for the canvas.");
+      return;
+    }
+
+    Chart.register(RadialLinearScale, RadarController, PointElement, LineElement);
+
     // Group data by category
     const groupedData = data.reduce((acc: any, item) => {
       if (!acc[item.category]) {
@@ -35,13 +56,19 @@ function SpiderGraph() {
     });
 
     // Extract labels and datasets from averages
+    Chart.defaults.backgroundColor = "#ff0000";
     const labels = averages.map((item: any) => item.category);
     const datasets = [
       {
         data: averages.map((item: any) => item.averageMark),
         label: "Applied",
-        borderColor: "#3e95cd",
-        backgroundColor: "rgba(62,149,205,0.1)",
+        fill: true,
+        borderColor: "rgb(255, 99, 132)",
+
+        pointBackgroundColor: "rgb(255, 99, 132)",
+        pointBorderColor: "rgb(255, 99, 132)",
+        pointHoverBackgroundColor: "rgb(255, 99, 132)",
+        pointHoverBorderColor: "rgb(255, 99, 132)",
         borderWidth: 2
       }
     ];
@@ -50,7 +77,6 @@ function SpiderGraph() {
     console.log("Datasets:", datasets);
 
     // Radar chart configuration
-    const ctx = document.getElementById("myChart").getContext("2d");
     const myChart = new Chart(ctx, {
       type: "radar",
       data: {
@@ -58,26 +84,34 @@ function SpiderGraph() {
         datasets: datasets
       },
       options: {
+        layout: { padding: 50 },
         scales: {
-          gridLines: {
-            color: ["black", "red"]
-          },
-          xAxes: [
-            {
-              display: false
+          r: {
+            grid: {
+              color: "gray" // Set the color of the gridlines
+            },
+
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20
             }
-          ]
+          }
         }
       }
     });
+    return () => {
+      // Clean up the chart on component unmount
+      myChart.destroy();
+    };
   }, [data]);
 
   return (
     <>
       {/* Radar chart */}
-      <h1 className="mx-auto mt-10 w-[110px] text-xl font-semibold capitalize ">Radar Chart</h1>
-      <div className="mx-auto my-auto flex h-screen w-[1000px]">
-        <div className="my-auto h-fit w-full rounded-xl  border border-red-600 pt-0  shadow-xl">
+
+      <div className="mx-auto my-auto flex">
+        <div className="my-auto h-[570px] w-[570px] rounded-xl  border border-red-600   shadow-xl">
           <canvas id="myChart">myChart</canvas>
         </div>
       </div>
