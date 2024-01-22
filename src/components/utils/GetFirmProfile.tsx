@@ -101,7 +101,7 @@ export const GetFirmProfile = ({ name, email, image, userCount }: userProfile) =
             <li className="text-sm font-medium">{name}</li>
             <li className="text-sm text-muted">{email}</li>
           </ul>
-          <div className="ml-32 text-sm font-bold">Client Limit: {userCount}</div>
+          <div className="ml-32 text-[13px] font-bold">Client Limit: {userCount}</div>
         </div>
         <CardTitle className="text-md">Change Client Limit</CardTitle>
         <Form {...form}>
