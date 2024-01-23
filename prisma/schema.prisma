@@ -92,15 +92,13 @@ model Assistant {
 }
 
 model Admin {
-  adminId        String  @id @default(cuid())
-  name           String
-  email          String  @unique
-<<<<<<< HEAD
-=======
-  image          String?
->>>>>>> 7f82e2f (feat: Added assistant assigning logic in q&a)
+  adminId String @id @default(cuid())
+  name    String
+  email   String @unique
+
+  image String?
+
   hashedPassword String
-  image          String?
 
   category   Category[]
   categoryId String?
