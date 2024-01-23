@@ -485,7 +485,44 @@ export const appRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  addFirmCategory: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const category = input;
+    const categoryData = await db.category.create({
+      data: {
+        name: category,
+        Firm: {
+          connect: {
+            email: session.user.email
+          }
+        }
+      }
+    });
+    return { success: true };
+  }),
+  getFirmCategory: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const categories = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        category: true
+      }
+    });
+    return categories?.category;
+  }),
+  deleteFirmCategory: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    await db.category.delete({
+      where: {
+        id: input
+      }
+    });
+    return { success: true };
+  })
 });
 
 export type AppRouter = typeof appRouter;

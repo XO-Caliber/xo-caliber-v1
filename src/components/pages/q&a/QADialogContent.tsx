@@ -13,6 +13,7 @@ import { CardHeader, CardTitle } from "@/components/ui/Card";
 import { string } from "zod";
 import { Textarea } from "@/components/ui/Textarea";
 import { Label } from "@/components/ui/Label";
+import { trpc } from "@/app/_trpc/client";
 
 interface QADialogContentProps {
   handleOpen: () => void;
@@ -20,16 +21,17 @@ interface QADialogContentProps {
   datas: { category: string; questions: { id: number; question: string; mark: string }[] }[];
 }
 
-const QADialogContent: React.FC<QADialogContentProps> = ({ handleOpen, handleData, datas }) => {
+const QADialogContent = ({}) => {
+  const categoriesResult = trpc.getFirmCategory.useQuery();
   const [mark, setMark] = useState("10");
   const [question, setQuestion] = useState("");
 
-  const checkLength = () => {
-    if (question.length < 10) {
-      return;
-    }
-    handleData({ question, mark, id: datas[datas.length - 1].questions.length });
-  };
+  // const checkLength = () => {
+  //   if (question.length < 10) {
+  //     return;
+  //   }
+  //   handleData({ question, mark, id: datas[datas.length - 1].questions.length });
+  // };
   // console.log(question, mark);
 
   return (
@@ -67,10 +69,12 @@ const QADialogContent: React.FC<QADialogContentProps> = ({ handleOpen, handleDat
             <SelectValue placeholder="category 1" />
           </SelectTrigger>
           <SelectContent className=" ">
-            <SelectItem value={"20"}>category 1</SelectItem>
-            <SelectItem value={"30"}>category 2</SelectItem>
-            <SelectItem value={"40"}>category 3</SelectItem>
-            <SelectItem value={"50"}>category 4</SelectItem>
+            {categoriesResult.data &&
+              categoriesResult.data.map((cat) => (
+                <SelectItem key={cat.id} value={cat.name}>
+                  {cat.name}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
       </div>
