@@ -435,8 +435,62 @@ export const appRouter = router({
     });
 
     return results;
+<<<<<<< HEAD
   })
   // AssignAssistant: firmProcedure
+=======
+  }),
+
+  clientList: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const clientList = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        User: true
+      }
+    });
+    return clientList?.User;
+  }),
+  assistantList: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const assistantList = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        assistant: true
+      }
+    });
+    return assistantList?.assistant;
+  }),
+  assignAssistant: firmProcedure
+    .input(
+      z.object({
+        user: z.string().email(),
+        assistant: z.string().email()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { user, assistant } = input;
+      await db.assistant.update({
+        where: {
+          email: assistant
+        },
+        data: {
+          User: {
+            connect: {
+              email: user
+            }
+          }
+        }
+      });
+      return { success: true };
+    })
+>>>>>>> 7f82e2f (feat: Added assistant assigning logic in q&a)
 });
 
 export type AppRouter = typeof appRouter;

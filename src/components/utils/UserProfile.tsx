@@ -3,13 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/Avatar";
 
 interface userProfile {
   name: string | null | undefined;
-  email: string | null | undefined;
+  email?: string | null | undefined;
   image?: string | undefined | null;
 }
 
 export const UserProfile = ({ name, email, image }: userProfile) => {
   return (
-    <div className="flex cursor-pointer items-center justify-between rounded-md p-2 text-black hover:bg-secondary">
+    <div className="flex cursor-pointer items-center rounded-md p-2 text-black hover:bg-secondary">
       <Avatar className="h-9 w-9">
         <AvatarImage src={image || ""} alt="profile" />
         <AvatarFallback>{name ? name.slice(0, 2).toUpperCase() : null}</AvatarFallback>
