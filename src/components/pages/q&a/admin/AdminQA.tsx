@@ -68,7 +68,7 @@ const AdminQA = async () => {
           <h1 className="text-2xl font-bold">Welcome back!</h1>
           <p className="text-sm font-normal text-muted">Here’s a list of Bonny davis’s cases</p>
         </div>
-        <AssistantDialog firmId={session?.user.id} />
+        <AssistantDialog />
         <AddQADiaglog />
         <AddCategoryDialog />
         <UserSelectList />

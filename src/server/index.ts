@@ -435,10 +435,6 @@ export const appRouter = router({
     });
 
     return results;
-<<<<<<< HEAD
-  })
-  // AssignAssistant: firmProcedure
-=======
   }),
 
   clientList: firmProcedure.query(async () => {
@@ -490,7 +486,6 @@ export const appRouter = router({
       });
       return { success: true };
     })
->>>>>>> 7f82e2f (feat: Added assistant assigning logic in q&a)
 });
 
 export type AppRouter = typeof appRouter;
