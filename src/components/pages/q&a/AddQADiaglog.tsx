@@ -1,4 +1,7 @@
+"use client";
 import { Button } from "@/components/ui/Button";
+import React, { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -10,8 +13,59 @@ import {
 } from "@/components/ui/Dialog";
 import { PlusSquare } from "lucide-react";
 import QADialogContent from "./QADialogContent";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import { trpc } from "@/app/_trpc/client";
 
 const AddQADiaglog = () => {
+  const [mark, setMark] = useState("10");
+  const [question, setQuestion] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const { mutate: addQA } = trpc.addFirmQuestion.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        router.refresh();
+        toast({
+          title: "Question added",
+          description: "Question was added to the category"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Somethin went wrong",
+        description: "Try again",
+        variant: "destructive"
+      });
+    },
+    onSettled() {
+      setLoading(false);
+    }
+  });
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!question.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter a valid question.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setLoading(true);
+    const data = {
+      question,
+      mark: parseInt(mark),
+      categoryId
+    };
+    addQA(data);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -31,12 +85,21 @@ const AddQADiaglog = () => {
           <DialogDescription>Write a question for your client to answer:</DialogDescription>
 
           {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
-          <QADialogContent />
+          <QADialogContent
+            question={question}
+            mark={mark}
+            setCategoryId={setCategoryId}
+            setMark={setMark}
+            setQuestion={setQuestion}
+            categoryId={categoryId}
+          />
 
           <DialogFooter>
-            <Button type="submit" className="mt-4" variant="primary">
-              Add Question
-            </Button>
+            <form onSubmit={onSubmit}>
+              <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
+                Add Question
+              </Button>
+            </form>
           </DialogFooter>
         </DialogHeader>
       </DialogContent>
