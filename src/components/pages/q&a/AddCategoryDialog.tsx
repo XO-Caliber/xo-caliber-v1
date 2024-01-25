@@ -25,6 +25,10 @@ const AddCategoryDialog = () => {
     onSuccess({ success }) {
       if (success) {
         router.refresh();
+        toast({
+          title: "Deleted Category",
+          description: "The category was deleted successfully"
+        });
       }
     },
     onError(err) {

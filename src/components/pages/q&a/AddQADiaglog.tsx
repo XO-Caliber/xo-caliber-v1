@@ -57,7 +57,14 @@ const AddQADiaglog = () => {
       });
       return;
     }
-
+    if (categoryId === "") {
+      toast({
+        title: "Validation Error",
+        description: "Please select a category",
+        variant: "destructive"
+      });
+      return;
+    }
     setLoading(true);
     const data = {
       question,

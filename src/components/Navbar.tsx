@@ -33,7 +33,7 @@ export const Navbar = async () => {
           <Input placeholder="Search..." className="h-9 border-2" />
           <SearchIcon
             size={17}
-            className="absolute right-0 mr-2 cursor-pointer text-muted 
+            className="absolute right-0 mr-2 cursor-pointer text-secondary-foreground 
                         transition-colors duration-300 
                         hover:text-primary focus:text-primary"
           />
@@ -43,29 +43,31 @@ export const Navbar = async () => {
             className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary "
           >
-            <HomeIcon color="var(--muted)" size={16} className="mx-2" />
-            <p className="mx-1 text-base text-muted hover:text-black">Home</p>
+            <HomeIcon color="var(--accent-foreground)" size={16} className="mx-2" />
+            <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary"
         >
-          <BellIcon color="var(--muted)" size={16} className="mx-2" />
-          <p className="mx-1 text-base text-muted hover:text-black">Notifications</p>
+          <BellIcon color="var(--accent-foreground)" size={16} className="mx-2" />
+          <p className="mx-1 text-base text-secondary-foreground  hover:text-black">
+            Notifications
+          </p>
         </li>
         <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary"
         >
-          <ArrowDown color="var(--muted)" size={16} className="mx-2" />
-          <p className="mx-1 text-base text-muted hover:text-black">Show more</p>
+          <ArrowDown color="var(--accent-foreground)" size={16} className="mx-2" />
+          <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Show more</p>
         </li>
       </ul>
 
       <Link href={"/favorites"}>
         <div className=" cursor-pointer border-2 border-x-0  hover:bg-primary">
-          <div className="m-4 w-20 text-muted hover:text-black">
+          <div className="m-4 w-20 text-secondary-foreground  hover:text-black">
             <span className="mr-0 flex">Favorites</span>
           </div>
         </div>
@@ -75,7 +77,7 @@ export const Navbar = async () => {
       </div>
       <Link href={"/dashboard"}>
         <div className=" cursor-pointer border-2 border-x-0 hover:bg-primary">
-          <div className="m-4 w-20 text-muted hover:text-black">
+          <div className="m-4 w-20 text-secondary-foreground  hover:text-black">
             <span className="mr-0 flex">Dashboard</span>
           </div>
         </div>
