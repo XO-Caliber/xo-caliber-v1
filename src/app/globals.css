@@ -14,6 +14,7 @@
     --popover-foreground: hsl(222.2 84% 4.9%);
 
     --primary: hsl(12 100% 85%);
+    --primary-light: hsla(12, 100%, 85%, 0.1);
     --primary-foreground: hsl(210 40% 98%);
 
     --secondary: hsl(210 40% 96.1%);

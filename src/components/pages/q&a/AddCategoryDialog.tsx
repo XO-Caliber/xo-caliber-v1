@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PlusSquare, Trash, Trash2, Trash2Icon } from "lucide-react";
+import { PlusSquare, X } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
@@ -21,9 +21,11 @@ const AddCategoryDialog = () => {
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
   const categoriesResult = trpc.getFirmCategory.useQuery();
+
   const { mutate: deleteCategory } = trpc.deleteFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
+        categoriesResult.refetch();
         router.refresh();
         toast({
           title: "Deleted Category",
@@ -35,9 +37,11 @@ const AddCategoryDialog = () => {
       console.log(err);
     }
   });
+
   const { mutate: addCategory } = trpc.addFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
+        categoriesResult.refetch();
         toast({
           title: "Category Added",
           description: "Category was added successfully"
@@ -54,6 +58,7 @@ const AddCategoryDialog = () => {
       setLoading(false);
     }
   });
+
   const onSubmit = () => {
     try {
       setLoading(true);
@@ -62,11 +67,7 @@ const AddCategoryDialog = () => {
       console.log("Something went wrong");
     }
   };
-  const onDelete = (id: string) => {
-    try {
-      deleteCategory(id);
-    } catch (err) {}
-  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -93,22 +94,28 @@ const AddCategoryDialog = () => {
           /> */}
           <Input placeholder="New category" onChange={(e) => setCategory(e.target.value)} />
           {categoriesResult.data && (
-            <ul className="space-y-2">
-              {categoriesResult.data.map((cat) => (
+            <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+              {categoriesResult.data.map((category, index) => (
                 <li
-                  key={cat.id}
-                  className="flex w-fit items-center justify-center rounded-md border border-muted-foreground bg-secondary px-2 text-sm"
+                  key={category.id}
+                  className={`flex w-fit items-center justify-center 
+                  rounded-md border p-1 px-3 text-sm ${
+                    index % 2 === 0
+                      ? "bg-primary-light border-primary"
+                      : "border-muted bg-secondary"
+                  }`}
                 >
-                  {cat.name}
-                  <Trash2
-                    className="ml-1  cursor-pointer text-red-500"
-                    size={14}
-                    onClick={() => deleteCategory(cat.id)}
+                  {category.name}
+                  <X
+                    className="ml-1 cursor-pointer text-primary"
+                    size={16}
+                    onClick={() => deleteCategory(category.id)}
                   />
                 </li>
               ))}
             </ul>
           )}
+
           <DialogFooter>
             <Button
               type="submit"
