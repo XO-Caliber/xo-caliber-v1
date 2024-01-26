@@ -19,8 +19,8 @@ export const AddQA: React.FC<AddQAProps> = ({
   handleDelete
 }) => {
   return (
-    <div className={``}>
-      <div className="ml-60 mt-24 flex ">
+    <div>
+      <div className=" mt-24 flex ">
         <div
           className={` mr-4 mt-2 flex w-[1300px] items-center justify-center rounded-lg  ${
             questionNumber % 2 === 0 ? "border-2 border-border bg-white" : "border  bg-border"

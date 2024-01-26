@@ -435,8 +435,130 @@ export const appRouter = router({
     });
 
     return results;
+  }),
+
+  clientList: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const clientList = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        User: true
+      }
+    });
+    return clientList?.User;
+  }),
+  assistantList: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const assistantList = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        assistant: true
+      }
+    });
+    return assistantList?.assistant;
+  }),
+  assignAssistant: firmProcedure
+    .input(
+      z.object({
+        user: z.string().email(),
+        assistant: z.string().email()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { user, assistant } = input;
+      await db.assistant.update({
+        where: {
+          email: assistant
+        },
+        data: {
+          User: {
+            connect: {
+              email: user
+            }
+          }
+        }
+      });
+      return { success: true };
+    }),
+  addFirmCategory: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const category = input;
+    const categoryData = await db.category.create({
+      data: {
+        name: category,
+        Firm: {
+          connect: {
+            email: session.user.email
+          }
+        }
+      }
+    });
+    return { success: true };
+  }),
+  getFirmCategory: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const categories = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        category: true
+      }
+    });
+    return categories?.category;
+  }),
+  deleteFirmCategory: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    await db.category.delete({
+      where: {
+        id: input
+      }
+    });
+    return { success: true };
+  }),
+  addFirmQuestion: firmProcedure
+    .input(
+      z.object({
+        question: z.string(),
+        mark: z.number(),
+        categoryId: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { question, mark, categoryId } = input;
+      await db.question.create({
+        data: {
+          question: question,
+          mark: mark,
+          category: {
+            connect: {
+              id: categoryId
+            }
+          }
+        }
+      });
+      return { success: true };
+    }),
+  getFirmQuestions: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const questions = await db.firm.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        category: true
+      }
+    });
+    return questions?.category;
   })
-  // AssignAssistant: firmProcedure
 });
 
 export type AppRouter = typeof appRouter;

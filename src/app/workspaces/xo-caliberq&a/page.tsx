@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Header from "@/components/Header";
 import { GetListQA } from "@/components/pages/q&a/GetListQA";
-import AdminQA from "@/components/pages/q&a/admin/AdminQA";
+import FirmQA from "@/components/pages/q&a/admin/FirmQA";
 
 const page = async () => {
   const session = await getAuthSession();
@@ -12,7 +12,7 @@ const page = async () => {
           <div>
             <Header className="ml-0">XO Caliber Q&A</Header>
           </div>
-          {session.user.role === "ADMIN" || "FIRM" ? <AdminQA /> : <GetListQA />}
+          {session.user.role === "ADMIN" || "FIRM" ? <FirmQA /> : <GetListQA />}
         </div>
       ) : (
         <div>

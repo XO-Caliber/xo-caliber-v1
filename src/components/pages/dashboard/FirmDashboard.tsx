@@ -21,7 +21,7 @@ export const FirmDashboard = async ({ user }: userProps) => {
           <h2 className="text-sm font-normal ">All details of your clients</h2>
         </li>
         <li className="ml-4  pl-4 font-bold">
-          <Tabs defaultValue="assistant" className="mt-4 w-[300px]">
+          <Tabs defaultValue="assistant" className="mt-4 w-fit rounded-lg border-2 p-2 shadow-lg">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="assistant">Assistant</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>

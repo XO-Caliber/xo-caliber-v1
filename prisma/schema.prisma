@@ -58,10 +58,9 @@ model User {
   isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
 
-  Firm        Firm?      @relation(fields: [firmId], references: [firmId])
-  firmId      String?
-  Assistant   Assistant? @relation(fields: [assistantId], references: [assistantId])
-  assistantId String?
+  Firm       Firm?       @relation(fields: [firmId], references: [firmId])
+  firmId     String?
+  Assistants Assistant[]
 
   accounts Account[]
   sessions Session[]
@@ -93,11 +92,13 @@ model Assistant {
 }
 
 model Admin {
-  adminId        String  @id @default(cuid())
-  name           String
-  email          String  @unique
+  adminId String @id @default(cuid())
+  name    String
+  email   String @unique
+
+  image String?
+
   hashedPassword String
-  image          String?
 
   category   Category[]
   categoryId String?

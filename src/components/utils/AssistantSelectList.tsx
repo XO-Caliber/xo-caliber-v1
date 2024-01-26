@@ -1,5 +1,5 @@
-"use client";
 import React from "react";
+import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 import {
   Select,
   SelectContent,
@@ -8,27 +8,29 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/Select";
+import { Label } from "../ui/Label";
 import { trpc } from "@/app/_trpc/client";
 import { UserProfile } from "./UserProfile";
 
-interface UserProps {
-  getSelectedUser?: (userData: string) => void;
+interface AssistantProps {
+  getSelectedAssistant?: (assistantData: string) => void;
 }
 
-const UserSelectList = ({ getSelectedUser }: UserProps) => {
-  const clientListResult = trpc.clientList.useQuery();
+const AssistantSelectList = ({ getSelectedAssistant }: AssistantProps) => {
+  const assistantListResult = trpc.assistantList.useQuery();
 
-  const clientList = clientListResult?.data || [];
+  // Check if the result has data property
+  const assistantList = assistantListResult?.data || [];
 
   return (
     <div className="flex flex-row items-center justify-center gap-2 px-4">
-      <Select onValueChange={getSelectedUser}>
-        <SelectTrigger className="flex h-16 w-[226px] flex-row overflow-hidden">
+      <Select onValueChange={getSelectedAssistant}>
+        <SelectTrigger className="h-16 w-[226px] overflow-hidden pb-8">
           <SelectValue placeholder="Change" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {clientList.map((user) => (
+            {assistantList.map((user: any) => (
               <SelectItem key={user.id} value={user.email}>
                 <UserProfile image={user.image} name={user.name} email={user.email}></UserProfile>
               </SelectItem>
@@ -40,4 +42,4 @@ const UserSelectList = ({ getSelectedUser }: UserProps) => {
   );
 };
 
-export default UserSelectList;
+export default AssistantSelectList;
