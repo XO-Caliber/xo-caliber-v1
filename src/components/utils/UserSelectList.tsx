@@ -13,14 +13,16 @@ import { Label } from "../ui/Label";
 import { getRandomImageUrl } from "./RandomProfileGenerator";
 
 interface UserSelectListProps {
-  users: { name: string; avatar: string }[] | undefined;
+  users: { name: string; image: string }[] | undefined;
 }
 
 const UserSelectList = ({ users }: UserSelectListProps) => {
-  const [selectedUser, setSelectedUser] = useState<{ name: string; avatar: string } | null>(null);
+  const [selectedUser, setSelectedUser] = useState<{ name: string; image: string } | null>(null);
 
   const handleUserSelect = (user: { name: string; image: string }) => {
     setSelectedUser(user);
+    console.log(user.name);
+    console.log("In Select");
   };
 
   const randomImage = getRandomImageUrl();
@@ -28,9 +30,9 @@ const UserSelectList = ({ users }: UserSelectListProps) => {
   return (
     <div className="flex flex-row items-center justify-center gap-2 px-4">
       <Avatar className="h-9 w-9">
-        <AvatarImage src={randomImage} alt="profile" />
+        <AvatarImage src={selectedUser?.image || randomImage} alt="profile" />
       </Avatar>
-      <Label className="text-base font-semibold">{selectedUser?.name || "Select a user"}</Label>
+      <Label className="text-base font-semibold">{selectedUser?.name}</Label>
       <Select>
         <SelectTrigger className="w-[116px]">
           <SelectValue placeholder="Change" />
