@@ -23,17 +23,17 @@ const UserSelectList = ({ getSelectedUser }: UserProps) => {
   return (
     <div className="flex flex-row items-center justify-center gap-2 px-4">
       <Select onValueChange={getSelectedUser}>
-        <SelectTrigger className="flex h-16 w-[226px] flex-row overflow-hidden">
-          <SelectValue placeholder="Change" />
+        <SelectTrigger className="flex flex-row overflow-hidden">
+          <SelectValue placeholder="Change User" />
         </SelectTrigger>
         <SelectContent>
-          <SelectGroup>
-            {clientList.map((user) => (
-              <SelectItem key={user.id} value={user.email}>
-                <UserProfile image={user.image} name={user.name} email={user.email}></UserProfile>
-              </SelectItem>
-            ))}
-          </SelectGroup>
+          {/* <SelectGroup> */}
+          {clientList.map((user) => (
+            <SelectItem key={user.id} value={user.email}>
+              <UserProfile image={user.image} name={user.name} email={user.email}></UserProfile>
+            </SelectItem>
+          ))}
+          {/* </SelectGroup> */}
         </SelectContent>
       </Select>
     </div>

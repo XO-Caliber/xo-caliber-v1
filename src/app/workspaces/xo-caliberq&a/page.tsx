@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Header from "@/components/Header";
 import { GetListQA } from "@/components/pages/q&a/GetListQA";
-import FirmQA from "@/components/pages/q&a/admin/FirmQA";
+import FirmQA from "@/components/pages/q&a/firm/FirmQA";
 
 const page = async () => {
   const session = await getAuthSession();

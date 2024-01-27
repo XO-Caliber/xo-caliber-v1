@@ -25,8 +25,8 @@ const AssistantSelectList = ({ getSelectedAssistant }: AssistantProps) => {
   return (
     <div className="flex flex-row items-center justify-center gap-2 px-4">
       <Select onValueChange={getSelectedAssistant}>
-        <SelectTrigger className="h-16 w-[226px] overflow-hidden pb-8">
-          <SelectValue placeholder="Change" />
+        <SelectTrigger className="overflow-hidden">
+          <SelectValue placeholder="Change Assistant" />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>

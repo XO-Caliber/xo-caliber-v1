@@ -9,7 +9,7 @@ interface userProfile {
 
 export const UserProfile = ({ name, email, image }: userProfile) => {
   return (
-    <div className="flex cursor-pointer items-center rounded-md p-2 text-black hover:bg-secondary">
+    <div className="flex cursor-pointer items-center rounded-md p-1 text-black hover:bg-secondary">
       <Avatar className="h-9 w-9">
         <AvatarImage src={image || ""} alt="profile" />
         <AvatarFallback>{name ? name.slice(0, 2).toUpperCase() : null}</AvatarFallback>

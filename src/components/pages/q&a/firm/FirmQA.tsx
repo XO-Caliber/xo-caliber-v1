@@ -5,7 +5,7 @@ import AddCategoryDialog from "../AddCategoryDialog";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { trpc } from "@/app/_trpc/client";
 
-const AdminQA = async () => {
+const FirmQA = async () => {
   // const categories = trpc.getFirmQuestions.useQuery();
 
   const session = await getAuthSession();
@@ -34,4 +34,4 @@ const AdminQA = async () => {
   );
 };
 
-export default AdminQA;
+export default FirmQA;
