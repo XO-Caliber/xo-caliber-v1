@@ -1,3 +1,5 @@
+"use client";
+import React from "react";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { AssistantDialog } from "../AssistantDialog";
 import AddQADiaglog from "../AddQADiaglog";
@@ -5,10 +7,9 @@ import AddCategoryDialog from "../AddCategoryDialog";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { trpc } from "@/app/_trpc/client";
 
-const FirmQA = async () => {
-  // const categories = trpc.getFirmQuestions.useQuery();
-
-  const session = await getAuthSession();
+const FirmQA = () => {
+  const { data: categories } = trpc.getFirmQuestions.useQuery();
+  console.log(categories);
 
   return (
     <div className="m-4 ml-56 text-xl ">

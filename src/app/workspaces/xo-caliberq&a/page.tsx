@@ -1,3 +1,4 @@
+import React from "react";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import Header from "@/components/Header";
 import { GetListQA } from "@/components/pages/q&a/GetListQA";

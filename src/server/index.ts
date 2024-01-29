@@ -549,15 +549,21 @@ export const appRouter = router({
   getFirmQuestions: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
-    const questions = await db.firm.findUnique({
-      where: {
-        email: session.user.email
-      },
+    // const questions = await db.firm.findUnique({
+    //   where: {
+    //     email: session.user.email
+    //   },
+    //   include: {
+    //     category: true
+    //   }
+    // });
+    const res = await db.category.findMany({
       include: {
-        category: true
+        questions: true
       }
     });
-    return questions?.category;
+    const firmQuestions = res.filter((questions) => questions.firmId === session.user.id);
+    return firmQuestions;
   })
 });
 
