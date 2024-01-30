@@ -15,7 +15,7 @@ interface SingleQAProps {
   id: string;
 }
 
-export const GetSingleQA: React.FC<SingleQAProps> = ({ questionNumber, question, mark, id }) => {
+export const SingleQA: React.FC<SingleQAProps> = ({ questionNumber, question, mark, id }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const handleChange = (value: string) => {
     setSelectedValue(value);

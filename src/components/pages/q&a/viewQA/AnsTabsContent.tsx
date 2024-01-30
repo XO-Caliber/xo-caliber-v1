@@ -1,7 +1,7 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import React from "react";
 
-import { GetSingleQA } from "./GetSingleQA";
+import { SingleQA } from "./SingleQA";
 
 interface AnsTabsContentProps {
   data: any;
@@ -13,7 +13,7 @@ const AnsTabsContent: React.FC<AnsTabsContentProps> = ({ data }) => {
       {data.map((category: any, index: any) => (
         <TabsContent key={index} value={category.name}>
           {category.questions.map((question: any, questionIndex: any) => (
-            <GetSingleQA
+            <SingleQA
               key={questionIndex}
               questionNumber={questionIndex + 1}
               question={question.question}

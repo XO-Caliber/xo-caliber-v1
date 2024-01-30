@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
-import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
-import AnsTabsContent from "../AnsTabsContent";
+import QATabsList from "../viewQA/QATabsList";
+import AnsTabsContent from "../viewQA/AnsTabsContent";
 
 const ClientQA = () => {
   const categoriesList = trpc.getClientQuestions.useQuery();

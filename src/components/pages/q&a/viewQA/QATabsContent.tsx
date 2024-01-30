@@ -1,6 +1,6 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import React from "react";
-import AddQA from "@/components/pages/q&a/AddQA";
+import AddQA from "@/components/pages/q&a/addQA/AddQA";
 
 interface QATabsContentProps {
   data: any;
