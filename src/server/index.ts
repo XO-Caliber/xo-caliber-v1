@@ -572,6 +572,22 @@ export const appRouter = router({
       }
     });
     return { success: true };
+  }),
+  getClientQuestions: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const userData = await db.user.findUnique({
+      where: {
+        email: session?.user.email
+      }
+    });
+    const questions = await db.category.findMany({
+      include: {
+        questions: true
+      }
+    });
+    const clientQuestion = questions.filter((questions) => questions.firmId === userData?.firmId);
+    return clientQuestion;
   })
 });
 

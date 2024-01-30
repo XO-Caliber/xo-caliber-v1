@@ -61,6 +61,7 @@ model User {
   Firm       Firm?       @relation(fields: [firmId], references: [firmId])
   firmId     String?
   Assistants Assistant[]
+  marks      Json?
 
   accounts Account[]
   sessions Session[]
