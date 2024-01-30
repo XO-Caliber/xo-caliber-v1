@@ -6,21 +6,20 @@ interface AddQAProps {
   questionNumber: number;
   question: string;
   mark: string;
-  id: number;
+  id: string;
 
-  handleDelete: (questionNumber: number) => void;
+  handleDelete: (questionId: string) => void;
 }
 export const AddQA: React.FC<AddQAProps> = ({
   questionNumber,
   question,
   mark,
   id,
-
   handleDelete
 }) => {
   return (
     <div>
-      <div className=" mt-24 flex ">
+      <div className=" flex ">
         <div
           className={` mr-4 mt-2 flex w-[1300px] items-center justify-center rounded-lg  ${
             questionNumber % 2 === 0 ? "border-2 border-border bg-white" : "border  bg-border"

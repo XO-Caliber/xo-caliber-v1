@@ -3,7 +3,7 @@ import QATabsTrigger from "./QATabsTrigger";
 import { TabsList } from "@/components/ui/Tabs";
 
 interface QATabsListProps {
-  categories: string[];
+  categories: any;
 }
 const QATabsList: React.FC<QATabsListProps> = ({ categories }) => {
   return (

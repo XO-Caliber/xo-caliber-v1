@@ -564,6 +564,14 @@ export const appRouter = router({
     });
     const firmQuestions = res.filter((questions) => questions.firmId === session.user.id);
     return firmQuestions;
+  }),
+  firmQuestionDelete: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    await db.question.delete({
+      where: {
+        id: input
+      }
+    });
+    return { success: true };
   })
 });
 
