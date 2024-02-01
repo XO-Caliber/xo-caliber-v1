@@ -10,7 +10,7 @@ interface AddQAProps {
 
   handleDelete: (questionId: string) => void;
 }
-export const AddQA: React.FC<AddQAProps> = ({
+export const ViewFirmQA: React.FC<AddQAProps> = ({
   questionNumber,
   question,
   mark,
@@ -18,10 +18,30 @@ export const AddQA: React.FC<AddQAProps> = ({
   handleDelete
 }) => {
   return (
-    <div>
-      <div className=" flex ">
-        <div
-          className={` mr-4 mt-2 flex w-[1300px] items-center justify-center rounded-lg  ${
+    <section className="mb-3 flex ">
+      <ul
+        className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4 
+        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
+      >
+        <li>{questionNumber}.</li>
+        <li className="w-full pl-4 text-left">{question}</li>
+        <li>
+          <XCircle
+            size={24}
+            className={"mr-2 cursor-pointer text-red-500 hover:text-red-400 "}
+            onClick={() => handleDelete(id)}
+          />
+        </li>
+      </ul>
+      <div
+        className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
+      ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
+      >
+        {mark}
+      </div>
+      {/* <div className="flex "> */}
+      {/* <div
+          className={`mr-4 mt-2 flex w-[1300px] items-center justify-center rounded-lg bg-black  ${
             questionNumber % 2 === 0 ? "border-2 border-border bg-white" : "border  bg-border"
           }`}
         >
@@ -39,12 +59,6 @@ export const AddQA: React.FC<AddQAProps> = ({
           >
             {question}
           </div>
-          <XCircle
-            className={`mr-8 cursor-pointer text-red-700 hover:text-red-400 ${
-              questionNumber % 2 == 0 ? "bg-white" : "bg-border"
-            }`}
-            onClick={() => handleDelete(id)}
-          />
         </div>
         <div
           className={`${
@@ -54,9 +68,9 @@ export const AddQA: React.FC<AddQAProps> = ({
         >
           {mark}
         </div>
-      </div>
-    </div>
+      </div> */}
+    </section>
   );
 };
 
-export default AddQA;
+export default ViewFirmQA;

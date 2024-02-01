@@ -7,9 +7,9 @@ interface QATabsTriggerProps {
 const QATabsTrigger: React.FC<QATabsTriggerProps> = ({ categories }) => {
   return (
     <div>
-      {categories.map((cat) => (
-        <TabsTrigger key={cat} value={cat}>
-          {cat.toUpperCase()}
+      {categories.map((categorie) => (
+        <TabsTrigger key={categorie} value={categorie}>
+          {categorie.charAt(0).toUpperCase() + categorie.slice(1)}
         </TabsTrigger>
       ))}
     </div>

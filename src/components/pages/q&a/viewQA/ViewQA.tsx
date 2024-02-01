@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "./QATabsList";
-import QATabsContent from "./QATabsContent";
+import FirmQATabsContent from "./FirmQATabsContent";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
@@ -52,10 +52,10 @@ export const ViewQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="absolute left-[300px] mt-4">
+        <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
-            <QATabsContent data={categories} handleDelete={handleDelete} />
+            <FirmQATabsContent data={categories} handleDelete={handleDelete} />
           </Tabs>
         </div>
       ) : (

@@ -7,7 +7,7 @@ interface QATabsListProps {
 }
 const QATabsList: React.FC<QATabsListProps> = ({ categories }) => {
   return (
-    <div>
+    <div className="flex justify-center">
       <TabsList>
         <QATabsTrigger categories={categories} />
       </TabsList>

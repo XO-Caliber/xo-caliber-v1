@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import { trpc } from "@/app/_trpc/client";
+import ClientTabsContent from "../viewQA/ClientTabsContent";
 import QATabsList from "../viewQA/QATabsList";
-import AnsTabsContent from "../viewQA/AnsTabsContent";
 
 const ClientQA = () => {
   const categoriesList = trpc.getClientQuestions.useQuery();
@@ -29,7 +29,7 @@ const ClientQA = () => {
           <div className="relative right-[550px] m-24  flex items-center justify-center">
             <Tabs>
               <QATabsList categories={catArray} />
-              <AnsTabsContent data={categories} />
+              <ClientTabsContent data={categories} />
             </Tabs>
           </div>
         )}
