@@ -4,8 +4,15 @@ import { Tabs } from "@/components/ui/Tabs";
 import { trpc } from "@/app/_trpc/client";
 import ClientTabsContent from "../viewQA/ClientTabsContent";
 import QATabsList from "../viewQA/QATabsList";
+import { UserProfile } from "@/components/utils/UserProfile";
 
-const ClientQA = () => {
+interface userProfile {
+  name: string | null | undefined;
+  email?: string | null | undefined;
+  image?: string | undefined | null;
+}
+
+const ClientQA = ({ name, email, image }: userProfile) => {
   const categoriesList = trpc.getClientQuestions.useQuery();
   const { data: categories } = categoriesList;
   console.log(categories);
@@ -23,17 +30,22 @@ const ClientQA = () => {
   const catArray = Array.from(listCat);
 
   return (
-    <div className="w-1400px m-4 ml-56 h-fit text-xl ">
-      <div className="absolute left-[800px] mt-4">
-        {listCat.size > 0 && (
-          <div className="relative right-[550px] m-24  flex items-center justify-center">
-            <Tabs>
-              <QATabsList categories={catArray} />
-              <ClientTabsContent data={categories} />
-            </Tabs>
-          </div>
-        )}
+    <div className="m-4 ml-56 text-xl">
+      <div className="flex items-center justify-between px-10">
+        <div className="px-4">
+          <h1 className="text-2xl font-bold">Answers all the questions!</h1>
+          <p className="text-sm font-normal text-muted">Here’s a list questions to answer </p>
+        </div>
+        <UserProfile name={name} email={email} image={image} />
       </div>
+      {listCat.size > 0 && (
+        <div className="mt-4">
+          <Tabs>
+            <QATabsList categories={catArray} />
+            <ClientTabsContent data={categories} />
+          </Tabs>
+        </div>
+      )}
     </div>
   );
 };

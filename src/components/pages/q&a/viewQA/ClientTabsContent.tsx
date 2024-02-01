@@ -9,7 +9,7 @@ interface AnsTabsContentProps {
 
 const ClientTabsContent: React.FC<AnsTabsContentProps> = ({ data }) => {
   return (
-    <div>
+    <div className="m-4">
       {data.map((category: any, index: any) => (
         <TabsContent key={index} value={category.name}>
           {category.questions.map((question: any, questionIndex: any) => (

@@ -20,7 +20,7 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
   return (
     <section className="mb-3 flex ">
       <ul
-        className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4 
+        className={` mr-2 flex w-full items-center justify-between rounded-lg border-2  px-4 
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
       >
         <li>{questionNumber}.</li>

@@ -24,11 +24,26 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({ questionNumber, question
   return (
     <section className="mb-3 flex ">
       <ul
-        className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4 
+        className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  px-4
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
       >
         <li>{questionNumber}.</li>
         <li className="w-full pl-4 text-left">{question}</li>
+        <li>
+          <Select onValueChange={handleChange}>
+            <SelectTrigger
+              className={`w-[150px] ${selectedValue === "yes" && "bg-black text-white"} ${
+                selectedValue === "no" && "bg-muted text-white"
+              }`}
+            >
+              <SelectValue placeholder="Select" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="yes">Yes</SelectItem>
+              <SelectItem value="no">No</SelectItem>
+            </SelectContent>
+          </Select>
+        </li>
       </ul>
       <div
         className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 

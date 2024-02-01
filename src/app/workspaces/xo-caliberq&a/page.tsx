@@ -13,7 +13,15 @@ const page = async () => {
           <div>
             <Header className="ml-0">XO Caliber Q&A</Header>
           </div>
-          {session.user.role === "FIRM" ? <FirmQA /> : <ClientQA />}
+          {session.user.role === "FIRM" ? (
+            <FirmQA />
+          ) : (
+            <ClientQA
+              name={session.user.name}
+              email={session.user.email}
+              image={session.user.image}
+            />
+          )}
         </div>
       ) : (
         <div>
