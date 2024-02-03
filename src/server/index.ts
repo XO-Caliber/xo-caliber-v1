@@ -546,6 +546,30 @@ export const appRouter = router({
       });
       return { success: true };
     }),
+  updateFirmQuestion: firmProcedure
+    .input(
+      z.object({
+        questionId: z.string(),
+        question: z.string(),
+        mark: z.number(),
+        categoryId: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { question, mark, categoryId } = input;
+      await db.question.create({
+        data: {
+          question: question,
+          mark: mark,
+          category: {
+            connect: {
+              id: categoryId
+            }
+          }
+        }
+      });
+      return { success: true };
+    }),
   getFirmQuestions: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });

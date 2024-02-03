@@ -36,7 +36,8 @@ export const ViewQA = () => {
     },
     onError(err) {
       toast({
-        title: "Something went wrong"
+        title: "Something went wrong",
+        description: `${err}`
       });
     }
   });

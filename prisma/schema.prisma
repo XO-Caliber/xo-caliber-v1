@@ -131,7 +131,7 @@ model Category {
 
 model Question {
   id         String   @id @default(cuid())
-  question   String
+  question   String   @db.Text
   mark       Int
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])

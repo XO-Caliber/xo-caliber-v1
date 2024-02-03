@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PlusSquare } from "lucide-react";
+import { PenBox, PlusSquare } from "lucide-react";
 import QADialogContent from "./QADialogContent";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -37,7 +37,7 @@ const AddQADiaglog = () => {
     onError(err) {
       toast({
         title: "Somethin went wrong",
-        description: "Try again",
+        description: `Try again ${err}`,
         variant: "destructive"
       });
     },
