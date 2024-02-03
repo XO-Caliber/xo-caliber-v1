@@ -61,7 +61,7 @@ model User {
   Firm       Firm?       @relation(fields: [firmId], references: [firmId])
   firmId     String?
   Assistants Assistant[]
-  marks      Json?
+  answer     Answer[]
 
   accounts Account[]
   sessions Session[]
@@ -131,8 +131,16 @@ model Category {
 
 model Question {
   id         String   @id @default(cuid())
-  question   String
+  question   String   @db.Text
   mark       Int
   categoryId String
   category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Answer {
+  id         String  @id @default(cuid())
+  answer     Answers
+  questionId String
+  user       User    @relation(fields: [userId], references: [id])
+  userId     String
 }

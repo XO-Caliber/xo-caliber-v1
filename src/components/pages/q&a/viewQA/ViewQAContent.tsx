@@ -10,7 +10,7 @@ interface AddQAProps {
 
   handleDelete: (questionId: string) => void;
 }
-export const ViewFirmQA: React.FC<AddQAProps> = ({
+export const ViewQAContent: React.FC<AddQAProps> = ({
   questionNumber,
   question,
   mark,
@@ -21,7 +21,7 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
     <section className="mb-3 flex ">
       <ul
         className={` mr-2 flex w-full items-center justify-between rounded-lg border-2  px-4 
-        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
+        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
       >
         <li>{questionNumber}.</li>
         <li className="w-full pl-4 text-left">{question}</li>
@@ -35,7 +35,7 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
       </ul>
       <div
         className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
-      ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
+      ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
       >
         {mark}
       </div>
@@ -73,4 +73,4 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
   );
 };
 
-export default ViewFirmQA;
+export default ViewQAContent;
