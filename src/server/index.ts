@@ -407,6 +407,24 @@ export const appRouter = router({
     });
     return { success: true };
   }),
+  getClientFirm: publiceProcedure.query(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const results = await db.user.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    if (!results) {
+      throw new Error("No Firm was found");
+    }
+    return results;
+  }),
   changeClientCount: adminProcedure
     .input(
       z.object({
