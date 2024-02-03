@@ -381,6 +381,59 @@ export const appRouter = router({
     });
     return { success: true };
   }),
+  leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const user = await db.user.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    await db.user.update({
+      where: {
+        email: session.user.email
+      },
+      data: {
+        firmId: null
+      }
+    });
+    return { success: true };
+  }),
+  changeClientCount: adminProcedure
+    .input(
+      z.object({
+        count: z.number(),
+        email: z.string().email()
+      })
+    )
+    .mutation(async (userData) => {
+      const { count, email } = userData.input;
+      const clientCount = await db.firm.findUnique({
+        where: {
+          email
+        }
+      });
+      if (clientCount?.userCount === count) {
+        throw new TRPCError({ code: "CONFLICT" });
+      }
+      await db.firm.update({
+        where: {
+          email: email
+        },
+        data: {
+          userCount: count
+        }
+      });
+      return { success: true };
+    }),
   getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 

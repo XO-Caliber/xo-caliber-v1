@@ -12,6 +12,7 @@ import {
   PaginationPrevious
 } from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
+import { GetUserProfile } from "@/components/utils/GetUserProfile";
 
 interface userListProps {
   userId?: string | undefined;
@@ -35,7 +36,7 @@ export const UserList = ({ userId }: userListProps) => {
           <div className="grid w-full grid-cols-2 gap-x-10 gap-y-5">
             {userList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <UserProfile email={user.email} name={user.name} image={user.image} />
+                <GetUserProfile email={user.email} name={user.name} image={user.image} />
               </div>
             ))}
           </div>
