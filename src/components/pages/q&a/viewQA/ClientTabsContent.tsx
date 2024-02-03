@@ -5,9 +5,10 @@ import { ViewClientQA } from "./ViewClientQA";
 
 interface AnsTabsContentProps {
   data: any;
+  userId: string;
 }
 
-const ClientTabsContent: React.FC<AnsTabsContentProps> = ({ data }) => {
+const ClientTabsContent: React.FC<AnsTabsContentProps> = ({ data, userId }) => {
   return (
     <div className="m-4">
       {data.map((category: any, index: any) => (
@@ -18,7 +19,8 @@ const ClientTabsContent: React.FC<AnsTabsContentProps> = ({ data }) => {
               questionNumber={questionIndex + 1}
               question={question.question}
               mark={question.mark}
-              id={question.id}
+              questionId={question.id}
+              userId={userId}
             />
           ))}
         </TabsContent>

@@ -18,6 +18,7 @@ const page = async () => {
           {session.user.role === "ADMIN" && <AdminQA />}
           {session.user.role === "INDIVIDUAL" && (
             <ClientQA
+              userId={session.user.id}
               name={session.user.name}
               email={session.user.email}
               image={session.user.image}

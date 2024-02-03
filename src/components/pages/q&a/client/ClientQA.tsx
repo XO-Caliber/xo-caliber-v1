@@ -7,12 +7,13 @@ import QATabsList from "../viewQA/QATabsList";
 import { UserProfile } from "@/components/utils/UserProfile";
 
 interface userProfile {
+  userId: string;
   name: string | null | undefined;
   email?: string | null | undefined;
   image?: string | undefined | null;
 }
 
-const ClientQA = ({ name, email, image }: userProfile) => {
+const ClientQA = ({ userId, name, email, image }: userProfile) => {
   const categoriesList = trpc.getClientQuestions.useQuery();
   const { data: categories } = categoriesList;
   console.log(categories);
@@ -42,7 +43,7 @@ const ClientQA = ({ name, email, image }: userProfile) => {
         <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
-            <ClientTabsContent data={categories} />
+            <ClientTabsContent data={categories} userId={userId} />
           </Tabs>
         </div>
       )}

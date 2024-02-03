@@ -12,6 +12,7 @@ import { z } from "zod";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { use } from "react";
 import { getRandomImageUrl } from "@/components/utils/RandomProfileGenerator";
+import { Answers } from "@prisma/client";
 
 export const appRouter = router({
   // REGISTER USER -------------------------------------------------------
@@ -754,7 +755,26 @@ export const appRouter = router({
     });
     const clientQuestion = questions.filter((questions) => questions.firmId === userData?.firmId);
     return clientQuestion;
-  })
+  }),
+  addUserAnswer: publiceProcedure
+    .input(
+      z.object({
+        questionId: z.string(),
+        userId: z.string(),
+        answer: z.enum(["YES", "NO"])
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { questionId, userId, answer } = input;
+      await db.answer.create({
+        data: {
+          questionId: questionId,
+          userId: userId,
+          answer: answer
+        }
+      });
+      return { success: true };
+    })
 });
 
 export type AppRouter = typeof appRouter;
