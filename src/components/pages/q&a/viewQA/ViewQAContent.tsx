@@ -1,5 +1,5 @@
 import { Input } from "@/components/ui/Input";
-import { PenBox, XCircle } from "lucide-react";
+import { XCircle } from "lucide-react";
 import React from "react";
 
 interface AddQAProps {
@@ -20,14 +20,11 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
   return (
     <section className="mb-3 flex ">
       <ul
-        className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 p-4 
+        className={` mr-2 flex w-full items-center justify-between rounded-lg border-2  px-4 
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
       >
         <li>{questionNumber}.</li>
-        <li className="mr-2 w-full pl-4 text-left text-base">{question}</li>
-        <li>
-          {/* <PenBox size={22} className="mr-4 cursor-pointer text-secondary-foreground" /> */}
-        </li>
+        <li className="w-full pl-4 text-left">{question}</li>
         <li>
           <XCircle
             size={24}
@@ -37,7 +34,7 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
         </li>
       </ul>
       <div
-        className={`flex min-w-16 justify-between gap-2 rounded-lg border-2 border-border p-4 text-center text-lg
+        className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
       ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}`}
       >
         {mark}

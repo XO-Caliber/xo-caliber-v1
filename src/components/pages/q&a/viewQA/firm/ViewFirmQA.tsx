@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
-import QATabsList from "./QATabsList";
-import FirmQATabsContent from "./FirmQATabsContent";
+import QATabsList from "../QATabsList";
+import FirmQATabsContent from "../AllQATabsContent";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
+import AllQATabsContent from "../AllQATabsContent";
 
-export const ViewQA = () => {
+export const ViewFirmQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   const categoriesList = trpc.getFirmQuestions.useQuery();
@@ -56,7 +57,7 @@ export const ViewQA = () => {
         <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
-            <FirmQATabsContent data={categories} handleDelete={handleDelete} />
+            <AllQATabsContent data={categories} handleDelete={handleDelete} />
           </Tabs>
         </div>
       ) : (

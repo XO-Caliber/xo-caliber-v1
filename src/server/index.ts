@@ -381,6 +381,77 @@ export const appRouter = router({
     });
     return { success: true };
   }),
+  leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const user = await db.user.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    await db.user.update({
+      where: {
+        email: session.user.email
+      },
+      data: {
+        firmId: null
+      }
+    });
+    return { success: true };
+  }),
+  getClientFirm: publiceProcedure.query(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const results = await db.user.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        Firm: true
+      }
+    });
+    if (!results) {
+      throw new Error("No Firm was found");
+    }
+    return results;
+  }),
+  changeClientCount: adminProcedure
+    .input(
+      z.object({
+        count: z.number(),
+        email: z.string().email()
+      })
+    )
+    .mutation(async (userData) => {
+      const { count, email } = userData.input;
+      const clientCount = await db.firm.findUnique({
+        where: {
+          email
+        }
+      });
+      if (clientCount?.userCount === count) {
+        throw new TRPCError({ code: "CONFLICT" });
+      }
+      await db.firm.update({
+        where: {
+          email: email
+        },
+        data: {
+          userCount: count
+        }
+      });
+      return { success: true };
+    }),
   getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 
@@ -490,7 +561,7 @@ export const appRouter = router({
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
     const category = input;
-    const categoryData = await db.category.create({
+    await db.category.create({
       data: {
         name: category,
         Firm: {
@@ -573,14 +644,6 @@ export const appRouter = router({
   getFirmQuestions: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
-    // const questions = await db.firm.findUnique({
-    //   where: {
-    //     email: session.user.email
-    //   },
-    //   include: {
-    //     category: true
-    //   }
-    // });
     const res = await db.category.findMany({
       include: {
         questions: true
@@ -590,6 +653,85 @@ export const appRouter = router({
     return firmQuestions;
   }),
   firmQuestionDelete: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    await db.question.delete({
+      where: {
+        id: input
+      }
+    });
+    return { success: true };
+  }),
+  addAdminCategory: adminProcedure.input(z.string()).mutation(async ({ input }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const category = input;
+    await db.category.create({
+      data: {
+        name: category,
+        Admin: {
+          connect: {
+            email: session.user.email
+          }
+        }
+      }
+    });
+    return { success: true };
+  }),
+  getAdminCategory: adminProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const categories = await db.admin.findUnique({
+      where: {
+        email: session.user.email
+      },
+      include: {
+        category: true
+      }
+    });
+    return categories?.category;
+  }),
+  deleteAdminCategory: adminProcedure.input(z.string()).mutation(async ({ input }) => {
+    await db.category.delete({
+      where: {
+        id: input
+      }
+    });
+    return { success: true };
+  }),
+  addAdminQuestion: adminProcedure
+    .input(
+      z.object({
+        question: z.string(),
+        mark: z.number(),
+        categoryId: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { question, mark, categoryId } = input;
+      await db.question.create({
+        data: {
+          question: question,
+          mark: mark,
+          category: {
+            connect: {
+              id: categoryId
+            }
+          }
+        }
+      });
+      return { success: true };
+    }),
+  getAdminQuestions: adminProcedure.query(async () => {
+    const session = await getAuthSession();
+    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    const res = await db.category.findMany({
+      include: {
+        questions: true
+      }
+    });
+    const adminQuestions = res.filter((questions) => questions.adminId === session.user.id);
+    return adminQuestions;
+  }),
+  adminQuestionDelete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
     await db.question.delete({
       where: {
         id: input

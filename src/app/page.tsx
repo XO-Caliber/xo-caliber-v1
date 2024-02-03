@@ -12,6 +12,7 @@ export default async function Home() {
           <Button variant={"primary"}>login</Button>
           <Button variant={"secondary"}>signup</Button>
           <h1>{session?.user.role}</h1>
+          <h1>{session?.user.email}</h1>
         </div>
       </div>
     </div>
