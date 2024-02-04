@@ -5,7 +5,7 @@ import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllQATabsContent from "../AllQATabsContent";
+import AllTabsContent from "../AllTabsContent";
 
 export const ViewAdminQA = () => {
   const router = useRouter();
@@ -56,7 +56,7 @@ export const ViewAdminQA = () => {
         <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
-            <AllQATabsContent data={categories} handleDelete={handleDelete} />
+            <AllTabsContent data={categories} handleDelete={handleDelete} />
           </Tabs>
         </div>
       ) : (

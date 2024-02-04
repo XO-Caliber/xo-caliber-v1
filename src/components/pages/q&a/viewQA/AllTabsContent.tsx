@@ -7,7 +7,7 @@ interface QATabsContentProps {
   handleDelete: (questionId: string) => void;
 }
 
-const AllQATabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete }) => {
+const AllTabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete }) => {
   return (
     <div className="m-4">
       {data.map((category: any, index: any) => (
@@ -28,4 +28,4 @@ const AllQATabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete }) 
   );
 };
 
-export default AllQATabsContent;
+export default AllTabsContent;
