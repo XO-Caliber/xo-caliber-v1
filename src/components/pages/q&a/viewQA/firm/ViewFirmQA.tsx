@@ -2,11 +2,11 @@
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "../QATabsList";
-import FirmQATabsContent from "../AllQATabsContent";
+import FirmQATabsContent from "../AllTabsContent";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllQATabsContent from "../AllQATabsContent";
+import AllTabsContent from "../AllTabsContent";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
@@ -57,7 +57,7 @@ export const ViewFirmQA = () => {
         <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
-            <AllQATabsContent data={categories} handleDelete={handleDelete} />
+            <AllTabsContent data={categories} handleDelete={handleDelete} />
           </Tabs>
         </div>
       ) : (
