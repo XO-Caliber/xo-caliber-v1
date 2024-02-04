@@ -10,7 +10,7 @@ interface AddQAProps {
 
   handleDelete: (questionId: string) => void;
 }
-export const ViewFirmQA: React.FC<AddQAProps> = ({
+export const ViewQAContent: React.FC<AddQAProps> = ({
   questionNumber,
   question,
   mark,
@@ -73,4 +73,4 @@ export const ViewFirmQA: React.FC<AddQAProps> = ({
   );
 };
 
-export default ViewFirmQA;
+export default ViewQAContent;

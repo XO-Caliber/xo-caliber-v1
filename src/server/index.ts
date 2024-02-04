@@ -730,6 +730,7 @@ export const appRouter = router({
       }
     });
     const adminQuestions = res.filter((questions) => questions.adminId === session.user.id);
+
     return adminQuestions;
   }),
   adminQuestionDelete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
@@ -774,6 +775,24 @@ export const appRouter = router({
         }
       });
       return { success: true };
+    }),
+  getUserAnswer: publiceProcedure
+    .input(
+      z.object({
+        questionId: z.string(),
+        userId: z.string()
+      })
+    )
+    .query(async ({ input }) => {
+      const { questionId, userId } = input;
+      console.log("getUserAnswer");
+      const userAnswers = await db.answer.findFirst({
+        where: {
+          userId: userId,
+          questionId: questionId
+        }
+      });
+      return userAnswers;
     })
 });
 

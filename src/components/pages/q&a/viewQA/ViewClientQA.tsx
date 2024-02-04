@@ -27,11 +27,14 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const router = useRouter();
+  const getuserAnswer = trpc.getUserAnswer.useQuery({ questionId, userId });
+  const { data: userAnswer } = getuserAnswer;
 
   const { mutate: addUserAnswer } = trpc.addUserAnswer.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();
+        getuserAnswer.refetch();
         toast({
           title: "Answer added",
           description: "Answer was added to the question"
@@ -60,7 +63,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
   };
 
   return (
-    <section className="mb-3 flex ">
+    <section className="mb-3 flex  ">
       <ul
         className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
@@ -74,7 +77,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
                 selectedValue === "no" && "bg-muted text-white"
               }`}
             >
-              <SelectValue placeholder="Select" />
+              <SelectValue placeholder={userAnswer?.answer || "Select"} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="YES">Yes</SelectItem>
@@ -84,7 +87,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
         </li>
       </ul>
       <div
-        className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
+        className={`flex min-w-16 justify-between gap-2 rounded-lg border-2 border-border p-4
       ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
       >
         {mark}
