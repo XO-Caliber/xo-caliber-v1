@@ -17,24 +17,26 @@ interface SingleQAProps {
   mark: string;
   questionId: string;
   userId: string;
+  userAnswer: any;
 }
 export const ViewClientQA: React.FC<SingleQAProps> = ({
   questionNumber,
   question,
   mark,
   questionId,
-  userId
+  userId,
+  userAnswer
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const router = useRouter();
-  const getuserAnswer = trpc.getUserAnswer.useQuery({ questionId, userId });
-  const { data: userAnswer } = getuserAnswer;
+  // const getuserAnswer = trpc.getUserAnswer.useQuery({ userId });
+  // const { data: userAnswer } = getuserAnswer;
 
   const { mutate: addUserAnswer } = trpc.addUserAnswer.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();
-        getuserAnswer.refetch();
+        // getuserAnswer.refetch();
         toast({
           title: "Answer added",
           description: "Answer was added to the question"
@@ -77,7 +79,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
                 selectedValue === "no" && "bg-muted text-white"
               }`}
             >
-              <SelectValue placeholder={userAnswer?.answer || "Select"} />
+              <SelectValue placeholder={userAnswer || "Select"} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="YES">Yes</SelectItem>

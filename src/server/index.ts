@@ -10,7 +10,7 @@ import {
 import crypto from "crypto";
 import { z } from "zod";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { use } from "react";
+import { use, useId } from "react";
 import { getRandomImageUrl } from "@/components/utils/RandomProfileGenerator";
 import { Answers } from "@prisma/client";
 
@@ -767,31 +767,56 @@ export const appRouter = router({
     )
     .mutation(async ({ input }) => {
       const { questionId, userId, answer } = input;
-      await db.answer.create({
-        data: {
-          questionId: questionId,
-          userId: userId,
-          answer: answer
+
+      // Check if there is an existing answer for the given questionId and userId
+      const existingAnswer = await db.answer.findFirst({
+        where: {
+          questionId,
+          userId
         }
       });
+
+      if (existingAnswer) {
+        // If an answer exists, update it
+        console.log("update");
+        await db.answer.update({
+          where: {
+            id: existingAnswer.id
+          },
+          data: {
+            answer
+          }
+        });
+      } else {
+        console.log("create");
+        // If no answer exists, create a new one
+        await db.answer.create({
+          data: {
+            questionId,
+            userId,
+            answer
+          }
+        });
+      }
+
       return { success: true };
     }),
+
   getUserAnswer: publiceProcedure
     .input(
       z.object({
-        questionId: z.string(),
         userId: z.string()
       })
     )
     .query(async ({ input }) => {
-      const { questionId, userId } = input;
+      const { userId } = input;
       console.log("getUserAnswer");
-      const userAnswers = await db.answer.findFirst({
+      const userAnswers = await db.answer.findMany({
         where: {
-          userId: userId,
-          questionId: questionId
+          userId: userId
         }
       });
+      console.log("index.ts" + userAnswers[0].answer);
       return userAnswers;
     })
 });
