@@ -4,6 +4,7 @@ import { AssistantDialog } from "../addAssistant/AssistantDialog";
 import AddQADiaglog from "../addQA/AddQADiaglog";
 import AddCategoryDialog from "../addCategory/AddCategoryDialog";
 import { ViewFirmQA } from "../viewQA/firm/ViewFirmQA";
+import ImportAdmin from "./ImportAdmin";
 
 const FirmQA = () => {
   return (
@@ -17,6 +18,7 @@ const FirmQA = () => {
         <AddQADiaglog />
         <AddCategoryDialog />
         <UserSelectList />
+        <ImportAdmin />
       </div>
       <ViewFirmQA />
     </div>
