@@ -23,9 +23,9 @@ export const UserList = ({ userId }: userListProps) => {
   let userList;
 
   if (userId) {
-    userList = trpc.getFirmUser.useQuery(userId);
+    userList = trpc.home.getFirmUser.useQuery(userId);
   } else {
-    userList = trpc.getAllUser.useQuery(page);
+    userList = trpc.home.getAllUser.useQuery(page);
   }
 
   if (userList.data) {

@@ -17,7 +17,7 @@ interface AssistantProps {
 }
 
 const AssistantSelectList = ({ getSelectedAssistant }: AssistantProps) => {
-  const assistantListResult = trpc.assistantList.useQuery();
+  const assistantListResult = trpc.home.assistantList.useQuery();
 
   // Check if the result has data property
   const assistantList = assistantListResult?.data || [];

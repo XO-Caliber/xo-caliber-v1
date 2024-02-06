@@ -32,7 +32,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
   // const getuserAnswer = trpc.getUserAnswer.useQuery({ userId });
   // const { data: userAnswer } = getuserAnswer;
 
-  const { mutate: addUserAnswer } = trpc.addUserAnswer.useMutation({
+  const { mutate: addUserAnswer } = trpc.answer.addUserAnswer.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

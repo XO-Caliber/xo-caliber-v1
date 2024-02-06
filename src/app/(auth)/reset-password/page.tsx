@@ -12,7 +12,7 @@ interface ResetPasswordProps {
 
 const page = ({ searchParams }: ResetPasswordProps) => {
   if (searchParams.token) {
-    const result = trpc.verifyPasswordToken.useQuery(
+    const result = trpc.auth.verifyPasswordToken.useQuery(
       searchParams.token as unknown as void | undefined
     );
 

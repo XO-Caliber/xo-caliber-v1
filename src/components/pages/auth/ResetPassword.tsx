@@ -11,7 +11,7 @@ const ResetPasswordPage = () => {
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { mutate: resetpassword } = trpc.resetPassword.useMutation({
+  const { mutate: resetpassword } = trpc.auth.resetPassword.useMutation({
     onSuccess() {
       setMessage("Password reset is sent to your email");
     },

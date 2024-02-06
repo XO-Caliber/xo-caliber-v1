@@ -16,7 +16,7 @@ import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 
 export const FirmList = () => {
   const [page, setpage] = useState(1);
-  const firmList = trpc.getAllFirm.useQuery(page);
+  const firmList = trpc.home.getAllFirm.useQuery(page);
 
   if (firmList.data) {
     return (

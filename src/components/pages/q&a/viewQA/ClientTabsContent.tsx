@@ -10,7 +10,7 @@ interface ClientTabsContentProps {
 }
 
 const ClientTabsContent: React.FC<ClientTabsContentProps> = ({ data, userId }) => {
-  const getuserAnswer = trpc.getUserAnswer.useQuery({ userId });
+  const getuserAnswer = trpc.answer.getUserAnswer.useQuery({ userId });
   const { data: userAnswer } = getuserAnswer;
 
   const userAnswerMap = new Map();

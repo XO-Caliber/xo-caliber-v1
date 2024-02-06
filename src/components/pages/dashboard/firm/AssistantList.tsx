@@ -15,7 +15,7 @@ import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
 export const AssistantList = () => {
   const [page, setpage] = useState(1);
-  const assistantList = trpc.getAllAssistant.useQuery(page);
+  const assistantList = trpc.home.getAllAssistant.useQuery(page);
 
   if (assistantList.data) {
     return (

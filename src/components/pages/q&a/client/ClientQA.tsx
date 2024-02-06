@@ -14,7 +14,7 @@ interface userProfile {
 }
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
-  const categoriesList = trpc.getClientQuestions.useQuery();
+  const categoriesList = trpc.question.getClientQuestions.useQuery();
   const { data: categories } = categoriesList;
   console.log(categories);
   const [listCat, setListCat] = useState<Set<string>>(new Set());

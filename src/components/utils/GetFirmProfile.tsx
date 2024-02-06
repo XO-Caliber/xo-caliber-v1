@@ -40,7 +40,7 @@ export const GetFirmProfile = ({ name, email, image, userCount }: userProfile) =
       count: ""
     }
   });
-  const { mutate: changeClientCount } = trpc.changeClientCount.useMutation({
+  const { mutate: changeClientCount } = trpc.dashboard.changeClientCount.useMutation({
     onSuccess({ success }) {
       if (success) {
         form.reset();

@@ -29,7 +29,7 @@ export const AssistantDialog = () => {
   function getSelectedAssistant(assistantData: string) {
     setAssistant(assistantData);
   }
-  const { mutate: assignAssistant } = trpc.assignAssistant.useMutation({
+  const { mutate: assignAssistant } = trpc.home.assignAssistant.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

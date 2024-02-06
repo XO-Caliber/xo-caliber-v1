@@ -17,7 +17,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  const { mutate: changePassword } = trpc.changePassword.useMutation({
+  const { mutate: changePassword } = trpc.auth.changePassword.useMutation({
     onSuccess() {
       setMessage("Password changed successfully");
       router.push("/login");

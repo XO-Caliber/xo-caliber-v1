@@ -24,7 +24,7 @@ const AddQADiaglog = () => {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
 
-  const { mutate: addQA } = trpc.addFirmQuestion.useMutation({
+  const { mutate: addQA } = trpc.question.addFirmQuestion.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

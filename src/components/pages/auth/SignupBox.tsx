@@ -55,7 +55,7 @@ export const SignupBox = () => {
       passwordConfirm: ""
     }
   });
-  const { mutate: registerUser } = trpc.register.useMutation({
+  const { mutate: registerUser } = trpc.auth.register.useMutation({
     onSuccess({ success }) {
       console.log("User created successfully");
       if (success) {

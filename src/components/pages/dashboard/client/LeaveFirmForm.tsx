@@ -19,7 +19,7 @@ import React, { useState } from "react";
 const LeaveFirmForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { mutate: leaveFirm } = trpc.leaveFirm.useMutation({
+  const { mutate: leaveFirm } = trpc.home.leaveFirm.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

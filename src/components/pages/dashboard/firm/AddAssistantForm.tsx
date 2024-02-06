@@ -34,7 +34,7 @@ export const AddAssistantForm = () => {
     }
   });
 
-  const { mutate: addAssistant } = trpc.addAssistant.useMutation({
+  const { mutate: addAssistant } = trpc.dashboard.addAssistant.useMutation({
     onSuccess({ success }) {
       console.log("User created successfully");
       if (success) {

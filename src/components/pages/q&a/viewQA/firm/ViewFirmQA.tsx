@@ -11,7 +11,7 @@ import AllTabsContent from "../AllTabsContent";
 export const ViewFirmQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  const categoriesList = trpc.getFirmQuestions.useQuery();
+  const categoriesList = trpc.question.getFirmQuestions.useQuery();
   const { data: categories } = categoriesList;
 
   // Use useEffect to update listCat when categories change
@@ -24,7 +24,7 @@ export const ViewFirmQA = () => {
   }, [categories]);
   console.log(categories);
 
-  const { mutate: deleteFirmQuestion } = trpc.firmQuestionDelete.useMutation({
+  const { mutate: deleteFirmQuestion } = trpc.question.firmQuestionDelete.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesList.refetch();

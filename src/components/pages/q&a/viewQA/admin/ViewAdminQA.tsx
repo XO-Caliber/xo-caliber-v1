@@ -10,7 +10,7 @@ import AllTabsContent from "../AllTabsContent";
 export const ViewAdminQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  const categoriesList = trpc.getAdminQuestions.useQuery();
+  const categoriesList = trpc.question.getAdminQuestions.useQuery();
   const { data: categories } = categoriesList;
 
   // Use useEffect to update listCat when categories change
@@ -23,7 +23,7 @@ export const ViewAdminQA = () => {
   }, [categories]);
   console.log(categories);
 
-  const { mutate: deleteAdminQuestion } = trpc.adminQuestionDelete.useMutation({
+  const { mutate: deleteAdminQuestion } = trpc.question.adminQuestionDelete.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesList.refetch();

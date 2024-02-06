@@ -15,7 +15,7 @@ import React, { useState } from "react";
 
 const ImportAdmin = () => {
   const [isLoading, setLoading] = useState(false);
-  const { mutate: importAdmin } = trpc.importAdmin.useMutation({
+  const { mutate: importAdmin } = trpc.question.importAdminQuestions.useMutation({
     onSuccess({ success }) {
       if (success) {
         toast({

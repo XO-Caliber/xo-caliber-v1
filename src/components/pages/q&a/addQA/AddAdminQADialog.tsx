@@ -24,7 +24,7 @@ const AddAdminQADialog = () => {
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
 
-  const { mutate: addQA } = trpc.addAdminQuestion.useMutation({
+  const { mutate: addQA } = trpc.question.addAdminQuestion.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

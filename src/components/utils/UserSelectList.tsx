@@ -16,7 +16,7 @@ interface UserProps {
 }
 
 const UserSelectList = ({ getSelectedUser }: UserProps) => {
-  const clientListResult = trpc.clientList.useQuery();
+  const clientListResult = trpc.home.clientList.useQuery();
 
   const clientList = clientListResult?.data || [];
 

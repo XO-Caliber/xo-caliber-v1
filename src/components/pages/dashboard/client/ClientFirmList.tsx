@@ -7,7 +7,7 @@ import LeaveFirmForm from "./LeaveFirmForm";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
 const ClientFirmList = () => {
-  const clientFirmList = trpc.getClientFirm.useQuery();
+  const clientFirmList = trpc.home.getClientFirm.useQuery();
   if (clientFirmList.data?.Firm) {
     return (
       <div>

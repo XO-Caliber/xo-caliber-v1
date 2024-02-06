@@ -11,7 +11,9 @@ interface VerifyEmailPageProps {
 
 const VerifyEmailPage = ({ searchParams }: VerifyEmailPageProps) => {
   if (searchParams.token) {
-    const result = trpc.verifyEmail.useQuery(searchParams.token as unknown as void | undefined);
+    const result = trpc.auth.verifyEmail.useQuery(
+      searchParams.token as unknown as void | undefined
+    );
     if (result.data?.success) {
       return (
         <section
