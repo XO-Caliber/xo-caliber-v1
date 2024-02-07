@@ -25,7 +25,7 @@ const QADialogContent = ({
   setCategoryId,
   setMark
 }: QADialogContentProps) => {
-  const categoriesResult = trpc.getFirmCategory.useQuery();
+  const categoriesResult = trpc.category.getFirmCategory.useQuery();
 
   return (
     // <Input className="h-40 w-full " />

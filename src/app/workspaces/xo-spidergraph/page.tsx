@@ -1,10 +1,10 @@
-import XOSpiderGraph from "@/components/pages/workspaces/XOSpiderGraph";
+import SpiderGraph from "@/components/pages/workspaces/XOSpiderGraph";
 import React from "react";
 
 const page = () => {
   return (
-    <div>
-      <XOSpiderGraph />
+    <div className="relative left-[500px] top-[100px]">
+      <SpiderGraph />
     </div>
   );
 };

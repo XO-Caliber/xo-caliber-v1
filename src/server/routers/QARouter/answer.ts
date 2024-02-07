@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { publiceProcedure, router } from "@/server/trpc";
 import { z } from "zod";
@@ -64,5 +65,48 @@ export const answerRouter = router({
       });
       console.log("index.ts" + userAnswers[0].answer);
       return userAnswers;
-    })
+    }),
+  getSpiderAnswer: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+
+    // Fetch user answers
+    const userAnswers = await db.answer.findMany({
+      where: {
+        userId: session?.user.id
+      }
+    });
+
+    // Fetch and map category data for each question in userAnswers
+    const userAnswersWithCategory = await Promise.all(
+      userAnswers.map(async (answer) => {
+        // Fetch category data for the question
+        const question = await db.question.findUnique({
+          where: {
+            id: answer.questionId
+          }
+        });
+        const categories = await db.category.findMany({
+          where: {
+            id: question?.categoryId
+          }
+        });
+        const categoryName = categories.length > 0 ? categories[0].name : null;
+        const mark = await db.question.findUnique({
+          where: {
+            id: answer.questionId
+          }
+        });
+
+        // Add category name to the userAnswer object
+        return {
+          ...answer,
+          category: categoryName,
+          mark: mark ? mark.mark : null // Add category name or null if category not found
+        };
+      })
+    );
+    // console.log(userAnswersWithCategory);
+
+    return userAnswersWithCategory;
+  })
 });

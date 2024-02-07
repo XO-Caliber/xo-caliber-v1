@@ -25,7 +25,7 @@ const AdminQADialogContent = ({
   setCategoryId,
   setMark
 }: AdminQADialogContentProps) => {
-  const categoriesResult = trpc.getAdminCategory.useQuery();
+  const categoriesResult = trpc.category.getAdminCategory.useQuery();
 
   return (
     // <Input className="h-40 w-full " />

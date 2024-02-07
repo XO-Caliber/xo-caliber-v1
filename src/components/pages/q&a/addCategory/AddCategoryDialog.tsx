@@ -20,9 +20,9 @@ const AddCategoryDialog = () => {
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const categoriesResult = trpc.getFirmCategory.useQuery();
+  const categoriesResult = trpc.category.getFirmCategory.useQuery();
 
-  const { mutate: deleteCategory } = trpc.deleteFirmCategory.useMutation({
+  const { mutate: deleteCategory } = trpc.category.deleteFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesResult.refetch();
@@ -38,7 +38,7 @@ const AddCategoryDialog = () => {
     }
   });
 
-  const { mutate: addCategory } = trpc.addFirmCategory.useMutation({
+  const { mutate: addCategory } = trpc.category.addFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesResult.refetch();
