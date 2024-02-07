@@ -75,9 +75,9 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
         <li>
           <Select onValueChange={handleChange}>
             <SelectTrigger
-              className={`w-[150px] ${selectedValue === "yes" && "bg-black text-white"} ${
-                selectedValue === "no" && "bg-muted text-white"
-              }`}
+              className={`w-[150px] ${selectedValue === "YES" && "bg-black text-white"} ${
+                selectedValue === "NO" && "bg-muted text-white"
+              } ${userAnswer === "YES" && "bg-black text-white"} ${userAnswer === "NO" && "bg-muted text-white"}`}
             >
               <SelectValue placeholder={userAnswer || "Select"} />
             </SelectTrigger>

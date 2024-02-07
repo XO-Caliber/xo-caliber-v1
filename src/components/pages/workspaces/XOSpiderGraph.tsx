@@ -106,7 +106,8 @@ function SpiderGraph() {
         pointBackgroundColor: "rgb(255, 99, 132)",
         pointBorderColor: "#fff",
         pointHoverBackgroundColor: "#fff",
-        pointHoverBorderColor: "rgb(255, 99, 132)"
+        pointHoverBorderColor: "rgb(255, 99, 132)",
+        pointRadius: 4
       }
     ];
 

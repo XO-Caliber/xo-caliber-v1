@@ -35,15 +35,50 @@ export const categoryRouter = router({
     });
     return categories?.category;
   }),
-
   deleteFirmCategory: firmProcedure.input(z.string()).mutation(async ({ input }) => {
+    const catQuestions = await db.category.findUnique({
+      where: {
+        id: input
+      },
+      include: {
+        questions: true
+      }
+    });
+
+    if (catQuestions) {
+      await Promise.all(
+        catQuestions.questions.map(async (question) => {
+          const checkAnswerPresent = await db.answer.findMany({
+            where: {
+              questionId: question.id
+            }
+          });
+          if (checkAnswerPresent) {
+            await db.answer.deleteMany({
+              where: {
+                questionId: question.id
+              }
+            });
+          }
+        })
+      );
+
+      await db.question.deleteMany({
+        where: {
+          categoryId: input
+        }
+      });
+    }
+
     await db.category.delete({
       where: {
         id: input
       }
     });
+
     return { success: true };
   }),
+
   addAdminCategory: adminProcedure.input(z.string()).mutation(async ({ input }) => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -74,11 +109,37 @@ export const categoryRouter = router({
     return categories?.category;
   }),
   deleteAdminCategory: adminProcedure.input(z.string()).mutation(async ({ input }) => {
-    await db.category.delete({
+    const catQuestions = await db.category.findUnique({
       where: {
         id: input
+      },
+      include: {
+        questions: true
       }
     });
-    return { success: true };
+    if (catQuestions) {
+      await Promise.all(
+        catQuestions.questions.map(async (question) => {
+          const checkAnswerPresent = await db.answer.findMany({
+            where: {
+              questionId: question.id
+            }
+          });
+          if (checkAnswerPresent) {
+            await db.answer.deleteMany({
+              where: {
+                questionId: question.id
+              }
+            });
+          }
+        })
+      );
+      await db.category.delete({
+        where: {
+          id: input
+        }
+      });
+      return { success: true };
+    }
   })
 });
