@@ -134,7 +134,7 @@ model Question {
   question   String   @db.Text
   mark       Int
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Answer {
