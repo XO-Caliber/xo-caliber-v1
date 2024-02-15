@@ -84,11 +84,13 @@ export const questionRouter = router({
     const res = await db.category.findMany({
       include: {
         questions: true
+      },
+      where: {
+        adminId: session.user.id
       }
     });
-    const adminQuestions = res.filter((questions) => questions.adminId === session.user.id);
 
-    return adminQuestions;
+    return res;
   }),
 
   adminQuestionDelete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
@@ -206,5 +208,18 @@ export const questionRouter = router({
     // Wait for all category creation promises to resolve
     await Promise.all(createCategoryPromises);
     return { success: true };
+  }),
+  getClientAdminQuestions: publiceProcedure.query(async () => {
+    const res = await db.category.findMany({
+      where: {
+        Admin: {
+          email: "vishnudarrshanorp@gmail.com"
+        }
+      },
+      include: {
+        questions: true
+      }
+    });
+    return res;
   })
 });
