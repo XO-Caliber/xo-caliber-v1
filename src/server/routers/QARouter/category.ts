@@ -9,6 +9,7 @@ export const categoryRouter = router({
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
     const category = input;
+
     await db.category.create({
       data: {
         name: category,

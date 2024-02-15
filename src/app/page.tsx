@@ -7,7 +7,7 @@ export default async function Home() {
   return (
     <div>
       <div>
-        <Header className="mb-0">Home</Header>
+        <Header>Home</Header>
         <div className="flex  flex-col items-center pt-4 ">
           <Button variant={"primary"}>login</Button>
           <Button variant={"secondary"}>signup</Button>

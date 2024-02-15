@@ -47,6 +47,11 @@ export const questionRouter = router({
         id: input
       }
     });
+    await db.answer.deleteMany({
+      where: {
+        questionId: input
+      }
+    });
     return { success: true };
   }),
   addAdminQuestion: adminProcedure

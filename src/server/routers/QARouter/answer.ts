@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
-import { firmProcedure, publiceProcedure, router } from "@/server/trpc";
-import { TRPCError } from "@trpc/server";
+import { publiceProcedure, router } from "@/server/trpc";
+
 import { z } from "zod";
 
 export const answerRouter = router({
@@ -109,29 +109,5 @@ export const answerRouter = router({
     // console.log(userAnswersWithCategory);
 
     return userAnswersWithCategory;
-  }),
-  saveChanges: firmProcedure.mutation(async () => {
-    const session = await getAuthSession();
-    if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
-    const firm = await db.firm.findUnique({
-      where: {
-        firmId: session.user.id
-      },
-      include: {
-        User: true
-      }
-    });
-    if (firm) {
-      await Promise.all(
-        firm?.User.map(async (user) => {
-          await db.answer.deleteMany({
-            where: {
-              userId: user.id
-            }
-          });
-        })
-      );
-    }
-    return { success: true };
   })
 });
