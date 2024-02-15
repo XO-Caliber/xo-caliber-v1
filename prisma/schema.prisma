@@ -65,6 +65,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  Note     Note[]
 }
 
 model Firm {
@@ -79,6 +80,7 @@ model Firm {
 
   category   Category[]
   categoryId String?
+  Note       Note[]
 }
 
 model Assistant {
@@ -143,4 +145,16 @@ model Answer {
   questionId String
   user       User    @relation(fields: [userId], references: [id])
   userId     String
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  firm   Firm   @relation(fields: [firmId], references: [firmId])
+  firmId String
 }

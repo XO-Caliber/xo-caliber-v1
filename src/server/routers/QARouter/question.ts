@@ -49,6 +49,7 @@ export const questionRouter = router({
     });
     return { success: true };
   }),
+
   addAdminQuestion: adminProcedure
     .input(
       z.object({
@@ -77,10 +78,14 @@ export const questionRouter = router({
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
     const res = await db.category.findMany({
+      where: {
+        adminId: session.user.id
+      },
       include: {
         questions: true
       }
     });
+
     const adminQuestions = res.filter((questions) => questions.adminId === session.user.id);
 
     return adminQuestions;

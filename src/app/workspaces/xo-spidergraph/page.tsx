@@ -1,9 +1,9 @@
-import SpiderGraph from "@/components/pages/workspaces/XOSpiderGraph";
+import SpiderGraph from "@/components/pages/spider-graph/XOSpiderGraph";
 import React from "react";
 
 const page = () => {
   return (
-    <div className="relative left-[500px] top-[100px]">
+    <div className="ml-56">
       <SpiderGraph />
     </div>
   );

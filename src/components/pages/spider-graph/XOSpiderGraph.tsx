@@ -9,6 +9,12 @@ import {
   RadialLinearScale
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
+import UserSelectList from "@/components/utils/UserSelectList";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
+import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/Button";
+import Notes from "./Notes";
 
 interface UserAnswer {
   category: string | null;
@@ -148,11 +154,28 @@ function SpiderGraph() {
   return (
     <>
       {/* Radar chart */}
-      <div className="mx-auto my-auto flex">
-        <div className="my-auto h-[570px] w-[570px] rounded-xl  border border-red-600   shadow-xl">
-          <canvas id="myChart">myChart</canvas>
-        </div>
-      </div>
+      <ResizablePanelGroup direction="vertical" className="min-h-screen max-w-full">
+        <ResizablePanel defaultSize={75} className="m-2">
+          <main className="flex h-full flex-col p-6">
+            <div className="flex items-center justify-between">
+              <div className="px-4">
+                <h1 className="text-2xl font-bold">Welcome back!</h1>
+                <p className="text-sm font-normal text-muted">
+                  Here’s a list of Bonny davis’s cases
+                </p>
+              </div>
+              <UserSelectList />
+            </div>
+            <div className="m-2 h-full rounded-xl border border-red-600">
+              <canvas id="myChart">myChart</canvas>
+            </div>
+          </main>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={25} className="m-3">
+          <Notes />
+        </ResizablePanel>
+      </ResizablePanelGroup>
     </>
   );
 }
