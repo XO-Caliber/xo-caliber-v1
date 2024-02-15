@@ -20,9 +20,9 @@ const AddAdminCategoryDialog = () => {
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
-  const categoriesResult = trpc.getAdminCategory.useQuery();
+  const categoriesResult = trpc.category.getAdminCategory.useQuery();
 
-  const { mutate: deleteCategory } = trpc.deleteAdminCategory.useMutation({
+  const { mutate: deleteCategory } = trpc.category.deleteAdminCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesResult.refetch();
@@ -38,7 +38,7 @@ const AddAdminCategoryDialog = () => {
     }
   });
 
-  const { mutate: addCategory } = trpc.addAdminCategory.useMutation({
+  const { mutate: addCategory } = trpc.category.addAdminCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
         categoriesResult.refetch();

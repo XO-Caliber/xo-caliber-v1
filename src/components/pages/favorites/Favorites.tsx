@@ -11,7 +11,7 @@ const Favorites = async () => {
       {session ? (
         <div className="ml-56 h-screen">
           <div className="h-[65px] border-2 border-l-0">
-            <p className="m-4 font-bold text-muted">XO Mind Map</p>
+            <p className="m-4 font-bold text-muted">Favorites</p>
           </div>
           <div className="absolute m-4 text-xl ">
             <div className="font-extrabold">
@@ -21,7 +21,7 @@ const Favorites = async () => {
         </div>
       ) : (
         <div>
-          <Header className="">XO Mind Map</Header>
+          <Header>Favorites</Header>
           <Home />
         </div>
       )}

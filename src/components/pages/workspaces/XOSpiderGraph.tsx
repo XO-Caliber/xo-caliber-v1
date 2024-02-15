@@ -33,17 +33,6 @@ function SpiderGraph() {
   // console.log(answerData);
 
   useEffect(() => {
-    if (isLoading) {
-      // Data is still loading, do nothing
-      return;
-    }
-
-    if (isError) {
-      // Error occurred while fetching data, handle error
-      console.error("Error fetching data:");
-      return;
-    }
-
     if (!answerData) {
       // Data is undefined, handle accordingly
       console.error("Data is undefined.");
