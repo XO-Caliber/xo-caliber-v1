@@ -29,7 +29,7 @@ function getRandomColor() {
 }
 
 function SpiderGraph() {
-  const { data: answerData, isLoading, isError } = trpc.answer.getSpiderAnswer.useQuery();
+  const { data: answerData, isLoading, isError } = trpc.answer.getFirmSpiderAnswer.useQuery();
   // console.log(answerData);
 
   useEffect(() => {
