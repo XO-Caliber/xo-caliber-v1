@@ -154,7 +154,7 @@ function SpiderGraph() {
   return (
     <>
       {/* Radar chart */}
-      <ResizablePanelGroup direction="vertical" className="min-h-screen max-w-full">
+      <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-full">
         <ResizablePanel defaultSize={75} className="m-2">
           <main className="flex h-full flex-col p-6">
             <div className="flex items-center justify-between">
