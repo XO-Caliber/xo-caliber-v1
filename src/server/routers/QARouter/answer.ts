@@ -143,7 +143,9 @@ export const answerRouter = router({
     // Fetch admin category IDs
     const adminCategories = await db.category.findMany({
       where: {
-        adminId: "vishnudarrshanorp@gmail.com"
+        Admin: {
+          email: "vishnudarrshanorp@gmail.com"
+        }
       }
     });
 

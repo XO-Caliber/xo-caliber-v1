@@ -28,8 +28,8 @@ function getRandomColor() {
   return color;
 }
 
-function SpiderGraph() {
-  const { data: answerData, isLoading, isError } = trpc.answer.getFirmSpiderAnswer.useQuery();
+function AdminSpiderGraph() {
+  const { data: answerData, isLoading, isError } = trpc.answer.getAdminSpiderAnswer.useQuery();
   // console.log(answerData);
 
   useEffect(() => {
@@ -156,4 +156,4 @@ function SpiderGraph() {
   );
 }
 
-export default SpiderGraph;
+export default AdminSpiderGraph;
