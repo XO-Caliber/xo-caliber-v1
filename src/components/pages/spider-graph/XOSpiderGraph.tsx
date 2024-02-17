@@ -14,7 +14,8 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
-import Notes from "./Notes";
+import FirmNotes from "./FirmNotes";
+import UserNotes from "./UserNotes";
 
 interface UserAnswer {
   category: string | null;
@@ -155,7 +156,7 @@ function SpiderGraph() {
     <>
       {/* Radar chart */}
       <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-full">
-        <ResizablePanel defaultSize={75} className="m-2">
+        <ResizablePanel defaultSize={50} className="m-2">
           <main className="flex h-full flex-col p-6">
             <div className="flex items-center justify-between">
               <div className="px-4">
@@ -172,8 +173,16 @@ function SpiderGraph() {
           </main>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={25} className="m-3">
-          <Notes />
+        <ResizablePanel defaultSize={50}>
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={50} className="m-3">
+              <FirmNotes />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={50} className="m-3">
+              <UserNotes />
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
     </>

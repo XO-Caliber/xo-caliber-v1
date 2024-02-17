@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/Textarea";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 
-export function Notes() {
+export function FirmNotes() {
   const [notes, setNotes] = useState("");
 
   function onSubmit() {
@@ -19,7 +19,7 @@ export function Notes() {
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
-      <h1 className="text-lg font-semibold">Notes:</h1>
+      <h1 className="text-lg font-semibold">Firm Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
@@ -27,12 +27,16 @@ export function Notes() {
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
-      <Button variant={"secondary"}>Edit</Button>
-      <Button variant={"dark"} onClick={onSubmit}>
-        Save
-      </Button>
+      <div className="flex w-full justify-between">
+        <Button className="mx-4 w-full" variant={"secondary"}>
+          Edit
+        </Button>
+        <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
+          Save
+        </Button>
+      </div>
     </section>
   );
 }
 
-export default Notes;
+export default FirmNotes;
