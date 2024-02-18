@@ -1,6 +1,14 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/Dialog";
+import {
   Select,
   SelectContent,
   SelectItem,
@@ -8,6 +16,7 @@ import {
   SelectValue
 } from "@/components/ui/Select";
 import { toast } from "@/hooks/use-toast";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -65,35 +74,45 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
   };
 
   return (
-    <section className="mb-3 flex  ">
-      <ul
-        className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4
+    <Dialog>
+      <DialogTrigger asChild>
+        <section className="mb-3 flex select-none">
+          <ul
+            className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
-      >
-        <li>{questionNumber}.</li>
-        <li className="w-full pl-4 text-left text-base">{question}</li>
-        <li>
-          <Select onValueChange={handleChange}>
-            <SelectTrigger
-              className={`w-[150px] ${selectedValue === "YES" && "bg-black text-white"} ${
-                selectedValue === "NO" && "bg-muted text-white"
-              } ${userAnswer === "YES" && "bg-black text-white"} ${userAnswer === "NO" && "bg-muted text-white"}`}
-            >
-              <SelectValue placeholder={userAnswer || "Select"} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="YES">Yes</SelectItem>
-              <SelectItem value="NO">No</SelectItem>
-            </SelectContent>
-          </Select>
-        </li>
-      </ul>
-      <div
+          >
+            <li>{questionNumber}.</li>
+            <li className="w-full pl-4 text-left text-base">{question}</li>
+            <li>
+              <Select onValueChange={handleChange}>
+                <SelectTrigger
+                  className={`w-[150px] ${selectedValue === "YES" && "bg-black text-white"} ${
+                    selectedValue === "NO" && "bg-muted text-white"
+                  } ${userAnswer === "YES" && "bg-black text-white"} ${userAnswer === "NO" && "bg-muted text-white"}`}
+                >
+                  <SelectValue placeholder={userAnswer || "Select"} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="YES">Yes</SelectItem>
+                  <SelectItem value="NO">No</SelectItem>
+                </SelectContent>
+              </Select>
+            </li>
+          </ul>
+          {/* <div
         className={`flex min-w-16 justify-between gap-2 rounded-lg border-2 border-border p-4
       ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
       >
         {mark}
-      </div>
-    </section>
+      </div> */}
+        </section>
+      </DialogTrigger>
+      <DialogContent className="min-w-96 select-none">
+        <DialogHeader>
+          <DialogTitle>Question</DialogTitle>
+        </DialogHeader>
+        <DialogDescription className="text-md">{question}</DialogDescription>
+      </DialogContent>
+    </Dialog>
   );
 };

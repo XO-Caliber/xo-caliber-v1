@@ -55,7 +55,7 @@ const ImportAdmin = () => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Import Admin Questions</DialogTitle>
+            <DialogTitle>Import Default Questions</DialogTitle>
           </DialogHeader>
           <DialogDescription>
             If you import admin questions your existing questions will overwrite,Do you want to

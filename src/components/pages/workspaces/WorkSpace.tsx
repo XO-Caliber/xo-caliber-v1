@@ -57,11 +57,11 @@ const WorkSpace = () => {
           <h1 className="hover ml-4 text-secondary-foreground hover:text-black">Caliber Q&A</h1>
         </div>
         <div
-          className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-coverletter")}
+          className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
+          onClick={() => router.push("/workspaces/xo-spidergraph")}
         >
-          <FileEdit size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
+          <CheckSquare size={18} className="bi bi-bookmark-fill" />
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Spider Graph</h1>
         </div>
         <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
@@ -70,12 +70,13 @@ const WorkSpace = () => {
           <Wind size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Mind Map</h1>
         </div>
+
         <div
           className="mb-2 flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-spidergraph")}
+          onClick={() => router.push("/workspaces/xo-coverletter")}
         >
-          <CheckSquare size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Spider Graph</h1>
+          <FileEdit size={18} className="bi bi-bookmark-fill" />
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
         </div>
       </div>
     </div>

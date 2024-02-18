@@ -11,7 +11,7 @@ const XOMindMap = async () => {
       {session ? (
         <div className="h-screen">
           <div>
-            <Header className="ml-0">XO Mindmap</Header>
+            <Header>XO Mindmap</Header>
           </div>
           <div className="absolute m-4 text-xl ">
             <div className="ml-56 font-extrabold">
@@ -21,7 +21,7 @@ const XOMindMap = async () => {
         </div>
       ) : (
         <div>
-          <Header className="">XO Mind Map</Header>
+          <Header>XO Mind Map</Header>
           <Home />
         </div>
       )}

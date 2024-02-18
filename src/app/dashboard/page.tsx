@@ -13,7 +13,7 @@ const Dashboard = async () => {
       {session ? (
         <div className="">
           <div>
-            <Header className="ml-0">Dashboard</Header>
+            <Header>Dashboard</Header>
           </div>
           <div className=" ml-56">
             <div className="">

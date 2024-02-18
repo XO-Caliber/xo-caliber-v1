@@ -1,6 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { publiceProcedure, router } from "@/server/trpc";
+
 import { z } from "zod";
 
 export const answerRouter = router({
@@ -66,13 +67,45 @@ export const answerRouter = router({
       console.log("index.ts" + userAnswers[0].answer);
       return userAnswers;
     }),
-  getSpiderAnswer: publiceProcedure.query(async () => {
+  getFirmSpiderAnswer: publiceProcedure.query(async () => {
     const session = await getAuthSession();
+    const user = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      },
+      include: {
+        Firm: true
+      }
+    });
+    // Fetch firm category IDs
+    const firmCategories = await db.category.findMany({
+      where: {
+        firmId: user?.firmId
+      }
+    });
 
-    // Fetch user answers
+    // Extract category IDs from firmCategories
+    const firmCategoryIds = firmCategories.map((category) => category.id);
+
+    // Fetch questions belonging to firm categories
+    const firmQuestions = await db.question.findMany({
+      where: {
+        categoryId: {
+          in: firmCategoryIds
+        }
+      }
+    });
+
+    // Extract question IDs from firmQuestions
+    const firmQuestionIds = firmQuestions.map((question) => question.id);
+
+    // Fetch user answers for firm questions
     const userAnswers = await db.answer.findMany({
       where: {
-        userId: session?.user.id
+        userId: session?.user.id,
+        questionId: {
+          in: firmQuestionIds
+        }
       }
     });
 
@@ -85,27 +118,87 @@ export const answerRouter = router({
             id: answer.questionId
           }
         });
-        const categories = await db.category.findMany({
+        const category = await db.category.findUnique({
           where: {
             id: question?.categoryId
           }
         });
-        const categoryName = categories.length > 0 ? categories[0].name : null;
-        const mark = await db.question.findUnique({
-          where: {
-            id: answer.questionId
-          }
-        });
+        const categoryName = category ? category.name : null;
+        const mark = question ? question.mark : null;
 
         // Add category name to the userAnswer object
         return {
           ...answer,
           category: categoryName,
-          mark: mark ? mark.mark : null // Add category name or null if category not found
+          mark: mark
         };
       })
     );
-    // console.log(userAnswersWithCategory);
+
+    return userAnswersWithCategory;
+  }),
+  getAdminSpiderAnswer: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+
+    // Fetch admin category IDs
+    const adminCategories = await db.category.findMany({
+      where: {
+        Admin: {
+          email: "vishnudarrshanorp@gmail.com"
+        }
+      }
+    });
+
+    // Extract category IDs from adminCategories
+    const adminCategoryIds = adminCategories.map((category) => category.id);
+
+    // Fetch questions belonging to admin categories
+    const adminQuestions = await db.question.findMany({
+      where: {
+        categoryId: {
+          in: adminCategoryIds
+        }
+      }
+    });
+
+    // Extract question IDs from adminQuestions
+    const adminQuestionIds = adminQuestions.map((question) => question.id);
+
+    // Fetch user answers for admin questions
+    const userAnswers = await db.answer.findMany({
+      where: {
+        userId: session?.user.id,
+        questionId: {
+          in: adminQuestionIds
+        }
+      }
+    });
+
+    // Fetch and map category data for each question in userAnswers
+    const userAnswersWithCategory = await Promise.all(
+      userAnswers.map(async (answer) => {
+        // Fetch category data for the question
+        const question = await db.question.findUnique({
+          where: {
+            id: answer.questionId
+          }
+        });
+        const category = await db.category.findUnique({
+          where: {
+            id: question?.categoryId
+          }
+        });
+        const categoryName = category ? category.name : null;
+        const mark = question ? question.mark : null;
+
+        // Add category name to the userAnswer object
+        return {
+          ...answer,
+          category: categoryName,
+          mark: mark
+        };
+      })
+    );
 
     return userAnswersWithCategory;
   })

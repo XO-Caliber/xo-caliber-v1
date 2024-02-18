@@ -11,7 +11,7 @@ const XOCoverLetter = async () => {
       {session ? (
         <div className=" h-screen">
           <div>
-            <Header className="ml-0">XO Cover Letter</Header>
+            <Header>XO Cover Letter</Header>
           </div>
           <div className="absolute m-4  text-xl">
             <div className="ml-56 font-extrabold">

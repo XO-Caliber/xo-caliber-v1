@@ -47,6 +47,11 @@ export const questionRouter = router({
         id: input
       }
     });
+    await db.answer.deleteMany({
+      where: {
+        questionId: input
+      }
+    });
     return { success: true };
   }),
 
@@ -86,15 +91,18 @@ export const questionRouter = router({
       }
     });
 
-    const adminQuestions = res.filter((questions) => questions.adminId === session.user.id);
-
-    return adminQuestions;
+    return res;
   }),
 
   adminQuestionDelete: adminProcedure.input(z.string()).mutation(async ({ input }) => {
     await db.question.delete({
       where: {
         id: input
+      }
+    });
+    await db.answer.deleteMany({
+      where: {
+        questionId: input
       }
     });
     return { success: true };
@@ -206,5 +214,18 @@ export const questionRouter = router({
     // Wait for all category creation promises to resolve
     await Promise.all(createCategoryPromises);
     return { success: true };
+  }),
+  getClientAdminQuestions: publiceProcedure.query(async () => {
+    const res = await db.category.findMany({
+      where: {
+        Admin: {
+          email: "vishnudarrshanorp@gmail.com"
+        }
+      },
+      include: {
+        questions: true
+      }
+    });
+    return res;
   })
 });
