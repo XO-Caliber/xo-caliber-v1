@@ -7,6 +7,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import AllTabsContent from "../AllTabsContent";
+import { Loader } from "lucide-react";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
@@ -61,7 +62,9 @@ export const ViewFirmQA = () => {
           </Tabs>
         </div>
       ) : (
-        <>Loading...</>
+        <div className="flex h-[70vh] items-center justify-center">
+          <Loader size={45} className="rotate-animation" />
+        </div>
       )}
     </div>
   );

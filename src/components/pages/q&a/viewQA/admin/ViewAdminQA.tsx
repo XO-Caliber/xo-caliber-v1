@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "../QATabsList";
@@ -6,6 +5,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import AllTabsContent from "../AllTabsContent";
+import { Loader } from "lucide-react";
 
 export const ViewAdminQA = () => {
   const router = useRouter();
@@ -21,7 +21,6 @@ export const ViewAdminQA = () => {
       setListCat(newSet);
     }
   }, [categories]);
-  console.log(categories);
 
   const { mutate: deleteAdminQuestion } = trpc.question.adminQuestionDelete.useMutation({
     onSuccess({ success }) {
@@ -41,7 +40,6 @@ export const ViewAdminQA = () => {
     }
   });
   const catArray = Array.from(listCat);
-  console.log(catArray.length);
 
   const handleDelete = (questionId: string) => {
     try {
@@ -50,6 +48,7 @@ export const ViewAdminQA = () => {
       console.log(err);
     }
   };
+
   return (
     <div>
       {catArray.length > 0 ? (
@@ -60,7 +59,9 @@ export const ViewAdminQA = () => {
           </Tabs>
         </div>
       ) : (
-        <>Loading...</>
+        <div className="flex h-[70vh] items-center justify-center">
+          <Loader size={45} className="rotate-animation" />
+        </div>
       )}
     </div>
   );

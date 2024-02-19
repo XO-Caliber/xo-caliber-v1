@@ -12,6 +12,7 @@ import {
   SelectContent,
   SelectValue
 } from "@/components/ui/Select";
+import { Loader } from "lucide-react";
 
 interface userProfile {
   userId: string;
@@ -67,12 +68,16 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         </div>
         <UserProfile name={name} email={email} image={image} />
       </div>
-      {listCat.size > 0 && (
+      {listCat.size > 0 ? (
         <div className="mt-4">
           <Tabs>
             <QATabsList categories={catArray} />
             <ClientTabsContent data={categories} userId={userId} />
           </Tabs>
+        </div>
+      ) : (
+        <div className="flex h-[70vh] items-center justify-center">
+          <Loader size={45} className="rotate-animation" />
         </div>
       )}
     </div>
