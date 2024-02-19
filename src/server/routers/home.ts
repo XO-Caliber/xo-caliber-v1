@@ -125,6 +125,15 @@ export const homeRouter = router({
     });
     return clientList?.User;
   }),
+  getAllUserList: adminProcedure.query(async () => {
+    const userList = await db.user.findMany({
+      where: {
+        role: "INDIVIDUAL"
+      }
+    });
+    const filteredUsers = userList.filter((data) => data.id !== "");
+    return filteredUsers;
+  }),
 
   assistantList: firmProcedure.query(async () => {
     const session = await getAuthSession();

@@ -271,5 +271,68 @@ export const answerRouter = router({
     );
 
     return userAnswersWithCategory;
+  }),
+  getClientSpiderAnswerByAdmin: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    // Fetch admin category IDs
+    const adminCategories = await db.category.findMany({
+      where: {
+        Admin: {
+          email: "vishnudarrshanorp@gmail.com"
+        }
+      }
+    });
+
+    // Extract category IDs from adminCategories
+    const adminCategoryIds = adminCategories.map((category) => category.id);
+
+    // Fetch questions belonging to admin categories
+    const adminQuestions = await db.question.findMany({
+      where: {
+        categoryId: {
+          in: adminCategoryIds
+        }
+      }
+    });
+
+    // Extract question IDs from adminQuestions
+    const adminQuestionIds = adminQuestions.map((question) => question.id);
+
+    // Fetch user answers for admin questions
+    const userAnswers = await db.answer.findMany({
+      where: {
+        userId: input,
+        questionId: {
+          in: adminQuestionIds
+        }
+      }
+    });
+
+    // Fetch and map category data for each question in userAnswers
+    const userAnswersWithCategory = await Promise.all(
+      userAnswers.map(async (answer) => {
+        // Fetch category data for the question
+        const question = await db.question.findUnique({
+          where: {
+            id: answer.questionId
+          }
+        });
+        const category = await db.category.findUnique({
+          where: {
+            id: question?.categoryId
+          }
+        });
+        const categoryName = category ? category.name : null;
+        const mark = question ? question.mark : null;
+
+        // Add category name to the userAnswer object
+        return {
+          ...answer,
+          category: categoryName,
+          mark: mark
+        };
+      })
+    );
+
+    return userAnswersWithCategory;
   })
 });

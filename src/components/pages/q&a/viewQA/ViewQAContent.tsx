@@ -1,7 +1,9 @@
+import { Button } from "@/components/ui/Button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
@@ -55,7 +57,19 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
           <DialogHeader>
             <DialogTitle>Question</DialogTitle>
           </DialogHeader>
-          <DialogDescription className="text-md">{question}</DialogDescription>
+          <section className="rounded-sm border bg-secondary ">
+            <ul className="flex items-center justify-center p-4">
+              <li>{question}</li>
+              <li className="ml-4 rounded-md bg-secondary-foreground p-2 text-white">
+                Mark:{mark}
+              </li>
+            </ul>
+          </section>
+          <DialogFooter>
+            <Button variant={"destructive"} onClick={() => handleDelete(id)}>
+              Delete Question
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
