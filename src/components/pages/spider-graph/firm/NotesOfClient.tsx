@@ -4,12 +4,13 @@ import { Textarea } from "@/components/ui/Textarea";
 import { toast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { boolean } from "zod";
-interface userType {
+interface userProps {
+  selectedUser: string;
   userType: string;
 }
-export function FirmNotes({ userType }: userType) {
-  const firmNotesData = trpc.note.getClientFirmNotes.useQuery();
-  const initialNotes = firmNotesData.data?.content;
+export function NotesOfClient({ selectedUser, userType }: userProps) {
+  const clientNotesData = trpc.note.getFirmClientNotes.useQuery(selectedUser);
+  const initialNotes = clientNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes);
   console.log(initialNotes);
 
@@ -18,7 +19,7 @@ export function FirmNotes({ userType }: userType) {
   }, [initialNotes]);
 
   const setAbility = () => {
-    if (userType === "FIRM") {
+    if (userType === "") {
       return false;
     }
     return true;
@@ -37,7 +38,7 @@ export function FirmNotes({ userType }: userType) {
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
-      <h1 className="text-lg font-semibold">Firm Notes:</h1>
+      <h1 className="text-lg font-semibold">Client Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
@@ -50,4 +51,4 @@ export function FirmNotes({ userType }: userType) {
   );
 }
 
-export default FirmNotes;
+export default NotesOfClient;

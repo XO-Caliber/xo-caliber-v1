@@ -29,7 +29,7 @@ const UserSelectList = ({ getSelectedUser }: UserProps) => {
         <SelectContent>
           {/* <SelectGroup> */}
           {clientList.map((user) => (
-            <SelectItem key={user.id} value={user.email}>
+            <SelectItem key={user.id} value={user.id}>
               <UserProfile image={user.image} name={user.name} email={user.email}></UserProfile>
             </SelectItem>
           ))}

@@ -67,6 +67,76 @@ export const answerRouter = router({
       console.log("index.ts" + userAnswers[0].answer);
       return userAnswers;
     }),
+  getClientSpiderAnswer: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const session = await getAuthSession();
+    const user = await db.user.findUnique({
+      where: {
+        id: input
+      },
+      include: {
+        Firm: true
+      }
+    });
+    // Fetch firm category IDs
+    const firmCategories = await db.category.findMany({
+      where: {
+        firmId: user?.firmId
+      }
+    });
+
+    // Extract category IDs from firmCategories
+    const firmCategoryIds = firmCategories.map((category) => category.id);
+
+    // Fetch questions belonging to firm categories
+    const firmQuestions = await db.question.findMany({
+      where: {
+        categoryId: {
+          in: firmCategoryIds
+        }
+      }
+    });
+
+    // Extract question IDs from firmQuestions
+    const firmQuestionIds = firmQuestions.map((question) => question.id);
+
+    // Fetch user answers for firm questions
+    const userAnswers = await db.answer.findMany({
+      where: {
+        userId: input,
+        questionId: {
+          in: firmQuestionIds
+        }
+      }
+    });
+
+    // Fetch and map category data for each question in userAnswers
+    const userAnswersWithCategory = await Promise.all(
+      userAnswers.map(async (answer) => {
+        // Fetch category data for the question
+        const question = await db.question.findUnique({
+          where: {
+            id: answer.questionId
+          }
+        });
+        const category = await db.category.findUnique({
+          where: {
+            id: question?.categoryId
+          }
+        });
+        const categoryName = category ? category.name : null;
+        const mark = question ? question.mark : null;
+
+        // Add category name to the userAnswer object
+        return {
+          ...answer,
+          category: categoryName,
+          mark: mark
+        };
+      })
+    );
+
+    return userAnswersWithCategory;
+  }),
   getFirmSpiderAnswer: publiceProcedure.query(async () => {
     const session = await getAuthSession();
     const user = await db.user.findUnique({

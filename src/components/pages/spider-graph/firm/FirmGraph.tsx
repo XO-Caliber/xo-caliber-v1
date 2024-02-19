@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+"use client";
+import { useEffect, useState } from "react";
 import {
   Chart,
   Filler,
@@ -13,8 +14,10 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { Button } from "@/components/ui/Button";
-import FirmNotes from "./FirmNotes";
-import UserNotes from "./UserNotes";
+import FirmNotes from "../FirmNotes";
+import UserNotes from "../UserNotes";
+import NotesOfFirm from "./NotesOfFirm";
+import NotesOfClient from "./NotesOfClient";
 
 interface UserAnswer {
   category: string | null;
@@ -24,12 +27,16 @@ interface UserAnswer {
   questionId: string;
   userId: string;
 }
-
-interface userProps {
+interface userType {
   userType: string;
 }
-function XOSpiderGraph({ userType }: userProps) {
-  const { data: answerData, isLoading, isError } = trpc.answer.getFirmSpiderAnswer.useQuery();
+
+function FirmGraph({ userType }: userType) {
+  const [user, setUser] = useState("");
+  const { data: answerData, isLoading, isError } = trpc.answer.getClientSpiderAnswer.useQuery(user);
+  function getSelectedUser(userData: string) {
+    setUser(userData);
+  }
 
   useEffect(() => {
     if (isLoading) {
@@ -156,6 +163,7 @@ function XOSpiderGraph({ userType }: userProps) {
                   Here’s a list of Bonny davis’s cases
                 </p>
               </div>
+              <UserSelectList getSelectedUser={getSelectedUser} />
             </div>
             <div className="m-2 h-full rounded-xl border border-red-600">
               <canvas id="myChart">myChart</canvas>
@@ -166,11 +174,11 @@ function XOSpiderGraph({ userType }: userProps) {
         <ResizablePanel defaultSize={50}>
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={50} className="m-3">
-              <FirmNotes userType={userType} />
+              <NotesOfFirm selectedUser={user} />
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
-              <UserNotes userType={userType} />
+              <NotesOfClient selectedUser={user} userType={userType} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
@@ -179,4 +187,4 @@ function XOSpiderGraph({ userType }: userProps) {
   );
 }
 
-export default XOSpiderGraph;
+export default FirmGraph;

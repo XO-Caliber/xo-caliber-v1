@@ -5,10 +5,10 @@ import { Textarea } from "@/components/ui/Textarea";
 import { toast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 interface userType {
-  userType: string;
+  selectedUser: string;
 }
-export function UserNotes({ userType }: userType) {
-  const userNotesData = trpc.note.getUserNotes.useQuery();
+export function NotesOfFirm({ selectedUser }: userType) {
+  const userNotesData = trpc.note.getFirmNotes.useQuery(selectedUser);
   const initialNotes = userNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes || " ");
   console.log(initialNotes);
@@ -16,7 +16,7 @@ export function UserNotes({ userType }: userType) {
     setNotes(initialNotes || "");
   }, [initialNotes]);
 
-  const { mutate: addNotes } = trpc.note.addUserNotes.useMutation({
+  const { mutate: addNotes } = trpc.note.addFirmNotes.useMutation({
     onSuccess() {
       userNotesData.refetch();
       toast({
@@ -37,12 +37,13 @@ export function UserNotes({ userType }: userType) {
   });
 
   function onSubmit() {
-    addNotes(notes);
+    const data = { userId: selectedUser, content: notes };
+    addNotes(data);
   }
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
-      <h1 className="text-lg font-semibold">User Notes:</h1>
+      <h1 className="text-lg font-semibold">Firm Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
@@ -50,18 +51,14 @@ export function UserNotes({ userType }: userType) {
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
-      {userType === "INDIVIDUAL" && (
-        <div className="flex w-full justify-between">
-          <Button className="mx-4 w-full" variant={"secondary"}>
-            Edit
-          </Button>
-          <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
-            Save
-          </Button>
-        </div>
-      )}
+
+      <div className="flex w-full justify-between">
+        <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
+          Save
+        </Button>
+      </div>
     </section>
   );
 }
 
-export default UserNotes;
+export default NotesOfFirm;

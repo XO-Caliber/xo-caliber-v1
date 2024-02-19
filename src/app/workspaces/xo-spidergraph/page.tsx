@@ -1,40 +1,18 @@
-"use client";
-import React, { useState } from "react";
-import SpiderGraph from "@/components/pages/spider-graph/XOSpiderGraph";
-import AdminSpiderGraph from "@/components/pages/workspaces/client/AdminSpiderGraph";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
+import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
+import Header from "@/components/Header";
+import ClientGraph from "@/components/pages/spider-graph/client/ClientGraph";
+import FirmGraph from "@/components/pages/spider-graph/firm/FirmGraph";
 
-const Page = () => {
-  const [userType, setUserType] = useState("admin");
-
-  const handleChange = (userType: string) => {
-    setUserType(userType);
-  };
-
-  console.log(userType);
-
+const Page = async () => {
+  const session = await getAuthSession();
   return (
     <div>
-      <div className="relative left-[500px] top-[100px] w-[200px]">
-        <Select onValueChange={handleChange}>
-          <SelectTrigger className="bg-black text-white">
-            <SelectValue placeholder="Admin" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="firm">Firm</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-      <div className="relative left-[500px] top-[100px]">
-        {userType === "admin" ? <AdminSpiderGraph /> : <SpiderGraph />}
-      </div>
+      {session && session?.user.role === "INDIVIDUAL" && <ClientGraph user="INDIVIDUAL" />}
+      {session && session?.user.role === "FIRM" && (
+        <div className="relative left-[500px] top-[100px]">
+          <FirmGraph userType="FIRM" />
+        </div>
+      )}
     </div>
   );
 };
