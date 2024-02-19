@@ -126,5 +126,27 @@ export const noteRouter = router({
       }
     });
     return notes;
+  }),
+  addQANotes: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const session = await getAuthSession();
+
+    await db.user.update({
+      where: {
+        id: session?.user.id
+      },
+      data: {
+        QANotes: input
+      }
+    });
+    return { success: true };
+  }),
+  getQANotes: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const notes = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      }
+    });
+    return notes?.QANotes;
   })
 });

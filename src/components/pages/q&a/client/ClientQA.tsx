@@ -13,6 +13,9 @@ import {
   SelectValue
 } from "@/components/ui/Select";
 import { Loader } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/Textarea";
+import { Button } from "@/components/ui/Button";
 
 interface userProfile {
   userId: string;
@@ -23,6 +26,7 @@ interface userProfile {
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
   const [userType, setUserType] = useState("admin");
+
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   let categoriesList;
@@ -31,7 +35,34 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
     ? (categoriesList = trpc.question.getClientQuestions.useQuery())
     : (categoriesList = trpc.question.getClientAdminQuestions.useQuery());
   const { data: categories } = categoriesList;
+  const notes = trpc.note.getQANotes.useQuery();
+  const initialNotes = notes.data || "";
+  const [Note, setNote] = useState(initialNotes);
+  console.log(initialNotes);
 
+  const { mutate: updateNote } = trpc.note.addQANotes.useMutation({
+    onSuccess({ success }) {
+      notes.refetch();
+      if (success) {
+        toast({
+          title: "You submitted the following values:",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{JSON.stringify(notes, null, 2)}</code>
+            </pre>
+          )
+        });
+      }
+    }
+  });
+  const notesUpdate = () => {
+    try {
+      updateNote(Note);
+    } catch (err) {}
+  };
+  useEffect(() => {
+    setNote(initialNotes);
+  }, [notes]);
   useEffect(() => {
     if (categories) {
       const newSet = new Set(listCat);
@@ -69,11 +100,24 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         <UserProfile name={name} email={email} image={image} />
       </div>
       {listCat.size > 0 ? (
-        <div className="mt-4">
+        <div className="mt-4 overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
             <ClientTabsContent data={categories} userId={userId} />
           </Tabs>
+          <section className="relative  flex h-full w-full flex-col justify-between p-2">
+            <h1 className="text-lg font-semibold">Your Notes:</h1>
+            <span className="block w-full border-[1px] border-border "></span>
+            <Textarea
+              value={Note}
+              className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+              placeholder="Tell us a little bit about yourself"
+              onChange={(e) => setNote(e.target.value)}
+            />
+            <form onSubmit={notesUpdate}>
+              <Button variant={"destructive"}>Save </Button>
+            </form>
+          </section>
         </div>
       ) : (
         <div className="flex h-[70vh] items-center justify-center">

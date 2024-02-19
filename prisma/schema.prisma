@@ -67,6 +67,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  QANotes  String?   @db.Text
   Note     UserNote?
 
   FirmNote FirmNote?
