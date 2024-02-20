@@ -23,20 +23,21 @@ const ClientGraph = ({ user }: userProps) => {
 
   return (
     <div>
-      <div className="relative left-[500px] top-[100px] w-[200px]">
-        <Select onValueChange={handleChange}>
-          <SelectTrigger className="bg-black text-white">
-            <SelectValue placeholder="Admin" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="admin">Admin</SelectItem>
-            <SelectItem value="firm">Firm</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">XO Caliber Spider graph</p>
+        <span className="mr-10 w-32">
+          <Select onValueChange={handleChange}>
+            <SelectTrigger className="bg-black text-white">
+              <SelectValue placeholder="Admin" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="firm">Firm</SelectItem>
+            </SelectContent>
+          </Select>
+        </span>
       </div>
-      <div className="relative left-[500px] top-[100px]">
-        {userType === "admin" ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
-      </div>
+      {userType === "admin" ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
     </div>
   );
 };

@@ -146,9 +146,9 @@ function XOSpiderGraph({ userType }: userProps) {
   return (
     <>
       {/* Radar chart */}
-      <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-full">
+      <ResizablePanelGroup direction="horizontal" className="min-h-[90vh] max-w-full">
         <ResizablePanel defaultSize={50} className="m-2">
-          <main className="flex h-full flex-col p-6">
+          <main className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
               <div className="px-4">
                 <h1 className="text-2xl font-bold">Welcome back!</h1>
@@ -157,7 +157,7 @@ function XOSpiderGraph({ userType }: userProps) {
                 </p>
               </div>
             </div>
-            <div className="m-2 h-full rounded-xl border border-red-600">
+            <div className="m-2 h-[70vh] rounded-xl border border-red-600">
               <canvas id="myChart">myChart</canvas>
             </div>
           </main>

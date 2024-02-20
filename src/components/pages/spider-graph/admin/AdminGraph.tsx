@@ -9,7 +9,6 @@ import {
   RadialLinearScale
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import AllUserSelectList from "./AllUserSelectList";
 
 interface UserAnswer {
@@ -150,25 +149,20 @@ function AdminGraph({ userType }: userType) {
   return (
     <>
       {/* Radar chart */}
-      <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-full">
-        <ResizablePanel defaultSize={50} className="m-2">
-          <main className="flex h-full flex-col p-6">
-            <div className="flex items-center justify-between">
-              <div className="px-4">
-                <h1 className="text-2xl font-bold">Welcome back!</h1>
-                <p className="text-sm font-normal text-muted">
-                  Here’s a list of Bonny davis’s cases
-                </p>
-              </div>
-              <AllUserSelectList getSelectedUser={getSelectedUser} />
-            </div>
-            <div className="m-2 h-full rounded-xl border border-red-600">
-              <canvas id="myChart">myChart</canvas>
-            </div>
-          </main>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-      </ResizablePanelGroup>
+      <main className="flex h-full flex-col p-6">
+        <div className="flex items-center justify-between">
+          <div className="px-4">
+            <h1 className="text-2xl font-bold">Welcome back!</h1>
+            <p className="text-sm font-normal text-muted">Here’s a list of all user cases</p>
+          </div>
+          <AllUserSelectList getSelectedUser={getSelectedUser} />
+        </div>
+        <div className="m-2 h-[80vh] w-max rounded-xl border border-red-600">
+          <canvas className="h-full w-max" id="myChart">
+            myChart
+          </canvas>
+        </div>
+      </main>
     </>
   );
 }

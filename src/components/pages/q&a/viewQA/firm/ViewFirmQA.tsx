@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "../QATabsList";
-import FirmQATabsContent from "../AllTabsContent";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
@@ -58,7 +57,9 @@ export const ViewFirmQA = () => {
         <div className="mt-4 h-[70vh] overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
-            <AllTabsContent data={categories} handleDelete={handleDelete} />
+            <div className="mt-2 h-[45vh] overflow-y-scroll">
+              <AllTabsContent data={categories} handleDelete={handleDelete} />
+            </div>
           </Tabs>
         </div>
       ) : (

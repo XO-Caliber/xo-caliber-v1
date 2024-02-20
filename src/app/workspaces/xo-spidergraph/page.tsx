@@ -7,13 +7,9 @@ import FirmGraph from "@/components/pages/spider-graph/firm/FirmGraph";
 const Page = async () => {
   const session = await getAuthSession();
   return (
-    <div>
+    <div className="ml-56">
       {session && session?.user.role === "INDIVIDUAL" && <ClientGraph user="INDIVIDUAL" />}
-      {session && session?.user.role === "FIRM" && (
-        <div className="relative left-[500px] top-[100px]">
-          <FirmGraph userType="FIRM" />
-        </div>
-      )}
+      {session && session?.user.role === "FIRM" && <FirmGraph userType="FIRM" />}
       {session && session.user.role === "ADMIN" && <AdminGraph userType="ADMIN" />}
     </div>
   );

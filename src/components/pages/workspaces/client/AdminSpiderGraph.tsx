@@ -148,7 +148,7 @@ function AdminSpiderGraph() {
     <>
       {/* Radar chart */}
       <div className="mx-auto my-auto flex">
-        <div className="my-auto h-[570px] w-[570px] rounded-xl  border border-red-600   shadow-xl">
+        <div className="m-4 h-[570px] w-[570px] rounded-xl  border border-red-600   shadow-xl">
           <canvas id="myChart">myChart</canvas>
         </div>
       </div>
