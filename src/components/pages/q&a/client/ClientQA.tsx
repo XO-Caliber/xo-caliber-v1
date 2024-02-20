@@ -78,9 +78,12 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
 
   const handleChange = (userType: string) => {
     setUserType(userType);
+    setListCat(new Set());
+    setCatArray([]);
   };
+
   return (
-    <div className="m-4 ml-56 text-xl">
+    <div className="ml-56 mt-2 text-xl">
       <div className="flex items-center justify-between px-10">
         <div className="px-4">
           <h1 className="text-2xl font-bold">Answers all the questions!</h1>
@@ -100,17 +103,19 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         <UserProfile name={name} email={email} image={image} />
       </div>
       {listCat.size > 0 ? (
-        <div className="mt-4 overflow-y-scroll">
-          <Tabs>
-            <QATabsList categories={catArray} />
-            <ClientTabsContent data={categories} userId={userId} />
-          </Tabs>
-          <section className="relative  flex h-full w-full flex-col justify-between p-2">
+        <div>
+          <div className="mt-4 h-[50vh] overflow-y-scroll">
+            <Tabs>
+              <QATabsList categories={catArray} />
+              <ClientTabsContent data={categories} userId={userId} />
+            </Tabs>
+          </div>
+          <section className="relative  flex h-full w-full flex-col justify-between rounded-md  border-2 border-x-0 p-2 pr-0">
             <h1 className="text-lg font-semibold">Your Notes:</h1>
             <span className="block w-full border-[1px] border-border "></span>
             <Textarea
               value={Note}
-              className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+              className="my-2 h-[250px] resize-none text-base font-semibold italic focus-visible:ring-0"
               placeholder="Tell us a little bit about yourself"
               onChange={(e) => setNote(e.target.value)}
             />
