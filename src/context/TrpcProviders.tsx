@@ -14,7 +14,7 @@ const Providers = ({ children }: PropsWithChildren) => {
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${baseUrl}/api/trpc`
+          url: `starfish-app-c34pl.ondigitalocean.app/api/trpc`
         })
       ]
     })
