@@ -27,6 +27,7 @@ interface SingleQAProps {
   questionId: string;
   userId: string;
   userAnswer: any;
+  refetch: () => void;
 }
 export const ViewClientQA: React.FC<SingleQAProps> = ({
   questionNumber,
@@ -34,7 +35,8 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
   mark,
   questionId,
   userId,
-  userAnswer
+  userAnswer,
+  refetch
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const router = useRouter();
@@ -43,6 +45,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
 
   const { mutate: addUserAnswer } = trpc.answer.addUserAnswer.useMutation({
     onSuccess({ success }) {
+      refetch();
       if (success) {
         router.refresh();
         // getuserAnswer.refetch();

@@ -40,7 +40,7 @@ export function FirmNotes({ userType }: userType) {
       <h1 className="text-lg font-semibold">Firm Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
-        className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+        className="my-2 h-full resize-none text-base font-semibold italic text-black focus-visible:ring-0"
         placeholder="Tell us a little bit about yourself"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}

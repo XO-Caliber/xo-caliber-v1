@@ -50,7 +50,7 @@ const ImportAdmin = () => {
             size={"sm"}
             // onClick={handleCategoryPopOpen}
           >
-            Import Admin Questions
+            Import Default Questions
           </Button>
         </DialogTrigger>
         <DialogContent>

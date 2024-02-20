@@ -52,9 +52,6 @@ export function UserNotes({ userType }: userType) {
       />
       {userType === "INDIVIDUAL" && (
         <div className="flex w-full justify-between">
-          <Button className="mx-4 w-full" variant={"secondary"}>
-            Edit
-          </Button>
           <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
             Save
           </Button>

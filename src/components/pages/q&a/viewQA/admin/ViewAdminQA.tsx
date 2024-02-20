@@ -52,17 +52,24 @@ export const ViewAdminQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="mt-4">
+        <div className="scrollableContainer mt-4 overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
             <AllTabsContent data={categories} handleDelete={handleDelete} />
           </Tabs>
         </div>
       ) : (
-        <div className="flex h-[70vh] items-center justify-center">
-          <Loader size={45} className="rotate-animation" />
+        <div>
+          {!catArray.length ? (
+            <></>
+          ) : (
+            <div className="flex h-[70vh] items-center justify-center">
+              <Loader size={45} className="rotate-animation" />
+            </div>
+          )}
         </div>
       )}
+      {!catArray && <div>Add a question or category</div>}
     </div>
   );
 };

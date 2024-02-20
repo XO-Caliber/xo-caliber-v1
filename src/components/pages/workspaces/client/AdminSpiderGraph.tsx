@@ -9,6 +9,7 @@ import {
   RadialLinearScale
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
+import { Loader2 } from "lucide-react";
 
 interface UserAnswer {
   category: string | null;
@@ -146,10 +147,15 @@ function AdminSpiderGraph() {
 
   return (
     <>
-      {/* Radar chart */}
-      <div className="mx-auto my-auto flex">
-        <div className="m-4 h-[570px] w-[570px] rounded-xl  border border-red-600   shadow-xl">
-          <canvas id="myChart">myChart</canvas>
+      <div className="mx-auto my-auto ">
+        <div className="m-4 flex h-[570px] w-[570px]  items-center justify-center   rounded-xl border border-red-600 shadow-xl">
+          {answerData ? (
+            <canvas id="myChart">myChart</canvas>
+          ) : (
+            <div>
+              <Loader2 color="gray" size={30} className="rotate-animation" />
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -25,6 +25,9 @@ interface ClientTabsContentProps {
 const ClientTabsContent: React.FC<ClientTabsContentProps> = ({ data, userId }) => {
   const getuserAnswer = trpc.answer.getUserAnswer.useQuery({ userId });
   const { data: userAnswer } = getuserAnswer;
+  const reFetch = () => {
+    getuserAnswer.refetch();
+  };
 
   const userAnswerMap = new Map();
   if (userAnswer) {
@@ -57,6 +60,7 @@ const ClientTabsContent: React.FC<ClientTabsContentProps> = ({ data, userId }) =
                   questionId={mergedQuestion.id}
                   userId={userId}
                   userAnswer={mergedQuestion.userAnswer}
+                  refetch={reFetch}
                 />
               );
             })}

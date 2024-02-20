@@ -54,7 +54,7 @@ export const ViewFirmQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="mt-4 h-[70vh] overflow-y-scroll">
+        <div className="scrollableContainer mt-4 h-[70vh] overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="mt-2 h-[45vh] overflow-y-scroll">
@@ -63,8 +63,19 @@ export const ViewFirmQA = () => {
           </Tabs>
         </div>
       ) : (
+        <div>
+          {!catArray.length ? (
+            <></>
+          ) : (
+            <div className="flex h-[70vh] items-center justify-center">
+              <Loader size={45} className="rotate-animation" />
+            </div>
+          )}
+        </div>
+      )}
+      {!catArray.length && (
         <div className="flex h-[70vh] items-center justify-center">
-          <Loader size={45} className="rotate-animation" />
+          Please add a question or category
         </div>
       )}
     </div>

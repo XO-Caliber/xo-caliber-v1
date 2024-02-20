@@ -173,12 +173,12 @@ function FirmGraph({ userType }: userType) {
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={50}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={50} className="m-3">
-              <NotesOfFirm selectedUser={user} />
-            </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
               <NotesOfClient selectedUser={user} userType={userType} />
+            </ResizablePanel>
+            <ResizablePanel defaultSize={50} className="m-3">
+              <NotesOfFirm selectedUser={user} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
