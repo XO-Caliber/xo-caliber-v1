@@ -9,7 +9,7 @@ import {
   DialogTrigger
 } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
-import { XCircle } from "lucide-react";
+import { Info, Trash, XCircle } from "lucide-react";
 import React from "react";
 
 interface AddQAProps {
@@ -39,10 +39,15 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
               <li>{questionNumber}.</li>
               <li className="w-full pl-4 text-left text-base ">{question}</li>
 
-              <XCircle
+              {/* <XCircle
                 size={24}
                 className={"mr-2 cursor-pointer text-red-500 hover:text-red-400 "}
                 onClick={() => handleDelete(id)}
+              /> */}
+
+              <Info
+                xlinkTitle="Tap to see detailed question overview "
+                className="cursor-pointer"
               />
             </ul>
             <div
@@ -60,14 +65,14 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
           <section className="rounded-sm border bg-secondary ">
             <ul className="flex items-center justify-center p-4">
               <li>{question}</li>
-              <li className="ml-4 rounded-md bg-secondary-foreground p-2 text-white">
+              <li className="ml-4 rounded-md bg-secondary-foreground p-1 text-white">
                 Mark:{mark}
               </li>
             </ul>
           </section>
           <DialogFooter>
             <Button variant={"destructive"} onClick={() => handleDelete(id)}>
-              Delete Question
+              <Trash size={15} />
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -26,19 +26,17 @@ interface userProfile {
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
   const [userType, setUserType] = useState("admin");
-
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  let categoriesList;
+  const [Note, setNote] = useState("");
 
-  userType === "firm"
-    ? (categoriesList = trpc.question.getClientQuestions.useQuery())
-    : (categoriesList = trpc.question.getClientAdminQuestions.useQuery());
+  const categoriesList =
+    userType === "firm"
+      ? trpc.question.getClientQuestions.useQuery()
+      : trpc.question.getClientAdminQuestions.useQuery();
   const { data: categories } = categoriesList;
   const notes = trpc.note.getQANotes.useQuery();
   const initialNotes = notes.data || "";
-  const [Note, setNote] = useState(initialNotes);
-  console.log(initialNotes);
 
   const { mutate: updateNote } = trpc.note.addQANotes.useMutation({
     onSuccess({ success }) {
@@ -55,14 +53,11 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
       }
     }
   });
-  const notesUpdate = () => {
-    try {
-      updateNote(Note);
-    } catch (err) {}
-  };
+
   useEffect(() => {
     setNote(initialNotes);
   }, [notes]);
+
   useEffect(() => {
     if (categories) {
       const newSet = new Set(listCat);
@@ -72,14 +67,16 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
     }
   }, [userType, categories]);
 
-  // console.log(categories);
-  console.log("catArray is" + catArray);
-  console.log("Liscat is" + listCat.values);
-
   const handleChange = (userType: string) => {
     setUserType(userType);
     setListCat(new Set());
     setCatArray([]);
+  };
+
+  const notesUpdate = () => {
+    try {
+      updateNote(Note);
+    } catch (err) {}
   };
 
   return (
@@ -104,7 +101,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
       </div>
       {listCat.size > 0 ? (
         <div>
-          <div className="mt-4 h-[50vh] overflow-y-scroll">
+          <div className={`scrollableContainer m-1 mt-4 h-[50vh] overflow-y-scroll`}>
             <Tabs>
               <QATabsList categories={catArray} />
               <ClientTabsContent data={categories} userId={userId} />

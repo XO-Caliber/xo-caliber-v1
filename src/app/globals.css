@@ -87,3 +87,16 @@
     @apply bg-background text-foreground;
   }
 }
+/* ClientQA.module.css */
+.scrollableContainer::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollableContainer::-webkit-scrollbar-track {
+  background-color: #f5f5f5; /* Change the background color of the scrollbar track */
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb {
+  background-color: hsl(12 100% 85%); /* Change the color of the scrollbar thumb */
+  border-radius: 6px;
+}

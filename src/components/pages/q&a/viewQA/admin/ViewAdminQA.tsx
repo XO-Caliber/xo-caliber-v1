@@ -52,7 +52,7 @@ export const ViewAdminQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="mt-4">
+        <div className="scrollableContainer mt-4 overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
             <AllTabsContent data={categories} handleDelete={handleDelete} />

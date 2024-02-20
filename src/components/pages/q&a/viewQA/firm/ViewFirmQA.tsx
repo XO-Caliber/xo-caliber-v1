@@ -55,7 +55,7 @@ export const ViewFirmQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="mt-4 h-[70vh] overflow-y-scroll">
+        <div className="scrollableContainer mt-4 h-[70vh] overflow-y-scroll">
           <Tabs>
             <QATabsList categories={catArray} />
             <AllTabsContent data={categories} handleDelete={handleDelete} />
