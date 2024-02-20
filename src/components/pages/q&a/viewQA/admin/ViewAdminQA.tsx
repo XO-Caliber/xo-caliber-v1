@@ -59,10 +59,17 @@ export const ViewAdminQA = () => {
           </Tabs>
         </div>
       ) : (
-        <div className="flex h-[70vh] items-center justify-center">
-          <Loader size={45} className="rotate-animation" />
+        <div>
+          {!catArray.length ? (
+            <></>
+          ) : (
+            <div className="flex h-[70vh] items-center justify-center">
+              <Loader size={45} className="rotate-animation" />
+            </div>
+          )}
         </div>
       )}
+      {!catArray && <div>Add a question or category</div>}
     </div>
   );
 };

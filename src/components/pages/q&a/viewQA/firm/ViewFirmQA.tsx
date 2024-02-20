@@ -62,8 +62,19 @@ export const ViewFirmQA = () => {
           </Tabs>
         </div>
       ) : (
+        <div>
+          {!catArray.length ? (
+            <></>
+          ) : (
+            <div className="flex h-[70vh] items-center justify-center">
+              <Loader size={45} className="rotate-animation" />
+            </div>
+          )}
+        </div>
+      )}
+      {!catArray.length && (
         <div className="flex h-[70vh] items-center justify-center">
-          <Loader size={45} className="rotate-animation" />
+          Please add a question or category
         </div>
       )}
     </div>
