@@ -130,46 +130,32 @@ export const questionRouter = router({
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
 
     // Delete existing categories for the firm and related questions
-    const getCat = await db.category
-      .findMany({
+    const categoriesToDelete = await db.category.findMany({
+      where: {
+        firmId: session.user.id
+      },
+      include: {
+        questions: true
+      }
+    });
+
+    // Delete existing categories and related questions
+    for (const category of categoriesToDelete) {
+      await db.question.deleteMany({
         where: {
-          firmId: session.user.id
-        },
-        include: {
-          questions: true
+          categoryId: category.id
         }
-      })
-      .then(async (categories) => {
-        console.log("Categories fetched successfully");
-
-        // Loop through categories and delete related questions
-        for (const category of categories) {
-          await db.question.deleteMany({
-            where: {
-              categoryId: category.id
-            }
-          });
-        }
-
-        console.log("Related questions deleted successfully");
-
-        categories.map(
-          async (category) =>
-            await db.category.deleteMany({
-              where: {
-                id: category.id
-              }
-            })
-        );
-
-        return categories; // Optionally return the fetched categories if needed
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-        throw error; // Throw error to handle it further if needed
       });
+      await db.category.delete({
+        where: {
+          id: category.id
+        }
+      });
+    }
 
-    // Fetch all admin categories with questions
+    console.log("Related categories and questions deleted successfully");
+
+    // Fetch admin categories with questions
     const adminCategories = await db.category.findMany({
       where: {
         Admin: {
@@ -181,40 +167,44 @@ export const questionRouter = router({
       }
     });
 
-    // Create an array to store all category creation promises
-    const createCategoryPromises = adminCategories.map(async (adminCategory) => {
-      // Create the category for the firm
-      for (const adminCategory of adminCategories) {
-        // Create the category for the firm
-        const createdCategory = await db.category.create({
+    // Create categories and questions for the firm
+    for (const adminCategory of adminCategories) {
+      const createdCategory = await db.category.create({
+        data: {
+          name: adminCategory.name,
+          firmId: session.user.id // Connect category to firm
+        }
+      });
+
+      for (const adminQuestion of adminCategory.questions) {
+        await db.question.create({
           data: {
-            name: adminCategory.name,
-            Firm: {
-              connect: {
-                firmId: session.user.id
-              }
-            }
+            categoryId: createdCategory.id,
+            question: adminQuestion.question,
+            mark: adminQuestion.mark
           }
         });
-        // Map over the questions in the admin category and create them for the firm
-        for (const adminQuestion of adminCategory.questions) {
-          await db.question.create({
-            data: {
-              categoryId: createdCategory.id,
-              question: adminQuestion.question,
-              mark: adminQuestion.mark
-            }
-          });
-        }
       }
+    }
 
-      // Wait for all question creation promises to resolve
+    // Delete existing answers for users of the firm
+    const users = await db.user.findMany({
+      where: {
+        firmId: session.user.id
+      }
     });
 
-    // Wait for all category creation promises to resolve
-    await Promise.all(createCategoryPromises);
+    for (const user of users) {
+      await db.answer.deleteMany({
+        where: {
+          userId: user.id
+        }
+      });
+    }
+
     return { success: true };
   }),
+
   getClientAdminQuestions: publiceProcedure.query(async () => {
     const res = await db.category.findMany({
       where: {
