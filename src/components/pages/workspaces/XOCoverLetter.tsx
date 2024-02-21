@@ -22,7 +22,6 @@ const XOCoverLetter = async () => {
       ) : (
         <div>
           <Header>XO Cover Letter</Header>
-          <Home />
         </div>
       )}
     </div>
