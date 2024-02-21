@@ -1,5 +1,11 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { adminProcedure, firmProcedure, publiceProcedure, router } from "../trpc";
+import {
+  adminProcedure,
+  assistantProcedure,
+  firmProcedure,
+  publiceProcedure,
+  router
+} from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
@@ -134,6 +140,19 @@ export const homeRouter = router({
     const filteredUsers = userList.filter((data) => data.id !== "");
     return filteredUsers;
   }),
+  getAssistantUser: assistantProcedure.query(async () => {
+    const session = await getAuthSession();
+    const assistantData = await db.assistant.findUnique({
+      where: {
+        assistantId: session?.user.id
+      },
+      include: {
+        User: true
+      }
+    });
+    const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
+    return filteredUsers;
+  }),
 
   assistantList: firmProcedure.query(async () => {
     const session = await getAuthSession();
@@ -152,7 +171,7 @@ export const homeRouter = router({
   assignAssistant: firmProcedure
     .input(
       z.object({
-        user: z.string().email(),
+        user: z.string(),
         assistant: z.string().email()
       })
     )
@@ -165,7 +184,7 @@ export const homeRouter = router({
         data: {
           User: {
             connect: {
-              email: user
+              id: user
             }
           }
         }

@@ -7,11 +7,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import AllTabsContent from "../AllTabsContent";
 import { Loader } from "lucide-react";
+import AssistantTabsContent from "../AssistantTabsCOntent";
 
-export const ViewFirmQA = () => {
+export const ViewAssistantQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  const categoriesList = trpc.question.getFirmQuestions.useQuery();
+  const categoriesList = trpc.question.getAssistantFirmQuestion.useQuery();
   const { data: categories } = categoriesList;
 
   // Use useEffect to update listCat when categories change
@@ -24,41 +25,16 @@ export const ViewFirmQA = () => {
   }, [categories]);
   console.log(categories);
 
-  const { mutate: deleteFirmQuestion } = trpc.question.firmQuestionDelete.useMutation({
-    onSuccess({ success }) {
-      if (success) {
-        categoriesList.refetch();
-        router.refresh();
-        toast({
-          title: "Question Deleted",
-          description: "The question was deleted successfully"
-        });
-      }
-    },
-    onError(err) {
-      toast({
-        title: "Something went wrong",
-        description: `${err}`
-      });
-    }
-  });
   const catArray = Array.from(listCat);
 
-  const handleDelete = (questionId: string) => {
-    try {
-      deleteFirmQuestion(questionId);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className=" mt-4 h-[70vh]">
+        <div className=" mt-4 h-[90vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
-              <AllTabsContent data={categories} handleDelete={handleDelete} />
+              <AssistantTabsContent data={categories} />
             </div>
           </Tabs>
         </div>
@@ -74,9 +50,7 @@ export const ViewFirmQA = () => {
         </div>
       )}
       {!catArray.length && (
-        <div className="flex h-[70vh] items-center justify-center">
-          Please add a question or category
-        </div>
+        <div className="flex h-[70vh] items-center justify-center">No data found</div>
       )}
     </div>
   );

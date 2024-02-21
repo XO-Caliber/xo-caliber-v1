@@ -53,6 +53,8 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
   console.log("Liscat is" + listCat.values);
 
   const handleChange = (userType: string) => {
+    setListCat(new Set());
+    setCatArray([]);
     setUserType(userType);
   };
   return (
@@ -81,7 +83,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             <ResizablePanel defaultSize={70}>
               <Tabs>
                 <QATabsList categories={catArray} />
-                <div className="mt-2 h-[70vh] overflow-y-scroll">
+                <div className="scrollableContainer mt-2 h-[50vh] overflow-y-scroll">
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>

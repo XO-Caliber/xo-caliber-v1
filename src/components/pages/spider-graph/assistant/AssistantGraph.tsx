@@ -11,8 +11,11 @@ import {
 import { trpc } from "@/app/_trpc/client";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
-import NotesOfFirm from "./NotesOfFirm";
-import NotesOfClient from "./NotesOfClient";
+import NotesOfClient from "../firm/NotesOfClient";
+import NotesOfFirm from "../firm/NotesOfFirm";
+import AssistantUserSelect from "./AssistantUserSelect";
+import FirmsNote from "./FirmsNote";
+import ClientsNote from "./ClientsNote";
 
 interface UserAnswer {
   category: string | null;
@@ -26,7 +29,7 @@ interface userType {
   userType: string;
 }
 
-function FirmGraph({ userType }: userType) {
+function AssistantGraph({ userType }: userType) {
   const [user, setUser] = useState("");
   const { data: answerData, isLoading, isError } = trpc.answer.getClientSpiderAnswer.useQuery(user);
   function getSelectedUser(userData: string) {
@@ -158,7 +161,7 @@ function FirmGraph({ userType }: userType) {
                   Here’s a list of Bonny davis’s cases
                 </p>
               </div>
-              <UserSelectList getSelectedUser={getSelectedUser} />
+              <AssistantUserSelect getSelectedUser={getSelectedUser} />
             </div>
             <div className="m-2 h-full rounded-xl border border-red-600">
               <canvas id="myChart">myChart</canvas>
@@ -170,10 +173,10 @@ function FirmGraph({ userType }: userType) {
           <ResizablePanelGroup direction="vertical">
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
-              <NotesOfClient selectedUser={user} userType={userType} />
+              <ClientsNote selectedUser={user} />
             </ResizablePanel>
             <ResizablePanel defaultSize={50} className="m-3">
-              <NotesOfFirm selectedUser={user} />
+              <FirmsNote selectedUser={user} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
@@ -182,4 +185,4 @@ function FirmGraph({ userType }: userType) {
   );
 }
 
-export default FirmGraph;
+export default AssistantGraph;

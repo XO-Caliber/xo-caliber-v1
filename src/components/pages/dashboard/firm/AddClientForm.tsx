@@ -70,6 +70,11 @@ export const AddClientForm = () => {
           description: "Only works on user",
           variant: "destructive"
         });
+      } else if (err.data?.code === "TOO_MANY_REQUESTS") {
+        toast({
+          title: "Client limit reached",
+          description: "Ask admin to increase your client limit"
+        });
       } else {
         form.setError("emailAddress", {
           type: "Failed",
