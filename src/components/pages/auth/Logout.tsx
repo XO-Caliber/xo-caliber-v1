@@ -8,7 +8,7 @@ export default function Logout() {
     <DropdownMenuItem
       className="cursor-pointer"
       onClick={() => {
-        signOut({ redirect: false });
+        signOut();
       }}
     >
       <span>Log Out</span>
