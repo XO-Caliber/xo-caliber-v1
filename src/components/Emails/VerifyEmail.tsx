@@ -12,7 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = "https://xo-caliber-v1-xi.vercel.app";
+const baseUrl = "https://starfish-app-c34pl.ondigitalocean.app";
 
 export const VerifyEmailTemplate = (email: string, token: string) => (
   <Html>
