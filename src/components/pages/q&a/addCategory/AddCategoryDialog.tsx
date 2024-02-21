@@ -61,6 +61,14 @@ const AddCategoryDialog = () => {
 
   const onSubmit = () => {
     try {
+      if (!category.trim()) {
+        toast({
+          title: "Validation Error",
+          description: "Please enter a valid category.",
+          variant: "destructive"
+        });
+        return;
+      }
       setLoading(true);
       addCategory(category);
     } catch (err) {
