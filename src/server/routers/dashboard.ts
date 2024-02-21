@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { adminProcedure, firmProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { z } from "zod";
+import { nullable, z } from "zod";
 
 export const dashboardRouter = router({
   addFirm: adminProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
@@ -45,6 +45,11 @@ export const dashboardRouter = router({
       },
       data: {
         role: "FIRM"
+      }
+    });
+    await db.answer.deleteMany({
+      where: {
+        userId: user.id
       }
     });
     return { success: true };
@@ -148,6 +153,11 @@ export const dashboardRouter = router({
           role: "ASSISTANT"
         }
       });
+      await db.answer.deleteMany({
+        where: {
+          userId: user.id
+        }
+      });
     }
 
     return { success: true };
@@ -171,47 +181,48 @@ export const dashboardRouter = router({
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }
-
-    // const firm = await db.firm.findUnique({
-    //   where: {
-    //     email: user.email
-    //   },
-    //   include: {
-    //     User: true
-    //   }
-    // });
-
-    // if (!firm) {
-
-    // }
-
-    // const isUserInFirm = firm.User.some((u: { id: string }) => u.id === user.id);
-    const isHavingFirm = await db.user.findUnique({
+    const firm = await db.firm.findUnique({
       where: {
-        email
+        firmId: session.user.id
       },
       include: {
-        Firm: true
+        User: true
       }
     });
-    console.log(isHavingFirm);
-
-    if (isHavingFirm?.Firm) {
-      throw new TRPCError({ code: "CONFLICT" });
+    if (!firm?.userCount) {
+      throw new Error("Limit reached");
     }
+    if (firm?.User.length < firm?.userCount) {
+      const isHavingFirm = await db.user.findUnique({
+        where: {
+          email
+        },
+        include: {
+          Firm: true
+        }
+      });
+      console.log(isHavingFirm);
 
-    await db.firm.update({
-      where: {
-        email: session.user.email
-      },
-      data: {
-        User: {
-          connect: {
-            id: user.id
+      if (isHavingFirm?.Firm) {
+        throw new TRPCError({ code: "CONFLICT" });
+      }
+
+      await db.firm.update({
+        where: {
+          email: session.user.email
+        },
+        data: {
+          User: {
+            connect: {
+              id: user.id
+            }
           }
         }
-      }
-    });
+      });
+    } else {
+      throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
+    }
+
     return { success: true };
   }),
 

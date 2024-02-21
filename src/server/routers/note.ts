@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { db } from "@/lib/db";
-import { firmProcedure, publiceProcedure, router } from "../trpc";
+import { assistantProcedure, firmProcedure, publiceProcedure, router } from "../trpc";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 
 export const noteRouter = router({
@@ -148,5 +148,27 @@ export const noteRouter = router({
       }
     });
     return notes?.QANotes;
+  }),
+  getClientNotesByAssistant: assistantProcedure.input(z.string()).query(async ({ input }) => {
+    const userNotes = await db.user.findUnique({
+      where: {
+        id: input
+      },
+      include: {
+        Note: true
+      }
+    });
+    return userNotes?.Note;
+  }),
+  getClientsFirmNoteByAssistant: assistantProcedure.input(z.string()).query(async ({ input }) => {
+    const userNotes = await db.user.findUnique({
+      where: {
+        id: input
+      },
+      include: {
+        FirmNote: true
+      }
+    });
+    return userNotes?.FirmNote;
   })
 });

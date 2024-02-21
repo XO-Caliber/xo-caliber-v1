@@ -52,10 +52,12 @@ export const ViewAdminQA = () => {
   return (
     <div>
       {catArray.length > 0 ? (
-        <div className="scrollableContainer mt-4 overflow-y-scroll">
+        <div className=" mt-4 h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
-            <AllTabsContent data={categories} handleDelete={handleDelete} />
+            <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
+              <AllTabsContent data={categories} handleDelete={handleDelete} />
+            </div>
           </Tabs>
         </div>
       ) : (

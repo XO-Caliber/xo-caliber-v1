@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import ClientQA from "@/components/pages/q&a/client/ClientQA";
 import FirmQA from "@/components/pages/q&a/firm/FirmQA";
 import AdminQA from "@/components/pages/q&a/admin/AdminQA";
+import AssistantQA from "@/components/pages/q&a/assistant/AssistantQA";
 
 const page = async () => {
   const session = await getAuthSession();
@@ -24,6 +25,7 @@ const page = async () => {
               image={session.user.image}
             />
           )}
+          {session.user.role === "ASSISTANT" && <AssistantQA />}
         </div>
       ) : (
         <div>

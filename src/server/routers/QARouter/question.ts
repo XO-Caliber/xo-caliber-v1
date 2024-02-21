@@ -1,6 +1,12 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
-import { adminProcedure, firmProcedure, publiceProcedure, router } from "@/server/trpc";
+import {
+  adminProcedure,
+  assistantProcedure,
+  firmProcedure,
+  publiceProcedure,
+  router
+} from "@/server/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
@@ -40,7 +46,24 @@ export const questionRouter = router({
     const firmQuestions = res.filter((questions) => questions.firmId === session.user.id);
     return firmQuestions;
   }),
-
+  getAssistantFirmQuestion: assistantProcedure.query(async () => {
+    const session = await getAuthSession();
+    const assistantData = await db.assistant.findUnique({
+      where: {
+        assistantId: session?.user.id
+      },
+      include: {
+        firm: true
+      }
+    });
+    const firmQuestions = await db.category.findMany({
+      include: {
+        questions: true
+      }
+    });
+    const res = firmQuestions.filter((question) => question.firmId === assistantData?.firmId);
+    return res;
+  }),
   firmQuestionDelete: firmProcedure.input(z.string()).mutation(async ({ input }) => {
     await db.question.delete({
       where: {
