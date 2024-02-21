@@ -12,9 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = process.env.PRODUCTION_URL
-  ? `https://${process.env.PRODUCTION_URL}`
-  : "http://localhost:3000";
+const baseUrl = "https://starfish-app-c34pl.ondigitalocean.app";
 
 export const ResetPasswordEmail = (token: string) => (
   <Html>
