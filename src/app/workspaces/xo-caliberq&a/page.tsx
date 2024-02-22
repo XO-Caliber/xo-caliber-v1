@@ -15,7 +15,7 @@ const page = async () => {
           <div>
             <Header workspace="Caliber QA">XO Caliber Q&A</Header>
           </div>
-          {session.user.role === "FIRM" && <FirmQA />}
+          {session.user.role === "FIRM" && <FirmQA user="FIRM" />}
           {session.user.role === "ADMIN" && <AdminQA />}
           {session.user.role === "INDIVIDUAL" && (
             <ClientQA

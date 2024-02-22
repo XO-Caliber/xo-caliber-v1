@@ -17,7 +17,11 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
 
-const AddAdminQADialog = () => {
+interface QAProps {
+  refetchData: () => void;
+}
+
+const AddAdminQADialog = ({ refetchData }: QAProps) => {
   const [mark, setMark] = useState("10");
   const [question, setQuestion] = useState("");
   const [categoryId, setCategoryId] = useState("");
@@ -26,6 +30,7 @@ const AddAdminQADialog = () => {
 
   const { mutate: addQA } = trpc.question.addAdminQuestion.useMutation({
     onSuccess({ success }) {
+      refetchData();
       if (success) {
         router.refresh();
         toast({

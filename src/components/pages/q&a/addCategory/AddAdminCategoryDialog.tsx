@@ -16,7 +16,11 @@ import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 
-const AddAdminCategoryDialog = () => {
+interface CategoryProps {
+  refetchData: () => void;
+}
+
+const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -25,6 +29,7 @@ const AddAdminCategoryDialog = () => {
   const { mutate: deleteCategory } = trpc.category.deleteAdminCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         categoriesResult.refetch();
         router.refresh();
         toast({
@@ -40,6 +45,7 @@ const AddAdminCategoryDialog = () => {
 
   const { mutate: addCategory } = trpc.category.addAdminCategory.useMutation({
     onSuccess({ success }) {
+      refetchData();
       if (success) {
         categoriesResult.refetch();
         toast({

@@ -6,7 +6,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 
 import { Loader } from "lucide-react";
-import AssistantTabsContent from "../AssistantTabsCOntent";
+import AssistantTabsContent from "../AssistantTabsContent";
 
 export const ViewAssistantQA = () => {
   const router = useRouter();

@@ -1,33 +1,47 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllTabsContent from "../AllTabsContent";
+import FirmTabsContent from "../FirmTabsContent";
 import { Loader } from "lucide-react";
+import AddQADiaglog from "../../addQA/AddQADiaglog";
+import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   const categoriesList = trpc.question.getFirmQuestions.useQuery();
-  const { data: categories } = categoriesList;
+  const [categories, setCategories] = useState<any[]>([]);
+  const [catArray, setCatArray] = useState<string[]>([]);
 
-  // Use useEffect to update listCat when categories change
+  const refetchData = () => {
+    categoriesList.refetch();
+  };
+
+  useEffect(() => {
+    if (categoriesList.data) {
+      setCategories(categoriesList.data);
+    }
+  }, [categoriesList.data]);
+
   useEffect(() => {
     if (categories) {
-      const newSet = new Set(listCat);
-      categories.forEach((data) => newSet.add(data.name));
+      const newSet = new Set(categories.map((data) => data.name));
       setListCat(newSet);
     }
   }, [categories]);
-  console.log(categories);
+
+  useEffect(() => {
+    setCatArray(Array.from(listCat));
+  }, [listCat]);
 
   const { mutate: deleteFirmQuestion } = trpc.question.firmQuestionDelete.useMutation({
     onSuccess({ success }) {
       if (success) {
-        categoriesList.refetch();
+        refetchData();
         router.refresh();
         toast({
           title: "Question Deleted",
@@ -42,7 +56,6 @@ export const ViewFirmQA = () => {
       });
     }
   });
-  const catArray = Array.from(listCat);
 
   const handleDelete = (questionId: string) => {
     try {
@@ -51,14 +64,23 @@ export const ViewFirmQA = () => {
       console.log(err);
     }
   };
+
   return (
     <div>
+      <div className="fixed bottom-[883px] left-[1100px] ml-8 mr-12">
+        <AddQADiaglog refetchData={refetchData} />
+        <AddCategoryDialog refetchData={refetchData} />
+      </div>
       {catArray.length > 0 ? (
-        <div className=" mt-4 h-[70vh]">
+        <div className=" mt-6 h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
-              <AllTabsContent data={categories} handleDelete={handleDelete} />
+              <FirmTabsContent
+                data={categories}
+                handleDelete={handleDelete}
+                refetchData={refetchData}
+              />
             </div>
           </Tabs>
         </div>
@@ -81,3 +103,5 @@ export const ViewFirmQA = () => {
     </div>
   );
 };
+
+export default ViewFirmQA;
