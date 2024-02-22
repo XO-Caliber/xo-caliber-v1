@@ -11,7 +11,7 @@ import AssistantTabsContent from "../AssistantTabsContent";
 export const ViewAssistantQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  const categoriesList = trpc.question.getFirmQuestions.useQuery();
+  const categoriesList = trpc.question.getAssistantFirmQuestion.useQuery();
   const [categories, setCategories] = useState<any[]>([]);
   const [catArray, setCatArray] = useState<string[]>([]);
 
