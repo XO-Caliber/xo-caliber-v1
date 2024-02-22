@@ -13,7 +13,7 @@ interface userProps {
   user: string;
 }
 const ClientGraph = ({ user }: userProps) => {
-  const [userType, setUserType] = useState("admin");
+  const [userType, setUserType] = useState("firm");
 
   const handleChange = (userType: string) => {
     setUserType(userType);
@@ -28,7 +28,7 @@ const ClientGraph = ({ user }: userProps) => {
         <span className="mr-10 w-32">
           <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Admin" />
+              <SelectValue placeholder="Firm" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="admin">Admin</SelectItem>

@@ -22,7 +22,6 @@ const XOMindMap = async () => {
       ) : (
         <div>
           <Header>XO Mind Map</Header>
-          <Home />
         </div>
       )}
     </div>

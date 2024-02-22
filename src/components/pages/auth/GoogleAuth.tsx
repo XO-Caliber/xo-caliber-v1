@@ -5,10 +5,11 @@ import googleLogo from "../../../../public/images/google-logo.svg";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export const GoogleAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const router = useRouter();
   const { toast } = useToast();
 
   const loginWithGoogle = async () => {
@@ -17,6 +18,7 @@ export const GoogleAuth = () => {
       console.log("Hello from client");
       const result = await signIn("google");
       if (result?.ok) {
+        router.push("/");
         setIsLoading(false);
       } else if (result?.error) {
         toast({
