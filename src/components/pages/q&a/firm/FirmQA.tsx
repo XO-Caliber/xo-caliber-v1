@@ -6,10 +6,8 @@ import AddCategoryDialog from "../addCategory/AddCategoryDialog";
 import { ViewFirmQA } from "../viewQA/firm/ViewFirmQA";
 import ImportAdmin from "./ImportAdmin";
 import { use } from "react";
-interface UserProps {
-  user: string;
-}
-const FirmQA = ({ user }: UserProps) => {
+
+const FirmQA = () => {
   return (
     <div className="m-4 ml-56 text-xl ">
       <div className="flex items-center justify-start ">

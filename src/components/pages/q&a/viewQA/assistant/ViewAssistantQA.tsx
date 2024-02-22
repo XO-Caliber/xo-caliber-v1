@@ -11,20 +11,26 @@ import AssistantTabsContent from "../AssistantTabsContent";
 export const ViewAssistantQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
-  const categoriesList = trpc.question.getAssistantFirmQuestion.useQuery();
-  const { data: categories } = categoriesList;
+  const categoriesList = trpc.question.getFirmQuestions.useQuery();
+  const [categories, setCategories] = useState<any[]>([]);
+  const [catArray, setCatArray] = useState<string[]>([]);
 
-  // Use useEffect to update listCat when categories change
+  useEffect(() => {
+    if (categoriesList.data) {
+      setCategories(categoriesList.data);
+    }
+  }, [categoriesList.data]);
+
   useEffect(() => {
     if (categories) {
-      const newSet = new Set(listCat);
-      categories.forEach((data) => newSet.add(data.name));
+      const newSet = new Set(categories.map((data) => data.name));
       setListCat(newSet);
     }
   }, [categories]);
-  console.log(categories);
 
-  const catArray = Array.from(listCat);
+  useEffect(() => {
+    setCatArray(Array.from(listCat));
+  }, [listCat]);
 
   return (
     <div>
