@@ -240,5 +240,20 @@ export const questionRouter = router({
       }
     });
     return res;
-  })
+  }),
+  updateQuestions: publiceProcedure
+    .input(z.object({ question: z.string(), mark: z.number(), questionId: z.string() }))
+    .mutation(async ({ input }) => {
+      const { question, mark, questionId } = input;
+      await db.question.update({
+        where: {
+          id: questionId
+        },
+        data: {
+          question: question,
+          mark: mark
+        }
+      });
+      return { success: true };
+    })
 });

@@ -1,3 +1,4 @@
+import { trpc } from "@/app/_trpc/client";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -9,9 +10,18 @@ import {
   DialogTrigger
 } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { toast } from "@/hooks/use-toast";
 import { Info, Trash, XCircle } from "lucide-react";
-import React from "react";
-
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/Select";
 interface AddQAProps {
   questionNumber: number;
   question: string;
@@ -27,6 +37,41 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
   id,
   handleDelete
 }) => {
+  const [isLoading, setLoading] = useState(false);
+  const [Question, setQuestion] = useState(question);
+  const [Mark, setMark] = useState(mark);
+  const router = useRouter();
+  const { mutate: updateQuestion } = trpc.question.updateQuestions.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        toast({
+          title: "Question Updated",
+          description: "Your new question data was updated successfully"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Something went wrong",
+        variant: "destructive"
+      });
+    },
+    onSettled() {
+      setLoading(false);
+    }
+  });
+  const onSubmit = () => {
+    try {
+      setLoading(true);
+      updateQuestion({
+        question: Question,
+        mark: parseInt(Mark),
+        questionId: id
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div>
       <Dialog>
@@ -64,13 +109,47 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
           </DialogHeader>
           <section className="rounded-sm border bg-secondary ">
             <ul className="flex items-center justify-center p-4">
-              <li>{question}</li>
-              <li className="ml-4 rounded-md bg-secondary-foreground p-1 text-white">
-                Mark:{mark}
+              <li>
+                <Textarea
+                  value={Question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  className="h-[200px] w-[400px]"
+                />
+              </li>
+              <li className="ml-4 rounded-md bg-secondary-foreground p-1 p-2">
+                <text className="text-white"> Mark:{mark}</text>
+              </li>
+              <li>
+                <div className="ml-4 flex">
+                  <text className="mr-4 font-bold">Change mark:</text>
+                  <Select onValueChange={(value) => setMark(value)}>
+                    {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
+                    <SelectTrigger className="">
+                      <SelectValue placeholder={Mark} />
+                    </SelectTrigger>
+                    <SelectContent className="w-[50px] ">
+                      <SelectItem value={"10"}>10</SelectItem>
+                      <SelectItem value={"20"}>20</SelectItem>
+                      <SelectItem value={"30"}>30</SelectItem>
+                      <SelectItem value={"40"}>40</SelectItem>
+                      <SelectItem value={"50"}>50</SelectItem>
+                      <SelectItem value={"60"}>60</SelectItem>
+                      <SelectItem value={"70"}>70</SelectItem>
+                      <SelectItem value={"80"}>80</SelectItem>
+                      <SelectItem value={"90"}>90</SelectItem>
+                      <SelectItem value={"100"}>100</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </li>
             </ul>
           </section>
           <DialogFooter>
+            <form onSubmit={onSubmit}>
+              <Button variant={"primary"} isLoading={isLoading}>
+                Save
+              </Button>
+            </form>
             <Button variant={"destructive"} onClick={() => handleDelete(id)}>
               <Trash size={15} />
             </Button>
