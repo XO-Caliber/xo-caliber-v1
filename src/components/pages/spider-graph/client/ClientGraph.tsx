@@ -28,11 +28,11 @@ const ClientGraph = ({ user }: userProps) => {
         <span className="mr-10 w-32">
           <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Admin" />
+              <SelectValue placeholder="Firm" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="admin">Admin</SelectItem>
               <SelectItem value="firm">Firm</SelectItem>
+              <SelectItem value="admin">Admin</SelectItem>
             </SelectContent>
           </Select>
         </span>
