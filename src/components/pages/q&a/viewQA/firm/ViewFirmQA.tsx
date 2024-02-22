@@ -59,12 +59,12 @@ export const ViewFirmQA = () => {
   };
   return (
     <div>
-      <div className="absolute bottom-[883px] left-[600px]">
+      <div className="fixed bottom-[883px] left-[1100px] ml-8 mr-12">
         <AddQADiaglog refetchData={refetchData} />
         <AddCategoryDialog refetchData={refetchData} />
       </div>
       {catArray.length > 0 ? (
-        <div className=" mt-4 h-[70vh]">
+        <div className=" mt-6 h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
