@@ -13,7 +13,7 @@ interface userProps {
   user: string;
 }
 const ClientGraph = ({ user }: userProps) => {
-  const [userType, setUserType] = useState("admin");
+  const [userType, setUserType] = useState("firm");
 
   const handleChange = (userType: string) => {
     setUserType(userType);
