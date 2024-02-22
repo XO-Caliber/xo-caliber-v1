@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
@@ -14,19 +14,26 @@ export const ViewFirmQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   const categoriesList = trpc.question.getFirmQuestions.useQuery();
-  let { data: categories } = categoriesList;
+  const [categories, setCategories] = useState<any[]>([]);
   const [catArray, setCatArray] = useState<string[]>([]);
+
   const refetchData = () => {
     categoriesList.refetch();
   };
 
   useEffect(() => {
+    if (categoriesList.data) {
+      setCategories(categoriesList.data);
+    }
+  }, [categoriesList.data]);
+
+  useEffect(() => {
     if (categories) {
-      const newSet = new Set(listCat);
-      categories.forEach((data) => newSet.add(data.name));
+      const newSet = new Set(categories.map((data) => data.name));
       setListCat(newSet);
     }
   }, [categories]);
+
   useEffect(() => {
     setCatArray(Array.from(listCat));
   }, [listCat]);
@@ -34,7 +41,7 @@ export const ViewFirmQA = () => {
   const { mutate: deleteFirmQuestion } = trpc.question.firmQuestionDelete.useMutation({
     onSuccess({ success }) {
       if (success) {
-        categoriesList.refetch();
+        refetchData();
         router.refresh();
         toast({
           title: "Question Deleted",
@@ -57,6 +64,7 @@ export const ViewFirmQA = () => {
       console.log(err);
     }
   };
+
   return (
     <div>
       <div className="fixed bottom-[883px] left-[1100px] ml-8 mr-12">
@@ -95,3 +103,5 @@ export const ViewFirmQA = () => {
     </div>
   );
 };
+
+export default ViewFirmQA;
