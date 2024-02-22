@@ -1,25 +1,27 @@
 import { TabsContent } from "@radix-ui/react-tabs";
 import React from "react";
-import ViewQAContent from "@/components/pages/q&a/viewQA/ViewQAContent";
+import FirmQAContent from "@/components/pages/q&a/viewQA/FirmQAContent";
 
 interface QATabsContentProps {
   data: any;
   handleDelete: (questionId: string) => void;
+  refetchData: () => void;
 }
 
-const AllTabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete }) => {
+const FirmTabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete, refetchData }) => {
   return (
     <div className="m-4">
       {data.map((category: any, index: any) => (
         <TabsContent key={index} value={category.name}>
           {category.questions.map((question: any, questionIndex: any) => (
-            <ViewQAContent
+            <FirmQAContent
               key={questionIndex}
               questionNumber={questionIndex + 1}
               question={question.question}
               mark={question.mark}
               handleDelete={handleDelete}
               id={question.id}
+              refetchData={refetchData}
             />
           ))}
         </TabsContent>
@@ -28,4 +30,4 @@ const AllTabsContent: React.FC<QATabsContentProps> = ({ data, handleDelete }) =>
   );
 };
 
-export default AllTabsContent;
+export default FirmTabsContent;

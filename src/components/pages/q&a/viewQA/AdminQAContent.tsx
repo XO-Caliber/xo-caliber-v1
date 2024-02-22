@@ -27,15 +27,17 @@ interface AddQAProps {
   question: string;
   mark: string;
   id: string;
-
   handleDelete: (questionId: string) => void;
+  refetchData: () => void;
 }
-export const ViewQAContent: React.FC<AddQAProps> = ({
+export const AdminQAContent: React.FC<AddQAProps> = ({
   questionNumber,
   question,
   mark,
   id,
-  handleDelete
+
+  handleDelete,
+  refetchData
 }) => {
   const [isLoading, setLoading] = useState(false);
   const [Question, setQuestion] = useState(question);
@@ -44,6 +46,7 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
   const { mutate: updateQuestion } = trpc.question.updateQuestions.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         toast({
           title: "Question Updated",
           description: "Your new question data was updated successfully"
@@ -60,7 +63,16 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
       setLoading(false);
     }
   });
-  const onSubmit = () => {
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!Question.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter a valid question.",
+        variant: "destructive"
+      });
+      return;
+    }
     try {
       setLoading(true);
       updateQuestion({
@@ -91,7 +103,7 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
               /> */}
 
               <Info
-                xlinkTitle="Tap to see detailed question overview "
+                xlinkTitle="Tap to see detailed question overFirm "
                 className="cursor-pointer"
               />
             </ul>
@@ -105,7 +117,7 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
         </DialogTrigger>
         <DialogContent className="min-w-60 select-none">
           <DialogHeader>
-            <DialogTitle>Question</DialogTitle>
+            <DialogTitle>Question {questionNumber}</DialogTitle>
           </DialogHeader>
           <section className="rounded-sm border bg-secondary ">
             <ul className="flex items-center justify-center p-4">
@@ -160,4 +172,4 @@ export const ViewQAContent: React.FC<AddQAProps> = ({
   );
 };
 
-export default ViewQAContent;
+export default AdminQAContent;

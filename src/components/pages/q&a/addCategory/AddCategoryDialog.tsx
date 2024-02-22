@@ -15,8 +15,10 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
-
-const AddCategoryDialog = () => {
+interface CategoryProps {
+  refetchData: () => void;
+}
+const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
   const router = useRouter();
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
@@ -25,6 +27,7 @@ const AddCategoryDialog = () => {
   const { mutate: deleteCategory } = trpc.category.deleteFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         categoriesResult.refetch();
         router.refresh();
         toast({
@@ -41,6 +44,7 @@ const AddCategoryDialog = () => {
   const { mutate: addCategory } = trpc.category.addFirmCategory.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         categoriesResult.refetch();
         toast({
           title: "Category Added",

@@ -4,8 +4,11 @@ import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllTabsContent from "../AllTabsContent";
+
 import { Loader } from "lucide-react";
+import AdminTabsContent from "../AdminTabsContent";
+import AddAdminCategoryDialog from "../../addCategory/AddAdminCategoryDialog";
+import AddAdminQADialog from "../../addQA/AddAdminQADialog";
 
 export const ViewAdminQA = () => {
   const router = useRouter();
@@ -13,7 +16,9 @@ export const ViewAdminQA = () => {
   const categoriesList = trpc.question.getAdminQuestions.useQuery();
   const { data: categories } = categoriesList;
 
-  // Use useEffect to update listCat when categories change
+  const refetchData = () => {
+    categoriesList.refetch();
+  };
   useEffect(() => {
     if (categories) {
       const newSet = new Set(listCat);
@@ -51,12 +56,20 @@ export const ViewAdminQA = () => {
 
   return (
     <div>
+      <div>
+        <AddAdminQADialog refetchData={refetchData} />
+        <AddAdminCategoryDialog refetchData={refetchData} />
+      </div>
       {catArray.length > 0 ? (
         <div className=" mt-4 h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
-              <AllTabsContent data={categories} handleDelete={handleDelete} />
+              <AdminTabsContent
+                data={categories}
+                handleDelete={handleDelete}
+                refetchData={refetchData}
+              />
             </div>
           </Tabs>
         </div>

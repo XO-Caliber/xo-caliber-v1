@@ -5,7 +5,7 @@ import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllTabsContent from "../AllTabsContent";
+import AllTabsContent from "../FirmTabsContent";
 import { Loader } from "lucide-react";
 import AssistantTabsContent from "../AssistantTabsCOntent";
 

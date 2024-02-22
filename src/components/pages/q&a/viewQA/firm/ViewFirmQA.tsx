@@ -5,16 +5,21 @@ import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-import AllTabsContent from "../AllTabsContent";
+import FirmTabsContent from "../FirmTabsContent";
 import { Loader } from "lucide-react";
+import AddQADiaglog from "../../addQA/AddQADiaglog";
+import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   const categoriesList = trpc.question.getFirmQuestions.useQuery();
-  const { data: categories } = categoriesList;
+  let { data: categories } = categoriesList;
+  const [catArray, setCatArray] = useState<string[]>([]);
+  const refetchData = () => {
+    categoriesList.refetch();
+  };
 
-  // Use useEffect to update listCat when categories change
   useEffect(() => {
     if (categories) {
       const newSet = new Set(listCat);
@@ -22,7 +27,9 @@ export const ViewFirmQA = () => {
       setListCat(newSet);
     }
   }, [categories]);
-  console.log(categories);
+  useEffect(() => {
+    setCatArray(Array.from(listCat));
+  }, [listCat]);
 
   const { mutate: deleteFirmQuestion } = trpc.question.firmQuestionDelete.useMutation({
     onSuccess({ success }) {
@@ -42,7 +49,6 @@ export const ViewFirmQA = () => {
       });
     }
   });
-  const catArray = Array.from(listCat);
 
   const handleDelete = (questionId: string) => {
     try {
@@ -53,12 +59,20 @@ export const ViewFirmQA = () => {
   };
   return (
     <div>
+      <div className="absolute bottom-[883px] left-[600px]">
+        <AddQADiaglog refetchData={refetchData} />
+        <AddCategoryDialog refetchData={refetchData} />
+      </div>
       {catArray.length > 0 ? (
         <div className=" mt-4 h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
-              <AllTabsContent data={categories} handleDelete={handleDelete} />
+              <FirmTabsContent
+                data={categories}
+                handleDelete={handleDelete}
+                refetchData={refetchData}
+              />
             </div>
           </Tabs>
         </div>

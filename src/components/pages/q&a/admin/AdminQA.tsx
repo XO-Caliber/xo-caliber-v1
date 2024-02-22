@@ -1,7 +1,5 @@
 "use client";
-import AddAdminQADialog from "../addQA/AddAdminQADialog";
-import { ViewFirmQA } from "../viewQA/firm/ViewFirmQA";
-import AddAdminCategoryDialog from "../addCategory/AddAdminCategoryDialog";
+
 import { ViewAdminQA } from "../viewQA/admin/ViewAdminQA";
 
 const AdminQA = () => {
@@ -12,9 +10,6 @@ const AdminQA = () => {
           <h1 className="text-2xl font-bold">Welcome back!</h1>
           <p className="text-sm font-normal text-muted">Here’s a list of Bonny davis’s cases</p>
         </div>
-
-        <AddAdminQADialog />
-        <AddAdminCategoryDialog />
       </div>
       <ViewAdminQA />
     </div>
