@@ -9,18 +9,17 @@ import { useRouter } from "next/navigation";
 
 export const GoogleAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter();
+
   const { toast } = useToast();
 
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
       console.log("Hello from client");
-      const result = await signIn("google");
+      const result = await signIn("google", { callbackUrl: "/" });
+
       if (result?.ok) {
         setIsLoading(false);
-        router.push("/");
-        router.refresh();
       } else if (result?.error) {
         toast({
           title: "There was a problem",
