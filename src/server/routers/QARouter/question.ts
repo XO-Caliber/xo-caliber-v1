@@ -144,6 +144,9 @@ export const questionRouter = router({
         questions: true
       }
     });
+    if (!userData?.firmId) {
+      return undefined;
+    }
     const clientQuestion = questions.filter((questions) => questions.firmId === userData?.firmId);
     return clientQuestion;
   }),

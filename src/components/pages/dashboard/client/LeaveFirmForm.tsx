@@ -16,12 +16,16 @@ import { useRouter } from "next/navigation";
 import { Input } from "postcss";
 import React, { useState } from "react";
 
-const LeaveFirmForm = () => {
+interface LeaveFirmProps {
+  refetchData: () => void;
+}
+const LeaveFirmForm = ({ refetchData }: LeaveFirmProps) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { mutate: leaveFirm } = trpc.home.leaveFirm.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         router.refresh();
         toast({
           title: "Leaved Firm successfully",
