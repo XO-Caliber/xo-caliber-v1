@@ -77,7 +77,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         </div>
         <UserProfile name={name} email={email} image={image} />
       </div>
-      {listCat.size > 0 ? (
+      {listCat.size > 0 && (
         <div className="mt-2">
           <ResizablePanelGroup direction="vertical" className="min-h-[80vh] max-w-full">
             <ResizablePanel defaultSize={70}>
@@ -94,9 +94,10 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>
-      ) : (
+      )}
+      {!listCat.size && (
         <div className="flex h-[70vh] items-center justify-center">
-          <Loader size={45} className="rotate-animation" />
+          <text>Join under a firm to view questions</text>
         </div>
       )}
     </div>

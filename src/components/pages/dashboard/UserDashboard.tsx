@@ -1,5 +1,6 @@
+import Header from "@/components/Header";
 import React from "react";
 
 export const UserDashboard = () => {
-  return <div>UserDashboard</div>;
+  return <Header>Dashboard</Header>;
 };

@@ -35,6 +35,11 @@ export const homeRouter = router({
         firmId: null
       }
     });
+    await db.answer.deleteMany({
+      where: {
+        userId: session.user.id
+      }
+    });
     return { success: true };
   }),
 

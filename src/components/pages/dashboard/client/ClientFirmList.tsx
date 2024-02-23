@@ -8,6 +8,9 @@ import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 
 const ClientFirmList = () => {
   const clientFirmList = trpc.home.getClientFirm.useQuery();
+  const refetchData = () => {
+    clientFirmList.refetch();
+  };
   if (clientFirmList.data?.Firm) {
     return (
       <div>
@@ -19,7 +22,7 @@ const ClientFirmList = () => {
               name={clientFirmList.data.Firm?.name}
             />
             <div className="flex pl-12 pt-24">
-              <LeaveFirmForm />
+              <LeaveFirmForm refetchData={refetchData} />
             </div>
           </CardContent>
         </Card>
