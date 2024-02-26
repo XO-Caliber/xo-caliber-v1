@@ -39,13 +39,15 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
     },
     onError(err) {
       toast({
-        title: "Somethin went wrong",
+        title: "Something went wrong",
         description: `Try again ${err}`,
         variant: "destructive"
       });
     },
     onSettled() {
       setLoading(false);
+      setCategoryId("");
+      setQuestion("");
     }
   });
 
