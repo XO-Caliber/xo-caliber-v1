@@ -12,10 +12,7 @@ import {
   SelectContent,
   SelectValue
 } from "@/components/ui/Select";
-import { Loader } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
-import { Textarea } from "@/components/ui/Textarea";
-import { Button } from "@/components/ui/Button";
+
 import { ClientQANotes } from "./ClientQANotes";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import { Checkbox } from "@/components/ui/Checkbox";
@@ -55,9 +52,6 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
     onSuccess({ success }) {
       checked.refetch();
       if (success) {
-        Toast({
-          title: "Accepted terms and conditions"
-        });
       }
     }
   });
@@ -106,14 +100,14 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                       immigration process but also provide with an opportunity to calibrate your
                       profile accurately. These questions are strategically crafted to assess and
                       guide the development of your narrative, especially for potential visa
-                      applications such as EB1A, EB2 NIW, O1 Visa, or other immigrant visas. It's
-                      crucial to understand that these questions serve as a tool for profiling and
-                      narrative building. Importantly, they do not determine your eligibility for
-                      any specific visa category. You might be asked these questions by the firm
-                      admin if you are under firm management; otherwise, the XO Caliber team has
-                      formulated them based on expert opinions and a wealth of acquired knowledge. A
-                      compartmentalized approach, coupled with a detailed understanding of
-                      immigration requirements, and a strategic method in approaching these
+                      applications such as EB1A, EB2 NIW, O1 Visa, or other immigrant visas.
+                      It&apos;s crucial to understand that these questions serve as a tool for
+                      profiling and narrative building. Importantly, they do not determine your
+                      eligibility for any specific visa category. You might be asked these questions
+                      by the firm admin if you are under firm management; otherwise, the XO Caliber
+                      team has formulated them based on expert opinions and a wealth of acquired
+                      knowledge. A compartmentalized approach, coupled with a detailed understanding
+                      of immigration requirements, and a strategic method in approaching these
                       requirements, facilitates a more informed immigration strategy. By breaking
                       down the process into distinct compartments, each requirement can be
                       systematically addressed, ensuring a comprehensive evaluation of your
@@ -129,7 +123,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                       <Checkbox
                         id="terms1"
                         disabled={checked.data}
-                        onClick={() => updateChecked()}
+                        onClick={() => onSubmit()}
                         checked={checked.data}
                       />
                       <div className="grid gap-1.5 pl-2 leading-none">
@@ -137,22 +131,22 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                           htmlFor="terms1"
                           className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                         >
-                          Please acknowledge that you understand the questions and answer "yes" or
-                          "no" truthfully. If you encounter uncertainty or lack clarity on any
-                          question, kindly reach out to the firm administration for assistance if
-                          you are enrolled to managed under Firm (or) you need a deeper
-                          understanding of each question to grasp the specific requirements of each
-                          compartment before providing your response. In order for the evaluation
-                          process to be effective, accurate and reliable information must be
-                          provided. Please accept sincere thanks and best wishes for your future
-                          endeavors on behalf of XO Caliber team.
+                          Please acknowledge that you understand the questions and answer
+                          &apos;yes&apos; or &apos;no&apos; truthfully. If you encounter uncertainty
+                          or lack clarity on any question, kindly reach out to the firm
+                          administration for assistance if you are enrolled to managed under Firm
+                          (or) you need a deeper understanding of each question to grasp the
+                          specific requirements of each compartment before providing your response.
+                          In order for the evaluation process to be effective, accurate and reliable
+                          information must be provided. Please accept sincere thanks and best wishes
+                          for your future endeavors on behalf of XO Caliber team.
                         </label>
                       </div>
                     </li>
                   </ul>
                 </section>
               )}
-              <Tabs onClick={() => setHidden(true)} aria-disabled={!checked.data}>
+              <Tabs onClick={() => setHidden(true)}>
                 <QATabsList categories={catArray} />
 
                 <div className="scrollableContainer mt-2 h-[60vh] overflow-y-scroll bg-white">
