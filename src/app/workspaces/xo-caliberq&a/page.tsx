@@ -13,7 +13,7 @@ const page = async () => {
       {session ? (
         <div className="h-screen">
           <div>
-            <Header workspace="Caliber QA">XO Caliber Q&A</Header>
+            <Header workspace="Caliber QA">Caliber Q&A</Header>
           </div>
           {session.user.role === "FIRM" && <FirmQA />}
           {session.user.role === "ADMIN" && <AdminQA />}
@@ -29,7 +29,7 @@ const page = async () => {
         </div>
       ) : (
         <div>
-          <Header>XO Caliber Q&A</Header>
+          <Header> Caliber Q&A</Header>
         </div>
       )}
     </div>

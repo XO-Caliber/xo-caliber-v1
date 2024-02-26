@@ -24,16 +24,12 @@ export function FirmNotes({ userType }: userType) {
     return true;
   };
 
-  function onSubmit() {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(notes, null, 2)}</code>
-        </pre>
-      )
-    });
-  }
+  // function onSubmit() {
+  //   toast({
+  //     title: "Your notes was saved successfully",
+  //     description: `${JSON.stringify(notes, null, 2)}`
+  //   });
+  // }
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
