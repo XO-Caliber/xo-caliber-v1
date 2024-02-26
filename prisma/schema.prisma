@@ -58,8 +58,6 @@ model User {
   isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
 
-  answeredAll Boolean @default(false)
-
   Firm       Firm?       @relation(fields: [firmId], references: [firmId])
   firmId     String?
   Assistants Assistant[]
