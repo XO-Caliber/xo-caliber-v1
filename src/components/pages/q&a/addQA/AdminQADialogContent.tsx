@@ -50,6 +50,7 @@ const AdminQADialogContent = ({
             <SelectValue placeholder="10" />
           </SelectTrigger>
           <SelectContent className="w-[50px] ">
+            <SelectItem value={"10"}>10</SelectItem>
             <SelectItem value={"20"}>20</SelectItem>
             <SelectItem value={"30"}>30</SelectItem>
             <SelectItem value={"40"}>40</SelectItem>
