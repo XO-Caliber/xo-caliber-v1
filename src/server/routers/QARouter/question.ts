@@ -258,5 +258,26 @@ export const questionRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  getClientChecked: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const user = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      }
+    });
+    return user?.answeredAll;
+  }),
+  addClientChecked: publiceProcedure.mutation(async () => {
+    const session = await getAuthSession();
+    await db.user.update({
+      where: {
+        id: session?.user.id
+      },
+      data: {
+        answeredAll: true
+      }
+    });
+    return { success: true };
+  })
 });
