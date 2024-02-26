@@ -32,12 +32,12 @@ const ClientGraph = ({ user }: userProps) => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="firm">Firm</SelectItem>
-              <SelectItem value="admin">Admin</SelectItem>
+              <SelectItem value="default">Default</SelectItem>
             </SelectContent>
           </Select>
         </span>
       </div>
-      {userType === "admin" ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
+      {userType === "default" ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
     </div>
   );
 };

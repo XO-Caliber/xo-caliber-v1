@@ -27,7 +27,7 @@ interface userProfile {
 }
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
-  const [userType, setUserType] = useState("admin");
+  const [userType, setUserType] = useState("default");
 
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());
@@ -67,10 +67,10 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         <div>
           <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Admin Questions" />
+              <SelectValue placeholder="Default Questions" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="admin">Admin Questions</SelectItem>
+              <SelectItem value="default">Default Questions</SelectItem>
               <SelectItem value="firm">Firm Questions</SelectItem>
             </SelectContent>
           </Select>
@@ -90,7 +90,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={30}>
-              <ClientQANotes />
+              {userType === "firm" && <ClientQANotes />}
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>
