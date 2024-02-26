@@ -8,7 +8,7 @@ const QATabsTrigger: React.FC<QATabsTriggerProps> = ({ categories }) => {
   return (
     <div>
       {categories.map((categorie) => (
-        <TabsTrigger key={categorie} value={categorie}>
+        <TabsTrigger key={categorie} value={categorie} className="p-1">
           {categorie.charAt(0).toUpperCase() + categorie.slice(1)}
         </TabsTrigger>
       ))}
