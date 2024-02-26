@@ -33,7 +33,6 @@ export const authRouter = router({
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
-        isEmailVerified: false,
         emailVerificationToken,
         image: RandomProfile
       }
