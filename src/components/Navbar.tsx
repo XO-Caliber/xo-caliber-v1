@@ -22,7 +22,7 @@ import { user } from "@/types/user";
 export const Navbar = async () => {
   const session = await getAuthSession();
   return (
-    <nav className="absolute h-screen w-56 border-r-2 border-border ">
+    <nav className="absolute h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>
         <div className="border-b-2 p-2 pl-8">
           <Image src={navLogo} width={140} height={41} alt="LOGO" />
@@ -47,7 +47,7 @@ export const Navbar = async () => {
             <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
-        <li
+        {/* <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary"
         >
@@ -55,23 +55,23 @@ export const Navbar = async () => {
           <p className="mx-1 text-base text-secondary-foreground  hover:text-black">
             Notifications
           </p>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary"
         >
           <ArrowDown color="var(--accent-foreground)" size={16} className="mx-2" />
           <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Show more</p>
-        </li>
+        </li> */}
       </ul>
 
-      <Link href={"/favorites"}>
+      {/* <Link href={"/favorites"}>
         <div className=" cursor-pointer border-2 border-x-0  hover:bg-primary">
           <div className="m-4 w-20 text-secondary-foreground  hover:text-black">
             <span className="mr-0 flex">Favorites</span>
           </div>
         </div>
-      </Link>
+      </Link> */}
       <div className="cursor-pointer">
         <WorkSpace />
       </div>

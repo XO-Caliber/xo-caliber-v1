@@ -89,7 +89,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             <ResizablePanel defaultSize={70}>
               {" "}
               {!hidden && userType === "firm" && (
-                <section className="absolute  m-16 mt-28 rounded-lg border-2  shadow-lg">
+                <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
                   <ul className="p-8 text-left  text-base">
                     <li className="font-serif">
                       By answering all Yes or No questions, you not only gain insights into the
