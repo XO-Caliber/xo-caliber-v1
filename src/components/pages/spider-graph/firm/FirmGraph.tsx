@@ -151,7 +151,7 @@ function FirmGraph({ userType }: userType) {
         <p className="m-4 mt-[1.2rem] text-xl font-bold text-muted">Spider Graph</p>{" "}
         <UserSelectList getSelectedUser={getSelectedUser} />
       </div>
-      <ResizablePanelGroup direction="horizontal" className="min-h-[90vh] max-w-full">
+      <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
         <ResizablePanel defaultSize={50} className="m-2">
           <main className="flex h-full flex-col p-6">
             <div className="flex items-center justify-between">
