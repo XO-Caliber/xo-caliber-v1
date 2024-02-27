@@ -12,7 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://starfish-app-c34pl.ondigitalocean.app";
 
 export const VerifyEmailTemplate = (email: string, token: string) => (
   <Html>
