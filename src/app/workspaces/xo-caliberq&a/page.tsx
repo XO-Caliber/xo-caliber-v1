@@ -12,9 +12,6 @@ const page = async () => {
     <div>
       {session ? (
         <div className="h-screen">
-          <div>
-            <Header workspace="Caliber QA">Caliber Q&A</Header>
-          </div>
           {session.user.role === "FIRM" && <FirmQA />}
           {session.user.role === "ADMIN" && <AdminQA />}
           {session.user.role === "INDIVIDUAL" && (

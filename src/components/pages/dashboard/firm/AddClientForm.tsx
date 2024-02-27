@@ -66,7 +66,7 @@ export const AddClientForm = () => {
         });
       } else if (err.data?.code === "CONFLICT") {
         toast({
-          title: "User can be already under a firm",
+          title: "User may be already under a firm",
           description: "Only works on user",
           variant: "destructive"
         });

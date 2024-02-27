@@ -28,7 +28,7 @@ const LeaveFirmForm = ({ refetchData }: LeaveFirmProps) => {
         refetchData();
         router.refresh();
         toast({
-          title: "Leaved Firm successfully",
+          title: "Left Firm successfully",
           description: "Sucess"
         });
       }

@@ -21,12 +21,8 @@ export const ClientQANotes = () => {
       notes.refetch();
       if (success) {
         toast({
-          title: "You submitted the following values:",
-          description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{JSON.stringify(Note, null, 2)}</code>
-            </pre>
-          )
+          title: "Updated notes",
+          description: "Your notes was saved successfully"
         });
       }
     }
@@ -39,8 +35,8 @@ export const ClientQANotes = () => {
   };
 
   return (
-    <section className="relative  flex h-full w-full flex-col justify-between p-2">
-      <h1 className="text-lg font-semibold">Your Notes:</h1>
+    <section className="relative  flex h-full w-full flex-col  justify-between p-2">
+      <h1 className="items-start text-lg font-semibold">Your Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         value={Note}
@@ -48,9 +44,11 @@ export const ClientQANotes = () => {
         placeholder="Tell us a little bit about yourself"
         onChange={(e) => setNote(e.target.value)}
       />
-      <Button variant={"destructive"} onClick={notesUpdate}>
-        Save
-      </Button>
+      <div className="relative left-[1460px]">
+        <Button variant={"primary"} onClick={notesUpdate} size={"lg"}>
+          Save
+        </Button>
+      </div>
     </section>
   );
 };

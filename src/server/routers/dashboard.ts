@@ -3,6 +3,7 @@ import { adminProcedure, firmProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { nullable, z } from "zod";
+import { use } from "react";
 
 export const dashboardRouter = router({
   addFirm: adminProcedure.input(z.string().email()).mutation(async ({ ctx, input }) => {
@@ -61,6 +62,9 @@ export const dashboardRouter = router({
     const user = await db.user.findUnique({
       where: {
         email
+      },
+      include: {
+        Firm: true
       }
     });
     if (!session?.user.email) {
@@ -72,6 +76,8 @@ export const dashboardRouter = router({
       throw new TRPCError({ code: "BAD_REQUEST" });
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
+    } else if (user.Firm) {
+      throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
     }
 
     const makeAssistant = await db.assistant.findUnique({

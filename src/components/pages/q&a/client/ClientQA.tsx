@@ -26,7 +26,7 @@ interface userProfile {
 }
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
-  const [userType, setUserType] = useState("default");
+  const [userType, setUserType] = useState("firm");
   const [hidden, setHidden] = useState(false);
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());
@@ -68,28 +68,24 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
     setHidden(false);
   };
   return (
-    <div className="m-4 ml-56 text-xl">
-      <div className="flex items-center justify-between px-10">
-        <div className="px-4">
-          <h1 className="text-2xl font-bold">Answers all the questions!</h1>
-          <p className="text-sm font-normal text-muted">Here’s a list questions to answer </p>
-        </div>
-        <div>
+    <div className=" ml-56 text-xl">
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        <span className="mr-10 w-32">
           <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Default Questions" />
+              <SelectValue placeholder="Firm" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="default">Default Questions</SelectItem>
-              <SelectItem value="firm">Firm Questions</SelectItem>
+              <SelectItem value="firm">Firm</SelectItem>
+              <SelectItem value="default">Default</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <UserProfile name={name} email={email} image={image} />
+        </span>
       </div>
       {listCat.size > 0 && (
         <div className="mt-2">
-          <ResizablePanelGroup direction="vertical" className="min-h-[80vh] max-w-full">
+          <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full">
             <ResizablePanel defaultSize={70}>
               {" "}
               {!hidden && userType === "firm" && (
@@ -156,7 +152,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={30}>
-              {userType === "firm" && <ClientQANotes />}
+              <ClientQANotes />
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>
