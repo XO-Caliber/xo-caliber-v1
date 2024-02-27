@@ -10,6 +10,7 @@ import {
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
 import AllUserSelectList from "./AllUserSelectList";
+import { Copyright } from "lucide-react";
 
 interface UserAnswer {
   category: string | null;
@@ -25,13 +26,19 @@ interface userType {
 
 function AdminGraph({ userType }: userType) {
   const [user, setUser] = useState("");
+  const [user2, setUser2] = useState("");
+  const year = new Date().getFullYear();
   const {
     data: answerData,
     isLoading,
     isError
   } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user);
+  const { data: answerData2 } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user2);
   function getSelectedUser(userData: string) {
     setUser(userData);
+  }
+  function getSelectedUser2(userData: string) {
+    setUser2(userData);
   }
 
   useEffect(() => {
@@ -146,23 +153,147 @@ function AdminGraph({ userType }: userType) {
     };
   }, [answerData]);
 
+  useEffect(() => {
+    if (!answerData2) {
+      // Data is undefined, handle accordingly
+      console.error("Data is undefined.");
+      return;
+    }
+
+    const userAnswersWithCategory: UserAnswer[] = answerData2.map((item: any) => ({
+      category: item.category,
+      mark: item.mark,
+      id: item.id,
+      answer: item.answer,
+      questionId: item.questionId,
+      userId: item.userId
+    }));
+
+    const canvas = document.getElementById("myChart2") as HTMLCanvasElement;
+
+    if (!canvas) {
+      console.error("Canvas element with ID 'myChart' not found.");
+      return;
+    }
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      console.error("Unable to get 2D rendering context for the canvas.");
+      return;
+    }
+
+    Chart.register(RadialLinearScale, RadarController, PointElement, LineElement, Filler);
+
+    const groupedData = answerData2.reduce((acc: any, item: any) => {
+      if (!acc[item.category]) {
+        acc[item.category] = [];
+      }
+      if (item.answer === "YES") {
+        acc[item.category].push(item.mark);
+      } else {
+        acc[item.category].push(0);
+      }
+      return acc;
+    }, {});
+
+    // Calculate average marks for each category
+    const averages = Object.entries(groupedData).map(([category, marks]: any) => {
+      const averageMark = marks.reduce((sum: number, mark: number) => sum + mark, 0) / marks.length;
+      return { category, averageMark };
+    });
+
+    // Extract labels and datasets from averages
+    Chart.defaults.backgroundColor = "#ff0000";
+    const labels = averages.map((item: any) => item.category);
+    const datasets = [
+      {
+        data: averages.map((item: any) => item.averageMark),
+        label: "Applied",
+        fill: true,
+        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgb(255, 99, 132)",
+        pointBackgroundColor: "rgb(255, 99, 132)",
+        pointBorderColor: "#fff",
+        pointHoverBackgroundColor: "#fff",
+        pointHoverBorderColor: "rgb(255, 99, 132)",
+        pointRadius: 4
+      }
+    ];
+
+    // Log datasets to the console
+    console.log("Datasets:", datasets);
+
+    // Radar chart configuration
+    const myChart = new Chart(ctx, {
+      type: "radar",
+      data: {
+        labels: labels,
+        datasets: datasets
+      },
+      options: {
+        layout: { padding: 50 },
+        scales: {
+          r: {
+            grid: {
+              color: "gray" // Set the color of the gridlines
+            },
+
+            min: 0,
+            max: 100,
+            ticks: {
+              stepSize: 20,
+              callback: (value: any) => `L${value / 20}` // Customize tick labels
+            }
+          }
+        }
+      }
+    });
+    return () => {
+      // Clean up the chart on component unmount
+      myChart.destroy();
+    };
+  }, [answerData2]);
+
   return (
     <>
-      {/* Radar chart */}
-      <main className="flex h-full flex-col p-6">
-        <div className="flex items-center justify-between">
-          <div className="px-4">
-            <h1 className="text-2xl font-bold">Welcome back!</h1>
-            <p className="text-sm font-normal text-muted">Here’s a list of all user cases</p>
-          </div>
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] text-xl font-bold text-muted">Spider Graph</p>{" "}
+        <div className="mr-72 flex items-center justify-center">
+          <span className="font-bold">User 1:</span>
           <AllUserSelectList getSelectedUser={getSelectedUser} />
         </div>
-        <div className="m-2 h-[80vh] w-max rounded-xl border border-red-600">
-          <canvas className="h-full w-max" id="myChart">
-            myChart
-          </canvas>
+        <div className="flex items-center justify-center">
+          <span className="font-bold">User 2:</span>
+          <AllUserSelectList getSelectedUser={getSelectedUser2} />
+        </div>
+      </div>
+      <main className="grid h-full grid-cols-2 flex-col ">
+        <div className=" h-[878px] border-2 border-y-0 border-l-0">
+          <h1 className="ml-8 mt-4 text-2xl font-bold">User Graph 1:</h1>
+          <div className="ml-8 mt-8 h-[77vh] w-[700px] rounded-xl border  border-red-600 bg-secondary ">
+            <canvas className="h-full w-[700px]" id="myChart">
+              myChart
+            </canvas>
+          </div>
+        </div>
+
+        <div className="mt-4">
+          <h1 className="ml-8 text-2xl font-bold">User Graph 2:</h1>
+          <div className="ml-8 mt-8 h-[77vh] w-[700px] rounded-xl border  border-red-600 bg-secondary ">
+            <canvas className="h-full w-[700px]" id="myChart2">
+              myChart
+            </canvas>
+          </div>
         </div>
       </main>
+      <div className=" flex h-[70px] items-center justify-center border-2 border-x-0 bg-gray-100">
+        <div className="flex items-center justify-center space-x-1">
+          <p className="text-sm font-bold">{year}</p>
+          <Copyright size={16} className="font-bold" />
+          <p className="text-sm font-bold">XO Caliber</p>
+        </div>
+      </div>
     </>
   );
 }
