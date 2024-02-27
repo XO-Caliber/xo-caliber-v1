@@ -8,11 +8,7 @@ import {
   RadialLinearScale
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
-import UserSelectList from "@/components/utils/UserSelectList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
-import { Button } from "@/components/ui/Button";
 import FirmNotes from "./FirmNotes";
 import UserNotes from "./UserNotes";
 
@@ -150,12 +146,12 @@ function XOSpiderGraph({ userType }: userProps) {
         <ResizablePanel defaultSize={50} className="m-2">
           <main className="flex h-full flex-col p-3">
             <div className="flex items-center justify-between">
-              <div className="px-4">
+              {/* <div className="px-4">
                 <h1 className="text-2xl font-bold">Welcome back!</h1>
                 <p className="text-sm font-normal text-muted">
                   Here’s a list of Bonny davis’s cases
                 </p>
-              </div>
+              </div> */}
             </div>
             <div className="m-2 h-[70vh] rounded-xl border border-red-600">
               <canvas id="myChart">myChart</canvas>
