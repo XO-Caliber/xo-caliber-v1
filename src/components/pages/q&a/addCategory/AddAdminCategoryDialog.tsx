@@ -62,10 +62,19 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
     },
     onSettled() {
       setLoading(false);
+      setCategory("");
     }
   });
 
   const onSubmit = () => {
+    if (!category.trim()) {
+      toast({
+        title: "Validation Error",
+        description: "Please enter a valid category.",
+        variant: "destructive"
+      });
+      return;
+    }
     try {
       setLoading(true);
       addCategory(category);
@@ -75,7 +84,7 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => setCategory("")}>
       <DialogTrigger asChild>
         <Button
           variant={"dark"}
