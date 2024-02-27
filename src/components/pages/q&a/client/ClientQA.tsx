@@ -84,7 +84,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         </span>
       </div>
       {listCat.size > 0 && (
-        <div className="mt-2">
+        <div>
           <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full">
             <ResizablePanel defaultSize={70}>
               {" "}

@@ -9,6 +9,8 @@ import FirmTabsContent from "../FirmTabsContent";
 import { Loader } from "lucide-react";
 import AddQADiaglog from "../../addQA/AddQADiaglog";
 import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
+import ImportAdmin from "../../firm/ImportAdmin";
+import { AssistantDialog } from "../../addAssistant/AssistantDialog";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
@@ -67,12 +69,19 @@ export const ViewFirmQA = () => {
 
   return (
     <div>
-      <div className="fixed bottom-[883px] left-[1100px] ml-8 mr-12">
-        <AddQADiaglog refetchData={refetchData} />
-        <AddCategoryDialog refetchData={refetchData} />
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        <div className="mr-4 flex space-x-12">
+          <AddQADiaglog refetchData={refetchData} />
+          <AddCategoryDialog refetchData={refetchData} />
+          <AssistantDialog />
+          <ImportAdmin />
+        </div>
       </div>
+
+      <div className="fixed bottom-[960px] left-[1150px] ml-8 mr-12 space-x-16"></div>
       {catArray.length > 0 ? (
-        <div className=" mt-6 h-[70vh]">
+        <div className="h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
