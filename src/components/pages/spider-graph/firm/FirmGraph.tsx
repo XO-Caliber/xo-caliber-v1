@@ -147,8 +147,11 @@ function FirmGraph({ userType }: userType) {
 
   return (
     <>
-      {/* Radar chart */}
-      <ResizablePanelGroup direction="horizontal" className="min-h-screen max-w-full">
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] text-xl font-bold text-muted">Spider Graph</p>{" "}
+        <UserSelectList getSelectedUser={getSelectedUser} />
+      </div>
+      <ResizablePanelGroup direction="horizontal" className="min-h-[90vh] max-w-full">
         <ResizablePanel defaultSize={50} className="m-2">
           <main className="flex h-full flex-col p-6">
             <div className="flex items-center justify-between">
@@ -158,7 +161,6 @@ function FirmGraph({ userType }: userType) {
                   Here’s a list of Bonny davis’s cases
                 </p>
               </div>
-              <UserSelectList getSelectedUser={getSelectedUser} />
             </div>
             <div className="m-2 h-full rounded-xl border border-red-600">
               <canvas id="myChart">myChart</canvas>
@@ -168,10 +170,10 @@ function FirmGraph({ userType }: userType) {
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={50}>
           <ResizablePanelGroup direction="vertical">
-            <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
               <NotesOfClient selectedUser={user} userType={userType} />
             </ResizablePanel>
+            <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
               <NotesOfFirm selectedUser={user} />
             </ResizablePanel>
