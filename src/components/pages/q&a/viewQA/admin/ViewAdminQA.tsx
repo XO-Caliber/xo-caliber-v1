@@ -56,15 +56,18 @@ export const ViewAdminQA = () => {
 
   return (
     <div>
-      <div>
-        <AddAdminQADialog refetchData={refetchData} />
-        <AddAdminCategoryDialog refetchData={refetchData} />
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        <div className="mr-4 flex space-x-12">
+          <AddAdminQADialog refetchData={refetchData} />
+          <AddAdminCategoryDialog refetchData={refetchData} />
+        </div>
       </div>
       {catArray.length > 0 ? (
-        <div className=" mt-4 h-[70vh]">
+        <div className="h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
-            <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
+            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll">
               <AdminTabsContent
                 data={categories}
                 handleDelete={handleDelete}

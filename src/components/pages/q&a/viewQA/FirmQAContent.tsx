@@ -102,10 +102,10 @@ export const FirmQAContent: React.FC<AddQAProps> = ({
                 onClick={() => handleDelete(id)}
               /> */}
 
-              <Info
+              {/* <Info
                 xlinkTitle="Tap to see detailed question overFirm "
                 className="cursor-pointer"
-              />
+              /> */}
             </ul>
             <div
               className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 

@@ -42,10 +42,10 @@ export const AssistantQAContent: React.FC<AddQAProps> = ({
                 onClick={() => handleDelete(id)}
               /> */}
 
-              <Info
+              {/* <Info
                 xlinkTitle="Tap to see detailed question overview "
                 className="cursor-pointer"
-              />
+              /> */}
             </ul>
             <div
               className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
