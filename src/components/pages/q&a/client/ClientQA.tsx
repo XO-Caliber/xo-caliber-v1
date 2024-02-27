@@ -88,7 +88,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
           <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full">
             <ResizablePanel defaultSize={70}>
               {" "}
-              {!hidden && userType === "firm" && (
+              {!hidden && (
                 <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
                   <ul className="p-8 text-left  text-base">
                     <li className="font-serif">

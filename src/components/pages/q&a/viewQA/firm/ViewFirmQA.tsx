@@ -81,7 +81,7 @@ export const ViewFirmQA = () => {
 
       <div className="fixed bottom-[960px] left-[1150px] ml-8 mr-12 space-x-16"></div>
       {catArray.length > 0 ? (
-        <div className="h-[70vh]">
+        <div className="h-[70vh] p-4">
           <Tabs>
             <QATabsList categories={catArray} />
             <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll">

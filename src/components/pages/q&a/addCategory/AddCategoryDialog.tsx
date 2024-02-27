@@ -60,6 +60,7 @@ const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
     },
     onSettled() {
       setLoading(false);
+      setCategory("");
     }
   });
 
@@ -81,7 +82,7 @@ const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => setCategory("")}>
       <DialogTrigger asChild>
         <Button
           variant={"dark"}
