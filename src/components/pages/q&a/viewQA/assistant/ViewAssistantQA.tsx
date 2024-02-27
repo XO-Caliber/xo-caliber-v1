@@ -34,11 +34,14 @@ export const ViewAssistantQA = () => {
 
   return (
     <div>
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>{" "}
+      </div>
       {catArray.length > 0 ? (
-        <div className=" mt-4 h-[90vh]">
+        <div className=" h-[90vh]">
           <Tabs>
             <QATabsList categories={catArray} />
-            <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
+            <div className="scrollableContainer mr-2  mt-2 h-[75vh] overflow-y-scroll">
               <AssistantTabsContent data={categories} />
             </div>
           </Tabs>
