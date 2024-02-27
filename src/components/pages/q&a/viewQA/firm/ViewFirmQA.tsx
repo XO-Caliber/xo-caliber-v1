@@ -84,7 +84,7 @@ export const ViewFirmQA = () => {
         <div className="h-[70vh]">
           <Tabs>
             <QATabsList categories={catArray} />
-            <div className="scrollableContainer mt-2 h-[75vh] overflow-y-scroll">
+            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll">
               <FirmTabsContent
                 data={categories}
                 handleDelete={handleDelete}
