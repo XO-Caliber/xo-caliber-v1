@@ -84,7 +84,6 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
         <Button
           variant={"dark"}
           className="ml-4 border-dashed border-gray-400 font-medium hover:border"
-          // onClick={handleOpen}
           size={"sm"}
         >
           <PlusSquare size={16} />

@@ -20,7 +20,7 @@ const XOMindMap = async () => {
           </div>
         </div>
       ) : (
-        <div>
+        <div className="text-xl">
           <Header>Mind Map</Header>
         </div>
       )}
