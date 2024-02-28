@@ -181,25 +181,25 @@ function AdminSpiderGraph() {
                     <p className="pb-2 text-lg font-bold">Description:</p>
                   </li>
                   <li className=" font-serif">
-                    It's essential to assess profiles from diverse perspectives, categorizing them
-                    into Research, Business, and Art. Each category demands specific skills and
+                    It&apos;s essential to assess profiles from diverse perspectives, categorizing
+                    them into Research, Business, and Art. Each category demands specific skills and
                     evidence for validation. For example Artists can showcase art shows, success
                     stories, media mentions, and memberships. In Business like IT industry, original
-                    contributions, critical roles, high salary, and evaluating others' work matter,
-                    backed by scholarly articles and memberships. Research profiles require original
-                    contributions, critical roles, scholarly publications, and evaluating others'
-                    work, not just media presence. The above examples are merely examples; to win a
-                    case, you must meet at least three criteria. Consider a spider graph to
-                    determine the strength of a profile and strengthen your case by focusing on the
-                    key criteria in your field and gathering a variety of strong evidence to support
-                    your claim. Winning some immigration visa necessitates meeting four criteria
-                    effectively chosen for quality, not quantity. Immigration authorities use a
-                    "preponderance of evidence" standard, demanding just over 50% certainty,
-                    emphasizing the importance of thorough evaluation. Despite misconceptions,
-                    evidence evaluation involves more than counting, with immigration authorities
-                    needing to justify refusals even when criteria are met. Understanding these
-                    standards is crucial, and consulting an attorney can offer valuable insights
-                    into the process.
+                    contributions, critical roles, high salary, and evaluating others&apos; work
+                    matter, backed by scholarly articles and memberships. Research profiles require
+                    original contributions, critical roles, scholarly publications, and evaluating
+                    others&apos; work, not just media presence. The above examples are merely
+                    examples; to win a case, you must meet at least three criteria. Consider a
+                    spider graph to determine the strength of a profile and strengthen your case by
+                    focusing on the key criteria in your field and gathering a variety of strong
+                    evidence to support your claim. Winning some immigration visa necessitates
+                    meeting four criteria effectively chosen for quality, not quantity. Immigration
+                    authorities use a &quot;preponderance of evidence&quot; standard, demanding just
+                    over 50% certainty, emphasizing the importance of thorough evaluation. Despite
+                    misconceptions, evidence evaluation involves more than counting, with
+                    immigration authorities needing to justify refusals even when criteria are met.
+                    Understanding these standards is crucial, and consulting an attorney can offer
+                    valuable insights into the process.
                   </li>
                 </ul>
               </section>
