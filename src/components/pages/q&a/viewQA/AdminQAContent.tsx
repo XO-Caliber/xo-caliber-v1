@@ -49,7 +49,7 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
         refetchData();
         toast({
           title: "Question Updated",
-          description: "Your new question data was updated successfully"
+          description: "Succesfully updated the question"
         });
       }
     },

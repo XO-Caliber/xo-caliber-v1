@@ -35,7 +35,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
         router.refresh();
         toast({
           title: "Question added",
-          description: "Question was added to the category"
+          description: "Sucessfully added the question"
         });
       }
     },

@@ -46,7 +46,7 @@ export const ViewAdminQA = () => {
         router.refresh();
         toast({
           title: "Question Deleted",
-          description: "The question was deleted successfully"
+          description: "Succesfully deleted the question"
         });
       }
     },
