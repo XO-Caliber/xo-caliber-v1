@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import { CardTitle } from "@/components/ui/Card";
 import Home from "@/app/page";
 import React from "react";
+import DownloadQuestions from "../q&a/firm/DownloadQuestions";
 
 const XOCoverLetter = async () => {
   const session = await getAuthSession();
@@ -14,8 +15,11 @@ const XOCoverLetter = async () => {
             <Header>Cover Letter</Header>
           </div>
           <div className="absolute m-4  text-xl">
-            <div className="ml-56 font-extrabold">
-              <CardTitle>Welcome {session?.user?.name?.toLowerCase()}</CardTitle>
+            <div className="ml-56 ">
+              <CardTitle className="font-extrabold">
+                Welcome {session?.user?.name?.toLowerCase()}
+              </CardTitle>
+              <DownloadQuestions />
             </div>
           </div>
         </div>
