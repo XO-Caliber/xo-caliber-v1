@@ -35,8 +35,13 @@ export const ClientQANotes = () => {
   };
 
   return (
-    <section className="relative  flex h-full w-full flex-col  justify-between p-2">
-      <h1 className="items-start text-lg font-semibold">Your Notes:</h1>
+    <section className="relative  flex h-full w-full flex-col  justify-between bg-white p-2">
+      <ul className="flex justify-between">
+        <h1 className="items-start text-lg font-semibold">Your Notes:</h1>
+        <Button variant={"dark"} onClick={notesUpdate} className="mb-1 mr-4 h-7 w-20">
+          Save Notes
+        </Button>
+      </ul>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         value={Note}
@@ -44,11 +49,6 @@ export const ClientQANotes = () => {
         placeholder="If Yes response:- Provide two cents on the topic"
         onChange={(e) => setNote(e.target.value)}
       />
-      <div className="relative left-[1460px]">
-        <Button variant={"primary"} onClick={notesUpdate} size={"lg"}>
-          Save
-        </Button>
-      </div>
     </section>
   );
 };
