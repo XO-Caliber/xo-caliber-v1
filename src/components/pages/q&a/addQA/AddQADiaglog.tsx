@@ -33,7 +33,7 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
         router.refresh();
         toast({
           title: "Question added",
-          description: "Question was added to the category"
+          description: "Successfully added the question"
         });
       }
     },

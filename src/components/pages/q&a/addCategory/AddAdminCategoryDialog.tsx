@@ -50,7 +50,7 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
         categoriesResult.refetch();
         toast({
           title: "Category Added",
-          description: "Category was added successfully"
+          description: "Successfully added the category"
         });
       }
     },

@@ -12,6 +12,9 @@ export const dashboardRouter = router({
     const user = await db.user.findUnique({
       where: {
         email
+      },
+      include: {
+        Firm: true
       }
     });
 
@@ -19,6 +22,8 @@ export const dashboardRouter = router({
       throw new TRPCError({ code: "NOT_FOUND" });
     } else if (user.role === "FIRM" || user.role === "ASSISTANT" || user.role === "ADMIN") {
       throw new TRPCError({ code: "BAD_REQUEST" });
+    } else if (user.Firm) {
+      throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
     } else if (!user.isEmailVerified) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }

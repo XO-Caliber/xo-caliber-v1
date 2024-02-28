@@ -73,6 +73,11 @@ export const AddFirmForm = () => {
           description: "Only works on user",
           variant: "destructive"
         });
+      } else if (err.data?.code === "METHOD_NOT_SUPPORTED") {
+        toast({
+          title: "User may be a client",
+          description: "Cant add a client as a firm"
+        });
       } else {
         toast({
           title: "Something went wrong",
