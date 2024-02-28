@@ -257,7 +257,7 @@ function AdminGraph({ userType }: userType) {
 
   return (
     <>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+      <div className="flex items-center justify-between border-2 border-l-0">
         <p className="m-4 mt-[1.2rem] text-xl font-bold text-muted">Spider Graph</p>{" "}
         <div className="mr-72 flex items-center justify-center">
           <span className="font-bold">User 1:</span>
@@ -268,11 +268,11 @@ function AdminGraph({ userType }: userType) {
           <AllUserSelectList getSelectedUser={getSelectedUser2} />
         </div>
       </div>
-      <main className="grid h-full grid-cols-2 flex-col ">
-        <div className=" h-[878px] border-2 border-y-0 border-l-0">
+      <main className="grid h-full grid-cols-2 flex-col">
+        <div className="border-2 border-y-0 border-l-0">
           <h1 className="ml-8 mt-4 text-2xl font-bold">User Graph 1:</h1>
-          <div className="ml-8 mt-8 h-[77vh] w-[700px] rounded-xl border  border-red-600 bg-secondary ">
-            <canvas className="h-full w-[700px]" id="myChart">
+          <div className="m-8 rounded-xl border  border-red-600 bg-secondary ">
+            <canvas className="min-w-20" id="myChart">
               myChart
             </canvas>
           </div>
@@ -280,20 +280,20 @@ function AdminGraph({ userType }: userType) {
 
         <div className="mt-4">
           <h1 className="ml-8 text-2xl font-bold">User Graph 2:</h1>
-          <div className="ml-8 mt-8 h-[77vh] w-[700px] rounded-xl border  border-red-600 bg-secondary ">
-            <canvas className="h-full w-[700px]" id="myChart2">
+          <div className="m-8 rounded-xl border  border-red-600 bg-secondary ">
+            <canvas className="min-w-20" id="myChart2">
               myChart
             </canvas>
           </div>
         </div>
       </main>
-      <div className=" flex h-[70px] items-center justify-center border-2 border-x-0 bg-gray-100">
+      {/* <div className=" flex h-[70px] items-center justify-center border-2 border-x-0 bg-gray-100">
         <div className="flex items-center justify-center space-x-1">
           <p className="text-sm font-bold">{year}</p>
           <Copyright size={16} className="font-bold" />
           <p className="text-sm font-bold">XO Caliber</p>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
