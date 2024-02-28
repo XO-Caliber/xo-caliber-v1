@@ -22,7 +22,7 @@ export const ClientQANotes = () => {
       if (success) {
         toast({
           title: "Updated notes",
-          description: "Your notes was saved successfully"
+          description: "Success"
         });
       }
     }
@@ -41,7 +41,7 @@ export const ClientQANotes = () => {
       <Textarea
         value={Note}
         className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
-        placeholder="Tell us a little bit about yourself"
+        placeholder="If Yes response:- Provide two cents on the topic"
         onChange={(e) => setNote(e.target.value)}
       />
       <div className="relative left-[1460px]">
