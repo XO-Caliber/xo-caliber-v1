@@ -17,6 +17,7 @@ import { ClientQANotes } from "./ClientQANotes";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Toast } from "@/components/ui/Toast";
+import { Loader } from "lucide-react";
 
 interface userProfile {
   userId: string;
@@ -145,23 +146,28 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               <Tabs onClick={() => setHidden(true)}>
                 <QATabsList categories={catArray} />
 
-                <div className="scrollableContainer mt-2 h-[60vh] overflow-y-scroll bg-white">
+                <div className="scrollableContainer mt-2 h-[60vh] overflow-y-scroll bg-white shadow-md">
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={30}>
+            <ResizablePanel defaultSize={15.6}>
               <ClientQANotes />
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>
       )}
-      {!listCat.size && (
-        <div className="flex h-[70vh] items-center justify-center">
-          <text>Join under a firm to view questions</text>
-        </div>
-      )}
+      {!listCat.size &&
+        (userType === "firm" ? (
+          <div className="flex h-[70vh] items-center justify-center">
+            <text>Join under a firm to view questions</text>
+          </div>
+        ) : (
+          <div className="flex h-[70vh] items-center justify-center">
+            <Loader size={45} className="rotate-animation" />
+          </div>
+        ))}
     </div>
   );
 };
