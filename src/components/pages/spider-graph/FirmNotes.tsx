@@ -37,7 +37,7 @@ export function FirmNotes({ userType }: userType) {
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         className="my-2 h-full resize-none text-base font-semibold italic text-black focus-visible:ring-0"
-        placeholder="Tell us a little bit about yourself"
+        placeholder="No data found"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
         disabled={setAbility()}
