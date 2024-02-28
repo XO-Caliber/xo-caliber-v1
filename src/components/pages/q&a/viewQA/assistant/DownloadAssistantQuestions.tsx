@@ -7,8 +7,12 @@ import { Save } from "lucide-react";
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 
-const DownloadQuestions = () => {
-  const { data: categoriesList, isLoading, isError } = trpc.question.getFirmQuestions.useQuery();
+const DownloadAssistantQuestions = () => {
+  const {
+    data: categoriesList,
+    isLoading,
+    isError
+  } = trpc.question.getAssistantFirmQuestion.useQuery();
 
   const exportHandler = () => {
     if (!categoriesList || categoriesList.length === 0) {
@@ -55,8 +59,8 @@ const DownloadQuestions = () => {
   return (
     <div>
       <Button
-        variant={"primary"}
-        className="ml-4 border-dashed border-gray-400 font-medium hover:border"
+        variant={"dark"}
+        className="ml-4 mr-2 border-dashed border-gray-400 font-medium hover:border"
         size={"sm"}
         onClick={exportHandler}
       >
@@ -71,4 +75,4 @@ const DownloadQuestions = () => {
   );
 };
 
-export default DownloadQuestions;
+export default DownloadAssistantQuestions;
