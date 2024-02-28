@@ -22,7 +22,7 @@ export const ClientQANotes = () => {
       if (success) {
         toast({
           title: "Updated notes",
-          description: "Success"
+          description: "Saved successfully"
         });
       }
     }

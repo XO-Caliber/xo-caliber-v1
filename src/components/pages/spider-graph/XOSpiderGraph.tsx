@@ -142,21 +142,22 @@ function XOSpiderGraph({ userType }: userProps) {
   return (
     <>
       {/* Radar chart */}
-      <ResizablePanelGroup direction="horizontal" className="min-h-[90vh] max-w-full">
-        <ResizablePanel defaultSize={50} className="m-2">
-          <main className="flex h-full flex-col p-3">
-            <div className="flex items-center justify-between">
-              {/* <div className="px-4">
-                <h1 className="text-2xl font-bold">Welcome back!</h1>
-                <p className="text-sm font-normal text-muted">
-                  Here’s a list of Bonny davis’s cases
-                </p>
-              </div> */}
-            </div>
-            <div className="m-2 h-[70vh] rounded-xl border border-red-600">
-              <canvas id="myChart">myChart</canvas>
-            </div>
-          </main>
+      <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
+        <ResizablePanel defaultSize={40} className="m-2">
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={120} className="m-3">
+              <main className="flex h-full flex-col p-3">
+                <div className="flex items-center justify-between"></div>
+                <div className="m-2 h-[65vh] rounded-xl border border-red-600 bg-secondary">
+                  <canvas id="myChart">myChart</canvas>
+                </div>
+              </main>
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={40} className="m-3 ">
+              <UserNotes userType={userType} />
+            </ResizablePanel>
+          </ResizablePanelGroup>
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={50}>
@@ -166,7 +167,34 @@ function XOSpiderGraph({ userType }: userProps) {
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={50} className="m-3">
-              <UserNotes userType={userType} />
+              <section className=" rounded-md bg-secondary">
+                <ul className="p-12">
+                  <li>
+                    <p className="pb-2 text-lg font-bold">Description:</p>
+                  </li>
+                  <li className=" font-serif ">
+                    It&apos;s essential to assess profiles from diverse perspectives, categorizing
+                    them into Research, Business, and Art. Each category demands specific skills and
+                    evidence for validation. For example Artists can showcase art shows, success
+                    stories, media mentions, and memberships. In Business like IT industry, original
+                    contributions, critical roles, high salary, and evaluating others&apos; work
+                    matter, backed by scholarly articles and memberships. Research profiles require
+                    original contributions, critical roles, scholarly publications, and evaluating
+                    others&apos; work, not just media presence. The above examples are merely
+                    examples; to win a case, you must meet at least three criteria. Consider a
+                    spider graph to determine the strength of a profile and strengthen your case by
+                    focusing on the key criteria in your field and gathering a variety of strong
+                    evidence to support your claim. Winning some immigration visa necessitates
+                    meeting four criteria effectively chosen for quality, not quantity. Immigration
+                    authorities use a &quot;preponderance of evidence&quot; standard, demanding just
+                    over 50% certainty, emphasizing the importance of thorough evaluation. Despite
+                    misconceptions, evidence evaluation involves more than counting, with
+                    immigration authorities needing to justify refusals even when criteria are met.
+                    Understanding these standards is crucial, and consulting an attorney can offer
+                    valuable insights into the process.
+                  </li>
+                </ul>
+              </section>
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
