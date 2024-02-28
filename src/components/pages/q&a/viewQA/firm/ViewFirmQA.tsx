@@ -12,6 +12,7 @@ import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 import ImportAdmin from "../../firm/ImportAdmin";
 import { AssistantDialog } from "../../addAssistant/AssistantDialog";
 import { Checkbox } from "@/components/ui/Checkbox";
+import DownloadQuestions from "../../firm/DownloadQuestions";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
@@ -91,6 +92,7 @@ export const ViewFirmQA = () => {
           <AddCategoryDialog refetchData={refetchData} />
           <AssistantDialog />
           <ImportAdmin />
+          <DownloadQuestions />
         </div>
       </div>
 
