@@ -20,11 +20,12 @@ const DownloadQuestions = () => {
 
     const tableData = categoriesList.map((category) => [
       category.name,
-      category.questions.map((question) => question.question).join("\n")
+      category.questions.map((question) => question.question).join("\n"),
+      category.questions.map((question) => question.mark).join("\n")
     ]);
     //@ts-ignore
     doc.autoTable({
-      head: [["CATEGORY", "QUESTIONS"]],
+      head: [["CATEGORY", "QUESTIONS", "WEIGHTAGE"]],
       body: tableData,
       styles: {
         font: "helvetica",

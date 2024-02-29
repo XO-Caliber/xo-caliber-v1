@@ -153,34 +153,20 @@ function AdminSpiderGraph() {
       {/* Radar chart */}
       <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
         <ResizablePanel defaultSize={40} className="m-2">
-          <main className="flex h-full flex-col p-3">
-            <div className="flex items-center justify-between">
-              {/* <div className="px-4">
-              <h1 className="text-2xl font-bold">Welcome back!</h1>
-              <p className="text-sm font-normal text-muted">
-                Here’s a list of Bonny davis’s cases
-              </p>
-            </div> */}
-            </div>
-            <div className="m-2 h-[80vh] rounded-xl border border-red-600 bg-secondary">
-              <canvas id="myChart">myChart</canvas>
-            </div>
-          </main>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50}>
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={40} className="m-3">
-              <ClientQANotes />
+            <ResizablePanel defaultSize={120} className="m-3">
+              <main className="flex h-full flex-col p-3">
+                <div className="flex items-center justify-between"></div>
+                <div className="m-2 h-[65vh] rounded-xl border border-red-600 bg-secondary pl-2">
+                  <canvas id="myChart">myChart</canvas>
+                </div>
+              </main>
             </ResizablePanel>
             <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={50} className="m-3">
-              <section className="rounded-md bg-secondary">
-                <ul className="p-12">
-                  <li>
-                    <p className="pb-2 text-lg font-bold">Description:</p>
-                  </li>
-                  <li className=" font-serif">
+            <ResizablePanel defaultSize={40} className="m-3 ">
+              <section className=" rounded-md bg-secondary">
+                <ul className="p-4 ">
+                  <li className=" font-serif text-xs">
                     It&apos;s essential to assess profiles from diverse perspectives, categorizing
                     them into Research, Business, and Art. Each category demands specific skills and
                     evidence for validation. For example Artists can showcase art shows, success
@@ -204,6 +190,15 @@ function AdminSpiderGraph() {
                 </ul>
               </section>
             </ResizablePanel>
+          </ResizablePanelGroup>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={50}>
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={40} className="m-3">
+              <ClientQANotes />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
