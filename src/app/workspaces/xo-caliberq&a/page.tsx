@@ -25,7 +25,7 @@ const page = async () => {
           {session.user.role === "ASSISTANT" && <AssistantQA />}
         </div>
       ) : (
-        <div className="text-xl">
+        <div className="text-xl font-bold">
           <Header> Caliber Q&A</Header>
         </div>
       )}

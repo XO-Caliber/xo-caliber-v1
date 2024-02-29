@@ -16,7 +16,7 @@ const Page = async () => {
         {session && session.user.role === "ASSISTANT" && <AssistantGraph userType={"ASSISTANT"} />}
       </div>
       {!session && (
-        <div className="text-xl">
+        <div className="text-xl font-bold">
           <Header>Spider Graph</Header>
         </div>
       )}

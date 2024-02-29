@@ -10,7 +10,7 @@ const XOMindMap = async () => {
     <div>
       {session ? (
         <div className="h-screen">
-          <div>
+          <div className="text-xl font-bold">
             <Header>Mindmap</Header>
           </div>
           <div className="absolute m-4 text-xl ">
@@ -20,7 +20,7 @@ const XOMindMap = async () => {
           </div>
         </div>
       ) : (
-        <div className="text-xl">
+        <div className="text-xl font-bold">
           <Header>Mind Map</Header>
         </div>
       )}
