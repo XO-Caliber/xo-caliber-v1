@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import { CardTitle } from "@/components/ui/Card";
 import Home from "@/app/page";
 import React from "react";
-import DownloadQuestions from "../q&a/firm/DownloadQuestions";
 
 const XOCoverLetter = async () => {
   const session = await getAuthSession();
