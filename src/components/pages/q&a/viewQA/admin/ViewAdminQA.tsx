@@ -10,7 +10,7 @@ import AdminTabsContent from "../AdminTabsContent";
 import AddAdminCategoryDialog from "../../addCategory/AddAdminCategoryDialog";
 import AddAdminQADialog from "../../addQA/AddAdminQADialog";
 import { Checkbox } from "@/components/ui/Checkbox";
-import DownloadAdminQuestions from "../../admin/DowloadAdminQuestions";
+import DownloadAdminQuestions from "../../admin/DownloadAdminQuestions";
 
 export const ViewAdminQA = () => {
   const year = new Date().getFullYear();
