@@ -9,7 +9,7 @@ import { NextAuthProvider } from "@/context/NextAuthProviders";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
-  variable: "--font-sans"
+  variable: "--font-serif"
 });
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <body
             className={cn(
-              "min-h-screen select-none bg-background font-sans antialiased",
+              "min-h-screen select-none bg-background font-serif text-lg antialiased",
               fontSans.variable
             )}
           >
