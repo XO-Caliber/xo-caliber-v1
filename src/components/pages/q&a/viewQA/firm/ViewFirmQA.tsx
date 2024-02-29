@@ -135,7 +135,7 @@ export const ViewFirmQA = () => {
                   <div className="grid gap-1.5 pl-2 leading-none">
                     <label
                       htmlFor="terms1"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                      className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                     >
                       Please acknowledge that you understand the questions and answer
                       &apos;yes&apos; or &apos;no&apos; truthfully. If you encounter uncertainty or
