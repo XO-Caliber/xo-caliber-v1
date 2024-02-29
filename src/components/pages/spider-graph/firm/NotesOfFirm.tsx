@@ -43,7 +43,7 @@ export function NotesOfFirm({ selectedUser }: userType) {
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
-        placeholder="Provide your comments about Spider Graph”"
+        placeholder="Provide your comments about Spider Graph"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />

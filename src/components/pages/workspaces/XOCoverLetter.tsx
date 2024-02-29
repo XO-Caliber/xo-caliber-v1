@@ -11,7 +11,7 @@ const XOCoverLetter = async () => {
     <div>
       {session ? (
         <div className=" h-screen">
-          <div className="text-xl">
+          <div className="text-xl font-bold">
             <Header>Cover Letter</Header>
           </div>
           <div className="absolute m-4  text-xl">
@@ -21,7 +21,7 @@ const XOCoverLetter = async () => {
           </div>
         </div>
       ) : (
-        <div className="text-xl">
+        <div className="text-xl font-bold">
           <Header>Cover Letter</Header>
         </div>
       )}
