@@ -26,9 +26,10 @@ interface userProfile {
   email: string;
   image?: string | undefined | null;
   userCount: number | undefined | null;
+  refetchData: () => void;
 }
 
-export const GetFirmProfile = ({ name, email, image, userCount }: userProfile) => {
+export const GetFirmProfile = ({ name, email, image, userCount, refetchData }: userProfile) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
   const formSchema = z.object({
@@ -43,19 +44,19 @@ export const GetFirmProfile = ({ name, email, image, userCount }: userProfile) =
   const { mutate: changeClientCount } = trpc.dashboard.changeClientCount.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData();
         form.reset();
         router.refresh();
         toast({
           title: "Client limit changed",
-          description: "Firm's client limit was changed",
-          variant: "success"
+          description: "Firm's client limit changed"
         });
       }
     },
     onError(err) {
       toast({
         title: "CONFLICT",
-        description: "The new count was same as its previous",
+        description: "Try a new value",
         variant: "destructive"
       });
     },
@@ -120,7 +121,7 @@ export const GetFirmProfile = ({ name, email, image, userCount }: userProfile) =
                 )}
               />
 
-              <Button variant={"primary"} className="ml-8" size={"default"}>
+              <Button variant={"primary"} className="ml-8" size={"default"} isLoading={isLoading}>
                 Change
               </Button>
             </div>

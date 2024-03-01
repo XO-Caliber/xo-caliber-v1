@@ -17,6 +17,9 @@ import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 export const FirmList = () => {
   const [page, setpage] = useState(1);
   const firmList = trpc.home.getAllFirm.useQuery(page);
+  const refetchData = () => {
+    firmList.refetch();
+  };
 
   if (firmList.data) {
     return (
@@ -31,6 +34,7 @@ export const FirmList = () => {
                   name={user.name}
                   image={user.image}
                   userCount={user.userCount}
+                  refetchData={refetchData}
                 />
               </div>
             ))}
