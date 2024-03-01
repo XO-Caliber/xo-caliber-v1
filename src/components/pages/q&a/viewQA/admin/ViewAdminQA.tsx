@@ -10,7 +10,7 @@ import AdminTabsContent from "../AdminTabsContent";
 import AddAdminCategoryDialog from "../../addCategory/AddAdminCategoryDialog";
 import AddAdminQADialog from "../../addQA/AddAdminQADialog";
 import { Checkbox } from "@/components/ui/Checkbox";
-// import DownloadAdminQuestions from "../../admin/DownloadAdminQuestions";
+import DownloadAdminQuestions from "../../admin/DownloadAdminQuestions";
 
 export const ViewAdminQA = () => {
   const year = new Date().getFullYear();
@@ -88,7 +88,7 @@ export const ViewAdminQA = () => {
         <div className="mr-4 flex space-x-12">
           <AddAdminQADialog refetchData={refetchData} />
           <AddAdminCategoryDialog refetchData={refetchData} />
-          {/* <DownloadAdminQuestions /> */}
+          <DownloadAdminQuestions />
         </div>
       </div>
       {catArray.length > 0 ? (
