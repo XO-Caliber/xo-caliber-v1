@@ -12,7 +12,7 @@ import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 import ImportAdmin from "../../firm/ImportAdmin";
 import { AssistantDialog } from "../../addAssistant/AssistantDialog";
 import { Checkbox } from "@/components/ui/Checkbox";
-import DownloadQuestions from "../../firm/DownloadQuestions";
+// import DownloadQuestions from "../../firm/DownloadQuestions";
 
 export const ViewFirmQA = () => {
   const router = useRouter();
@@ -92,7 +92,7 @@ export const ViewFirmQA = () => {
           <AddCategoryDialog refetchData={refetchData} />
           <AssistantDialog />
           <ImportAdmin />
-          <DownloadQuestions />
+          {/* <DownloadQuestions /> */}
         </div>
       </div>
 
@@ -135,7 +135,7 @@ export const ViewFirmQA = () => {
                   <div className="grid gap-1.5 pl-2 leading-none">
                     <label
                       htmlFor="terms1"
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                      className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                     >
                       Please acknowledge that you understand the questions and answer
                       &apos;yes&apos; or &apos;no&apos; truthfully. If you encounter uncertainty or

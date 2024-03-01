@@ -39,7 +39,7 @@ export const ClientQANotes = () => {
       <ul className="flex justify-between">
         <h1 className="items-start text-lg font-semibold">Your Notes:</h1>
         <Button variant={"dark"} onClick={notesUpdate} className="mb-1 mr-4 h-7 w-20">
-          Save Notes
+          Save
         </Button>
       </ul>
       <span className="block w-full border-[1px] border-border "></span>

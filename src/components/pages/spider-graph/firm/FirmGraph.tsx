@@ -164,25 +164,10 @@ function FirmGraph({ userType }: userType) {
             </ResizablePanel>
             <ResizableHandle withHandle />
             <ResizablePanel defaultSize={40} className="m-3 ">
-              <NotesOfFirm selectedUser={user} />
-            </ResizablePanel>
-          </ResizablePanelGroup>
-        </ResizablePanel>
-        <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50}>
-          <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={50} className="m-3">
-              <NotesOfClient selectedUser={user} userType={userType} />
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={50} className="m-3">
               {" "}
               <section className=" rounded-md bg-secondary">
-                <ul className="p-12">
-                  <li>
-                    <p className="pb-2 text-lg font-bold">Description:</p>
-                  </li>
-                  <li className=" font-serif ">
+                <ul className="p-4 ">
+                  <li className="font-serif text-xs ">
                     It&apos;s essential to assess profiles from diverse perspectives, categorizing
                     them into Research, Business, and Art. Each category demands specific skills and
                     evidence for validation. For example Artists can showcase art shows, success
@@ -205,6 +190,18 @@ function FirmGraph({ userType }: userType) {
                   </li>
                 </ul>
               </section>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <ResizablePanel defaultSize={50}>
+          <ResizablePanelGroup direction="vertical">
+            <ResizablePanel defaultSize={50} className="m-3">
+              <NotesOfClient selectedUser={user} userType={userType} />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel defaultSize={50} className="m-3">
+              <NotesOfFirm selectedUser={user} />
             </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>

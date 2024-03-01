@@ -3,7 +3,6 @@ import Header from "@/components/Header";
 import { CardTitle } from "@/components/ui/Card";
 import Home from "@/app/page";
 import React from "react";
-import DownloadQuestions from "../q&a/firm/DownloadQuestions";
 
 const XOCoverLetter = async () => {
   const session = await getAuthSession();
@@ -11,7 +10,7 @@ const XOCoverLetter = async () => {
     <div>
       {session ? (
         <div className=" h-screen">
-          <div className="text-xl">
+          <div className="text-xl font-bold">
             <Header>Cover Letter</Header>
           </div>
           <div className="absolute m-4  text-xl">
@@ -21,7 +20,7 @@ const XOCoverLetter = async () => {
           </div>
         </div>
       ) : (
-        <div className="text-xl">
+        <div className="text-xl font-bold">
           <Header>Cover Letter</Header>
         </div>
       )}

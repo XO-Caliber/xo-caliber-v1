@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 
 import { Loader } from "lucide-react";
 import AssistantTabsContent from "../AssistantTabsContent";
+// import DownloadAssistantQuestions from "./DownloadAssistantQuestions";
 
 export const ViewAssistantQA = () => {
   const router = useRouter();
@@ -35,7 +36,8 @@ export const ViewAssistantQA = () => {
   return (
     <div>
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
-        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>{" "}
+        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        {/* <DownloadAssistantQuestions /> */}
       </div>
       {catArray.length > 0 ? (
         <div className=" h-[90vh]">

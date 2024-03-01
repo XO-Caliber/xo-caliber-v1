@@ -7,8 +7,8 @@
 // import { jsPDF } from "jspdf";
 // import "jspdf-autotable";
 
-// const DownloadQuestions = () => {
-//   const { data: categoriesList, isLoading, isError } = trpc.question.getFirmQuestions.useQuery();
+// const DownloadAdminQuestions = () => {
+//   const { data: categoriesList, isLoading, isError } = trpc.question.getAdminQuestions.useQuery();
 
 //   const exportHandler = () => {
 //     if (!categoriesList || categoriesList.length === 0) {
@@ -42,7 +42,7 @@
 //       }
 //     });
 
-//     doc.save("FirmQuestions.pdf");
+//     doc.save("AdminQuestions.pdf");
 //   };
 
 //   //   if (isLoading) {
@@ -72,4 +72,4 @@
 //   );
 // };
 
-// export default DownloadQuestions;
+// export default DownloadAdminQuestions;
