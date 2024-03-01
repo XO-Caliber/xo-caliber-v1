@@ -11,6 +11,13 @@ import AddAdminCategoryDialog from "../../addCategory/AddAdminCategoryDialog";
 import AddAdminQADialog from "../../addQA/AddAdminQADialog";
 import { Checkbox } from "@/components/ui/Checkbox";
 import DownloadAdminQuestions from "../../admin/DownloadAdminQuestions";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/Select";
 
 export const ViewAdminQA = () => {
   const year = new Date().getFullYear();
