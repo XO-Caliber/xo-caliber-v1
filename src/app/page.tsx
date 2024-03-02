@@ -12,8 +12,8 @@ export default async function Home() {
     <div>
       {session ? (
         <div className="">
-          <div>
-            <Header>Dashboard</Header>
+          <div className="text-xl">
+            <Header>Home</Header>
           </div>
           <div className=" ml-56">
             <div className="">
