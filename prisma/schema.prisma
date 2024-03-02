@@ -70,7 +70,8 @@ model User {
   QANotes  String?   @db.Text
   Note     UserNote?
 
-  FirmNote FirmNote?
+  FirmNote    FirmNote?
+  UserChecked UserChecked[]
 }
 
 model Firm {
@@ -108,8 +109,9 @@ model Admin {
 
   hashedPassword String
 
-  category   Category[]
-  categoryId String?
+  category     Category[]
+  categoryId   String?
+  CheckHeading CheckHeading[]
 }
 
 model VerificationToken {
@@ -172,4 +174,38 @@ model UserNote {
 
   User   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+model CheckHeading {
+  id                String            @id @default(cuid())
+  name              String            @db.Text
+  subHeading        CheckSubHeading[]
+  checkSubHeadingId String?
+  Admin             Admin?            @relation(fields: [adminId], references: [adminId])
+
+  adminId String?
+}
+
+model CheckSubHeading {
+  id             String        @id @default(cuid())
+  name           String        @db.Text
+  heading        CheckHeading? @relation(fields: [checkHeadingId], references: [id])
+  checkHeadingId String?
+  Checklist      Checklist[]
+}
+
+model Checklist {
+  id                String          @id @default(cuid())
+  name              String          @db.Text
+  heading           CheckSubHeading @relation(fields: [checkSubHeadingId], references: [id])
+  checkSubHeadingId String
+}
+
+model UserChecked {
+  id          String  @id
+  name        String  @db.Text
+  isChecked   Boolean
+  checkListId String
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String?
 }
