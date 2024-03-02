@@ -181,7 +181,7 @@ model CheckHeading {
   name              String            @db.Text
   subHeading        CheckSubHeading[]
   checkSubHeadingId String?
-  Admin             Admin?            @relation(fields: [adminId], references: [adminId])
+  Admin             Admin?            @relation(fields: [adminId], references: [adminId], onDelete: Cascade)
 
   adminId String?
 }
@@ -189,7 +189,7 @@ model CheckHeading {
 model CheckSubHeading {
   id             String        @id @default(cuid())
   name           String        @db.Text
-  heading        CheckHeading? @relation(fields: [checkHeadingId], references: [id])
+  heading        CheckHeading? @relation(fields: [checkHeadingId], references: [id], onDelete: Cascade)
   checkHeadingId String?
   Checklist      Checklist[]
 }
