@@ -1,16 +1,16 @@
 import React from "react";
-import { AddAssistantForm } from "./firm/AddAssistantForm";
-import { AssistantList } from "./firm/AssistantList";
-import { AddClientForm } from "./firm/AddClientForm";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { UserList } from "./firm/UserList";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
+import { AddAssistantForm } from "../dashboard/firm/AddAssistantForm";
+import { AddClientForm } from "../dashboard/firm/AddClientForm";
+import { AssistantList } from "../dashboard/firm/AssistantList";
+import { UserList } from "../dashboard/firm/UserList";
 
 interface userProps {
   user: string | undefined | null;
 }
 
-export const FirmDashboard = async ({ user }: userProps) => {
+export const FirmHome = async ({ user }: userProps) => {
   const session = await getAuthSession();
 
   return (

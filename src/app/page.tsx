@@ -1,20 +1,37 @@
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/Button";
 import { getAuthSession } from "./api/auth/[...nextauth]/authOptions";
+import AdminHome from "@/components/pages/home/AdminHome";
+import { FirmHome } from "@/components/pages/home/FirmHome";
+import { UserHome } from "@/components/pages/home/UserHome";
+import ClientFirmList from "@/components/pages/dashboard/client/ClientFirmList";
 
 export default async function Home() {
   const session = await getAuthSession();
   return (
     <div>
-      <div>
-        <Header>Home</Header>
-        <div className="flex  flex-col items-center pt-4 ">
-          <Button variant={"primary"}>login</Button>
-          <Button variant={"secondary"}>signup</Button>
-          <h1>{session?.user.role}</h1>
-          <h1>{session?.user.email}</h1>
+      {session ? (
+        <div className="">
+          <div>
+            <Header>Dashboard</Header>
+          </div>
+          <div className=" ml-56">
+            <div className="">
+              {session.user.role === "ADMIN" && (
+                <div>
+                  <AdminHome user={session.user.name} />
+                </div>
+              )}
+              {session.user.role === "FIRM" && <FirmHome user={session.user.name} />}
+              {session.user.role === "INDIVIDUAL" && <ClientFirmList />}
+            </div>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <UserHome />
+        </div>
+      )}
     </div>
   );
 }

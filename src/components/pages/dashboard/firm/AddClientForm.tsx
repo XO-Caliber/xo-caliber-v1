@@ -34,7 +34,7 @@ export const AddClientForm = () => {
     }
   });
 
-  const { mutate: addClient } = trpc.dashboard.addClient.useMutation({
+  const { mutate: addClient } = trpc.home.addClient.useMutation({
     onSuccess({ success }) {
       if (success) {
         router.refresh();

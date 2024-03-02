@@ -41,7 +41,7 @@ export const GetFirmProfile = ({ name, email, image, userCount, refetchData }: u
       count: ""
     }
   });
-  const { mutate: changeClientCount } = trpc.dashboard.changeClientCount.useMutation({
+  const { mutate: changeClientCount } = trpc.home.changeClientCount.useMutation({
     onSuccess({ success }) {
       if (success) {
         refetchData();
