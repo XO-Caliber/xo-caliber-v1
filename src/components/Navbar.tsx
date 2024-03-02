@@ -18,6 +18,7 @@ import Logout from "./pages/auth/Logout";
 import WorkSpace from "./pages/workspaces/WorkSpace";
 import { UserProfile } from "./utils/UserProfile";
 import { user } from "@/types/user";
+import ViewProfile from "./pages/profile/ViewProfile";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -106,7 +107,9 @@ export const Navbar = async () => {
             <DropdownMenuContent className="w-48">
               <DropdownMenuLabel>My Profile</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-border" />
-              <DropdownMenuItem>View Profile</DropdownMenuItem>
+              <DropdownMenuItem>
+                <ViewProfile />
+              </DropdownMenuItem>
               <DropdownMenuItem>Edit Profile</DropdownMenuItem>
               <Logout />
             </DropdownMenuContent>

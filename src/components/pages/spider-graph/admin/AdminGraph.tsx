@@ -34,6 +34,7 @@ function AdminGraph({ userType }: userType) {
     isError
   } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user);
   const { data: answerData2 } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user2);
+  const { data: yourQuestions } = trpc.question.getAdminQuestions.useQuery();
   function getSelectedUser(userData: string) {
     setUser(userData);
   }
@@ -52,7 +53,7 @@ function AdminGraph({ userType }: userType) {
       console.error("Error fetching data:");
       return;
     }
-    if (!answerData) {
+    if (!answerData || !yourQuestions) {
       // Data is undefined, handle accordingly
       console.error("Data is undefined.");
       return;
@@ -88,16 +89,23 @@ function AdminGraph({ userType }: userType) {
         acc[item.category] = [];
       }
       if (item.answer === "YES") {
-        acc[item.category].push(item.mark);
+        acc[item.category].push(item.mark / 100);
       } else {
         acc[item.category].push(0);
       }
       return acc;
     }, {});
 
-    // Calculate average marks for each category
+    // Calculating average mark based on the number of questions in each category
     const averages = Object.entries(groupedData).map(([category, marks]: any) => {
-      const averageMark = marks.reduce((sum: number, mark: number) => sum + mark, 0) / marks.length;
+      // Find the corresponding category in firmAnswer
+      const categoryInfo = yourQuestions.find((answer) => answer.name === category);
+      if (!categoryInfo) return { category, averageMark: 0 };
+
+      const questionsCount = categoryInfo.questions.length;
+      const averageMark =
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+
       return { category, averageMark };
     });
 
@@ -138,10 +146,10 @@ function AdminGraph({ userType }: userType) {
             },
 
             min: 0,
-            max: 100,
+            max: 10,
             ticks: {
-              stepSize: 20,
-              callback: (value: any) => `L${value / 20}` // Customize tick labels
+              stepSize: 2,
+              callback: (value: any) => `L${value / 2}` // Customize tick labels
             }
           }
         }
@@ -151,10 +159,10 @@ function AdminGraph({ userType }: userType) {
       // Clean up the chart on component unmount
       myChart.destroy();
     };
-  }, [answerData]);
+  }, [answerData, yourQuestions]);
 
   useEffect(() => {
-    if (!answerData2) {
+    if (!answerData2 || !yourQuestions) {
       // Data is undefined, handle accordingly
       console.error("Data is undefined.");
       return;
@@ -190,19 +198,25 @@ function AdminGraph({ userType }: userType) {
         acc[item.category] = [];
       }
       if (item.answer === "YES") {
-        acc[item.category].push(item.mark);
+        acc[item.category].push(item.mark / 100);
       } else {
         acc[item.category].push(0);
       }
       return acc;
     }, {});
 
-    // Calculate average marks for each category
+    // Calculating average mark based on the number of questions in each category
     const averages = Object.entries(groupedData).map(([category, marks]: any) => {
-      const averageMark = marks.reduce((sum: number, mark: number) => sum + mark, 0) / marks.length;
+      // Find the corresponding category in firmAnswer
+      const categoryInfo = yourQuestions.find((answer) => answer.name === category);
+      if (!categoryInfo) return { category, averageMark: 0 };
+
+      const questionsCount = categoryInfo.questions.length;
+      const averageMark =
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+
       return { category, averageMark };
     });
-
     // Extract labels and datasets from averages
     Chart.defaults.backgroundColor = "#ff0000";
     const labels = averages.map((item: any) => item.category);
@@ -240,10 +254,10 @@ function AdminGraph({ userType }: userType) {
             },
 
             min: 0,
-            max: 100,
+            max: 10,
             ticks: {
-              stepSize: 20,
-              callback: (value: any) => `L${value / 20}` // Customize tick labels
+              stepSize: 2,
+              callback: (value: any) => `L${value / 2}` // Customize tick labels
             }
           }
         }
@@ -253,7 +267,7 @@ function AdminGraph({ userType }: userType) {
       // Clean up the chart on component unmount
       myChart.destroy();
     };
-  }, [answerData2]);
+  }, [answerData2, yourQuestions]);
 
   return (
     <>

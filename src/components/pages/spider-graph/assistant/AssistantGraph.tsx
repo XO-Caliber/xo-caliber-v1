@@ -9,10 +9,7 @@ import {
   RadialLinearScale
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
-import UserSelectList from "@/components/utils/UserSelectList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
-import NotesOfClient from "../firm/NotesOfClient";
-import NotesOfFirm from "../firm/NotesOfFirm";
 import AssistantUserSelect from "./AssistantUserSelect";
 import FirmsNote from "./FirmsNote";
 import ClientsNote from "./ClientsNote";
@@ -33,6 +30,7 @@ interface userType {
 function AssistantGraph({ userType }: userType) {
   const [user, setUser] = useState("");
   const { data: answerData, isLoading, isError } = trpc.answer.getClientSpiderAnswer.useQuery(user);
+  const { data: firmQuestions } = trpc.question.getAssistantFirmQuestion.useQuery();
   function getSelectedUser(userData: string) {
     setUser(userData);
   }
@@ -48,7 +46,7 @@ function AssistantGraph({ userType }: userType) {
       console.error("Error fetching data:");
       return;
     }
-    if (!answerData) {
+    if (!answerData || !firmQuestions) {
       // Data is undefined, handle accordingly
       console.error("Data is undefined.");
       return;
@@ -84,16 +82,23 @@ function AssistantGraph({ userType }: userType) {
         acc[item.category] = [];
       }
       if (item.answer === "YES") {
-        acc[item.category].push(item.mark);
+        acc[item.category].push(item.mark / 100);
       } else {
         acc[item.category].push(0);
       }
       return acc;
     }, {});
 
-    // Calculate average marks for each category
+    // Calculating average mark based on the number of questions in each category
     const averages = Object.entries(groupedData).map(([category, marks]: any) => {
-      const averageMark = marks.reduce((sum: number, mark: number) => sum + mark, 0) / marks.length;
+      // Find the corresponding category in firmAnswer
+      const categoryInfo = firmQuestions.find((answer) => answer.name === category);
+      if (!categoryInfo) return { category, averageMark: 0 };
+
+      const questionsCount = categoryInfo.questions.length;
+      const averageMark =
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+
       return { category, averageMark };
     });
 
@@ -134,10 +139,10 @@ function AssistantGraph({ userType }: userType) {
             },
 
             min: 0,
-            max: 100,
+            max: 10,
             ticks: {
-              stepSize: 20,
-              callback: (value: any) => `L${value / 20}` // Customize tick labels
+              stepSize: 2,
+              callback: (value: any) => `L${value / 2}` // Customize tick labels
             }
           }
         }

@@ -27,6 +27,7 @@ interface userProps {
 }
 function XOSpiderGraph({ userType }: userProps) {
   const { data: answerData, isLoading, isError } = trpc.answer.getFirmSpiderAnswer.useQuery();
+  const { data: firmQuestion } = trpc.question.getClientQuestions.useQuery();
 
   useEffect(() => {
     if (isLoading) {
@@ -40,6 +41,11 @@ function XOSpiderGraph({ userType }: userProps) {
       return;
     }
     if (!answerData) {
+      // Data is undefined, handle accordingly
+      console.error("Data is undefined.");
+      return;
+    }
+    if (!firmQuestion) {
       // Data is undefined, handle accordingly
       console.error("Data is undefined.");
       return;
@@ -70,21 +76,29 @@ function XOSpiderGraph({ userType }: userProps) {
 
     Chart.register(RadialLinearScale, RadarController, PointElement, LineElement, Filler);
 
+    // Grouping answer data by category
     const groupedData = answerData.reduce((acc: any, item: any) => {
       if (!acc[item.category]) {
         acc[item.category] = [];
       }
       if (item.answer === "YES") {
-        acc[item.category].push(item.mark);
+        acc[item.category].push(item.mark / 100);
       } else {
         acc[item.category].push(0);
       }
       return acc;
     }, {});
 
-    // Calculate average marks for each category
+    // Calculating average mark based on the number of questions in each category
     const averages = Object.entries(groupedData).map(([category, marks]: any) => {
-      const averageMark = marks.reduce((sum: number, mark: number) => sum + mark, 0) / marks.length;
+      // Find the corresponding category in firmAnswer
+      const categoryInfo = firmQuestion.find((answer) => answer.name === category);
+      if (!categoryInfo) return { category, averageMark: 0 };
+
+      const questionsCount = categoryInfo.questions.length;
+      const averageMark =
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+
       return { category, averageMark };
     });
 
@@ -125,10 +139,10 @@ function XOSpiderGraph({ userType }: userProps) {
             },
 
             min: 0,
-            max: 100,
+            max: 10,
             ticks: {
-              stepSize: 20,
-              callback: (value: any) => `L${value / 20}` // Customize tick labels
+              stepSize: 2,
+              callback: (value: any) => `L${value / 2}` // Customize tick labels
             }
           }
         }
@@ -138,7 +152,7 @@ function XOSpiderGraph({ userType }: userProps) {
       // Clean up the chart on component unmount
       myChart.destroy();
     };
-  }, [answerData]);
+  }, [answerData, firmQuestion]);
 
   return (
     <>
