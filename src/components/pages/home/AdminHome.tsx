@@ -1,12 +1,12 @@
 import React from "react";
-import { AddFirmForm } from "./admin/AddFirmForm";
-import { FirmList } from "./admin/FirmList";
+import { AddFirmForm } from "../dashboard/admin/AddFirmForm";
+import { FirmList } from "../dashboard/admin/FirmList";
 
 interface userProps {
   user: string | undefined | null;
 }
 
-const AdminDashboard = ({ user }: userProps) => {
+const AdminHome = ({ user }: userProps) => {
   return (
     <section className="flex flex-row">
       <ul className="flex w-1/2 flex-col items-center justify-start">
@@ -25,4 +25,4 @@ const AdminDashboard = ({ user }: userProps) => {
   );
 };
 
-export default AdminDashboard;
+export default AdminHome;

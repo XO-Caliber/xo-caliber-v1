@@ -35,7 +35,7 @@ export const AddFirmForm = () => {
     }
   });
 
-  const { mutate: addfirm } = trpc.dashboard.addFirm.useMutation({
+  const { mutate: addfirm } = trpc.home.addFirm.useMutation({
     onSuccess({ success }) {
       console.log("User created successfully");
       if (success) {
