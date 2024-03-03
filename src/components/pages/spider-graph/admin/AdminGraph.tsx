@@ -34,7 +34,7 @@ function AdminGraph({ userType }: userType) {
     isError
   } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user);
   const { data: answerData2 } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user2);
-  const { data: yourQuestions } = trpc.question.getAdminQuestions.useQuery();
+  const { data: yourQuestions } = trpc.question.getClientAdminQuestions.useQuery();
   function getSelectedUser(userData: string) {
     setUser(userData);
   }
