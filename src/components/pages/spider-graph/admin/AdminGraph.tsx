@@ -11,6 +11,7 @@ import {
 import { trpc } from "@/app/_trpc/client";
 import AllUserSelectList from "./AllUserSelectList";
 import { Copyright } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 
 interface UserAnswer {
   category: string | null;
@@ -34,7 +35,7 @@ function AdminGraph({ userType }: userType) {
     isError
   } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user);
   const { data: answerData2 } = trpc.answer.getClientSpiderAnswerByAdmin.useQuery(user2);
-  const { data: yourQuestions } = trpc.question.getAdminQuestions.useQuery();
+  const { data: yourQuestions } = trpc.question.getClientAdminQuestions.useQuery();
   function getSelectedUser(userData: string) {
     setUser(userData);
   }
@@ -285,7 +286,7 @@ function AdminGraph({ userType }: userType) {
       <main className="grid h-full grid-cols-2 flex-col md:min-h-[87vh] xl:min-h-[93vh]">
         <div className="border-2 border-y-0 border-l-0">
           <h1 className="ml-8 mt-4 text-2xl font-bold">User Graph 1:</h1>
-          <div className="m-8 flex items-center justify-center rounded-xl border  border-red-600 bg-secondary ">
+          <div className="m-8 mb-2 flex flex-col items-center justify-center rounded-xl border  border-red-600 bg-secondary ">
             <canvas className="min-w-20" id="myChart">
               myChart
             </canvas>
