@@ -105,7 +105,9 @@ function AdminGraph({ userType }: userType) {
 
       const questionsCount = categoryInfo.questions.length;
       const averageMark =
-        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10 > 10
+          ? 10
+          : (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
 
       return { category, averageMark };
     });
@@ -214,7 +216,9 @@ function AdminGraph({ userType }: userType) {
 
       const questionsCount = categoryInfo.questions.length;
       const averageMark =
-        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
+        (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10 > 10
+          ? 10
+          : (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
 
       return { category, averageMark };
     });

@@ -60,6 +60,7 @@ const AdminQADialogContent = ({
             <SelectItem value={"80"}>80</SelectItem>
             <SelectItem value={"90"}>90</SelectItem>
             <SelectItem value={"100"}>100</SelectItem>
+            <SelectItem value={"1000"}>1000</SelectItem>
           </SelectContent>
         </Select>
 
