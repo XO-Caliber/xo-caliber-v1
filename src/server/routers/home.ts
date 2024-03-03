@@ -62,23 +62,17 @@ export const homeRouter = router({
     return results;
   }),
 
-  getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
-    const page = input;
+  getAllUser: firmProcedure.query(async () => {
+    const results = await db.user.findMany({});
 
-    const results = await db.user.findMany({
-      skip: (page - 1) * 10,
-      take: 12
-    });
-
-    return results;
+    return results.filter((user) => user.id !== "");
   }),
 
   getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
     const page = input;
 
     const results = await db.firm.findMany({
-      skip: (page - 1) * 10, // Adjusting skip based on page number
-      take: 14 // Always take 10 items per page
+      // Always take 10 items per page
     });
 
     return results;
@@ -108,19 +102,18 @@ export const homeRouter = router({
   }),
 
   //! WHY NEVER USE???
-  getFirmAssistant: firmProcedure.input(z.string()).query(async ({ input }) => {
-    const firmId = input;
-    if (!firmId) {
-      throw new TRPCError({ code: "BAD_REQUEST" });
-    }
-
-    const results = await db.assistant.findMany({
+  getFirmAssistant: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    const results = await db.firm.findUnique({
       where: {
-        firmId: firmId
+        firmId: session?.user.id
+      },
+      include: {
+        assistant: true
       }
     });
 
-    return results;
+    return results?.assistant;
   }),
 
   clientList: firmProcedure.query(async () => {
