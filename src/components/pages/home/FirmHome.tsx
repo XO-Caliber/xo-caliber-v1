@@ -5,6 +5,7 @@ import { AddAssistantForm } from "../dashboard/firm/AddAssistantForm";
 import { AddClientForm } from "../dashboard/firm/AddClientForm";
 import { AssistantList } from "../dashboard/firm/AssistantList";
 import { UserList } from "../dashboard/firm/UserList";
+import { AssistantDialog } from "../q&a/addAssistant/AssistantDialog";
 
 interface userProps {
   user: string | undefined | null;
@@ -35,22 +36,33 @@ export const FirmHome = async ({ user }: userProps) => {
               <UserList userId={session?.user.id} />
             </TabsContent>
           </Tabs> */}
-          <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
-              Your Assistants
-            </h1>
-            <AssistantList />
-          </div>
-          <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
-              Your Clients
-            </h1>
-            <UserList userId={session?.user.id} />
+          <div className="flex flex-col items-center justify-center space-y-9">
+            <div className="flex flex-row space-x-6">
+              <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                  Your Assistants
+                </h1>
+                <AssistantList />
+              </div>
+              <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                  Your Clients
+                </h1>
+                <UserList userId={session?.user.id} />
+              </div>
+            </div>
+            <div className="flex w-[400px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+              <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                Your Clients
+              </h1>
+
+              <AssistantDialog />
+            </div>
           </div>
         </li>
       </ul>
       <span
-        className=" border-l-2 border-border pr-4"
+        className=" min-h-[93vh] border-l-2 border-border pr-4"
         style={{ height: "calc(100vh - 100px)" }}
       ></span>
       <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">

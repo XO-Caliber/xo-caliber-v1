@@ -90,7 +90,6 @@ export const ViewFirmQA = () => {
         <div className="mr-4 flex space-x-12">
           <AddQADiaglog refetchData={refetchData} />
           <AddCategoryDialog refetchData={refetchData} />
-          <AssistantDialog />
           <ImportAdmin />
           <DownloadQuestions />
         </div>

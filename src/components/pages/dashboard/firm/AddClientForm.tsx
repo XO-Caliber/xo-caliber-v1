@@ -109,7 +109,7 @@ export const AddClientForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 rounded-lg border-2 p-8 pl-8"
+        className="space-y-2 rounded-lg border-2 bg-white p-8 pl-8"
       >
         <CardTitle>Add Client</CardTitle>
         <CardDescription>Add your client details here</CardDescription>
