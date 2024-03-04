@@ -165,7 +165,7 @@ export const homeRouter = router({
     const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
     return filteredUsers;
   }),
-  getAssistantsUser: firmProcedure.input(z.string().email()).query(async ({ input }) => {
+  getAssistantsUser: publiceProcedure.input(z.string().email()).query(async ({ input }) => {
     const assistantData = await db.assistant.findUnique({
       where: {
         email: input
@@ -177,7 +177,17 @@ export const homeRouter = router({
     const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
     return filteredUsers;
   }),
-
+  getAssistantsFirm: assistantProcedure.input(z.string()).query(async ({ input }) => {
+    const results = await db.assistant.findUnique({
+      where: {
+        assistantId: input
+      },
+      include: {
+        firm: true
+      }
+    });
+    return results?.firm;
+  }),
   assistantList: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });

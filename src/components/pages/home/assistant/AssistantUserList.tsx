@@ -5,17 +5,17 @@ import { useState } from "react";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
 
-export const AssistantList = () => {
+export const AssistantUserList = () => {
   const [page, setpage] = useState(1);
-  const assistantList = trpc.home.getFirmAssistant.useQuery();
+  const userList = trpc.home.getAssistantUser.useQuery();
 
-  if (assistantList.data) {
+  if (userList.data) {
     return (
       <section className="scrollableContainer flex h-72 w-[350px] flex-col items-center overflow-y-scroll">
         <div className=" m-4 ml-6">
           {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
           <div className="  grid-rows grid w-full  gap-y-5 ">
-            {assistantList.data.map((user) => (
+            {userList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
                 <GetAssistantProfile email={user.email} name={user.name} image={user.image} />
               </div>

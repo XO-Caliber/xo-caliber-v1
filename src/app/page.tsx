@@ -5,6 +5,7 @@ import AdminHome from "@/components/pages/home/AdminHome";
 import { FirmHome } from "@/components/pages/home/FirmHome";
 import { UserHome } from "@/components/pages/home/UserHome";
 import ClientFirmList from "@/components/pages/home/client/ClientFirmList";
+import { AssistantHome } from "@/components/pages/home/AssistantHome";
 
 export default async function Home() {
   const session = await getAuthSession();
@@ -24,6 +25,7 @@ export default async function Home() {
               )}
               {session.user.role === "FIRM" && <FirmHome user={session.user.name} />}
               {session.user.role === "INDIVIDUAL" && <UserHome />}
+              {session.user.role === "ASSISTANT" && <AssistantHome />}
             </div>
           </div>
         </div>
