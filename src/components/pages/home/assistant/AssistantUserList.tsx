@@ -3,7 +3,6 @@ import { trpc } from "@/app/_trpc/client";
 import { GetUserProfile } from "@/components/utils/GetUserProfile";
 import { useState } from "react";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
-import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
 
 export const AssistantUserList = () => {
   const [page, setpage] = useState(1);
@@ -17,7 +16,7 @@ export const AssistantUserList = () => {
           <div className="  grid-rows grid w-full  gap-y-5 ">
             {userList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <GetAssistantProfile email={user.email} name={user.name} image={user.image} />
+                <GetUserProfile email={user.email} name={user.name} image={user.image} />
               </div>
             ))}
           </div>
