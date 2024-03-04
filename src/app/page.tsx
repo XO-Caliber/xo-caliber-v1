@@ -28,8 +28,8 @@ export default async function Home() {
           </div>
         </div>
       ) : (
-        <div>
-          <UserHome />
+        <div className="text-lg font-bold">
+          <Header>Home</Header>
         </div>
       )}
     </div>
