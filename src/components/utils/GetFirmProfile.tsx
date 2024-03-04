@@ -90,7 +90,7 @@ export const GetFirmProfile = ({ name, email, image, userCount, refetchData }: u
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>User Profile</DialogTitle>
+          <DialogTitle>Firm Profile</DialogTitle>
           <DialogDescription>All the details of users</DialogDescription>
         </DialogHeader>
         <div className="flex cursor-pointer items-center  rounded-md bg-secondary p-2 text-black">
