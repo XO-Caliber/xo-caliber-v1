@@ -5,37 +5,42 @@ import { UserProfile } from "@/components/utils/UserProfile";
 import React from "react";
 import LeaveFirmForm from "./LeaveFirmForm";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
+import { GetUserProfile } from "@/components/utils/GetUserProfile";
 
 const ClientFirmList = () => {
   const clientFirmList = trpc.home.getClientFirm.useQuery();
   const refetchData = () => {
     clientFirmList.refetch();
   };
-  if (clientFirmList.data?.Firm) {
+  if (clientFirmList.data?.Firm?.firmId) {
     return (
-      <div>
-        <Card className="m-8  h-[300px] w-[250px] p-2">
-          <CardHeader className="text-xl font-bold">Your Firm</CardHeader>
-          <CardContent>
+      <section className="scrollableContainer flex h-72 w-[310px] flex-col items-center  overflow-y-scroll">
+        <div className=" m-4 ml-6 flex flex-col items-center justify-center">
+          {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
+          <div className="  grid-rows mb-28 grid  w-full gap-y-5">
             <UserProfile
-              email={clientFirmList.data.Firm?.email}
-              name={clientFirmList.data.Firm?.name}
+              email={clientFirmList.data.Firm.email}
+              name={clientFirmList.data.Firm.name}
+              image={clientFirmList.data.Firm.image}
             />
-            <div className="flex pl-12 pt-24">
-              <LeaveFirmForm refetchData={refetchData} />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+          </div>
+          <LeaveFirmForm refetchData={refetchData} />
+        </div>
+      </section>
     );
   } else {
+    // If the user does not exist, return an error message
     return (
-      <div className="m-8 flex ">
-        <Card className="h-[300px] w-[250px] p-2">
-          <CardHeader className="text-xl font-bold">Your Firm</CardHeader>
-          <UserProfileLoading />
-        </Card>
+      <div className=" scrollableContainer flex min-h-72 w-[310px] flex-col items-center overflow-y-scroll">
+        {[...Array(1)].map((_, index) => (
+          <div key={index} className=" grid-rows grid w-full  gap-y-5 px-12">
+            <UserProfileLoading />
+          </div>
+        ))}
       </div>
+      // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
+      //   Loading...
+      // </div>
     );
   }
 };

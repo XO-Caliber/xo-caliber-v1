@@ -53,7 +53,7 @@ export const FirmHome = async ({ user }: userProps) => {
             </div>
             <div className="flex w-[400px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
               <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
-                Your Clients
+                Assign Assistant
               </h1>
 
               <AssistantDialog />

@@ -62,6 +62,21 @@ export const homeRouter = router({
     }
     return results;
   }),
+  getClientAssistants: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const results = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      },
+      include: {
+        Assistants: true
+      }
+    });
+    if (!results) {
+      throw new Error("No assistant was found");
+    }
+    return results.Assistants.filter((user) => user.assistantId !== "");
+  }),
 
   getAllUser: publiceProcedure.query(async () => {
     const results = await db.user.findMany({});

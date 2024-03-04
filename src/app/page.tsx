@@ -23,7 +23,7 @@ export default async function Home() {
                 </div>
               )}
               {session.user.role === "FIRM" && <FirmHome user={session.user.name} />}
-              {session.user.role === "INDIVIDUAL" && <ClientFirmList />}
+              {session.user.role === "INDIVIDUAL" && <UserHome />}
             </div>
           </div>
         </div>
