@@ -117,7 +117,7 @@ export const AddAssistantForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 rounded-lg border-2 p-8 pl-8"
+        className="space-y-2 rounded-lg border-2 bg-white p-8  pl-8"
       >
         <CardTitle>Add Assistant</CardTitle>
         <CardDescription>Add your assistant details here</CardDescription>

@@ -151,6 +151,18 @@ export const homeRouter = router({
     const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
     return filteredUsers;
   }),
+  getAssistantsUser: firmProcedure.input(z.string().email()).query(async ({ input }) => {
+    const assistantData = await db.assistant.findUnique({
+      where: {
+        email: input
+      },
+      include: {
+        User: true
+      }
+    });
+    const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
+    return filteredUsers;
+  }),
 
   assistantList: firmProcedure.query(async () => {
     const session = await getAuthSession();

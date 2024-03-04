@@ -12,6 +12,7 @@ import {
   PaginationPrevious
 } from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
+import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
 
 export const AssistantList = () => {
   const [page, setpage] = useState(1);
@@ -25,7 +26,7 @@ export const AssistantList = () => {
           <div className="  grid-rows grid w-full  gap-y-5 ">
             {assistantList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <GetUserProfile email={user.email} name={user.name} image={user.image} />
+                <GetAssistantProfile email={user.email} name={user.name} image={user.image} />
               </div>
             ))}
           </div>
