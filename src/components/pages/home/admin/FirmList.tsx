@@ -1,6 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { GetUserProfile } from "@/components/utils/GetUserProfile";
+import { UserProfile } from "@/components/utils/UserProfile";
 import { useState } from "react";
 import {
   Pagination,
@@ -12,21 +12,29 @@ import {
   PaginationPrevious
 } from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
-import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
+import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 
-export const AssistantList = () => {
+export const FirmList = () => {
   const [page, setpage] = useState(1);
-  const assistantList = trpc.home.getFirmAssistant.useQuery();
+  const firmList = trpc.home.getAllFirm.useQuery();
+  const refetchData = () => {
+    firmList.refetch();
+  };
 
-  if (assistantList.data) {
+  if (firmList.data) {
     return (
-      <section className="scrollableContainer flex h-72 w-[310px] flex-col items-center overflow-y-scroll">
+      <section className="scrollableContainer flex h-72 w-[350px] flex-col items-center overflow-y-scroll">
         <div className=" m-4 ml-6">
-          {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
           <div className="  grid-rows grid w-full  gap-y-5 ">
-            {assistantList.data.map((user) => (
+            {firmList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <GetAssistantProfile email={user.email} name={user.name} image={user.image} />
+                <GetFirmProfile
+                  email={user.email}
+                  name={user.name}
+                  image={user.image}
+                  userCount={user.userCount}
+                  refetchData={refetchData}
+                />
               </div>
             ))}
           </div>
@@ -58,7 +66,7 @@ export const AssistantList = () => {
   } else {
     // If the user does not exist, return an error message
     return (
-      <div className=" scrollableContainer flex min-h-72 w-[310px] flex-col items-center overflow-y-scroll">
+      <div className=" scrollableContainer flex min-h-72 w-[350px] flex-col items-center overflow-y-scroll">
         {[...Array(5)].map((_, index) => (
           <div key={index} className=" grid-rows grid w-full  gap-y-5 px-12">
             <UserProfileLoading />

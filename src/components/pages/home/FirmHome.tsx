@@ -1,10 +1,10 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { AddAssistantForm } from "../dashboard/firm/AddAssistantForm";
-import { AddClientForm } from "../dashboard/firm/AddClientForm";
-import { AssistantList } from "../dashboard/firm/AssistantList";
-import { UserList } from "../dashboard/firm/UserList";
+import { AddAssistantForm } from "./firm/AddAssistantForm";
+import { AddClientForm } from "./firm/AddClientForm";
+import { AssistantList } from "./firm/AssistantList";
+import { UserList } from "./firm/UserList";
 import { AssistantDialog } from "../q&a/addAssistant/AssistantDialog";
 
 interface userProps {
@@ -38,13 +38,13 @@ export const FirmHome = async ({ user }: userProps) => {
           </Tabs> */}
           <div className="flex flex-col items-center justify-center space-y-9">
             <div className="flex flex-row space-x-6">
-              <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+              <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
                 <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
                   Your Assistants
                 </h1>
                 <AssistantList />
               </div>
-              <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+              <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
                 <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
                   Your Clients
                 </h1>

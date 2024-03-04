@@ -4,7 +4,7 @@ import { getAuthSession } from "./api/auth/[...nextauth]/authOptions";
 import AdminHome from "@/components/pages/home/AdminHome";
 import { FirmHome } from "@/components/pages/home/FirmHome";
 import { UserHome } from "@/components/pages/home/UserHome";
-import ClientFirmList from "@/components/pages/dashboard/client/ClientFirmList";
+import ClientFirmList from "@/components/pages/home/client/ClientFirmList";
 
 export default async function Home() {
   const session = await getAuthSession();
