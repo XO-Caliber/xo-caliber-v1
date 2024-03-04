@@ -9,6 +9,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { use } from "react";
 
 export const homeRouter = router({
   leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
@@ -62,20 +63,18 @@ export const homeRouter = router({
     return results;
   }),
 
-  getAllUser: firmProcedure.query(async () => {
+  getAllUser: publiceProcedure.query(async () => {
     const results = await db.user.findMany({});
 
     return results.filter((user) => user.id !== "");
   }),
 
-  getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
-    const page = input;
-
+  getAllFirm: adminProcedure.query(async () => {
     const results = await db.firm.findMany({
       // Always take 10 items per page
     });
 
-    return results;
+    return results.filter((user) => user.firmId !== "");
   }),
 
   getAllAssistant: firmProcedure.input(z.number()).query(async ({ input }) => {

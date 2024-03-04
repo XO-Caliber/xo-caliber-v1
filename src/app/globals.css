@@ -100,4 +100,5 @@
 .scrollableContainer::-webkit-scrollbar-thumb {
   background-color: hsl(12 100% 85%); /* Change the color of the scrollbar thumb */
   border-radius: 6px;
+  cursor: pointer;
 }
