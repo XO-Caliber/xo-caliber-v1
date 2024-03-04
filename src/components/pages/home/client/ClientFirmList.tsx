@@ -18,7 +18,7 @@ const ClientFirmList = () => {
         <div className=" m-4 ml-6 flex flex-col items-center justify-center">
           {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
           <div className="  grid-rows mb-28 grid  w-full gap-y-5">
-            <UserProfile
+            <GetUserProfile
               email={clientFirmList.data.Firm.email}
               name={clientFirmList.data.Firm.name}
               image={clientFirmList.data.Firm.image}
