@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PenBox, PlusSquare } from "lucide-react";
+import { PenBox, Plus, PlusSquare } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
@@ -26,10 +26,11 @@ import {
 import { Textarea } from "@/components/ui/Textarea";
 interface QAProps {
   refetchData: () => void;
+  subHeadingId: string;
 }
-const AddCheckList = ({ refetchData }: QAProps) => {
+const AddCheckList = ({ refetchData, subHeadingId }: QAProps) => {
   const [name, setName] = useState("");
-  const [subHeadingId, setSubHeadingId] = useState("");
+  // const [subHeadingId, setSubHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const subHeadingResult = trpc.checklist.getSubHeading.useQuery();
@@ -53,7 +54,7 @@ const AddCheckList = ({ refetchData }: QAProps) => {
     },
     onSettled() {
       setLoading(false);
-      setSubHeadingId("");
+      // setSubHeadingId("");
       setName("");
     }
   });
@@ -87,14 +88,9 @@ const AddCheckList = ({ refetchData }: QAProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant={"dark"}
-          className="ml-4 border-dashed border-gray-400 font-medium "
-          size={"sm"}
-        >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Checklist</p>
-        </Button>
+        <li className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 hover:bg-secondary">
+          <Plus className="text-secondary-foreground" />
+        </li>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
@@ -115,8 +111,8 @@ const AddCheckList = ({ refetchData }: QAProps) => {
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <Select onValueChange={(value) => setSubHeadingId(value)}>
-                {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-white text-black"> */}
+              {/* <Select onValueChange={(value) => setSubHeadingId(value)}>
+              
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="select" />
                 </SelectTrigger>
@@ -130,7 +126,7 @@ const AddCheckList = ({ refetchData }: QAProps) => {
                       ))
                     )}
                 </SelectContent>
-              </Select>
+              </Select> */}
             </div>
           </section>
 

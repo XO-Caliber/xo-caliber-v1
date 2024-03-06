@@ -84,9 +84,10 @@ model Firm {
   User      User[]
   userCount Int         @default(1)
 
-  category   Category[]
-  categoryId String?
-  Note       FirmNote[]
+  category     Category[]
+  categoryId   String?
+  Note         FirmNote[]
+  CheckHeading CheckHeading[]
 }
 
 model Assistant {
@@ -182,8 +183,10 @@ model CheckHeading {
   subHeading        CheckSubHeading[]
   checkSubHeadingId String?
   Admin             Admin?            @relation(fields: [adminId], references: [adminId], onDelete: Cascade)
+  Firm              Firm?             @relation(fields: [firmId], references: [firmId], onDelete: Cascade)
 
   adminId String?
+  firmId  String?
 }
 
 model CheckSubHeading {

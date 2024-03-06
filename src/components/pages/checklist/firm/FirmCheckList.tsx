@@ -1,19 +1,19 @@
 "use client";
 import React, { useState } from "react";
-import AddHeading from "./AddHeading";
-import AddSubHeading from "./AddSubHeading";
-import AddCheckList from "./AddCheckList";
 import { trpc } from "@/app/_trpc/client";
-import { ChevronDown, ChevronRight, LucideTrash2, Plus } from "lucide-react";
+import { ChevronDown, ChevronRight, LucideTrash2 } from "lucide-react";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { toast } from "@/hooks/use-toast";
+import AddFirmHeading from "./AddFirmHeading";
+import AddFirmCheckList from "./AddFirmCheckList";
+import AddFirmSubHeading from "./AddFirmSubHeading";
 
 interface SubMenuState {
   [key: string]: boolean;
 }
 
-const AdminCheckList = () => {
-  const checkListData = trpc.checklist.getCheckListSubHeading.useQuery();
+const FirmCheckList = () => {
+  const checkListData = trpc.checklist.getFirmCheckListSubHeading.useQuery();
   const [id, setId] = useState("");
   const [openSubMenus, setOpenSubMenus] = useState<SubMenuState>({});
 
@@ -53,7 +53,7 @@ const AdminCheckList = () => {
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
         <p className="m-4 mt-[1.2rem] font-bold text-muted">Checklist</p>
         <div className="mr-4 flex space-x-12">
-          <AddHeading refetchData={refetchData} />
+          <AddFirmHeading refetchData={refetchData} />
         </div>
       </div>
       <div className="scrollableContainer m-4 ml-60 mt-8 h-[85vh] overflow-y-scroll font-serif shadow-md">
@@ -93,7 +93,7 @@ const AdminCheckList = () => {
                       <h1 className="cursor-pointer p-2 text-xl font-bold text-white">
                         {checkList.name}
                       </h1>
-                      <AddSubHeading refetchData={refetchData} headingId={checkList.id} />
+                      <AddFirmSubHeading refetchData={refetchData} headingId={checkList.id} />
                     </div>
                     <div
                       className={`transition-max-height overflow-hidden duration-500 ${
@@ -124,7 +124,7 @@ const AdminCheckList = () => {
                                   </li>
                                 ))}
                               <li className="p-2">
-                                <AddCheckList
+                                <AddFirmCheckList
                                   refetchData={refetchData}
                                   subHeadingId={subHeading.id}
                                 />
@@ -143,4 +143,4 @@ const AdminCheckList = () => {
   );
 };
 
-export default AdminCheckList;
+export default FirmCheckList;

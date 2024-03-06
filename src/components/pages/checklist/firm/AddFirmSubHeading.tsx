@@ -29,13 +29,13 @@ interface QAProps {
   headingId: string;
 }
 
-const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
+const AddFirmSubHeading = ({ refetchData, headingId }: QAProps) => {
   const [name, setName] = useState("");
   // const [headingId, setHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const headingResult = trpc.checklist.getHeading.useQuery();
-  const subHeadingResult = trpc.checklist.getSubHeading.useQuery();
+  const headingResult = trpc.checklist.getFirmHeading.useQuery();
+  const subHeadingResult = trpc.checklist.getFirmSubHeading.useQuery();
 
   const { mutate: deleteSubHeading } = trpc.checklist.deleteSubHeading.useMutation({
     onSuccess({ success }) {
@@ -186,4 +186,4 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   );
 };
 
-export default AddSubHeading;
+export default AddFirmSubHeading;

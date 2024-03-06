@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
+
 import {
   Dialog,
   DialogContent,
@@ -23,42 +24,20 @@ import {
   SelectValue
 } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
-
 interface QAProps {
   refetchData: () => void;
-  headingId: string;
+  subHeadingId: string;
 }
-
-const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
+const AddFirmCheckList = ({ refetchData, subHeadingId }: QAProps) => {
   const [name, setName] = useState("");
-  // const [headingId, setHeadingId] = useState("");
+  // const [subHeadingId, setSubHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const headingResult = trpc.checklist.getHeading.useQuery();
-  const subHeadingResult = trpc.checklist.getSubHeading.useQuery();
-
-  const { mutate: deleteSubHeading } = trpc.checklist.deleteSubHeading.useMutation({
+  const subHeadingResult = trpc.checklist.getFirmSubHeading.useQuery();
+  const { mutate: addSubHeading } = trpc.checklist.addCheckList.useMutation({
     onSuccess({ success }) {
       if (success) {
         refetchData();
-        headingResult.refetch();
-        router.refresh();
-        toast({
-          title: "Deleted heading",
-          description: "The heading was deleted successfully"
-        });
-      }
-    },
-    onError(err) {
-      console.log(err);
-    }
-  });
-
-  const { mutate: addSubHeading } = trpc.checklist.addSubHeading.useMutation({
-    onSuccess({ success }) {
-      if (success) {
-        refetchData();
-        subHeadingResult.refetch();
         router.refresh();
         toast({
           title: "Subheading added",
@@ -75,7 +54,7 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
     },
     onSettled() {
       setLoading(false);
-      // setHeadingId("");
+      // setSubHeadingId("");
       setName("");
     }
   });
@@ -91,7 +70,7 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
       });
       return;
     }
-    if (headingId === "") {
+    if (subHeadingId === "") {
       toast({
         title: "Validation Error",
         description: "Please select a category",
@@ -102,21 +81,20 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
     setLoading(true);
     const data = {
       name,
-      checkHeadingId: headingId
+      checkSubHeadingId: subHeadingId
     };
     addSubHeading(data);
   };
-
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <li className="flex cursor-pointer items-center justify-center rounded-md border border-gray-500 bg-white hover:bg-secondary">
-          <Plus className="text-gray-500 text-secondary-foreground" />
+        <li className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 hover:bg-secondary">
+          <Plus className="text-secondary-foreground" />
         </li>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add SubHeading</DialogTitle>
+          <DialogTitle>Add Checklist</DialogTitle>
           <DialogDescription>Write a question for your client to answer:</DialogDescription>
           <section className="flex w-[600px] flex-row items-center gap-4">
             <div className="grid w-full gap-1.5 pt-4">
@@ -133,50 +111,29 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              {/* <Select onValueChange={(value) => setHeadingId(value)}>
+              {/* <Select onValueChange={(value) => setSubHeadingId(value)}>
+              
                 <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="select" />
                 </SelectTrigger>
                 <SelectContent className=" ">
-                  {headingResult.data &&
-                    headingResult.data.map((head) => (
-                      <SelectItem key={head.id} value={head.id}>
-                        {head.name}
-                      </SelectItem>
-                    ))}
+                  {subHeadingResult.data &&
+                    subHeadingResult.data.map((head) =>
+                      head.subHeading.map((head, index) => (
+                        <SelectItem key={head.id} value={head.id}>
+                          {head.name}
+                        </SelectItem>
+                      ))
+                    )}
                 </SelectContent>
               </Select> */}
             </div>
           </section>
-          <div>
-            {subHeadingResult.data && (
-              <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
-                {subHeadingResult.data.map((heading) =>
-                  heading.subHeading.map((sub, index) => (
-                    <li
-                      key={sub.id} // Use sub.id as the key for each list item
-                      className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${
-                        index % 2 === 0
-                          ? "border-primary bg-primary-light"
-                          : "border-muted bg-secondary"
-                      }`}
-                    >
-                      {sub.name}
-                      <PenBox
-                        className="ml-1 cursor-pointer text-primary"
-                        size={16}
-                        onClick={() => deleteSubHeading(sub.id)} // Pass sub.id to the deleteSubHeading mutation
-                      />
-                    </li>
-                  ))
-                )}
-              </ul>
-            )}
-          </div>
+
           <DialogFooter>
             <form onSubmit={onSubmit}>
               <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
-                Add SubHeading
+                Add Checklist
               </Button>
             </form>
           </DialogFooter>
@@ -186,4 +143,4 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   );
 };
 
-export default AddSubHeading;
+export default AddFirmCheckList;
