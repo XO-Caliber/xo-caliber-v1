@@ -20,11 +20,11 @@ export default async function Home() {
             <div className="">
               {session.user.role === "ADMIN" && (
                 <div>
-                  <AdminHome user={session.user.name} />
+                  <AdminHome user={session.user} />
                 </div>
               )}
-              {session.user.role === "FIRM" && <FirmHome user={session.user.name} />}
-              {session.user.role === "INDIVIDUAL" && <UserHome />}
+              {session.user.role === "FIRM" && <FirmHome user={session.user} />}
+              {session.user.role === "INDIVIDUAL" && <UserHome user={session.user} />}
               {session.user.role === "ASSISTANT" && <AssistantHome />}
             </div>
           </div>
