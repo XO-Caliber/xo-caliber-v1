@@ -168,7 +168,10 @@ const ViewClient = ({ userId }: UserProps) => {
                                     {item.UserChecked.map(
                                       (checked) =>
                                         checked.isChecked && (
-                                          <div className="flex flex-row items-center justify-center">
+                                          <div
+                                            className="flex flex-row items-center justify-center"
+                                            key={checked.id}
+                                          >
                                             <Input
                                               className="h-[50px] border-gray-500"
                                               autoFocus={true}
@@ -190,7 +193,6 @@ const ViewClient = ({ userId }: UserProps) => {
                                             <Save
                                               className=" ml-2 inline-block h-[30px]  cursor-pointer bg-sky-400  p-0.5 text-white"
                                               xlinkTitle="Save"
-                                              href="save"
                                               onClick={() =>
                                                 handleChange(checked.id, referenceLinks[checked.id])
                                               }
