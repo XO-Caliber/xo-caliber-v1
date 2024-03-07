@@ -179,7 +179,15 @@ export const checkRouter = router({
       include: {
         subHeading: {
           include: {
-            Checklist: true
+            Checklist: {
+              include: {
+                UserChecked: {
+                  where: {
+                    userId: input
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -206,7 +214,7 @@ export const checkRouter = router({
       const { userId, checkListId, isChecked } = input;
       const checkAnswered = await db.userChecked.findFirst({
         where: {
-          checkListId: checkListId,
+          checklistId: checkListId,
           userId: userId
         }
       });
@@ -223,7 +231,7 @@ export const checkRouter = router({
       }
       await db.userChecked.create({
         data: {
-          checkListId: checkListId,
+          checklistId: checkListId,
           userId: userId,
           isChecked: true
         }
