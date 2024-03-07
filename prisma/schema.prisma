@@ -202,13 +202,16 @@ model Checklist {
   name              String          @db.Text
   heading           CheckSubHeading @relation(fields: [checkSubHeadingId], references: [id])
   checkSubHeadingId String
+  UserChecked       UserChecked[]
 }
 
 model UserChecked {
-  id          String  @id
-  name        String  @db.Text
-  isChecked   Boolean
-  checkListId String
-  User        User?   @relation(fields: [userId], references: [id])
-  userId      String?
+  id            String     @id @default(cuid())
+  isChecked     Boolean    @default(false)
+  Checklist     Checklist? @relation(fields: [checklistId], references: [id])
+  referenceLink String?
+  User          User       @relation(fields: [userId], references: [id])
+
+  userId      String
+  checklistId String?
 }

@@ -165,5 +165,83 @@ export const checkRouter = router({
         }
       });
       return { success: true };
+    }),
+  getClientCheckList: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const userData = await db.user.findUnique({
+      where: {
+        id: input
+      }
+    });
+    const checklists = await db.checkHeading.findMany({
+      where: {
+        firmId: userData?.firmId
+      },
+      include: {
+        subHeading: {
+          include: {
+            Checklist: true
+          }
+        }
+      }
+    });
+    return checklists;
+  }),
+  getClientAnswer: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const result = await db.userChecked.findMany({
+      where: {
+        userId: input
+      }
+    });
+    return result;
+  }),
+  addClientChecked: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        checkListId: z.string(),
+        isChecked: z.boolean()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { userId, checkListId, isChecked } = input;
+      const checkAnswered = await db.userChecked.findFirst({
+        where: {
+          checkListId: checkListId,
+          userId: userId
+        }
+      });
+      if (checkAnswered) {
+        await db.userChecked.update({
+          where: {
+            id: checkAnswered.id
+          },
+          data: {
+            isChecked: isChecked
+          }
+        });
+        return { success: true };
+      }
+      await db.userChecked.create({
+        data: {
+          checkListId: checkListId,
+          userId: userId,
+          isChecked: true
+        }
+      });
+      return { success: true };
+    }),
+  addReferenceLink: publiceProcedure
+    .input(z.object({ id: z.string(), link: z.string() }))
+    .mutation(async ({ input }) => {
+      const { id, link } = input;
+      await db.userChecked.update({
+        where: {
+          id: id
+        },
+        data: {
+          referenceLink: link
+        }
+      });
+      return { success: true };
     })
 });
