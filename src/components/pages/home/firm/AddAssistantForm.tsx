@@ -22,7 +22,7 @@ const formSchema = z.object({
   emailAddress: z.string().email()
 });
 
-export const AddClientForm = () => {
+export const AddAssistantForm = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,14 +34,16 @@ export const AddClientForm = () => {
     }
   });
 
-  const { mutate: addClient } = trpc.home.addClient.useMutation({
+  const { mutate: addAssistant } = trpc.home.addAssistant.useMutation({
     onSuccess({ success }) {
+      console.log("User created successfully");
       if (success) {
+        //Login user here
         router.refresh();
         form.reset();
         toast({
-          title: "Client created",
-          description: "Client was added succesfully"
+          title: "Assistant created",
+          description: "User upgraded to assistant successfully"
         });
       }
     },
@@ -54,7 +56,7 @@ export const AddClientForm = () => {
         });
       } else if (err.data?.code === "BAD_REQUEST") {
         toast({
-          title: "User can be firm/assistant/admin",
+          title: "User may be firm or admin",
           description: "Try on assistant or user",
           variant: "destructive"
         });
@@ -66,14 +68,20 @@ export const AddClientForm = () => {
         });
       } else if (err.data?.code === "CONFLICT") {
         toast({
-          title: "User may be already under a firm",
+          title: "User already exist in assistant table",
           description: "Only works on user",
           variant: "destructive"
         });
       } else if (err.data?.code === "TOO_MANY_REQUESTS") {
         toast({
-          title: "Client limit reached",
-          description: "Ask admin to increase your client limit"
+          title: "Assistant is already under a firm",
+          description: "Only works for users",
+          variant: "destructive"
+        });
+      } else if (err.data?.code === "METHOD_NOT_SUPPORTED") {
+        toast({
+          title: "User may be a client",
+          description: "Cant add a client as a assistant"
         });
       } else {
         form.setError("emailAddress", {
@@ -98,7 +106,7 @@ export const AddClientForm = () => {
     console.log({ values });
     // Commented for testing
     try {
-      addClient(values.emailAddress);
+      addAssistant(values.emailAddress);
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");
       alert(`An unknown error occurred: ${error}`);
@@ -109,10 +117,10 @@ export const AddClientForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-2 rounded-lg border-2 p-8 pl-8"
+        className="space-y-2 rounded-lg border-2 bg-white p-8  pl-8"
       >
-        <CardTitle>Add Client</CardTitle>
-        <CardDescription>Add your client details here</CardDescription>
+        <CardTitle>Add Assistant</CardTitle>
+        <CardDescription>Add your assistant details here</CardDescription>
         <div className="pt-4">
           <FormField
             control={form.control}
@@ -121,7 +129,7 @@ export const AddClientForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="firm@gmail.com" {...field} />
+                  <Input placeholder="assistant@gmail.com" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

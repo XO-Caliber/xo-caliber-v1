@@ -1,5 +1,5 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { AddAssistantForm } from "@/components/pages/dashboard/firm/AddAssistantForm";
+import { AddAssistantForm } from "@/components/pages/home/firm/AddAssistantForm";
 import { notFound } from "next/navigation";
 import React from "react";
 

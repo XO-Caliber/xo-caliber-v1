@@ -9,6 +9,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { use } from "react";
 
 export const homeRouter = router({
   leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
@@ -61,27 +62,34 @@ export const homeRouter = router({
     }
     return results;
   }),
-
-  getAllUser: firmProcedure.input(z.number()).query(async ({ input }) => {
-    const page = input;
-
-    const results = await db.user.findMany({
-      skip: (page - 1) * 10,
-      take: 12
+  getClientAssistants: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const results = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      },
+      include: {
+        Assistants: true
+      }
     });
-
-    return results;
+    if (!results) {
+      throw new Error("No assistant was found");
+    }
+    return results.Assistants.filter((user) => user.assistantId !== "");
   }),
 
-  getAllFirm: adminProcedure.input(z.number()).query(async ({ input }) => {
-    const page = input;
+  getAllUser: publiceProcedure.query(async () => {
+    const results = await db.user.findMany({});
 
+    return results.filter((user) => user.id !== "");
+  }),
+
+  getAllFirm: adminProcedure.query(async () => {
     const results = await db.firm.findMany({
-      skip: (page - 1) * 10, // Adjusting skip based on page number
-      take: 14 // Always take 10 items per page
+      // Always take 10 items per page
     });
 
-    return results;
+    return results.filter((user) => user.firmId !== "");
   }),
 
   getAllAssistant: firmProcedure.input(z.number()).query(async ({ input }) => {
@@ -108,19 +116,18 @@ export const homeRouter = router({
   }),
 
   //! WHY NEVER USE???
-  getFirmAssistant: firmProcedure.input(z.string()).query(async ({ input }) => {
-    const firmId = input;
-    if (!firmId) {
-      throw new TRPCError({ code: "BAD_REQUEST" });
-    }
-
-    const results = await db.assistant.findMany({
+  getFirmAssistant: firmProcedure.query(async () => {
+    const session = await getAuthSession();
+    const results = await db.firm.findUnique({
       where: {
-        firmId: firmId
+        firmId: session?.user.id
+      },
+      include: {
+        assistant: true
       }
     });
 
-    return results;
+    return results?.assistant;
   }),
 
   clientList: firmProcedure.query(async () => {
@@ -158,7 +165,29 @@ export const homeRouter = router({
     const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
     return filteredUsers;
   }),
-
+  getAssistantsUser: publiceProcedure.input(z.string().email()).query(async ({ input }) => {
+    const assistantData = await db.assistant.findUnique({
+      where: {
+        email: input
+      },
+      include: {
+        User: true
+      }
+    });
+    const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
+    return filteredUsers;
+  }),
+  getAssistantsFirm: assistantProcedure.input(z.string()).query(async ({ input }) => {
+    const results = await db.assistant.findUnique({
+      where: {
+        assistantId: input
+      },
+      include: {
+        firm: true
+      }
+    });
+    return results?.firm;
+  }),
   assistantList: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });

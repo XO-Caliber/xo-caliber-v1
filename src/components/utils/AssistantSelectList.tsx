@@ -32,7 +32,7 @@ const AssistantSelectList = ({ getSelectedAssistant }: AssistantProps) => {
           <SelectGroup>
             {assistantList.map((user: any) => (
               <SelectItem key={user.id} value={user.email}>
-                <UserProfile image={user.image} name={user.name} email={user.email}></UserProfile>
+                <UserProfile image={user.image} name={user.name} email={user.email} />
               </SelectItem>
             ))}
           </SelectGroup>

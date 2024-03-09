@@ -1,45 +1,26 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { UserProfile } from "@/components/utils/UserProfile";
+import { GetUserProfile } from "@/components/utils/GetUserProfile";
 import { useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious
-} from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
-import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 
-export const FirmList = () => {
+export const AssistantUserList = () => {
   const [page, setpage] = useState(1);
-  const firmList = trpc.home.getAllFirm.useQuery(page);
-  const refetchData = () => {
-    firmList.refetch();
-  };
+  const userList = trpc.home.getAssistantUser.useQuery();
 
-  if (firmList.data) {
+  if (userList.data) {
     return (
-      <section className="flex h-full w-[500px] flex-col items-center  border-l-2 border-border ">
+      <section className="scrollableContainer flex h-72 w-[350px] flex-col items-center overflow-y-scroll">
         <div className=" m-4 ml-6">
-          <h2 className="pb-4 text-xl font-semibold">List of all firms:</h2>
-          <div className="grid w-full grid-cols-2 gap-x-10 gap-y-5">
-            {firmList.data.map((user) => (
+          {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
+          <div className="  grid-rows grid w-full  gap-y-5 ">
+            {userList.data.map((user) => (
               <div key={user.email} className="rounded-md bg-secondary">
-                <GetFirmProfile
-                  email={user.email}
-                  name={user.name}
-                  image={user.image}
-                  userCount={user.userCount}
-                  refetchData={refetchData}
-                />
+                <GetUserProfile email={user.email} name={user.name} image={user.image} />
               </div>
             ))}
           </div>
-          <Pagination className="pt-6">
+          {/* <Pagination className="pt-6">
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious onClick={() => setpage(page > 1 ? page - 1 : 1)} />
@@ -60,16 +41,16 @@ export const FirmList = () => {
                 <PaginationNext onClick={() => setpage(page + 1)} />
               </PaginationItem>
             </PaginationContent>
-          </Pagination>
+          </Pagination> */}
         </div>
       </section>
     );
   } else {
     // If the user does not exist, return an error message
     return (
-      <div className="grid w-full grid-cols-2 gap-x-52 gap-y-5">
-        {[...Array(10)].map((_, index) => (
-          <div key={index} className="h-[55px] w-[200px] rounded-md bg-secondary">
+      <div className=" scrollableContainer flex min-h-72 w-[350px] flex-col items-center overflow-y-scroll">
+        {[...Array(5)].map((_, index) => (
+          <div key={index} className=" grid-rows grid w-full  gap-y-5 px-12">
             <UserProfileLoading />
           </div>
         ))}

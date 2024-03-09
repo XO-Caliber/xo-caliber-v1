@@ -1,26 +1,57 @@
 import React from "react";
-import { AddFirmForm } from "../dashboard/admin/AddFirmForm";
-import { FirmList } from "../dashboard/admin/FirmList";
+import { AddFirmForm } from "./admin/AddFirmForm";
+import { FirmList } from "./admin/FirmList";
+import { AllUserList } from "./admin/AllUserList";
+import { CandlestickChart, CheckSquare, FileEdit, Wind } from "lucide-react";
+import { HomeLink } from "./HomeLink";
 
 interface userProps {
-  user: string | undefined | null;
+  user: {
+    id: string;
+    name?: string | null | undefined;
+    email?: string | null | undefined;
+    image?: string | null | undefined;
+    role: string;
+  };
 }
 
 const AdminHome = ({ user }: userProps) => {
   return (
-    <section className="flex flex-row">
-      <ul className="flex w-1/2 flex-col items-center justify-start">
-        <li className="ml-4 w-full pl-4 pt-4 font-bold">
-          <h1 className="text-2xl font-semibold ">Welcome {user}</h1>
-          <h2 className="text-sm font-normal ">All details of your clients</h2>
-        </li>
-        <li className="mt-4 w-[350px] justify-self-center p-4">
+    <section className="flex h-max items-start justify-normal">
+      <ul className="mr-12 flex h-max w-max flex-col justify-start">
+        <HomeLink name={user.name} />
+        <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">
           <AddFirmForm />
-        </li>
+        </div>
       </ul>
-      <div className="mr-4">
-        <FirmList />
-      </div>
+      <span
+        className="border-l-2 border-border pr-4"
+        style={{ height: "calc(100vh - 70px)" }}
+      ></span>
+      <li className="flex flex-col">
+        <div className="ml-4 w-full pl-4 pt-4 font-bold">
+          <h1 className="text-2xl font-bold">Recent Activities</h1>
+          <h2 className="text-sm font-normal">New firms and users </h2>
+        </div>
+        <div className="ml-4 mt-12 flex flex-row items-start justify-start gap-y-4 space-x-4 pl-4 font-bold">
+          <div className="flex flex-col items-center justify-center space-y-9">
+            <div className="flex flex-row space-x-6">
+              <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                  List of Firms
+                </h1>
+                <FirmList />
+              </div>
+              <div className="mx-4 flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                  List of Users
+                </h1>
+                <AllUserList />
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
     </section>
   );
 };
