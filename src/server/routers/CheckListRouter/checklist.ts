@@ -194,6 +194,36 @@ export const checkRouter = router({
     });
     return checklists;
   }),
+  getClientAdminCheckList: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const userData = await db.user.findUnique({
+      where: {
+        id: input
+      }
+    });
+    const checklists = await db.checkHeading.findMany({
+      where: {
+        Admin: {
+          email: "ohnusaavyus@@gmail.com"
+        }
+      },
+      include: {
+        subHeading: {
+          include: {
+            Checklist: {
+              include: {
+                UserChecked: {
+                  where: {
+                    userId: input
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    return checklists;
+  }),
   getClientAnswer: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const result = await db.userChecked.findMany({
       where: {
@@ -251,5 +281,13 @@ export const checkRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  getUserHasFirm: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const results = await db.user.findUnique({
+      where: {
+        id: input
+      }
+    });
+    return results;
+  })
 });
