@@ -18,6 +18,7 @@ import { categoryRouter } from "./routers/QARouter/category";
 import { questionRouter } from "./routers/QARouter/question";
 import { answerRouter } from "./routers/QARouter/answer";
 import { noteRouter } from "./routers/note";
+import { checkRouter } from "./routers/CheckListRouter/checklist";
 
 export const appRouter = router({
   auth: authRouter,
@@ -26,7 +27,8 @@ export const appRouter = router({
   category: categoryRouter,
   question: questionRouter,
   answer: answerRouter,
-  note: noteRouter
+  note: noteRouter,
+  checklist: checkRouter
 });
 
 export type AppRouter = typeof appRouter;

@@ -76,13 +76,19 @@ const WorkSpace = () => {
           <Wind size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Mind Map</h1>
         </div>
-
         <div
-          className="mb-2 flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+          className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-coverletter")}
         >
           <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
+        </div>{" "}
+        <div
+          className="mb-2 flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+          onClick={() => router.push("/checklist")}
+        >
+          <Wind size={18} className="bi bi-bookmark-fill" />
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Checklist</h1>
         </div>
       </div>
     </div>

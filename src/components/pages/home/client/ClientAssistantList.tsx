@@ -11,7 +11,7 @@ export const ClientAssistantList = () => {
 
   if (assistantList.data) {
     return (
-      <section className="scrollableContainer flex  min-h-48 w-[350px] flex-col items-center overflow-y-scroll">
+      <section className="scrollableContainer flex h-min w-[350px] flex-col items-center overflow-y-scroll">
         <div className=" m-4 ml-6">
           {/* <h2 className="pb-4 text-xl font-semibold">List of all Assistant:</h2> */}
           <div className="  grid-rows grid w-full  gap-y-5 ">
