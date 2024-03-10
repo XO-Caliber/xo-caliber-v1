@@ -200,7 +200,7 @@ model CheckSubHeading {
 model Checklist {
   id                String          @id @default(cuid())
   name              String          @db.Text
-  heading           CheckSubHeading @relation(fields: [checkSubHeadingId], references: [id])
+  heading           CheckSubHeading @relation(fields: [checkSubHeadingId], references: [id], onDelete: Cascade)
   checkSubHeadingId String
   UserChecked       UserChecked[]
 }
