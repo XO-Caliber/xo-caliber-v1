@@ -40,6 +40,50 @@ const DragNDrop = () => {
   const handleDragDrop = (results: DropResult) => {
     console.log(results);
     console.log("Dropped");
+    const { source, destination, type } = results;
+    if (!destination) return;
+
+    if (source.droppableId === destination.droppableId && source.index === destination.index)
+      return;
+
+    if (type === "group") {
+      const reOrderedStore = [...sections];
+      const sourceIndex = source.index;
+      const destinationIndex = destination.index;
+
+      const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
+      reOrderedStore.splice(destinationIndex, 0, removedStore);
+
+      return setSections(reOrderedStore);
+    }
+
+    const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
+    const sectionDestinationIndex = sections.findIndex(
+      (section) => section.id === destination.droppableId
+    );
+
+    const newSourceItems = [...sections[sectionSourceIndex].exhibits];
+    const newDestinationItems =
+      source.droppableId != destination.droppableId
+        ? [...sections[sectionDestinationIndex].exhibits]
+        : newSourceItems;
+
+    const [deletedItems] = newSourceItems.splice(source.index, 1);
+    newDestinationItems.splice(destination.index, 0, deletedItems);
+
+    const newSections = [...sections];
+
+    newSections[sectionSourceIndex] = {
+      ...sections[sectionSourceIndex],
+      exhibits: newSourceItems
+    };
+
+    newSections[sectionDestinationIndex] = {
+      ...sections[sectionDestinationIndex],
+      exhibits: newDestinationItems
+    };
+
+    setSections(newSections);
   };
 
   return (
@@ -59,39 +103,48 @@ const DragNDrop = () => {
                     >
                       <Droppable droppableId={section.id}>
                         {(provided) => (
-                          <section
-                            {...provided.droppableProps}
-                            ref={provided.innerRef}
-                            className="grid h-full w-full grid-flow-col items-center justify-around border p-3"
-                          >
-                            <GripVertical size={18} />
-                            <ChevronDown size={18} />
-                            <h1 className="text-base">Section-1</h1>
-                            <h2 className="rounded-sm border border-border p-1 text-sm font-semibold">
-                              Section
-                            </h2>
-                            <p className="font-medium">{section.content}</p>
-                            <i className="flex flex-row items-center gap-1 text-base">
-                              <MessageCircle size={16} />
-                              Comment
-                            </i>
-                            {/* {section.exhibits.map((exhibit, index) => (
+                          <div {...provided.droppableProps} ref={provided.innerRef} className="">
+                            <section className="grid h-full w-full grid-flow-col items-center justify-around border border-border bg-primary p-3">
+                              <GripVertical size={18} />
+                              <ChevronDown size={18} />
+                              <h1 className="text-base">Section-{index + 1}</h1>
+                              <h2 className="rounded-sm border border-border bg-white p-1 text-sm font-semibold">
+                                Section
+                              </h2>
+                              <p className="font-medium">{section.content}</p>
+                              <i className="flex flex-row items-center gap-1 text-base">
+                                <MessageCircle size={16} />
+                                Comment
+                              </i>
+                            </section>
+                            {section.exhibits.map((exhibit, index) => (
                               <Draggable draggableId={exhibit.id} key={exhibit.id} index={index}>
                                 {(provided) => (
-                                  <h2
+                                  <div
                                     {...provided.draggableProps}
                                     {...provided.dragHandleProps}
                                     ref={provided.innerRef}
-                                    className="mb-2 w-full bg-emerald-200/50 p-1.5 text-lg backdrop-blur-lg"
+                                    // className="grid h-full w-full grid-flow-col items-center justify-around border border-border p-1"
+                                    className="flex h-full w-full items-center  justify-start gap-14 border border-border p-1 pl-16"
                                     key={exhibit.id}
                                   >
-                                    {exhibit.content}
-                                  </h2>
+                                    <GripVertical size={18} />
+                                    <ChevronDown size={18} />
+                                    <h1 className="text-sm">Exhibit-{index + 1}</h1>
+                                    <h2 className="rounded-sm border border-border p-1 text-sm font-semibold">
+                                      Exhibit
+                                    </h2>
+                                    <p className="text-sm">{exhibit.content}</p>
+                                    <i className="flex flex-row items-center gap-1 text-base">
+                                      <MessageCircle size={16} />
+                                      Comment
+                                    </i>
+                                  </div>
                                 )}
                               </Draggable>
-                            ))} */}
+                            ))}
                             {provided.placeholder}
-                          </section>
+                          </div>
                         )}
                       </Droppable>
                     </div>
