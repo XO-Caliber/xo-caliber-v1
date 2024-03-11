@@ -10,7 +10,6 @@ import { Loader } from "lucide-react";
 import AddQADiaglog from "../../addQA/AddQADiaglog";
 import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 import ImportAdmin from "../../firm/ImportAdmin";
-import { AssistantDialog } from "../../addAssistant/AssistantDialog";
 import { Checkbox } from "@/components/ui/Checkbox";
 import DownloadQuestions from "../../firm/DownloadQuestions";
 
