@@ -3,7 +3,8 @@ import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
 import { PlusSquare, UserPlus } from "lucide-react";
 import React from "react";
-import DragNDrop from "../DragNDrop";
+import DragNDropSection from "../DragNDropSection";
+import { UserCase } from "../UserCase";
 
 export const FirmCoverLetter = (user: Baseuser) => {
   return (
@@ -23,7 +24,8 @@ export const FirmCoverLetter = (user: Baseuser) => {
         </Button>
         <UserSelectList />
       </div>
-      <DragNDrop />
+      <UserCase />
+      {/* <DragNDropSection /> */}
     </section>
   );
 };

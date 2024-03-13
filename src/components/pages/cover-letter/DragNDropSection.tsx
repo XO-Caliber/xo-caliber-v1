@@ -34,7 +34,7 @@ const DATA = [
   }
 ];
 
-const DragNDrop = () => {
+const DragNDropSection = () => {
   const [sections, setSections] = useState(DATA);
 
   const handleDragDrop = (results: DropResult) => {
@@ -87,7 +87,7 @@ const DragNDrop = () => {
   };
 
   return (
-    <main className="h-max w-full p-2">
+    <main className="h-max w-full p-2 pt-0">
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
@@ -99,7 +99,7 @@ const DragNDrop = () => {
                       {...provided.dragHandleProps}
                       {...provided.draggableProps}
                       ref={provided.innerRef}
-                      className=" mb-2 text-center"
+                      className="text-center"
                     >
                       <Droppable droppableId={section.id}>
                         {(provided) => (
@@ -107,7 +107,7 @@ const DragNDrop = () => {
                             <section className="grid h-full w-full grid-flow-col items-center justify-around border border-border bg-primary p-3">
                               <GripVertical size={18} />
                               <ChevronDown size={18} />
-                              <h1 className="text-base">Section-{index + 1}</h1>
+                              {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                               <h2 className="rounded-sm border border-border bg-white p-1 text-sm font-semibold">
                                 Section
                               </h2>
@@ -125,13 +125,13 @@ const DragNDrop = () => {
                                     {...provided.dragHandleProps}
                                     ref={provided.innerRef}
                                     // className="grid h-full w-full grid-flow-col items-center justify-around border border-border p-1"
-                                    className="flex h-full w-full items-center  justify-start gap-14 border border-border p-1 pl-16"
+                                    className="flex h-full w-full items-center justify-start gap-14 border border-border p-1 pl-16"
                                     key={exhibit.id}
                                   >
                                     <GripVertical size={18} />
                                     <ChevronDown size={18} />
-                                    <h1 className="text-sm">Exhibit-{index + 1}</h1>
-                                    <h2 className="rounded-sm border border-border p-1 text-sm font-semibold">
+                                    {/* <h1 className="text-sm">Exhibit-{index + 1}</h1> */}
+                                    <h2 className="rounded-sm border border-border bg-white p-1 text-sm font-semibold">
                                       Exhibit
                                     </h2>
                                     <p className="text-sm">{exhibit.content}</p>
@@ -160,4 +160,4 @@ const DragNDrop = () => {
   );
 };
 
-export default DragNDrop;
+export default DragNDropSection;
