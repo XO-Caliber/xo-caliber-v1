@@ -87,7 +87,10 @@ const DragNDropSection = () => {
   };
 
   return (
-    <main className="h-max w-full p-2 pt-0">
+    <main
+      className="h-max w-full p-2 pt-0 transition-all duration-500 ease-in-out"
+      data-collapse="animated-collapse-1"
+    >
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (

@@ -24,8 +24,10 @@ export const FirmCoverLetter = (user: Baseuser) => {
         </Button>
         <UserSelectList />
       </div>
-      <UserCase />
-      <UserCase />
+      <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
+        <UserCase />
+        <UserCase />
+      </div>
       {/* <DragNDropSection /> */}
     </section>
   );
