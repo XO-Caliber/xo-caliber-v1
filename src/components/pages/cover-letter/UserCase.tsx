@@ -5,9 +5,14 @@ import { ChevronDown } from "lucide-react";
 export const UserCase = () => {
   return (
     <main>
-      <div className="m-2 mb-0 flex rounded-t-lg border-2 border-border p-2 text-sm font-medium">
+      <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-border bg-primary p-3 ">
         <ChevronDown />
-        <p>Case-1</p>
+        <h1 className="text-base font-medium">Case-1</h1>
+        <p className="pr-2 text-left text-sm font-medium text-muted-foreground">Type</p>
+        <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
+        <p className="ml-auto mr-10 justify-items-end text-sm font-medium text-muted-foreground">
+          Comments
+        </p>
       </div>
       <DragNDropSection />
     </main>

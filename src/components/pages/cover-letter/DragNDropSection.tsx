@@ -104,15 +104,17 @@ const DragNDropSection = () => {
                       <Droppable droppableId={section.id}>
                         {(provided) => (
                           <div {...provided.droppableProps} ref={provided.innerRef} className="">
-                            <section className="grid h-full w-full grid-flow-col items-center justify-around border border-border bg-primary p-3">
-                              <GripVertical size={18} />
-                              <ChevronDown size={18} />
+                            <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
+                              <GripVertical size={18} className="w-16" />
+                              <ChevronDown size={18} className="w-16" />
                               {/* <h1 className="text-base">Section-{index + 1}</h1> */}
-                              <h2 className="rounded-sm border border-border bg-white p-1 text-sm font-semibold">
-                                Section
+                              <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                Section-{index + 1}
                               </h2>
-                              <p className="font-medium">{section.content}</p>
-                              <i className="flex flex-row items-center gap-1 text-base">
+                              <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
+                                {section.content}
+                              </p>
+                              <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                 <MessageCircle size={16} />
                                 Comment
                               </i>
@@ -125,17 +127,19 @@ const DragNDropSection = () => {
                                     {...provided.dragHandleProps}
                                     ref={provided.innerRef}
                                     // className="grid h-full w-full grid-flow-col items-center justify-around border border-border p-1"
-                                    className="flex h-full w-full items-center justify-start gap-14 border border-border p-1 pl-16"
+                                    className="flex h-full w-full items-center justify-normal gap-14 border border-border px-16 py-1.5"
                                     key={exhibit.id}
                                   >
-                                    <GripVertical size={18} />
-                                    <ChevronDown size={18} />
+                                    <GripVertical size={18} className="w-16" />
+                                    <ChevronDown size={18} className="w-16" />
                                     {/* <h1 className="text-sm">Exhibit-{index + 1}</h1> */}
-                                    <h2 className="rounded-sm border border-border bg-white p-1 text-sm font-semibold">
+                                    <h2 className="rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                       Exhibit
                                     </h2>
-                                    <p className="text-sm">{exhibit.content}</p>
-                                    <i className="flex flex-row items-center gap-1 text-base">
+                                    <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-sm">
+                                      {exhibit.content}
+                                    </p>
+                                    <i className="ml-auto flex flex-row items-center gap-1 justify-self-end text-base">
                                       <MessageCircle size={16} />
                                       Comment
                                     </i>

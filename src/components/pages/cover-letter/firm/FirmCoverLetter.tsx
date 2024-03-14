@@ -25,6 +25,7 @@ export const FirmCoverLetter = (user: Baseuser) => {
         <UserSelectList />
       </div>
       <UserCase />
+      <UserCase />
       {/* <DragNDropSection /> */}
     </section>
   );
