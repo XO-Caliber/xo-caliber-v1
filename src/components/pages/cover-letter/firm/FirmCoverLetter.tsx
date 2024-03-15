@@ -5,6 +5,7 @@ import { PlusSquare, UserPlus } from "lucide-react";
 import React from "react";
 import DragNDropSection from "../DragNDropSection";
 import { UserCase } from "../UserCase";
+import AddCoverLetterDialog from "../AddCoverLetterDialog";
 
 export const FirmCoverLetter = (user: Baseuser) => {
   return (
@@ -18,10 +19,7 @@ export const FirmCoverLetter = (user: Baseuser) => {
           <UserPlus size={16} className="mr-2" />
           Assign Assistant
         </Button>
-        <Button variant={"dark"}>
-          <PlusSquare size={16} className="mr-2" />
-          Create Cover letter
-        </Button>
+        <AddCoverLetterDialog />
         <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
