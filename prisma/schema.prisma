@@ -70,7 +70,8 @@ model User {
   QANotes  String?   @db.Text
   Note     UserNote?
 
-  FirmNote FirmNote?
+  FirmNote    FirmNote?
+  UserChecked UserChecked[]
 }
 
 model Firm {
@@ -86,6 +87,9 @@ model Firm {
   category   Category[]
   categoryId String?
   Note       FirmNote[]
+
+  coverletter  CoverLetter[]
+  CheckHeading CheckHeading[]
 }
 
 model Assistant {
@@ -110,6 +114,9 @@ model Admin {
 
   category   Category[]
   categoryId String?
+
+  coverletter  CoverLetter[]
+  CheckHeading CheckHeading[]
 }
 
 model VerificationToken {
@@ -172,4 +179,79 @@ model UserNote {
 
   User   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+model CheckHeading {
+  id                String            @id @default(cuid())
+  name              String            @db.Text
+  subHeading        CheckSubHeading[]
+  checkSubHeadingId String?
+  Admin             Admin?            @relation(fields: [adminId], references: [adminId], onDelete: Cascade)
+  Firm              Firm?             @relation(fields: [firmId], references: [firmId], onDelete: Cascade)
+
+  adminId String?
+  firmId  String?
+}
+
+model CheckSubHeading {
+  id             String        @id @default(cuid())
+  name           String        @db.Text
+  heading        CheckHeading? @relation(fields: [checkHeadingId], references: [id], onDelete: Cascade)
+  checkHeadingId String?
+  Checklist      Checklist[]
+}
+
+model Checklist {
+  id                String          @id @default(cuid())
+  name              String          @db.Text
+  heading           CheckSubHeading @relation(fields: [checkSubHeadingId], references: [id], onDelete: Cascade)
+  checkSubHeadingId String
+  UserChecked       UserChecked[]
+}
+
+model UserChecked {
+  id            String    @id @default(cuid())
+  isChecked     Boolean   @default(false)
+  Checklist     Checklist @relation(fields: [checklistId], references: [id])
+  referenceLink String?
+  User          User      @relation(fields: [userId], references: [id])
+
+  userId      String
+  checklistId String
+}
+
+model CoverLetter {
+  id      String    @id @default(cuid())
+  title   String
+  Section Section[]
+
+  Admin   Admin?  @relation(fields: [adminId], references: [adminId])
+  adminId String?
+
+  Firm   Firm?   @relation(fields: [firmId], references: [firmId])
+  firmId String?
+}
+
+model Section {
+  id          String @id @default(cuid())
+  title       String
+  description String @db.Text
+  comments    String @db.Text
+  postion     Int
+
+  CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id])
+  coverLetterId String?
+
+  SubSection SubSection[]
+}
+
+model SubSection {
+  id          String @id @default(cuid())
+  title       String
+  description String @db.Text
+  comments    String @db.Text
+  postion     Int
+
+  Section   Section? @relation(fields: [sectionId], references: [id])
+  sectionId String?
 }
