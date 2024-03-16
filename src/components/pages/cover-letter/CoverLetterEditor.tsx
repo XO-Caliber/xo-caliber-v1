@@ -12,12 +12,24 @@ import {
 import { Input } from "@/components/ui/Input";
 import { coverLetterSchema } from "@/types/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { DescriptionEditor } from "./DescriptionEditor";
+import type EditorJS from "@editorjs/editorjs";
+import { Textarea } from "@/components/ui/Textarea";
+import { DialogClose } from "@/components/ui/Dialog";
 
 const CoverLetterEditor = () => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
+
+  const ref = useRef<EditorJS>();
+
   const form = useForm<z.infer<typeof coverLetterSchema>>({
     resolver: zodResolver(coverLetterSchema),
     mode: "onChange",
@@ -27,20 +39,60 @@ const CoverLetterEditor = () => {
     }
   });
 
-  const onSubmit = (values: z.infer<typeof coverLetterSchema>) => {
+  const initializeEditor = useCallback(async () => {
+    const EditorJS = (await import("@editorjs/editorjs")).default;
+    const Header = (await import("@editorjs/header")).default;
+    // @ts-ignore
+    const Table = (await import("@editorjs/table")).default;
+    // @ts-ignore
+    const List = (await import("@editorjs/list")).default;
+
+    if (!ref.current) {
+      const editor = new EditorJS({
+        holder: "editor",
+        onReady() {
+          ref.current = editor;
+        },
+        placeholder: "Type here your description here...",
+        inlineToolbar: true,
+        data: {
+          blocks: []
+        },
+        tools: {
+          header: Header,
+          table: Table,
+          list: List
+        }
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
+      await initializeEditor();
+    };
+    if (isMounted) {
+      init();
+    }
+  }, [isMounted, initializeEditor]);
+
+  const onSubmit = async (values: z.infer<typeof coverLetterSchema>) => {
+    const blocks = await ref.current?.save();
+
     console.log(values);
+    console.log(JSON.stringify(blocks));
   };
 
   return (
     <main>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-2  gap-6">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="mb-2 text-2xl font-bold">Section</FormLabel>
+              <FormItem className="col-span-2">
+                <FormLabel className="mb-2 text-lg font-bold">Section - 1</FormLabel>
                 <FormControl>
                   <Input placeholder="Section title" {...field} />
                 </FormControl>
@@ -52,16 +104,43 @@ const CoverLetterEditor = () => {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem>
-                <FormLabel className="mb-2 text-2xl font-bold">Description</FormLabel>
+              <FormItem className="col-span-2 row-span-2">
+                {/* <FormLabel className="mb-2 text-2xl font-bold">Description</FormLabel> */}
                 <FormControl>
-                  <DescriptionEditor description={field.name} onChange={field.onChange} />
+                  <div
+                    {...field}
+                    id="editor"
+                    className="flex h-[400px] w-full cursor-text overflow-scroll overflow-x-hidden rounded-md border-2 border-border bg-background p-2 pl-6 text-sm ring-offset-background placeholder:text-muted-foreground focus-within:border-primary"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <FormItem className="col-start-3 col-end-4 row-start-1 row-end-3">
+                <FormLabel className="mb-2 text-lg">Comments</FormLabel>
+                <FormControl>
+                  <Textarea
+                    className="h-3/4 max-h-full resize-none overflow-x-auto bg-secondary"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="col-start-3 col-end-3 row-start-3 row-end-3 flex justify-between">
+            <DialogClose>
+              <Button>Close</Button>
+            </DialogClose>
+            <Button variant={"primary"} type="submit">
+              Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </main>

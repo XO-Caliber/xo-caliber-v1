@@ -11,6 +11,10 @@ const DATA = [
     exhibits: [
       { id: "1", content: "Exploration of novel encryption algorithms" },
       { id: "2", content: "Comparative analysis of SSL/TLS protocols" }
+    ],
+    subsections: [
+      { id: "1", content: "Novel encryption algorithms" },
+      { id: "2", content: "New SSL/TLS protocols" }
     ]
   },
   {
@@ -21,6 +25,10 @@ const DATA = [
     exhibits: [
       { id: "3", content: "Case studies on successful SSL implementation in large enterprises" },
       { id: "4", content: "Best practices for optimizing SSL certificate usage" }
+    ],
+    subsections: [
+      { id: "1", content: "Optimizing SSL certificate usage" },
+      { id: "2", content: "Successful SSL implementation in large enterprises" }
     ]
   },
   {
@@ -30,6 +38,10 @@ const DATA = [
     exhibits: [
       { id: "5", content: "Identification and mitigation of SSL vulnerabilities" },
       { id: "6", content: "Addressing performance issues in SSL-encrypted communication" }
+    ],
+    subsections: [
+      { id: "1", content: "Issues in SSL-encrypted communication" },
+      { id: "2", content: "Mitigation of SSL vulnerabilities" }
     ]
   }
 ];
@@ -62,28 +74,28 @@ const DragNDropSection = () => {
       (section) => section.id === destination.droppableId
     );
 
-    const newSourceItems = [...sections[sectionSourceIndex].exhibits];
-    const newDestinationItems =
+    const newSourceSubsection = [...sections[sectionSourceIndex].subsections];
+    const newDestinationSubsection =
       source.droppableId != destination.droppableId
-        ? [...sections[sectionDestinationIndex].exhibits]
-        : newSourceItems;
+        ? [...sections[sectionDestinationIndex].subsections]
+        : newSourceSubsection;
 
-    const [deletedItems] = newSourceItems.splice(source.index, 1);
-    newDestinationItems.splice(destination.index, 0, deletedItems);
+    const [deletedItems] = newSourceSubsection.splice(source.index, 1);
+    newDestinationSubsection.splice(destination.index, 0, deletedItems);
 
-    const newSections = [...sections];
+    const newSectionSubsection = [...sections];
 
-    newSections[sectionSourceIndex] = {
+    newSectionSubsection[sectionSourceIndex] = {
       ...sections[sectionSourceIndex],
-      exhibits: newSourceItems
+      subsections: newSourceSubsection
     };
 
-    newSections[sectionDestinationIndex] = {
+    newSectionSubsection[sectionDestinationIndex] = {
       ...sections[sectionDestinationIndex],
-      exhibits: newDestinationItems
+      subsections: newDestinationSubsection
     };
 
-    setSections(newSections);
+    setSections(newSectionSubsection);
   };
 
   return (
@@ -141,6 +153,38 @@ const DragNDropSection = () => {
                                     </h2>
                                     <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-sm">
                                       {exhibit.content}
+                                    </p>
+                                    {/* <i className="ml-auto flex flex-row items-center gap-1 justify-self-end text-base">
+                                      <MessageCircle size={16} />
+                                      Comment
+                                    </i> */}
+                                  </div>
+                                )}
+                              </Draggable>
+                            ))}
+                            {section.subsections.map((subsection, index) => (
+                              <Draggable
+                                draggableId={subsection.id}
+                                key={subsection.id}
+                                index={index}
+                              >
+                                {(provided) => (
+                                  <div
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                    ref={provided.innerRef}
+                                    // className="grid h-full w-full grid-flow-col items-center justify-around border border-border p-1"
+                                    className="flex h-full w-full items-center justify-normal gap-14 border border-border px-16 py-1.5"
+                                    key={subsection.id}
+                                  >
+                                    <GripVertical size={18} className="w-16" />
+                                    <ChevronDown size={18} className="w-16" />
+                                    {/* <h1 className="text-sm">Subsectsubsection-{index + 1}</h1> */}
+                                    <h2 className="rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                      Subsection
+                                    </h2>
+                                    <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-sm">
+                                      {subsection.content}
                                     </p>
                                     <i className="ml-auto flex flex-row items-center gap-1 justify-self-end text-base">
                                       <MessageCircle size={16} />

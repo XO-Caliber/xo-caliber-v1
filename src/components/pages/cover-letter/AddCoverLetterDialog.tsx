@@ -28,19 +28,9 @@ const AddCoverLetterDialog = () => {
             Make changes to your profile here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <section className="h-96 w-[1000px]">
-          {/* <div>
-            <h1 className="mb-2 text-2xl font-bold">Section-1</h1>
-            <h2 className="text-sm">
-              Field of Endeavor: Enterprise Hybrid Big Data Analytics and Infrastructure Security
-              Platform Consultant
-            </h2>
-          </div> */}
+        <section className="h-max w-[1000px] ">
           <CoverLetterEditor />
         </section>
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
