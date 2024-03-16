@@ -235,7 +235,7 @@ model CoverLetter {
 model Section {
   id          String @id @default(cuid())
   title       String
-  description String @db.Text
+  description Json
   comments    String @db.Text
   postion     Int
 
@@ -248,7 +248,7 @@ model Section {
 model SubSection {
   id          String @id @default(cuid())
   title       String
-  description String @db.Text
+  description Json
   comments    String @db.Text
   postion     Int
 
