@@ -18,15 +18,17 @@ import { z } from "zod";
 import type EditorJS from "@editorjs/editorjs";
 import { Textarea } from "@/components/ui/Textarea";
 import { DialogClose } from "@/components/ui/Dialog";
+import { trpc } from "@/app/_trpc/client";
+import { toast } from "@/hooks/use-toast";
 
-const CoverLetterEditor = () => {
+const CoverLetterEditor = ({
+  userId,
+  coverLetterId
+}: {
+  userId: string;
+  coverLetterId: string;
+}) => {
   const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMounted(true);
-    }
-  }, []);
 
   const ref = useRef<EditorJS>();
 
@@ -68,6 +70,12 @@ const CoverLetterEditor = () => {
   }, []);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsMounted(true);
+    }
+  }, []);
+
+  useEffect(() => {
     const init = async () => {
       await initializeEditor();
     };
@@ -76,11 +84,39 @@ const CoverLetterEditor = () => {
     }
   }, [isMounted, initializeEditor]);
 
+  const { mutate: addSection } = trpc.coverletter.addSection.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        toast({
+          title: "New Section Added",
+          description: "Successfully added new section"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Something went wrong",
+        description: `${err}`
+      });
+    },
+    onSettled() {
+      // setLoading(false);
+    }
+  });
+
   const onSubmit = async (values: z.infer<typeof coverLetterSchema>) => {
     const blocks = await ref.current?.save();
 
     console.log(values);
     console.log(JSON.stringify(blocks));
+    console.log(coverLetterId);
+    addSection({
+      userId: userId,
+      coverLetterId,
+      title: values.title,
+      description: blocks,
+      comments: values.comment
+    });
   };
 
   return (

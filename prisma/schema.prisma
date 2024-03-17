@@ -237,7 +237,7 @@ model Section {
   title       String
   description Json
   comments    String @db.Text
-  postion     Int
+  position    Int
 
   CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id])
   coverLetterId String?
@@ -250,7 +250,7 @@ model SubSection {
   title       String
   description Json
   comments    String @db.Text
-  postion     Int
+  position    Int
 
   Section   Section? @relation(fields: [sectionId], references: [id])
   sectionId String?

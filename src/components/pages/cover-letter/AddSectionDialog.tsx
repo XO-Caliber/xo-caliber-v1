@@ -12,7 +12,7 @@ import { PlusSquare } from "lucide-react";
 import React from "react";
 import CoverLetterEditor from "./CoverLetterEditor";
 
-const AddSectionDialog = () => {
+const AddSectionDialog = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -29,7 +29,7 @@ const AddSectionDialog = () => {
           </DialogDescription>
         </DialogHeader>
         <section className="h-max w-[1000px] ">
-          <CoverLetterEditor />
+          <CoverLetterEditor userId={userId} coverLetterId={coverLetterId} />
         </section>
       </DialogContent>
     </Dialog>

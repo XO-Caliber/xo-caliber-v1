@@ -45,7 +45,7 @@ const AddCoverLetterDialog = ({ userId }: { userId: string }) => {
     }
   });
 
-  const { mutate: addCategory } = trpc.coverletter.addCoverLetter.useMutation({
+  const { mutate: addCategory } = trpc.coverletter.addAdminCoverLetter.useMutation({
     onSuccess({ success }) {
       if (success) {
         toast({

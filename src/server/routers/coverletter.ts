@@ -1,11 +1,10 @@
 import { string, z } from "zod";
 import { adminProcedure, firmProcedure, publiceProcedure, router } from "../trpc";
-import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 
 export const coverletterRouter = router({
-  addCoverLetter: publiceProcedure
+  addAdminCoverLetter: adminProcedure
     .input(z.object({ userId: z.string(), title: z.string() }))
     .mutation(async ({ input }) => {
       const { title, userId } = input;
@@ -14,18 +13,52 @@ export const coverletterRouter = router({
       await db.coverLetter.create({
         data: {
           title: title,
-          firmId: userId
+          adminId: userId
         }
       });
       return { success: true };
     }),
+
+  addSection: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        coverLetterId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { coverLetterId, title, description, userId, comments } = input;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.log("INFO: ", input);
+      const lastPosition = await db.section.findFirst({
+        orderBy: { position: "desc" },
+        select: { position: true }
+      });
+
+      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
+
+      await db.section.create({
+        data: {
+          title,
+          description,
+          position: newPosition,
+          coverLetterId,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
   getAdminCoverLetter: adminProcedure.input(z.string()).query(async ({ input }) => {
     const adminId = input;
     if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
     const coverLetters = await db.coverLetter.findMany({
       where: {
-        firmId: adminId
+        adminId: adminId
       },
       include: {
         Section: true

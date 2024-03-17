@@ -3,8 +3,15 @@ import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
+import AddSectionDialog from "./AddSectionDialog";
 
-export const ViewCoverLetter = ({ CoverLetterData }: { CoverLetterData: CoverLetterType[] }) => {
+export const ViewCoverLetter = ({
+  CoverLetterData,
+  userId
+}: {
+  CoverLetterData: CoverLetterType[];
+  userId: string;
+}) => {
   const [isSectionVisible, setIsSectionVisible] = useState<{ [key: number]: boolean }>({});
 
   const toggleSectionVisibility = (id: number) => {
@@ -25,6 +32,7 @@ export const ViewCoverLetter = ({ CoverLetterData }: { CoverLetterData: CoverLet
             <h1 className="text-base font-medium">{coverLetter.title}</h1>
             <p className="pr-2 text-left text-sm font-medium text-muted-foreground">Type</p>
             <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
+            <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} />
             <p className="ml-auto mr-10 justify-items-end text-sm font-medium text-muted-foreground">
               Comments
             </p>

@@ -27,12 +27,11 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
           Assign Assistant
         </Button>
         <AddCoverLetterDialog userId={user.id} />
-        <AddSectionDialog />
         <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
-        <ViewCoverLetter CoverLetterData={CoverLetterData} />
+        <ViewCoverLetter CoverLetterData={CoverLetterData} userId={user.id} />
       </div>
       {/* <DragNDropSection /> */}
     </section>
