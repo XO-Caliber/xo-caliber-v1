@@ -107,10 +107,12 @@ export const Navbar = async () => {
             <DropdownMenuContent className="w-48">
               <DropdownMenuLabel>My Profile</DropdownMenuLabel>
               <DropdownMenuSeparator className="bg-border" />
+              <DropdownMenuItem>{session.user.role}</DropdownMenuItem>
               <DropdownMenuItem>
                 <ViewProfile />
               </DropdownMenuItem>
               <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+
               <Logout />
             </DropdownMenuContent>
           </DropdownMenu>

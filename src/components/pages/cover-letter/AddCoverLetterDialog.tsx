@@ -29,7 +29,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const AddCoverLetterDialog = () => {
+const AddCoverLetterDialog = ({ userId }: { userId: string }) => {
   const [loading, setLoading] = useState(false);
 
   const formSchema = z.object({
@@ -67,7 +67,8 @@ const AddCoverLetterDialog = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    addCategory(values.title);
+    const title = values.title;
+    addCategory({ userId, title });
     setLoading(true);
   }
 

@@ -14,8 +14,8 @@ const page = async () => {
         <Header>Cover Letter</Header>
         <div className="ml-56">
           {session && session?.user.role === "INDIVIDUAL" && <ClientCoverLetter />}
-          {session && session?.user.role === "FIRM" && <FirmCoverLetter name={session.user.name} />}
-          {session && session.user.role === "ADMIN" && <AdminCoverLetter />}
+          {session && session?.user.role === "FIRM" && <FirmCoverLetter user={session.user} />}
+          {session && session.user.role === "ADMIN" && <AdminCoverLetter user={session.user} />}
         </div>
       </main>
       {!session && <main>Login to get access</main>}

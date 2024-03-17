@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
 import { UserPlus } from "lucide-react";
-import React from "react";
-import { UserCase } from "../UserCase";
 import AddSectionDialog from "../AddSectionDialog";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
+import { ViewCoverLetter } from "../ViewCoverLetter";
 
-export const FirmCoverLetter = (user: Baseuser) => {
+export const FirmCoverLetter = ({ user }: { user: Baseuser }) => {
+  // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
+
   return (
     <section>
       <div className="flex items-center justify-around">
@@ -19,13 +20,12 @@ export const FirmCoverLetter = (user: Baseuser) => {
           <UserPlus size={16} className="mr-2" />
           Assign Assistant
         </Button>
-        <AddCoverLetterDialog />
+        <AddCoverLetterDialog userId={user.id} />
         <AddSectionDialog />
         <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
-        <UserCase />
-        <UserCase />
+        <ViewCoverLetter />
       </div>
       {/* <DragNDropSection /> */}
     </section>
