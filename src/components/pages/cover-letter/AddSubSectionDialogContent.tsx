@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,12 +20,12 @@ import { DialogClose } from "@/components/ui/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 
-const CoverLetterEditor = ({
+const AddSubSectionDialogContent = ({
   userId,
-  coverLetterId
+  sectionId
 }: {
   userId: string;
-  coverLetterId: string;
+  sectionId: string;
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -84,12 +83,12 @@ const CoverLetterEditor = ({
     }
   }, [isMounted, initializeEditor]);
 
-  const { mutate: addSection } = trpc.coverletter.addSection.useMutation({
+  const { mutate: addSubSection } = trpc.coverletter.addSubSection.useMutation({
     onSuccess({ success }) {
       if (success) {
         toast({
-          title: "New Section Added",
-          description: "Successfully added new section"
+          title: "New Sub Section Added",
+          description: "Successfully added new sub section"
         });
       }
     },
@@ -109,10 +108,10 @@ const CoverLetterEditor = ({
 
     console.log(values);
     console.log(JSON.stringify(blocks));
-    console.log(coverLetterId);
-    addSection({
-      userId: userId,
-      coverLetterId,
+    console.log(sectionId);
+    addSubSection({
+      userId,
+      sectionId,
       title: values.title,
       description: blocks,
       comments: values.comment
@@ -128,9 +127,9 @@ const CoverLetterEditor = ({
             name="title"
             render={({ field }) => (
               <FormItem className="col-span-2">
-                <FormLabel className="mb-2 text-lg font-bold">Section - 1</FormLabel>
+                <FormLabel className="mb-2 text-lg font-bold">Sub Section</FormLabel>
                 <FormControl>
-                  <Input placeholder="Section title" {...field} />
+                  <Input placeholder="Sub-Section title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -183,4 +182,4 @@ const CoverLetterEditor = ({
   );
 };
 
-export default CoverLetterEditor;
+export default AddSubSectionDialogContent;

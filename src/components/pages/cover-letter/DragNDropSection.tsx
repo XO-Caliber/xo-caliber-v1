@@ -2,6 +2,9 @@
 import { ChevronDown, GripVertical, MessageCircle } from "lucide-react";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
+import AddSubSectionDialog from "./AddSubSectionDialog";
+import { trpc } from "@/app/_trpc/client";
+import { SectionType } from "@/types/CoverLetter";
 
 const DATA = [
   {
@@ -34,127 +37,110 @@ const DATA = [
   }
 ];
 
-const DragNDropSection = () => {
-  const [sections, setSections] = useState(DATA);
+const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
+  const {
+    data: sections,
+    isLoading,
+    error
+    //@ts-ignore
+  } = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
 
-  const handleDragDrop = (results: DropResult) => {
-    console.log(results);
-    console.log("Dropped");
-    const { source, destination, type } = results;
-    if (!destination) return;
+  // const [sections, setSections] = useState(SectionsData);
 
-    if (source.droppableId === destination.droppableId && source.index === destination.index)
-      return;
+  // const handleDragDrop = (results: DropResult) => {
+  //   console.log(results);
+  //   console.log("Dropped");
+  //   const { source, destination, type } = results;
+  //   if (!destination) return;
 
-    if (type === "group") {
-      const reOrderedStore = [...sections];
-      const sourceIndex = source.index;
-      const destinationIndex = destination.index;
+  //   if (source.droppableId === destination.droppableId && source.index === destination.index)
+  //     return;
 
-      const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
-      reOrderedStore.splice(destinationIndex, 0, removedStore);
+  //   if (type === "group") {
+  //     const reOrderedStore = [...sections];
+  //     const sourceIndex = source.index;
+  //     const destinationIndex = destination.index;
 
-      return setSections(reOrderedStore);
-    }
+  //     const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
+  //     reOrderedStore.splice(destinationIndex, 0, removedStore);
 
-    const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
-    const sectionDestinationIndex = sections.findIndex(
-      (section) => section.id === destination.droppableId
-    );
+  //     return setSections(reOrderedStore);
+  //   }
 
-    const newSourceItems = [...sections[sectionSourceIndex].exhibits];
-    const newDestinationItems =
-      source.droppableId != destination.droppableId
-        ? [...sections[sectionDestinationIndex].exhibits]
-        : newSourceItems;
+  //   const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
+  //   const sectionDestinationIndex = sections.findIndex(
+  //     (section) => section.id === destination.droppableId
+  //   );
 
-    const [deletedItems] = newSourceItems.splice(source.index, 1);
-    newDestinationItems.splice(destination.index, 0, deletedItems);
+  //   const newSourceItems = [...sections[sectionSourceIndex].exhibits];
+  //   const newDestinationItems =
+  //     source.droppableId != destination.droppableId
+  //       ? [...sections[sectionDestinationIndex].exhibits]
+  //       : newSourceItems;
 
-    const newSections = [...sections];
+  //   const [deletedItems] = newSourceItems.splice(source.index, 1);
+  //   newDestinationItems.splice(destination.index, 0, deletedItems);
 
-    newSections[sectionSourceIndex] = {
-      ...sections[sectionSourceIndex],
-      exhibits: newSourceItems
-    };
+  //   const newSections = [...sections];
 
-    newSections[sectionDestinationIndex] = {
-      ...sections[sectionDestinationIndex],
-      exhibits: newDestinationItems
-    };
+  //   newSections[sectionSourceIndex] = {
+  //     ...sections[sectionSourceIndex],
+  //     exhibits: newSourceItems
+  //   };
 
-    setSections(newSections);
-  };
+  //   newSections[sectionDestinationIndex] = {
+  //     ...sections[sectionDestinationIndex],
+  //     exhibits: newDestinationItems
+  //   };
+
+  //   setSections(newSections);
+  // };
+
+  console.log(sections);
 
   return (
     <main className="h-max w-full p-2 pt-0">
-      <DragDropContext onDragEnd={handleDragDrop}>
+      <DragDropContext onDragEnd={() => {}}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
             <main className="w-full" {...provided.droppableProps} ref={provided.innerRef}>
-              {sections.map((section, index) => (
-                <Draggable draggableId={section.id} key={section.id} index={index}>
-                  {(provided) => (
-                    <div
-                      {...provided.dragHandleProps}
-                      {...provided.draggableProps}
-                      ref={provided.innerRef}
-                      className="text-center"
-                    >
-                      <Droppable droppableId={section.id}>
-                        {(provided) => (
-                          <div {...provided.droppableProps} ref={provided.innerRef} className="">
-                            <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
-                              <GripVertical size={18} className="w-16" />
-                              <ChevronDown size={18} className="w-16" />
-                              {/* <h1 className="text-base">Section-{index + 1}</h1> */}
-                              <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                Section-{index + 1}
-                              </h2>
-                              <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                {section.content}
-                              </p>
-                              <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
-                                <MessageCircle size={16} />
-                                Comment
-                              </i>
-                            </section>
-                            {section.exhibits.map((exhibit, index) => (
-                              <Draggable draggableId={exhibit.id} key={exhibit.id} index={index}>
-                                {(provided) => (
-                                  <div
-                                    {...provided.draggableProps}
-                                    {...provided.dragHandleProps}
-                                    ref={provided.innerRef}
-                                    // className="grid h-full w-full grid-flow-col items-center justify-around border border-border p-1"
-                                    className="flex h-full w-full items-center justify-normal gap-14 border border-border px-16 py-1.5"
-                                    key={exhibit.id}
-                                  >
-                                    <GripVertical size={18} className="w-16" />
-                                    <ChevronDown size={18} className="w-16" />
-                                    {/* <h1 className="text-sm">Exhibit-{index + 1}</h1> */}
-                                    <h2 className="rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                      Exhibit
-                                    </h2>
-                                    <p className="w-full overflow-hidden overflow-ellipsis text-nowrap text-left text-sm">
-                                      {exhibit.content}
-                                    </p>
-                                    <i className="ml-auto flex flex-row items-center gap-1 justify-self-end text-base">
-                                      <MessageCircle size={16} />
-                                      Comment
-                                    </i>
-                                  </div>
-                                )}
-                              </Draggable>
-                            ))}
-                            {provided.placeholder}
-                          </div>
-                        )}
-                      </Droppable>
-                    </div>
-                  )}
-                </Draggable>
-              ))}
+              {sections &&
+                sections.map((section, index) => (
+                  <Draggable draggableId={section.id} key={section.id} index={index}>
+                    {(provided) => (
+                      <div
+                        {...provided.dragHandleProps}
+                        {...provided.draggableProps}
+                        ref={provided.innerRef}
+                        className="text-center"
+                      >
+                        <Droppable droppableId={section.id}>
+                          {(provided) => (
+                            <div {...provided.droppableProps} ref={provided.innerRef} className="">
+                              <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
+                                <GripVertical size={18} className="w-16" />
+                                <ChevronDown size={18} className="w-16" />
+                                {/* <h1 className="text-base">Section-{index + 1}</h1> */}
+                                <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                  Section-{index + 1}
+                                </h2>
+                                <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
+                                  {section.title}
+                                </p>
+                                <AddSubSectionDialog userId={userId} sectionId={section.id} />
+                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                  <MessageCircle size={16} />
+                                  Comment
+                                </i>
+                              </section>
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
               {provided.placeholder}
             </main>
           )}

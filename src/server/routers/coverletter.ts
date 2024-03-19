@@ -33,7 +33,9 @@ export const coverletterRouter = router({
       const { coverLetterId, title, description, userId, comments } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
       console.log("INFO: ", input);
+
       const lastPosition = await db.section.findFirst({
+        where: { coverLetterId },
         orderBy: { position: "desc" },
         select: { position: true }
       });
@@ -52,7 +54,42 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
-  getAdminCoverLetter: adminProcedure.input(z.string()).query(async ({ input }) => {
+  addSubSection: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        sectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { sectionId, title, description, userId, comments } = input;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.log("INFO: ", input);
+
+      const lastPosition = await db.subSection.findFirst({
+        where: { sectionId },
+        orderBy: { position: "desc" },
+        select: { position: true }
+      });
+
+      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
+
+      await db.subSection.create({
+        data: {
+          title,
+          description,
+          position: newPosition,
+          sectionId,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
+  getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const adminId = input;
     if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
@@ -70,6 +107,24 @@ export const coverletterRouter = router({
     );
 
     return coverLetters;
+  }),
+
+  getAdminSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const coverLetterId = input;
+    console.log("COVERLETTER ID: ", coverLetterId);
+    if (!coverLetterId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const sections = await db.section.findMany({
+      where: {
+        coverLetterId
+      }
+    });
+    console.log(
+      "cover letter: ",
+      sections.map((section) => section.title)
+    );
+
+    return sections;
   })
 
   // getFirmCoverLetter: firmProcedure.input().query(async () => {

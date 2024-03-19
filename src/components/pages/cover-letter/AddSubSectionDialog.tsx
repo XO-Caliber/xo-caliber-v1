@@ -3,16 +3,15 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
 import { PlusSquare } from "lucide-react";
 import React from "react";
-import AddSectionDialogContent from "./AddSectionDialogContent";
+import AddSubSectionDialogContent from "./AddSubSectionDialogContent";
 
-const AddSectionDialog = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
+const AddSubSectionDialog = ({ userId, sectionId }: { userId: string; sectionId: string }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -21,7 +20,7 @@ const AddSectionDialog = ({ userId, coverLetterId }: { userId: string; coverLett
           // className="border-spacing-1 border border-dashed border-red-400 p-2 "
         >
           <PlusSquare size={16} className="mr-2" />
-          Create Section
+          Add Sub Section
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -32,11 +31,11 @@ const AddSectionDialog = ({ userId, coverLetterId }: { userId: string; coverLett
           </DialogDescription>
         </DialogHeader>
         <section className="h-max w-[1000px] ">
-          <AddSectionDialogContent userId={userId} coverLetterId={coverLetterId} />
+          <AddSubSectionDialogContent userId={userId} sectionId={sectionId} />
         </section>
       </DialogContent>
     </Dialog>
   );
 };
 
-export default AddSectionDialog;
+export default AddSubSectionDialog;

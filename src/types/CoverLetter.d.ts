@@ -1,4 +1,5 @@
-import { DropResult } from "react-beautiful-dnd";
+import { OutputData } from "@editorjs/editorjs";
+import { Prisma } from "@prisma/client";
 
 interface SubSection {
   id: string;
@@ -12,11 +13,11 @@ interface SubSection {
 export interface SectionType {
   id: string;
   title: string;
-  description: DropResult;
+  description: Prisma.JsonArray;
   comments: string;
   position: number;
   coverLetterId: string | null;
-  subSections: SubSection[];
+  // subSections: SubSection[];
 }
 
 export interface CoverLetterType {
