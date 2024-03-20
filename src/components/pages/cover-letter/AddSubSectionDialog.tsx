@@ -17,7 +17,8 @@ const AddSubSectionDialog = ({ userId, sectionId }: { userId: string; sectionId:
       <DialogTrigger asChild>
         <Button
           variant={"outline"}
-          // className="border-spacing-1 border border-dashed border-red-400 p-2 "
+          size={"sm"}
+          className="border border-dashed border-border py-0 "
         >
           <PlusSquare size={16} className="mr-2" />
           Add Sub Section

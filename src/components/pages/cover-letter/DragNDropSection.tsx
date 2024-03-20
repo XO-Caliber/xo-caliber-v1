@@ -1,10 +1,11 @@
 "use client";
 import { ChevronDown, GripVertical, MessageCircle } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
 import { SectionType } from "@/types/CoverLetter";
+import { Button } from "@/components/ui/Button";
 
 const DATA = [
   {
@@ -39,68 +40,84 @@ const DATA = [
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   const {
-    data: sections,
+    data: SectionsData,
     isLoading,
     error
     //@ts-ignore
   } = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
 
-  // const [sections, setSections] = useState(SectionsData);
+  const [sections, setSections] = useState<SectionType[]>();
+  const [positionData, setPositionData] = useState<any[]>([]);
 
-  // const handleDragDrop = (results: DropResult) => {
-  //   console.log(results);
-  //   console.log("Dropped");
-  //   const { source, destination, type } = results;
-  //   if (!destination) return;
+  useEffect(() => {
+    if (SectionsData && !isLoading && !error) {
+      setSections(SectionsData);
+    }
+  }, [SectionsData, isLoading, error]);
 
-  //   if (source.droppableId === destination.droppableId && source.index === destination.index)
-  //     return;
+  useEffect(() => {
+    console.log("Position Data:", positionData);
+  }, [positionData]);
+  const handleDragDrop = (results: DropResult) => {
+    console.log(JSON.stringify(results));
+    // setDropData(results);
+    const { source, destination, type } = results;
+    if (!destination) return;
 
-  //   if (type === "group") {
-  //     const reOrderedStore = [...sections];
-  //     const sourceIndex = source.index;
-  //     const destinationIndex = destination.index;
+    if (source.droppableId === destination.droppableId && source.index === destination.index)
+      return;
 
-  //     const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
-  //     reOrderedStore.splice(destinationIndex, 0, removedStore);
+    if (type === "group" && sections) {
+      const reOrderedStore = [...sections];
+      const sourceIndex = source.index;
+      const destinationIndex = destination.index;
 
-  //     return setSections(reOrderedStore);
-  //   }
+      const updatedSections = {
+        sectionId: results.draggableId,
+        newPostion: destinationIndex
+      };
+      console.log("Updated sections:", updatedSections);
+      setPositionData((prevPositionData) => [...prevPositionData, updatedSections]);
+      console.log("Postion Data: ", positionData);
+      const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
+      reOrderedStore.splice(destinationIndex, 0, removedStore);
+      console.log("reorderedStore: ", reOrderedStore);
+      return setSections(reOrderedStore);
+    }
+    // const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
+    // const sectionDestinationIndex = sections.findIndex(
+    //   (section) => section.id === destination.droppableId
+    // );
 
-  //   const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
-  //   const sectionDestinationIndex = sections.findIndex(
-  //     (section) => section.id === destination.droppableId
-  //   );
+    // const newSourceItems = [...sections[sectionSourceIndex].exhibits];
+    // const newDestinationItems =
+    //   source.droppableId != destination.droppableId
+    //     ? [...sections[sectionDestinationIndex].exhibits]
+    //     : newSourceItems;
 
-  //   const newSourceItems = [...sections[sectionSourceIndex].exhibits];
-  //   const newDestinationItems =
-  //     source.droppableId != destination.droppableId
-  //       ? [...sections[sectionDestinationIndex].exhibits]
-  //       : newSourceItems;
+    // const [deletedItems] = newSourceItems.splice(source.index, 1);
+    // newDestinationItems.splice(destination.index, 0, deletedItems);
 
-  //   const [deletedItems] = newSourceItems.splice(source.index, 1);
-  //   newDestinationItems.splice(destination.index, 0, deletedItems);
+    // const newSections = [...sections];
 
-  //   const newSections = [...sections];
+    // newSections[sectionSourceIndex] = {
+    //   ...sections[sectionSourceIndex],
+    //   exhibits: newSourceItems
+    // };
 
-  //   newSections[sectionSourceIndex] = {
-  //     ...sections[sectionSourceIndex],
-  //     exhibits: newSourceItems
-  //   };
+    // newSections[sectionDestinationIndex] = {
+    //   ...sections[sectionDestinationIndex],
+    //   exhibits: newDestinationItems
+    // };
 
-  //   newSections[sectionDestinationIndex] = {
-  //     ...sections[sectionDestinationIndex],
-  //     exhibits: newDestinationItems
-  //   };
+    // setSections(newSections);
+  };
 
-  //   setSections(newSections);
-  // };
-
-  console.log(sections);
+  // console.log(sections);
 
   return (
     <main className="h-max w-full p-2 pt-0">
-      <DragDropContext onDragEnd={() => {}}>
+      <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
             <main className="w-full" {...provided.droppableProps} ref={provided.innerRef}>
@@ -127,7 +144,10 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                   {section.title}
                                 </p>
-                                <AddSubSectionDialog userId={userId} sectionId={section.id} />
+                                <p className="m-0">
+                                  <AddSubSectionDialog userId={userId} sectionId={section.id} />
+                                </p>
+                                <p>{section.position}</p>
                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                   <MessageCircle size={16} />
                                   Comment
@@ -146,6 +166,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           )}
         </Droppable>
       </DragDropContext>
+      {positionData && (
+        <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
+          <Button variant={"secondary"}>Cancel</Button>
+          <Button variant={"primary"}>Save chanegs</Button>
+        </div>
+      )}
     </main>
   );
 };

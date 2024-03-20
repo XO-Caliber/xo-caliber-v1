@@ -40,9 +40,9 @@ export const ViewCoverLetter = ({
               Comments
             </p>
           </div>
-          <Button variant={"ghost"} className="mx-2 w-full">
+          {/* <Button variant={"ghost"} className="mx-2 w-full">
             Add section
-          </Button>
+          </Button> */}
           <div
             className={`transition-max-height overflow-hidden duration-500 ease-in-out ${
               isSectionVisible[index] ? "h-auto" : "h-0"
