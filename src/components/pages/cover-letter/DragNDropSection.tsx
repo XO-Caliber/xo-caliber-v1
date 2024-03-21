@@ -4,50 +4,39 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
-import { SectionType } from "@/types/CoverLetter";
+import { PositionType, SectionType } from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
-
-const DATA = [
-  {
-    id: "123",
-    section: "Introduction",
-    content: "To enhance cybersecurity, it is essential to implement advanced encryption methods.",
-    exhibits: [
-      { id: "1", content: "Exploration of novel encryption algorithms" },
-      { id: "2", content: "Comparative analysis of SSL/TLS protocols" }
-    ]
-  },
-  {
-    id: "456",
-    section: "Implementation",
-    content:
-      "In this phase, we delve into practical aspects of integrating open-source SSL certificates into existing systems.",
-    exhibits: [
-      { id: "3", content: "Case studies on successful SSL implementation in large enterprises" },
-      { id: "4", content: "Best practices for optimizing SSL certificate usage" }
-    ]
-  },
-  {
-    id: "789",
-    section: "Challenges and Solutions",
-    content: "While open-source SSL certificates offer numerous advantages, challenges may arise. ",
-    exhibits: [
-      { id: "5", content: "Identification and mitigation of SSL vulnerabilities" },
-      { id: "6", content: "Addressing performance issues in SSL-encrypted communication" }
-    ]
-  }
-];
+import { toast } from "@/hooks/use-toast";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
-  const {
-    data: SectionsData,
-    isLoading,
-    error
-    //@ts-ignore
-  } = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+  //@ts-ignore
+  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+
+  const { data: SectionsData, isLoading, error } = data;
+
+  const { mutate: updateSectionPostion } = trpc.coverletter.updateSectionPostion.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        data.refetch();
+        toast({
+          title: "section updated",
+          description: "Successfully updated the section"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Something went wrong",
+        description: `${err}`
+      });
+    },
+    onSettled() {
+      // setLoading(false);
+    }
+  });
 
   const [sections, setSections] = useState<SectionType[]>();
-  const [positionData, setPositionData] = useState<any[]>([]);
+  const [updatedSections, setupdatedSections] = useState<PositionType[]>();
 
   useEffect(() => {
     if (SectionsData && !isLoading && !error) {
@@ -55,9 +44,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
     }
   }, [SectionsData, isLoading, error]);
 
-  useEffect(() => {
-    console.log("Position Data:", positionData);
-  }, [positionData]);
   const handleDragDrop = (results: DropResult) => {
     console.log(JSON.stringify(results));
     // setDropData(results);
@@ -72,17 +58,26 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       const sourceIndex = source.index;
       const destinationIndex = destination.index;
 
-      const updatedSections = {
-        sectionId: results.draggableId,
-        newPostion: destinationIndex
-      };
-      console.log("Updated sections:", updatedSections);
-      setPositionData((prevPositionData) => [...prevPositionData, updatedSections]);
-      console.log("Postion Data: ", positionData);
       const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
       reOrderedStore.splice(destinationIndex, 0, removedStore);
+
+      const updatedSections = reOrderedStore.map((section, index) => ({
+        ...section,
+        position: index
+      }));
+
       console.log("reorderedStore: ", reOrderedStore);
-      return setSections(reOrderedStore);
+      console.log("updatedSections: ", updatedSections);
+
+      const sectionPositions = updatedSections.map((section) => ({
+        id: section.id,
+        position: section.position
+      }));
+
+      console.log("sectionPositions: ", JSON.stringify(sectionPositions));
+
+      setupdatedSections(sectionPositions);
+      return setSections(updatedSections);
     }
     // const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
     // const sectionDestinationIndex = sections.findIndex(
@@ -114,6 +109,10 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   };
 
   // console.log(sections);
+
+  const updatePostionInDb = () => {
+    if (updatedSections) updateSectionPostion(updatedSections);
+  };
 
   return (
     <main className="h-max w-full p-2 pt-0">
@@ -166,10 +165,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           )}
         </Droppable>
       </DragDropContext>
-      {positionData && (
+      {updatedSections && (
         <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
           <Button variant={"secondary"}>Cancel</Button>
-          <Button variant={"primary"}>Save chanegs</Button>
+          <Button variant={"primary"} onClick={updatePostionInDb}>
+            Save chanegs
+          </Button>
         </div>
       )}
     </main>

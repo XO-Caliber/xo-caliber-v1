@@ -89,6 +89,32 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
+  updateSectionPostion: publiceProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          position: z.number()
+        })
+      )
+    )
+    .mutation(async ({ input }) => {
+      const positionData = input;
+
+      positionData.map(async (position) => {
+        await db.section.update({
+          where: {
+            id: position.id
+          },
+          data: {
+            position: position.position
+          }
+        });
+      });
+
+      return { success: true };
+    }),
+
   getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const adminId = input;
     if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -117,6 +143,9 @@ export const coverletterRouter = router({
     const sections = await db.section.findMany({
       where: {
         coverLetterId
+      },
+      orderBy: {
+        position: "asc"
       }
     });
     console.log(

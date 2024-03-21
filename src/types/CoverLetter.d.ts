@@ -27,3 +27,8 @@ export interface CoverLetterType {
   firmId: string | null;
   Section: SectionType[];
 }
+
+export interface PositionType {
+  id: string;
+  position: number;
+}
