@@ -1,7 +1,7 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { adminProcedure, firmProcedure, publiceProcedure, router } from "@/server/trpc";
-
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const checkRouter = router({
@@ -167,6 +167,9 @@ export const checkRouter = router({
       return { success: true };
     }),
   getClientCheckList: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    if (input === "") {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
     const userData = await db.user.findUnique({
       where: {
         id: input

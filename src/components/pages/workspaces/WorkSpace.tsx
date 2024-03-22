@@ -1,9 +1,12 @@
 "use client";
 import {
   CandlestickChart,
+  Check,
   CheckSquare,
+  CheckSquare2,
   ChevronDown,
   ChevronRight,
+  DownloadCloud,
   FileEdit,
   Wind
 } from "lucide-react";
@@ -84,11 +87,18 @@ const WorkSpace = () => {
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
         </div>{" "}
         <div
-          className="mb-2 flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+          className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
           onClick={() => router.push("/checklist")}
         >
-          <Wind size={18} className="bi bi-bookmark-fill" />
+          <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Checklist</h1>
+        </div>
+        <div
+          className="mb-2 flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+          onClick={() => router.push("/strategy-doc")}
+        >
+          <DownloadCloud size={18} className="bi bi-bookmark-fill" />
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Strategy Doc</h1>
         </div>
       </div>
     </div>

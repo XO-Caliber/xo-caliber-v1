@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <body
             className={cn(
-              "min-h-screen select-none bg-background font-sans text-lg antialiased",
+              "min-h-screen  bg-background font-sans text-lg antialiased",
               fontSans.variable
             )}
           >
