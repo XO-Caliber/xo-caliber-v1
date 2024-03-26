@@ -152,6 +152,51 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   Comment
                                 </i>
                               </section>
+                              {section.SubSection.map((subsection, index) => (
+                                <Draggable
+                                  draggableId={subsection.id}
+                                  key={subsection.id}
+                                  index={index}
+                                >
+                                  {(provided) => (
+                                    <div
+                                      {...provided.dragHandleProps}
+                                      {...provided.draggableProps}
+                                      ref={provided.innerRef}
+                                      className=""
+                                    >
+                                      <Droppable droppableId={subsection.id}>
+                                        {(provided) => (
+                                          <div
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}
+                                            className=""
+                                          >
+                                            <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-12">
+                                              <GripVertical size={18} className="w-16" />
+                                              <ChevronDown size={18} className="w-16" />
+                                              <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                Sub-Section-{index + 1}
+                                              </h2>
+                                              <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
+                                                {subsection.title}
+                                              </p>
+                                              <p className="m-0">
+                                                {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
+                                              </p>
+                                              <p>{subsection.position}</p>
+                                              <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                                <MessageCircle size={16} />
+                                                Comment
+                                              </i>
+                                            </section>
+                                          </div>
+                                        )}
+                                      </Droppable>
+                                    </div>
+                                  )}
+                                </Draggable>
+                              ))}
                               {provided.placeholder}
                             </div>
                           )}

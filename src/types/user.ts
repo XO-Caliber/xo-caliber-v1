@@ -11,5 +11,5 @@ export const user = z.object({
 export const coverLetterSchema = z.object({
   title: z.string().min(4, { message: "Too short" }).max(1000, { message: "Too long" }),
   description: z.any(),
-  comment: z.string().min(4, { message: "Too short" }).max(1000, { message: "Too long" })
+  comment: z.string().min(4, { message: "Too short" }).max(1000, { message: "Too long" }).optional()
 });

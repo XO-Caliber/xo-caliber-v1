@@ -26,7 +26,7 @@ export const coverletterRouter = router({
         coverLetterId: z.string(),
         title: z.string(),
         description: z.any(),
-        comments: z.string()
+        comments: z.string().optional()
       })
     )
     .mutation(async ({ input }) => {
@@ -61,7 +61,7 @@ export const coverletterRouter = router({
         sectionId: z.string(),
         title: z.string(),
         description: z.any(),
-        comments: z.string()
+        comments: z.string().optional()
       })
     )
     .mutation(async ({ input }) => {
@@ -144,13 +144,16 @@ export const coverletterRouter = router({
       where: {
         coverLetterId
       },
+      include: {
+        SubSection: true
+      },
       orderBy: {
         position: "asc"
       }
     });
     console.log(
-      "cover letter: ",
-      sections.map((section) => section.title)
+      "subsection: ",
+      sections.map((section) => section.SubSection)
     );
 
     return sections;

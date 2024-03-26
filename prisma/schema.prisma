@@ -233,10 +233,10 @@ model CoverLetter {
 }
 
 model Section {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
   description Json
-  comments    String @db.Text
+  comments    String? @db.Text
   position    Int
 
   CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id])
@@ -246,10 +246,10 @@ model Section {
 }
 
 model SubSection {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String
   description Json
-  comments    String @db.Text
+  comments    String? @db.Text
   position    Int
 
   Section   Section? @relation(fields: [sectionId], references: [id])

@@ -4,8 +4,8 @@ import { Prisma } from "@prisma/client";
 interface SubSection {
   id: string;
   title: string;
-  description: Record<string, unknown> | null; // Adjust the type according to your JSON data structure
-  comments: string;
+  description: Prisma.JsonArray;
+  comments: string | null;
   position: number;
   sectionId: string | null;
 }
@@ -14,10 +14,10 @@ export interface SectionType {
   id: string;
   title: string;
   description: Prisma.JsonArray;
-  comments: string;
+  comments: string | null;
   position: number;
   coverLetterId: string | null;
-  // subSections: SubSection[];
+  SubSection: SubSection[];
 }
 
 export interface CoverLetterType {
