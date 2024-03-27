@@ -89,32 +89,6 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
-  updateSectionPostion: publiceProcedure
-    .input(
-      z.array(
-        z.object({
-          id: z.string(),
-          position: z.number()
-        })
-      )
-    )
-    .mutation(async ({ input }) => {
-      const positionData = input;
-
-      positionData.map(async (position) => {
-        await db.section.update({
-          where: {
-            id: position.id
-          },
-          data: {
-            position: position.position
-          }
-        });
-      });
-
-      return { success: true };
-    }),
-
   getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const adminId = input;
     if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -157,7 +131,81 @@ export const coverletterRouter = router({
     );
 
     return sections;
-  })
+  }),
+
+  getAdminSubSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const sectionId = input;
+    console.log("COVERLETTER ID: ", sectionId);
+    if (!sectionId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const subsections = await db.subSection.findMany({
+      where: {
+        sectionId
+      },
+      orderBy: {
+        position: "asc"
+      }
+    });
+
+    console.log(
+      "subsection title: ",
+      subsections.map((section) => section.title)
+    );
+
+    return subsections;
+  }),
+
+  updateSectionPostion: publiceProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          position: z.number()
+        })
+      )
+    )
+    .mutation(async ({ input }) => {
+      const positionData = input;
+
+      positionData.map(async (position) => {
+        await db.section.update({
+          where: {
+            id: position.id
+          },
+          data: {
+            position: position.position
+          }
+        });
+      });
+
+      return { success: true };
+    }),
+
+  updateSubSectionPostion: publiceProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          position: z.number()
+        })
+      )
+    )
+    .mutation(async ({ input }) => {
+      const positionData = input;
+
+      positionData.map(async (position) => {
+        await db.subSection.update({
+          where: {
+            id: position.id
+          },
+          data: {
+            position: position.position
+          }
+        });
+      });
+
+      return { success: true };
+    })
 
   // getFirmCoverLetter: firmProcedure.input().query(async () => {
 

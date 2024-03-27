@@ -1,23 +1,25 @@
 "use client";
-import { ChevronDown, GripVertical, MessageCircle } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronUp, GripVertical, MessageCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
-import { PositionType, SectionType } from "@/types/CoverLetter";
+import { PositionType, SectionType, SubSectionType } from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
-  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+  const sectionData = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+  const subsectionData =
+    trpc.coverletter.getAdminSubSections.useQuery<SubSectionType[]>(coverLetterId);
 
-  const { data: SectionsData, isLoading, error } = data;
+  const { data: SectionsData, isLoading, error } = sectionData;
 
   const { mutate: updateSectionPostion } = trpc.coverletter.updateSectionPostion.useMutation({
     onSuccess({ success }) {
       if (success) {
-        data.refetch();
+        sectionData.refetch();
         toast({
           title: "section updated",
           description: "Successfully updated the section"
@@ -37,6 +39,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   const [sections, setSections] = useState<SectionType[]>();
   const [updatedSections, setupdatedSections] = useState<PositionType[]>();
+
+  const [isSubSectionVisible, setIsSubSectionVisible] = useState<{ [key: number]: boolean }>({});
+  const [updatedSubSections, setupdatedSubSections] = useState<PositionType[]>();
 
   useEffect(() => {
     if (SectionsData && !isLoading && !error) {
@@ -79,39 +84,52 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       setupdatedSections(sectionPositions);
       return setSections(updatedSections);
     }
-    // const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
-    // const sectionDestinationIndex = sections.findIndex(
-    //   (section) => section.id === destination.droppableId
-    // );
+    if (sections) {
+      const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
+      const sectionDestinationIndex = sections.findIndex(
+        (section) => section.id === destination.droppableId
+      );
 
-    // const newSourceItems = [...sections[sectionSourceIndex].exhibits];
-    // const newDestinationItems =
-    //   source.droppableId != destination.droppableId
-    //     ? [...sections[sectionDestinationIndex].exhibits]
-    //     : newSourceItems;
+      const newSourceItems = [...sections[sectionSourceIndex].SubSection];
+      const newDestinationItems =
+        source.droppableId != destination.droppableId
+          ? [...sections[sectionDestinationIndex].SubSection]
+          : newSourceItems;
 
-    // const [deletedItems] = newSourceItems.splice(source.index, 1);
-    // newDestinationItems.splice(destination.index, 0, deletedItems);
+      const [deletedItems] = newSourceItems.splice(source.index, 1);
+      newDestinationItems.splice(destination.index, 0, deletedItems);
 
-    // const newSections = [...sections];
+      const newSections = [...sections];
 
-    // newSections[sectionSourceIndex] = {
-    //   ...sections[sectionSourceIndex],
-    //   exhibits: newSourceItems
-    // };
+      newSections[sectionSourceIndex] = {
+        ...sections[sectionSourceIndex],
+        SubSection: newSourceItems
+      };
 
-    // newSections[sectionDestinationIndex] = {
-    //   ...sections[sectionDestinationIndex],
-    //   exhibits: newDestinationItems
-    // };
+      newSections[sectionDestinationIndex] = {
+        ...sections[sectionDestinationIndex],
+        SubSection: newDestinationItems
+      };
 
-    // setSections(newSections);
+      setSections(newSections);
+    }
   };
 
-  // console.log(sections);
+  console.log(sections);
 
-  const updatePostionInDb = () => {
+  const updateSectionPostionInDb = () => {
     if (updatedSections) updateSectionPostion(updatedSections);
+  };
+
+  const updateSubSectionPostionInDb = () => {
+    if (updatedSections) updateSectionPostion(updatedSections);
+  };
+
+  const toggleSubSection = (id: string, index: number) => {
+    setIsSubSectionVisible((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index]
+    }));
   };
 
   return (
@@ -135,7 +153,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
                               <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
                                 <GripVertical size={18} className="w-16" />
-                                <ChevronDown size={18} className="w-16" />
+                                <button onClick={() => toggleSubSection(section.id, index)}>
+                                  {isSubSectionVisible[index] ? (
+                                    <ChevronDown size={18} className="w-16" />
+                                  ) : (
+                                    <ChevronRight size={18} className="w-16" />
+                                  )}
+                                </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                                 <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                   Section-{index + 1}
@@ -152,51 +176,68 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   Comment
                                 </i>
                               </section>
-                              {section.SubSection.map((subsection, index) => (
-                                <Draggable
-                                  draggableId={subsection.id}
-                                  key={subsection.id}
-                                  index={index}
-                                >
-                                  {(provided) => (
-                                    <div
-                                      {...provided.dragHandleProps}
-                                      {...provided.draggableProps}
-                                      ref={provided.innerRef}
-                                      className=""
-                                    >
-                                      <Droppable droppableId={subsection.id}>
+                              {/* Subsection Drag and Drop */}
+                              <div
+                                className={`${isSubSectionVisible[index] ? "h-auto" : "hidden h-0"}`}
+                              >
+                                {section.SubSection.map((subsection, index) => (
+                                  <Draggable
+                                    draggableId={subsection.id}
+                                    key={subsection.id}
+                                    index={index}
+                                  >
+                                    {(provided) => (
+                                      <div
+                                        {...provided.dragHandleProps}
+                                        {...provided.draggableProps}
+                                        ref={provided.innerRef}
+                                        className=""
+                                      >
+                                        {/* <Droppable droppableId={subsection.id}>
                                         {(provided) => (
                                           <div
                                             {...provided.droppableProps}
                                             ref={provided.innerRef}
                                             className=""
-                                          >
-                                            <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-12">
-                                              <GripVertical size={18} className="w-16" />
-                                              <ChevronDown size={18} className="w-16" />
-                                              <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                                Sub-Section-{index + 1}
-                                              </h2>
-                                              <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                {subsection.title}
-                                              </p>
-                                              <p className="m-0">
-                                                {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
-                                              </p>
-                                              <p>{subsection.position}</p>
-                                              <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
-                                                <MessageCircle size={16} />
-                                                Comment
-                                              </i>
-                                            </section>
-                                          </div>
-                                        )}
-                                      </Droppable>
-                                    </div>
-                                  )}
-                                </Draggable>
-                              ))}
+                                          > */}
+                                        <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-12">
+                                          <GripVertical size={18} className="w-16" />
+                                          <ChevronDown size={18} className="w-16" />
+                                          <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                            Sub-Section-{index + 1}
+                                          </h2>
+                                          <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
+                                            {subsection.title}
+                                          </p>
+                                          <p className="m-0">
+                                            {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
+                                          </p>
+                                          <p>{subsection.position}</p>
+                                          <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                            <MessageCircle size={16} />
+                                            Comment
+                                          </i>
+                                        </section>
+                                        {/* </div> */}
+                                        {/* )} */}
+                                        {/* </Droppable> */}
+                                      </div>
+                                    )}
+                                  </Draggable>
+                                ))}
+                                <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
+                                  <Button variant={"secondary"} size={"sm"}>
+                                    Cancel
+                                  </Button>
+                                  <Button
+                                    variant={"primary"}
+                                    size={"sm"}
+                                    onClick={updateSubSectionPostionInDb}
+                                  >
+                                    Save postions
+                                  </Button>
+                                </div>
+                              </div>
                               {provided.placeholder}
                             </div>
                           )}
@@ -213,7 +254,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       {updatedSections && (
         <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
           <Button variant={"secondary"}>Cancel</Button>
-          <Button variant={"primary"} onClick={updatePostionInDb}>
+          <Button variant={"primary"} onClick={updateSectionPostionInDb}>
             Save chanegs
           </Button>
         </div>
