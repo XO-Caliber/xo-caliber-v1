@@ -1,25 +1,23 @@
 "use client";
-import { ChevronDown, ChevronRight, ChevronUp, GripVertical, MessageCircle } from "lucide-react";
+import { ChevronDown, ChevronRight, GripVertical, MessageCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
-import { PositionType, SectionType, SubSectionType } from "@/types/CoverLetter";
+import { SectionPositionType, SectionType, SubSectionPositionType } from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
-  const sectionData = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
-  const subsectionData =
-    trpc.coverletter.getAdminSubSections.useQuery<SubSectionType[]>(coverLetterId);
+  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
 
-  const { data: SectionsData, isLoading, error } = sectionData;
+  const { data: SectionsData, isLoading, error } = data;
 
   const { mutate: updateSectionPostion } = trpc.coverletter.updateSectionPostion.useMutation({
     onSuccess({ success }) {
       if (success) {
-        sectionData.refetch();
+        data.refetch();
         toast({
           title: "section updated",
           description: "Successfully updated the section"
@@ -37,11 +35,32 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
     }
   });
 
+  const { mutate: updateSubSectionPostion } = trpc.coverletter.updateSubSectionPostion.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        data.refetch();
+        toast({
+          title: "SubSection updated",
+          description: "Successfully updated the SubSection"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Something went wrong",
+        description: `${err}`
+      });
+    },
+    onSettled() {
+      // setLoading(false);
+    }
+  });
+
   const [sections, setSections] = useState<SectionType[]>();
-  const [updatedSections, setupdatedSections] = useState<PositionType[]>();
+  const [updatedSections, setupdatedSections] = useState<SectionPositionType[]>();
 
   const [isSubSectionVisible, setIsSubSectionVisible] = useState<{ [key: number]: boolean }>({});
-  const [updatedSubSections, setupdatedSubSections] = useState<PositionType[]>();
+  const [updatedSubSections, setupdatedSubSections] = useState<SubSectionPositionType[]>();
 
   useEffect(() => {
     if (SectionsData && !isLoading && !error) {
@@ -58,33 +77,34 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
     if (source.droppableId === destination.droppableId && source.index === destination.index)
       return;
 
-    if (type === "group" && sections) {
-      const reOrderedStore = [...sections];
-      const sourceIndex = source.index;
-      const destinationIndex = destination.index;
-
-      const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
-      reOrderedStore.splice(destinationIndex, 0, removedStore);
-
-      const updatedSections = reOrderedStore.map((section, index) => ({
-        ...section,
-        position: index
-      }));
-
-      console.log("reorderedStore: ", reOrderedStore);
-      console.log("updatedSections: ", updatedSections);
-
-      const sectionPositions = updatedSections.map((section) => ({
-        id: section.id,
-        position: section.position
-      }));
-
-      console.log("sectionPositions: ", JSON.stringify(sectionPositions));
-
-      setupdatedSections(sectionPositions);
-      return setSections(updatedSections);
-    }
     if (sections) {
+      if (type === "group") {
+        const reOrderedStore = [...sections];
+        const sourceIndex = source.index;
+        const destinationIndex = destination.index;
+
+        const [removedStore] = reOrderedStore.splice(sourceIndex, 1);
+        reOrderedStore.splice(destinationIndex, 0, removedStore);
+
+        const updatedSections = reOrderedStore.map((section, index) => ({
+          ...section,
+          position: index
+        }));
+
+        console.log("reorderedStore: ", reOrderedStore);
+        console.log("updatedSections: ", updatedSections);
+
+        const sectionPositions = updatedSections.map((section) => ({
+          id: section.id,
+          position: section.position
+        }));
+
+        console.log("sectionPositions: ", JSON.stringify(sectionPositions));
+
+        setupdatedSections(sectionPositions);
+        return setSections(updatedSections);
+      }
+
       const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
       const sectionDestinationIndex = sections.findIndex(
         (section) => section.id === destination.droppableId
@@ -110,19 +130,27 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
         ...sections[sectionDestinationIndex],
         SubSection: newDestinationItems
       };
+      console.log("newSection: ", newSections);
 
+      const subSectionPostions = newSections.flatMap((section) =>
+        section.SubSection.map((subsection, index) => ({
+          id: subsection.id,
+          sectionId: section.id,
+          position: index
+        }))
+      );
+      console.log("subSectionPostion: ", subSectionPostions);
+      setupdatedSubSections(subSectionPostions);
       setSections(newSections);
     }
   };
-
-  console.log(sections);
 
   const updateSectionPostionInDb = () => {
     if (updatedSections) updateSectionPostion(updatedSections);
   };
 
   const updateSubSectionPostionInDb = () => {
-    if (updatedSections) updateSectionPostion(updatedSections);
+    if (updatedSubSections) updateSubSectionPostion(updatedSubSections);
   };
 
   const toggleSubSection = (id: string, index: number) => {
@@ -153,7 +181,10 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
                               <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
                                 <GripVertical size={18} className="w-16" />
-                                <button onClick={() => toggleSubSection(section.id, index)}>
+                                <button
+                                  onClick={() => toggleSubSection(section.id, index)}
+                                  className="hover:selector"
+                                >
                                   {isSubSectionVisible[index] ? (
                                     <ChevronDown size={18} className="w-16" />
                                   ) : (
@@ -225,18 +256,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     )}
                                   </Draggable>
                                 ))}
-                                <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
-                                  <Button variant={"secondary"} size={"sm"}>
-                                    Cancel
-                                  </Button>
-                                  <Button
-                                    variant={"primary"}
-                                    size={"sm"}
-                                    onClick={updateSubSectionPostionInDb}
-                                  >
-                                    Save postions
-                                  </Button>
-                                </div>
                               </div>
                               {provided.placeholder}
                             </div>
@@ -251,14 +270,14 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           )}
         </Droppable>
       </DragDropContext>
-      {updatedSections && (
+      {updatedSections || updatedSubSections ? (
         <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
           <Button variant={"secondary"}>Cancel</Button>
-          <Button variant={"primary"} onClick={updateSectionPostionInDb}>
-            Save chanegs
+          <Button variant={"primary"} onClick={updateSubSectionPostionInDb}>
+            Save changes
           </Button>
         </div>
-      )}
+      ) : null}
     </main>
   );
 };

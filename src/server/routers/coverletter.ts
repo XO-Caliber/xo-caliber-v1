@@ -119,40 +119,23 @@ export const coverletterRouter = router({
         coverLetterId
       },
       include: {
-        SubSection: true
+        SubSection: {
+          orderBy: {
+            position: "asc"
+          }
+        }
       },
       orderBy: {
         position: "asc"
       }
     });
+
     console.log(
       "subsection: ",
       sections.map((section) => section.SubSection)
     );
 
     return sections;
-  }),
-
-  getAdminSubSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
-    const sectionId = input;
-    console.log("COVERLETTER ID: ", sectionId);
-    if (!sectionId) throw new TRPCError({ code: "UNAUTHORIZED" });
-
-    const subsections = await db.subSection.findMany({
-      where: {
-        sectionId
-      },
-      orderBy: {
-        position: "asc"
-      }
-    });
-
-    console.log(
-      "subsection title: ",
-      subsections.map((section) => section.title)
-    );
-
-    return subsections;
   }),
 
   updateSectionPostion: publiceProcedure
@@ -186,20 +169,22 @@ export const coverletterRouter = router({
       z.array(
         z.object({
           id: z.string(),
+          sectionId: z.string(),
           position: z.number()
         })
       )
     )
     .mutation(async ({ input }) => {
-      const positionData = input;
+      const subSectionData = input;
 
-      positionData.map(async (position) => {
+      subSectionData.map(async (subsection) => {
         await db.subSection.update({
           where: {
-            id: position.id
+            id: subsection.id
           },
           data: {
-            position: position.position
+            position: subsection.position,
+            sectionId: subsection.sectionId
           }
         });
       });

@@ -1,7 +1,7 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Prisma } from "@prisma/client";
 
-interface SubSection {
+interface SubSectionType {
   id: string;
   title: string;
   description: Prisma.JsonArray;
@@ -28,7 +28,13 @@ export interface CoverLetterType {
   Section: SectionType[];
 }
 
-export interface PositionType {
+export interface SectionPositionType {
   id: string;
   position: number;
+}
+
+export interface SubSectionPositionType {
+  id: string;
+  position: number;
+  sectionId: string;
 }
