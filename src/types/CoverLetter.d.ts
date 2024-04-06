@@ -1,6 +1,15 @@
 import { OutputData } from "@editorjs/editorjs";
 import { Prisma } from "@prisma/client";
 
+interface ExhibitType {
+  id: string;
+  title: string;
+  description: Prisma.JsonArray;
+  comments: string | null;
+  position: number;
+  subSectionId: string | null;
+}
+
 interface SubSectionType {
   id: string;
   title: string;
@@ -8,6 +17,7 @@ interface SubSectionType {
   comments: string | null;
   position: number;
   sectionId: string | null;
+  Exhibits: ExhibitType[];
 }
 
 export interface SectionType {
@@ -17,7 +27,7 @@ export interface SectionType {
   comments: string | null;
   position: number;
   coverLetterId: string | null;
-  SubSection: SubSection[];
+  SubSection: SubSectionType[];
 }
 
 export interface CoverLetterType {
