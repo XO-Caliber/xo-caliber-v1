@@ -252,6 +252,18 @@ model SubSection {
   comments    String? @db.Text
   position    Int
 
-  Section   Section? @relation(fields: [sectionId], references: [id])
+  Section   Section?   @relation(fields: [sectionId], references: [id])
   sectionId String?
+  Exhibits  Exhibits[]
+}
+
+model Exhibits {
+  id          String  @id @default(cuid())
+  title       String
+  description Json
+  comments    String? @db.Text
+  position    Int
+
+  SubSection   SubSection @relation(fields: [subSectionId], references: [id])
+  subSectionId String
 }

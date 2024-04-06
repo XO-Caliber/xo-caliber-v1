@@ -7,6 +7,7 @@ import { trpc } from "@/app/_trpc/client";
 import { SectionPositionType, SectionType, SubSectionPositionType } from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
+import AddDialog from "./AddDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -199,7 +200,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   {section.title}
                                 </p>
                                 <p className="m-0">
-                                  <AddSubSectionDialog userId={userId} sectionId={section.id} />
+                                  {/* <AddSubSectionDialog userId={userId} sectionId={section.id} /> */}
+                                  <AddDialog
+                                    userId={userId}
+                                    itemId={section.id}
+                                    dialogType="subSection"
+                                  />
                                 </p>
                                 <p>{section.position}</p>
                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
@@ -242,6 +248,11 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                           </p>
                                           <p className="m-0">
                                             {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
+                                            <AddDialog
+                                              userId={userId}
+                                              itemId={subsection.id}
+                                              dialogType="exhibit"
+                                            />
                                           </p>
                                           <p>{subsection.position}</p>
                                           <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">

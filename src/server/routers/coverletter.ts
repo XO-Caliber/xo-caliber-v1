@@ -54,6 +54,62 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
+  getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const adminId = input;
+    if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const coverLetters = await db.coverLetter.findMany({
+      where: {
+        adminId: adminId
+      },
+      include: {
+        Section: true
+      }
+    });
+    console.log(
+      "cover letter: ",
+      coverLetters.map((coverLetter) => coverLetter.title)
+    );
+
+    return coverLetters;
+  }),
+
+  getAdminSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const coverLetterId = input;
+    console.log("COVERLETTER ID: ", coverLetterId);
+    if (!coverLetterId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+    const sections = await db.section.findMany({
+      where: {
+        coverLetterId
+      },
+      include: {
+        SubSection: {
+          orderBy: {
+            position: "asc"
+          },
+          include: {
+            Exhibits: {
+              orderBy: {
+                position: "asc"
+              }
+            }
+          }
+        }
+      },
+      orderBy: {
+        position: "asc"
+      }
+    });
+
+    console.log(
+      "subsection: ",
+      sections.map((section) => section.SubSection)
+    );
+
+    return sections;
+  }),
+
   addSubSection: publiceProcedure
     .input(
       z.object({
@@ -89,54 +145,40 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
-  getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
-    const adminId = input;
-    if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
+  addExhibits: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        subSectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { subSectionId, title, description, userId, comments } = input;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.log("INFO: ", input);
 
-    const coverLetters = await db.coverLetter.findMany({
-      where: {
-        adminId: adminId
-      },
-      include: {
-        Section: true
-      }
-    });
-    console.log(
-      "cover letter: ",
-      coverLetters.map((coverLetter) => coverLetter.title)
-    );
+      const lastPosition = await db.exhibits.findFirst({
+        where: { subSectionId },
+        orderBy: { position: "desc" },
+        select: { position: true }
+      });
 
-    return coverLetters;
-  }),
+      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
 
-  getAdminSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
-    const coverLetterId = input;
-    console.log("COVERLETTER ID: ", coverLetterId);
-    if (!coverLetterId) throw new TRPCError({ code: "UNAUTHORIZED" });
-
-    const sections = await db.section.findMany({
-      where: {
-        coverLetterId
-      },
-      include: {
-        SubSection: {
-          orderBy: {
-            position: "asc"
-          }
+      await db.exhibits.create({
+        data: {
+          title,
+          description,
+          position: newPosition,
+          subSectionId,
+          comments
         }
-      },
-      orderBy: {
-        position: "asc"
-      }
-    });
-
-    console.log(
-      "subsection: ",
-      sections.map((section) => section.SubSection)
-    );
-
-    return sections;
-  }),
+      });
+      return { success: true };
+    }),
 
   updateSectionPostion: publiceProcedure
     .input(

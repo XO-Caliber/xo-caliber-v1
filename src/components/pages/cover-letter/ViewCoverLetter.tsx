@@ -5,6 +5,7 @@ import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
 import AddSectionDialog from "./AddSectionDialog";
 import { Button } from "@/components/ui/Button";
+import AddDialog from "./AddDialog";
 
 export const ViewCoverLetter = ({
   CoverLetterData,
@@ -34,7 +35,8 @@ export const ViewCoverLetter = ({
             <p className="pr-2 text-left text-sm font-medium text-muted-foreground">Type</p>
             <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
             <div className="ml-auto">
-              <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} />
+              {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
+              <AddDialog userId={userId} itemId={coverLetter.id} dialogType="section" />
             </div>
             <p className="ml-auto mr-10 justify-items-end text-sm font-medium text-muted-foreground">
               Comments
