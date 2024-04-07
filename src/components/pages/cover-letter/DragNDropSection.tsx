@@ -4,7 +4,12 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
-import { SectionPositionType, SectionType, SubSectionPositionType } from "@/types/CoverLetter";
+import {
+  ExhibitPositionType,
+  SectionPositionType,
+  SectionType,
+  SubSectionPositionType
+} from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
@@ -20,7 +25,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       if (success) {
         data.refetch();
         toast({
-          title: "section updated",
+          title: "section postion updated",
           description: "Successfully updated the section"
         });
       }
@@ -41,7 +46,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       if (success) {
         data.refetch();
         toast({
-          title: "SubSection updated",
+          title: "SubSections postion updated",
           description: "Successfully updated the SubSection"
         });
       }
@@ -57,11 +62,35 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
     }
   });
 
+  const { mutate: updateExhibitPostion } = trpc.coverletter.updateExhibitPostion.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        data.refetch();
+        toast({
+          title: "Exhibits postion updated",
+          description: "Successfully updated the Exhibit"
+        });
+      }
+    },
+    onError(err) {
+      toast({
+        title: "Something went wrong",
+        description: `${err}`
+      });
+    },
+    onSettled() {
+      // setLoading(false);
+    }
+  });
+
   const [sections, setSections] = useState<SectionType[]>();
-  const [updatedSections, setupdatedSections] = useState<SectionPositionType[]>();
 
   const [isSubSectionVisible, setIsSubSectionVisible] = useState<{ [key: number]: boolean }>({});
-  const [updatedSubSections, setupdatedSubSections] = useState<SubSectionPositionType[]>();
+
+  const [updatedSectionsPosition, setupdatedSectionsPosition] = useState<SectionPositionType[]>();
+  const [updatedSubSectionsPosition, setupdatedSubSectionsPosition] =
+    useState<SubSectionPositionType[]>();
+  const [updatedExhibitsPosition, setUpdatedExhibitsPosition] = useState<ExhibitPositionType[]>();
 
   useEffect(() => {
     if (SectionsData && !isLoading && !error) {
@@ -70,9 +99,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   }, [SectionsData, isLoading, error]);
 
   const handleDragDrop = (results: DropResult) => {
-    console.log(results);
+    console.log(JSON.stringify(results));
     // setDropData(results);
-    const { source, destination, type } = results;
+    const { source, destination, type, draggableId } = results;
     if (!destination) return;
 
     if (source.droppableId === destination.droppableId && source.index === destination.index)
@@ -102,56 +131,120 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
         console.log("sectionPositions: ", JSON.stringify(sectionPositions));
 
-        setupdatedSections(sectionPositions);
+        setupdatedSectionsPosition(sectionPositions);
         return setSections(updatedSections);
       }
 
-      const sectionSourceIndex = sections.findIndex((section) => section.id === source.droppableId);
-      const sectionDestinationIndex = sections.findIndex(
-        (section) => section.id === destination.droppableId
-      );
+      if (type === "section") {
+        const sectionSourceIndex = sections.findIndex(
+          (section) => section.id === source.droppableId
+        );
+        const sectionDestinationIndex = sections.findIndex(
+          (section) => section.id === destination.droppableId
+        );
 
-      const newSourceItems = [...sections[sectionSourceIndex].SubSection];
-      const newDestinationItems =
-        source.droppableId != destination.droppableId
-          ? [...sections[sectionDestinationIndex].SubSection]
-          : newSourceItems;
+        const newSourceItems = [...sections[sectionSourceIndex].SubSection];
+        const newDestinationItems =
+          source.droppableId != destination.droppableId
+            ? [...sections[sectionDestinationIndex].SubSection]
+            : newSourceItems;
 
-      const [deletedItems] = newSourceItems.splice(source.index, 1);
-      newDestinationItems.splice(destination.index, 0, deletedItems);
+        const [deletedItems] = newSourceItems.splice(source.index, 1);
+        newDestinationItems.splice(destination.index, 0, deletedItems);
 
-      const newSections = [...sections];
+        const newSections = [...sections];
 
-      newSections[sectionSourceIndex] = {
-        ...sections[sectionSourceIndex],
-        SubSection: newSourceItems
-      };
+        newSections[sectionSourceIndex] = {
+          ...sections[sectionSourceIndex],
+          SubSection: newSourceItems
+        };
 
-      newSections[sectionDestinationIndex] = {
-        ...sections[sectionDestinationIndex],
-        SubSection: newDestinationItems
-      };
-      console.log("newSection: ", newSections);
+        newSections[sectionDestinationIndex] = {
+          ...sections[sectionDestinationIndex],
+          SubSection: newDestinationItems
+        };
+        console.log("newSection: ", newSections);
 
-      const subSectionPostions = newSections.flatMap((section) =>
-        section.SubSection.map((subsection, index) => ({
-          id: subsection.id,
-          sectionId: section.id,
-          position: index
-        }))
-      );
-      console.log("subSectionPostion: ", subSectionPostions);
-      setupdatedSubSections(subSectionPostions);
-      setSections(newSections);
+        const subSectionPostions = newSections.flatMap((section) =>
+          section.SubSection.map((subsection, index) => ({
+            id: subsection.id,
+            sectionId: section.id,
+            position: index
+          }))
+        );
+        console.log("subSectionPostion: ", subSectionPostions);
+        setupdatedSubSectionsPosition(subSectionPostions);
+        setSections(newSections);
+      }
+
+      if (type === "subsection") {
+        const updatedSections = sections.map((section) => {
+          const sourceSubSection = section.SubSection.find(
+            (subSection) => subSection.id === source.droppableId
+          );
+          const destinationSubSection = section.SubSection.find(
+            (subSection) => subSection.id === destination.droppableId
+          );
+
+          if (!sourceSubSection || !destinationSubSection) return section;
+
+          // Find the dragged exhibit
+          const draggedExhibitIndex = sourceSubSection.Exhibits.findIndex(
+            (exhibit) => exhibit.id === draggableId
+          );
+          if (draggedExhibitIndex === -1) return section;
+
+          const draggedExhibit = sourceSubSection.Exhibits[draggedExhibitIndex];
+
+          // Remove the dragged exhibit from the source subsection
+          sourceSubSection.Exhibits.splice(draggedExhibitIndex, 1);
+
+          // Insert the dragged exhibit into the destination subsection at the specified index
+          destinationSubSection.Exhibits.splice(destination.index, 0, draggedExhibit);
+
+          // Update positions if necessary
+          if (sourceSubSection.id === destinationSubSection.id) {
+            // If the drag is within the same subsection, update positions for affected exhibits
+            destinationSubSection.Exhibits.forEach((exhibit, index) => {
+              exhibit.position = index;
+            });
+          } else {
+            // If the drag is between different subsections, update positions for both source and destination subsections
+            sourceSubSection.Exhibits.forEach((exhibit, index) => {
+              exhibit.position = index;
+            });
+
+            destinationSubSection.Exhibits.forEach((exhibit, index) => {
+              exhibit.position = index;
+              exhibit.subSectionId = destinationSubSection.id;
+            });
+          }
+
+          return section;
+        });
+        console.log(updatedSections);
+        setSections(updatedSections);
+        const exhibitPositions = sections.flatMap((section) =>
+          section.SubSection.flatMap((subSection) =>
+            subSection.Exhibits.map((exhibit, index) => ({
+              id: exhibit.id,
+              subSectionId: exhibit.subSectionId,
+              position: index
+            }))
+          )
+        );
+        console.log("exhibitPositions: ", exhibitPositions);
+        setUpdatedExhibitsPosition(exhibitPositions);
+      }
     }
   };
 
-  const updateSectionPostionInDb = () => {
-    if (updatedSections) updateSectionPostion(updatedSections);
-  };
+  const updateSectionPostionInDb = () => {};
 
   const updateSubSectionPostionInDb = () => {
-    if (updatedSubSections) updateSubSectionPostion(updatedSubSections);
+    if (updatedSectionsPosition) updateSectionPostion(updatedSectionsPosition);
+    if (updatedSubSectionsPosition) updateSubSectionPostion(updatedSubSectionsPosition);
+    if (updatedExhibitsPosition) updateExhibitPostion(updatedExhibitsPosition);
   };
 
   const toggleSubSection = (id: string, index: number) => {
@@ -177,7 +270,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                         ref={provided.innerRef}
                         className="text-center"
                       >
-                        <Droppable droppableId={section.id}>
+                        <Droppable droppableId={section.id} type="section">
                           {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
                               <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
@@ -230,7 +323,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                         ref={provided.innerRef}
                                         className=""
                                       >
-                                        <Droppable droppableId={subsection.id}>
+                                        <Droppable droppableId={subsection.id} type="subsection">
                                           {(provided) => (
                                             <div
                                               {...provided.droppableProps}
@@ -246,6 +339,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                                   {subsection.title}
                                                 </p>
+                                                <p>{subsection.id}</p>
                                                 <p className="m-0">
                                                   {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
                                                   <AddDialog
@@ -312,7 +406,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           )}
         </Droppable>
       </DragDropContext>
-      {updatedSections || updatedSubSections ? (
+      {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
         <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
           <Button variant={"secondary"}>Cancel</Button>
           <Button variant={"primary"} onClick={updateSubSectionPostionInDb}>

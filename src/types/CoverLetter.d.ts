@@ -7,7 +7,7 @@ interface ExhibitType {
   description: Prisma.JsonArray;
   comments: string | null;
   position: number;
-  subSectionId: string | null;
+  subSectionId: string;
 }
 
 interface SubSectionType {
@@ -47,4 +47,10 @@ export interface SubSectionPositionType {
   id: string;
   position: number;
   sectionId: string;
+}
+
+export interface ExhibitPositionType {
+  id: string;
+  position: number;
+  subSectionId: string;
 }

@@ -232,6 +232,42 @@ export const coverletterRouter = router({
       });
 
       return { success: true };
+    }),
+
+  updateExhibitPostion: publiceProcedure
+    .input(
+      z.array(
+        z.object({
+          id: z.string(),
+          subSectionId: z.string(),
+          position: z.number()
+        })
+      )
+    )
+    .mutation(async ({ input }) => {
+      const exhibitsData = input;
+
+      try {
+        await Promise.all(
+          exhibitsData.map(async (exhibit) => {
+            await db.exhibits.update({
+              where: {
+                id: exhibit.id
+              },
+              data: {
+                position: exhibit.position,
+                subSectionId: exhibit.subSectionId
+              }
+            });
+          })
+        );
+
+        return { success: true };
+      } catch (error) {
+        // Handle the error appropriately
+        console.error("Error updating exhibits:", error);
+        return { success: false, error: "An error occurred while updating exhibits." };
+      }
     })
 
   // getFirmCoverLetter: firmProcedure.input().query(async () => {
