@@ -86,6 +86,11 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   const [sections, setSections] = useState<SectionType[]>();
 
   const [isSubSectionVisible, setIsSubSectionVisible] = useState<{ [key: number]: boolean }>({});
+  const [isExhibitVisible, setIsExhibitVisible] = useState<{
+    [key: number]: {
+      [key: number]: boolean;
+    };
+  }>([]);
 
   const [updatedSectionsPosition, setupdatedSectionsPosition] = useState<SectionPositionType[]>();
   const [updatedSubSectionsPosition, setupdatedSubSectionsPosition] =
@@ -247,11 +252,26 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
     if (updatedExhibitsPosition) updateExhibitPostion(updatedExhibitsPosition);
   };
 
-  const toggleSubSection = (id: string, index: number) => {
+  const toggleSubSection = (index: number) => {
     setIsSubSectionVisible((prevState) => ({
       ...prevState,
       [index]: !prevState[index]
     }));
+  };
+
+  const toggleExhibit = (outerKey: number, innerKey: number) => {
+    console.log("outerKey: ", outerKey);
+    console.log("innerKey: ", innerKey);
+    setIsExhibitVisible((prevState) => {
+      // Clone the previous state
+      const newState = { ...prevState };
+
+      // Toggle the boolean value of the inner key
+      newState[outerKey] = { ...newState[outerKey], [innerKey]: !newState[outerKey]?.[innerKey] };
+
+      // Return the updated state
+      return newState;
+    });
   };
 
   return (
@@ -261,8 +281,8 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           {(provided) => (
             <main className="w-full" {...provided.droppableProps} ref={provided.innerRef}>
               {sections &&
-                sections.map((section, index) => (
-                  <Draggable draggableId={section.id} key={section.id} index={index}>
+                sections.map((section, indexSection) => (
+                  <Draggable draggableId={section.id} key={section.id} index={indexSection}>
                     {(provided) => (
                       <div
                         {...provided.dragHandleProps}
@@ -273,13 +293,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                         <Droppable droppableId={section.id} type="section">
                           {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
-                              <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-secondary p-3">
+                              <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-[#f6f6f7] p-3">
                                 <GripVertical size={18} className="w-16" />
                                 <button
-                                  onClick={() => toggleSubSection(section.id, index)}
+                                  onClick={() => toggleSubSection(indexSection)}
                                   className="hover:selector"
                                 >
-                                  {isSubSectionVisible[index] ? (
+                                  {isSubSectionVisible[indexSection] ? (
                                     <ChevronDown size={18} className="w-16" />
                                   ) : (
                                     <ChevronRight size={18} className="w-16" />
@@ -287,7 +307,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                                 <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                  Section-{index + 1}
+                                  Section-{indexSection + 1}
                                 </h2>
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                   {section.title}
@@ -308,13 +328,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                               </section>
                               {/* Subsection Drag and Drop */}
                               <div
-                                className={`${isSubSectionVisible[index] ? "h-auto" : "hidden h-0"}`}
+                                className={`${isSubSectionVisible[indexSection] ? "h-auto" : "hidden h-0"}`}
                               >
-                                {section.SubSection.map((subsection, index) => (
+                                {section.SubSection.map((subsection, indexSubsection) => (
                                   <Draggable
                                     draggableId={subsection.id}
                                     key={subsection.id}
-                                    index={index}
+                                    index={indexSubsection}
                                   >
                                     {(provided) => (
                                       <div
@@ -332,14 +352,26 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                             >
                                               <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-12">
                                                 <GripVertical size={18} className="w-16" />
-                                                <ChevronDown size={18} className="w-16" />
+                                                <button
+                                                  onClick={() =>
+                                                    toggleExhibit(indexSection, indexSubsection)
+                                                  }
+                                                  className="hover:selector"
+                                                >
+                                                  {isExhibitVisible[indexSection]?.[
+                                                    indexSubsection
+                                                  ] ? (
+                                                    <ChevronDown size={18} className="w-16" />
+                                                  ) : (
+                                                    <ChevronRight size={18} className="w-16" />
+                                                  )}
+                                                </button>
                                                 <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                                  Sub-Section-{index + 1}
+                                                  Sub-Section-{indexSubsection + 1}
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                                   {subsection.title}
                                                 </p>
-                                                <p>{subsection.id}</p>
                                                 <p className="m-0">
                                                   {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
                                                   <AddDialog
@@ -354,36 +386,44 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   Comment
                                                 </i>
                                               </section>
-                                              {subsection.Exhibits.map((exhibit, index) => (
-                                                <Draggable
-                                                  draggableId={exhibit.id}
-                                                  key={exhibit.id}
-                                                  index={index}
-                                                >
-                                                  {(provided) => (
-                                                    <div
-                                                      {...provided.dragHandleProps}
-                                                      {...provided.draggableProps}
-                                                      ref={provided.innerRef}
-                                                    >
-                                                      <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-16">
-                                                        <GripVertical size={18} className="w-16" />
-                                                        <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                                          Exhibit-{index + 1}
-                                                        </h2>
-                                                        <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                          {exhibit.title}
-                                                        </p>
-                                                        <p>{exhibit.position}</p>
-                                                        <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
-                                                          <MessageCircle size={16} />
-                                                          Comment
-                                                        </i>
-                                                      </section>
-                                                    </div>
-                                                  )}
-                                                </Draggable>
-                                              ))}
+                                              {/* Exhibits Drag and Drop */}
+                                              <div
+                                                className={`${isExhibitVisible[indexSection]?.[indexSubsection] ? "h-auto" : "hidden h-0"}`}
+                                              >
+                                                {subsection.Exhibits.map((exhibit, index) => (
+                                                  <Draggable
+                                                    draggableId={exhibit.id}
+                                                    key={exhibit.id}
+                                                    index={index}
+                                                  >
+                                                    {(provided) => (
+                                                      <div
+                                                        {...provided.dragHandleProps}
+                                                        {...provided.draggableProps}
+                                                        ref={provided.innerRef}
+                                                      >
+                                                        <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-16">
+                                                          <GripVertical
+                                                            size={18}
+                                                            className="w-16"
+                                                          />
+                                                          <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                            Exhibit-{index + 1}
+                                                          </h2>
+                                                          <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
+                                                            {exhibit.title}
+                                                          </p>
+                                                          <p>{exhibit.position}</p>
+                                                          <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                                            <MessageCircle size={16} />
+                                                            Comment
+                                                          </i>
+                                                        </section>
+                                                      </div>
+                                                    )}
+                                                  </Draggable>
+                                                ))}
+                                              </div>
                                               {provided.placeholder}
                                             </div>
                                           )}
