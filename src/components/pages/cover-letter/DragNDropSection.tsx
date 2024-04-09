@@ -16,7 +16,9 @@ import AddDialog from "./AddDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
-  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId, {
+    refetchOnWindowFocus: true
+  });
 
   const { data: SectionsData, isLoading, error } = data;
 

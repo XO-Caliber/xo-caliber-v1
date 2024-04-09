@@ -31,6 +31,7 @@ const AddDialogContent = ({
   contentType: string;
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const ref = useRef<EditorJS>();
 
@@ -106,7 +107,7 @@ const AddDialogContent = ({
       });
     },
     onSettled() {
-      // setLoading(false);
+      setLoading(false);
     }
   });
 
@@ -114,7 +115,7 @@ const AddDialogContent = ({
     onSuccess({ success }) {
       if (success) {
         toast({
-          title: "New Sub Section Added",
+          title: "New SubSection Added",
           description: "Successfully added new sub section"
         });
       }
@@ -126,7 +127,7 @@ const AddDialogContent = ({
       });
     },
     onSettled() {
-      // setLoading(false);
+      setLoading(false);
     }
   });
 
@@ -146,13 +147,13 @@ const AddDialogContent = ({
       });
     },
     onSettled() {
-      // setLoading(false);
+      setLoading(false);
     }
   });
 
   const onSubmit = async (values: z.infer<typeof coverLetterSchema>) => {
     const blocks = await ref.current?.save();
-
+    setLoading(true);
     console.log(values);
     console.log(JSON.stringify(blocks));
     console.log(itemId);
@@ -174,6 +175,7 @@ const AddDialogContent = ({
           description: blocks,
           comments: values.comment
         });
+        break;
       case "exhibit":
         addExhibit({
           userId,
@@ -182,6 +184,7 @@ const AddDialogContent = ({
           description: blocks,
           comments: values.comment
         });
+        break;
     }
   };
 
@@ -237,9 +240,9 @@ const AddDialogContent = ({
           />
           <div className="col-start-3 col-end-3 row-start-3 row-end-3 flex justify-between">
             <DialogClose>
-              <Button>Close</Button>
+              <Button type="reset">Close</Button>
             </DialogClose>
-            <Button variant={"primary"} type="submit">
+            <Button variant={"primary"} type="submit" isLoading={loading}>
               Submit
             </Button>
           </div>

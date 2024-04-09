@@ -34,7 +34,7 @@ const AddDialog = ({
       break;
     case "subSection":
       title = "Add Sub section";
-      buttonText = "Add Sub Section";
+      buttonText = "Add SubSection";
       contentComponent = (
         <AddDialogContent userId={userId} itemId={itemId} contentType={dialogType} />
       );
