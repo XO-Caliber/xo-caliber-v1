@@ -21,11 +21,11 @@ export const FirmCoverLetter = ({ user }: { user: Baseuser }) => {
           Assign Assistant
         </Button>
         <AddCoverLetterDialog userId={user.id} />
-        <AddSectionDialog />
+        {/* <AddSectionDialog /> */}
         <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
-        <ViewCoverLetter />
+        {/* <ViewCoverLetter /> */}
       </div>
       {/* <DragNDropSection /> */}
     </section>

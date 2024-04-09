@@ -59,6 +59,7 @@
     "react-hook-form": "^7.49.2",
     "react-resizable-panels": "^1.0.10",
     "resend": "^2.1.0",
+    "sharp": "^0.33.3",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
