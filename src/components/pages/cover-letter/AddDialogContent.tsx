@@ -21,15 +21,14 @@ import { DialogClose } from "@/components/ui/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 
-const AddDialogContent = ({
-  userId,
-  itemId,
-  contentType
-}: {
+interface AddDialogContentProps {
   userId: string;
   itemId: string;
   contentType: string;
-}) => {
+  refetchData: () => void;
+}
+
+const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialogContentProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -93,6 +92,7 @@ const AddDialogContent = ({
 
   const { mutate: addSection } = trpc.coverletter.addSection.useMutation({
     onSuccess({ success }) {
+      refetchData();
       if (success) {
         toast({
           title: "New Section Added",
@@ -113,6 +113,7 @@ const AddDialogContent = ({
 
   const { mutate: addSubSection } = trpc.coverletter.addSubSection.useMutation({
     onSuccess({ success }) {
+      refetchData();
       if (success) {
         toast({
           title: "New SubSection Added",
@@ -133,6 +134,7 @@ const AddDialogContent = ({
 
   const { mutate: addExhibit } = trpc.coverletter.addExhibits.useMutation({
     onSuccess({ success }) {
+      refetchData();
       if (success) {
         toast({
           title: "New Exhibit Added",

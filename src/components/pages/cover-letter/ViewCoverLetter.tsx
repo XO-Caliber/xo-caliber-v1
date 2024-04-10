@@ -3,8 +3,6 @@ import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
-import AddSectionDialog from "./AddSectionDialog";
-import { Button } from "@/components/ui/Button";
 import AddDialog from "./AddDialog";
 
 export const ViewCoverLetter = ({
@@ -23,6 +21,10 @@ export const ViewCoverLetter = ({
     }));
   };
 
+  const refetchData = () => {
+    console.log("Data refetch");
+  };
+
   return (
     <main>
       {CoverLetterData?.map((coverLetter, index) => (
@@ -36,7 +38,12 @@ export const ViewCoverLetter = ({
             <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
-              <AddDialog userId={userId} itemId={coverLetter.id} dialogType="section" />
+              <AddDialog
+                userId={userId}
+                itemId={coverLetter.id}
+                dialogType="section"
+                refetchData={refetchData}
+              />
             </div>
             <p className="ml-auto mr-10 justify-items-end text-sm font-medium text-muted-foreground">
               Comments

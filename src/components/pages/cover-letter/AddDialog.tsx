@@ -8,42 +8,53 @@ import {
   DialogTrigger
 } from "@/components/ui/Dialog";
 import { PlusSquare } from "lucide-react";
-import AddSectionDialogContent from "./AddSectionDialogContent";
-import AddSubSectionDialogContent from "./AddSubSectionDialogContent";
 import AddDialogContent from "./AddDialogContent";
 
-const AddDialog = ({
-  userId,
-  itemId,
-  dialogType
-}: {
+interface AddDialogProps {
   userId: string;
   itemId: string;
   dialogType: string;
-}) => {
+  refetchData: () => void;
+}
+
+const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) => {
   let title, buttonText, contentComponent;
 
   switch (dialogType) {
     case "section":
       title = "Add Section";
       buttonText = "Create Section";
-      // contentComponent = <AddSectionDialogContent userId={userId} coverLetterId={itemId} />;
       contentComponent = (
-        <AddDialogContent userId={userId} itemId={itemId} contentType={dialogType} />
+        <AddDialogContent
+          userId={userId}
+          itemId={itemId}
+          contentType={dialogType}
+          refetchData={refetchData}
+        />
       );
       break;
     case "subSection":
       title = "Add Sub section";
       buttonText = "Add SubSection";
       contentComponent = (
-        <AddDialogContent userId={userId} itemId={itemId} contentType={dialogType} />
+        <AddDialogContent
+          userId={userId}
+          itemId={itemId}
+          contentType={dialogType}
+          refetchData={refetchData}
+        />
       );
       break;
     case "exhibit":
       title = "Add Exhibit";
       buttonText = "Add Exhibit";
       contentComponent = (
-        <AddDialogContent userId={userId} itemId={itemId} contentType={dialogType} />
+        <AddDialogContent
+          userId={userId}
+          itemId={itemId}
+          contentType={dialogType}
+          refetchData={refetchData}
+        />
       );
       break;
     default:

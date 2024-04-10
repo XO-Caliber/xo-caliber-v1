@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
 import { UserPlus } from "lucide-react";
-import AddSectionDialog from "../AddSectionDialog";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";

@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
+import ViewDialog from "./ViewDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -19,10 +20,14 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   const { data: SectionsData, isLoading, error } = data;
 
+  const refetchData = () => {
+    data.refetch();
+  };
+
   const { mutate: updateSectionPostion } = trpc.coverletter.updateSectionPostion.useMutation({
     onSuccess({ success }) {
       if (success) {
-        data.refetch();
+        refetchData();
         toast({
           title: "section postion updated",
           description: "Successfully updated the section"
@@ -43,7 +48,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   const { mutate: updateSubSectionPostion } = trpc.coverletter.updateSubSectionPostion.useMutation({
     onSuccess({ success }) {
       if (success) {
-        data.refetch();
+        refetchData();
         toast({
           title: "SubSections postion updated",
           description: "Successfully updated the SubSection"
@@ -64,7 +69,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   const { mutate: updateExhibitPostion } = trpc.coverletter.updateExhibitPostion.useMutation({
     onSuccess({ success }) {
       if (success) {
-        data.refetch();
+        refetchData();
         toast({
           title: "Exhibits postion updated",
           description: "Successfully updated the Exhibit"
@@ -287,21 +292,29 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                         {...provided.dragHandleProps}
                         {...provided.draggableProps}
                         ref={provided.innerRef}
-                        className="text-center"
+                        className="border-x-2 border-border text-center"
                       >
                         <Droppable droppableId={section.id} type="section">
                           {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
-                              <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-[#f6f6f7] p-3">
+                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-[#f6f6f7] p-3">
                                 <GripVertical size={18} className="w-16" />
                                 <button
                                   onClick={() => toggleSubSection(indexSection)}
                                   className="hover:selector"
                                 >
                                   {isSubSectionVisible[indexSection] ? (
-                                    <ChevronDown size={18} className="w-16" />
+                                    <ChevronDown
+                                      size={50}
+                                      strokeWidth={1.5}
+                                      className="h-full w-full opacity-60"
+                                    />
                                   ) : (
-                                    <ChevronRight size={18} className="w-16" />
+                                    <ChevronRight
+                                      size={50}
+                                      strokeWidth={1.5}
+                                      className="h-full w-full opacity-60"
+                                    />
                                   )}
                                 </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
@@ -309,7 +322,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   Section-{indexSection + 1}
                                 </h2>
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                  {section.title}
+                                  {/* {section.title} */}
+                                  <ViewDialog
+                                    dialogType="section"
+                                    title={section.title}
+                                    description={section.description}
+                                    comments={section.comments}
+                                  />
                                 </p>
                                 <p className="m-0">
                                   {/* <AddSubSectionDialog userId={userId} sectionId={section.id} /> */}
@@ -317,6 +336,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     userId={userId}
                                     itemId={section.id}
                                     dialogType="subSection"
+                                    refetchData={refetchData}
                                   />
                                 </p>
                                 <p>{section.position}</p>
@@ -347,9 +367,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                             <div
                                               {...provided.droppableProps}
                                               ref={provided.innerRef}
-                                              className=""
+                                              className="pl-12"
                                             >
-                                              <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-12">
+                                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-3">
                                                 <GripVertical size={18} className="w-16" />
                                                 <button
                                                   onClick={() =>
@@ -360,9 +380,15 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   {isExhibitVisible[indexSection]?.[
                                                     indexSubsection
                                                   ] ? (
-                                                    <ChevronDown size={18} className="w-16" />
+                                                    <ChevronDown
+                                                      size={45}
+                                                      className="h-full w-full opacity-60"
+                                                    />
                                                   ) : (
-                                                    <ChevronRight size={18} className="w-16" />
+                                                    <ChevronRight
+                                                      size={45}
+                                                      className="h-full w-full opacity-60"
+                                                    />
                                                   )}
                                                 </button>
                                                 <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
@@ -377,6 +403,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     userId={userId}
                                                     itemId={subsection.id}
                                                     dialogType="exhibit"
+                                                    refetchData={refetchData}
                                                   />
                                                 </p>
                                                 <p>{subsection.position}</p>
@@ -400,8 +427,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                         {...provided.dragHandleProps}
                                                         {...provided.draggableProps}
                                                         ref={provided.innerRef}
+                                                        className="pl-16"
                                                       >
-                                                        <section className="flex h-full w-full items-center justify-normal gap-6 border border-border bg-white p-3 pl-16">
+                                                        <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-3">
                                                           <GripVertical
                                                             size={18}
                                                             className="w-16"

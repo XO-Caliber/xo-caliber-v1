@@ -46,6 +46,7 @@
     "chart.js": "^4.4.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "editorjs-react-renderer": "^3.5.1",
     "exceljs": "^4.4.0",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.8.2",
