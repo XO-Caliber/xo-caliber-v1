@@ -2,7 +2,6 @@
 import { ChevronDown, ChevronRight, GripVertical, MessageCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
-import AddSubSectionDialog from "./AddSubSectionDialog";
 import { trpc } from "@/app/_trpc/client";
 import {
   ExhibitPositionType,
@@ -16,9 +15,7 @@ import AddDialog from "./AddDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
-  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId, {
-    refetchOnWindowFocus: true
-  });
+  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
 
   const { data: SectionsData, isLoading, error } = data;
 
