@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
 import AddDialog from "./AddDialog";
+import { DialogType } from "@/types/Dialog";
 
 export const ViewCoverLetter = ({
   CoverLetterData,
@@ -41,7 +42,7 @@ export const ViewCoverLetter = ({
               <AddDialog
                 userId={userId}
                 itemId={coverLetter.id}
-                dialogType="section"
+                dialogType={DialogType.Section}
                 refetchData={refetchData}
               />
             </div>

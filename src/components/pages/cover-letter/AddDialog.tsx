@@ -9,11 +9,12 @@ import {
 } from "@/components/ui/Dialog";
 import { PlusSquare } from "lucide-react";
 import AddDialogContent from "./AddDialogContent";
+import { DialogType } from "@/types/Dialog";
 
 interface AddDialogProps {
   userId: string;
   itemId: string;
-  dialogType: string;
+  dialogType: DialogType;
   refetchData: () => void;
 }
 
@@ -21,7 +22,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
   let title, buttonText, contentComponent;
 
   switch (dialogType) {
-    case "section":
+    case "Section":
       title = "Add Section";
       buttonText = "Create Section";
       contentComponent = (
@@ -33,7 +34,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
         />
       );
       break;
-    case "subSection":
+    case "Subsection":
       title = "Add Sub section";
       buttonText = "Add SubSection";
       contentComponent = (
@@ -45,7 +46,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
         />
       );
       break;
-    case "exhibit":
+    case "Exhibit":
       title = "Add Exhibit";
       buttonText = "Add Exhibit";
       contentComponent = (

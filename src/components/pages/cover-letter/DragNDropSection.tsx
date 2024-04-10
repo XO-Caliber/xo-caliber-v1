@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
 import ViewDialog from "./ViewDialog";
+import { DialogType } from "@/types/Dialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -324,7 +325,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                   {/* {section.title} */}
                                   <ViewDialog
-                                    dialogType="section"
+                                    dialogType={DialogType.Section}
                                     title={section.title}
                                     description={section.description}
                                     comments={section.comments}
@@ -335,7 +336,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   <AddDialog
                                     userId={userId}
                                     itemId={section.id}
-                                    dialogType="subSection"
+                                    dialogType={DialogType.Subsection}
                                     refetchData={refetchData}
                                   />
                                 </p>
@@ -395,14 +396,19 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   Sub-Section-{indexSubsection + 1}
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                  {subsection.title}
+                                                  <ViewDialog
+                                                    dialogType={DialogType.Subsection}
+                                                    title={subsection.title}
+                                                    description={subsection.description}
+                                                    comments={subsection.comments}
+                                                  />
                                                 </p>
                                                 <p className="m-0">
                                                   {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
                                                   <AddDialog
                                                     userId={userId}
                                                     itemId={subsection.id}
-                                                    dialogType="exhibit"
+                                                    dialogType={DialogType.Exhibit}
                                                     refetchData={refetchData}
                                                   />
                                                 </p>
@@ -438,7 +444,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             Exhibit-{index + 1}
                                                           </h2>
                                                           <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                            {exhibit.title}
+                                                            <ViewDialog
+                                                              dialogType={DialogType.Exhibit}
+                                                              title={exhibit.title}
+                                                              description={exhibit.description}
+                                                              comments={exhibit.comments}
+                                                            />
                                                           </p>
                                                           <p>{exhibit.position}</p>
                                                           <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">

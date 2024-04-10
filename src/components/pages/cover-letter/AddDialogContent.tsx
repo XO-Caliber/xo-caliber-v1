@@ -20,11 +20,12 @@ import { Textarea } from "@/components/ui/Textarea";
 import { DialogClose } from "@/components/ui/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
+import { DialogType } from "@/types/Dialog";
 
 interface AddDialogContentProps {
   userId: string;
   itemId: string;
-  contentType: string;
+  contentType: DialogType;
   refetchData: () => void;
 }
 
@@ -85,10 +86,6 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
       init();
     }
   }, [isMounted, initializeEditor]);
-
-  switch (contentType) {
-    case "section":
-  }
 
   const { mutate: addSection } = trpc.coverletter.addSection.useMutation({
     onSuccess({ success }) {
@@ -160,7 +157,7 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
     console.log(JSON.stringify(blocks));
     console.log(itemId);
     switch (contentType) {
-      case "section":
+      case "Section":
         addSection({
           userId: userId,
           coverLetterId: itemId,
@@ -169,7 +166,7 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
           comments: values.comment
         });
         break;
-      case "subSection":
+      case "Subsection":
         addSubSection({
           userId,
           sectionId: itemId,
@@ -178,7 +175,7 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
           comments: values.comment
         });
         break;
-      case "exhibit":
+      case "Exhibit":
         addExhibit({
           userId,
           subSectionId: itemId,

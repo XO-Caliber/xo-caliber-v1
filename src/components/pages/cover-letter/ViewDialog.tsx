@@ -10,28 +10,27 @@ import {
 } from "@/components/ui/Dialog";
 import { Prisma } from "@prisma/client";
 import EditorOutput from "./utils/EditorOutput";
+import { DialogType } from "@/types/Dialog";
 
 interface ViewDialogProps {
   title: string;
   description: Prisma.JsonArray;
   comments: string | null;
-  dialogType: string;
+  dialogType: DialogType;
 }
 
 const ViewDialog = ({ title, description, comments, dialogType }: ViewDialogProps) => {
-  let buttonText, contentComponent;
+  let buttonText;
 
   switch (dialogType) {
-    case "section":
-      contentComponent = "Section content";
+    case "Section":
+      buttonText = "View Section";
       break;
-    case "subSection":
-      buttonText = "Add SubSection";
-      contentComponent = "Subsection Content";
+    case "Subsection":
+      buttonText = "View SubSection";
       break;
-    case "exhibit":
-      buttonText = "Add Exhibit";
-      contentComponent = "Exhibit Content";
+    case "Exhibit":
+      buttonText = "View Exhibit";
       break;
     default:
       return null;
@@ -44,7 +43,7 @@ const ViewDialog = ({ title, description, comments, dialogType }: ViewDialogProp
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="border-b-2 border-border pb-2 text-left">
-          <DialogTitle>{title}</DialogTitle>
+          <DialogTitle>{buttonText}</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when youre done.
           </DialogDescription>
@@ -53,7 +52,7 @@ const ViewDialog = ({ title, description, comments, dialogType }: ViewDialogProp
           <main>
             <section className="grid grid-cols-2  gap-6">
               <ul className="col-span-2">
-                <li className="mb-2 text-lg font-bold">{buttonText}</li>
+                <li className="mb-2 text-base font-bold">Title</li>
                 <li>{title}</li>
               </ul>
 
@@ -65,17 +64,15 @@ const ViewDialog = ({ title, description, comments, dialogType }: ViewDialogProp
 
               <ul className="col-start-3 col-end-4 row-start-1 row-end-3">
                 <li className="mb-2 text-lg">Comments</li>
-
-                <li className="h-3/4 w-36 overflow-x-auto bg-secondary text-sm">{comments}</li>
+                <li className="h-3/4 w-36 overflow-x-auto bg-secondary p-2 text-sm">{comments}</li>
               </ul>
 
-              <div className="col-start-3 col-end-3 row-start-3 row-end-3 flex justify-between">
-                <DialogClose>
-                  <Button type="reset">Close</Button>
+              <div className="col-start-3 col-end-3 row-start-3 row-end-3 flex justify-center">
+                <DialogClose className="w-full">
+                  <Button type="reset" className="w-full">
+                    Close
+                  </Button>
                 </DialogClose>
-                <Button variant={"primary"} type="submit">
-                  Submit
-                </Button>
               </div>
             </section>
           </main>
