@@ -21,15 +21,23 @@ import { DialogClose } from "@/components/ui/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 import { DialogType } from "@/types/Dialog";
+import { Prisma } from "@prisma/client";
 
-interface AddDialogContentProps {
-  userId: string;
-  itemId: string;
+interface EditDialogContentProps {
+  title: string;
+  description: Prisma.JsonArray;
+  comments: string | null;
   contentType: DialogType;
   refetchData: () => void;
 }
 
-const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialogContentProps) => {
+const EditDialogContent = ({
+  title,
+  description,
+  comments,
+  contentType,
+  refetchData
+}: EditDialogContentProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -60,15 +68,15 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
         },
         placeholder: "Type here your description here...",
         inlineToolbar: true,
-        data: {
-          blocks: []
-        },
+        //@ts-ignore
+        data: description,
         tools: {
           header: Header,
           table: Table,
           list: List
         },
-        autofocus: true
+        autofocus: true,
+        readOnly: true
       });
     }
   }, []);
@@ -156,36 +164,6 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
     setLoading(true);
     console.log(values);
     console.log(JSON.stringify(blocks));
-    console.log(itemId);
-    switch (contentType) {
-      case "Section":
-        addSection({
-          userId: userId,
-          coverLetterId: itemId,
-          title: values.title,
-          description: blocks,
-          comments: values.comment
-        });
-        break;
-      case "Subsection":
-        addSubSection({
-          userId,
-          sectionId: itemId,
-          title: values.title,
-          description: blocks,
-          comments: values.comment
-        });
-        break;
-      case "Exhibit":
-        addExhibit({
-          userId,
-          subSectionId: itemId,
-          title: values.title,
-          description: blocks,
-          comments: values.comment
-        });
-        break;
-    }
   };
 
   return (
@@ -199,7 +177,7 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
               <FormItem className="col-span-2">
                 <FormLabel className="mb-2 text-lg font-bold">{contentType}</FormLabel>
                 <FormControl>
-                  <Input placeholder={`${contentType} title`} {...field} />
+                  <Input {...field} type="text" value={title} disabled />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -230,9 +208,12 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
                 <FormLabel className="mb-2 text-lg">Comments</FormLabel>
                 <FormControl>
                   <Textarea
+                    disabled={true}
                     className="h-3/4 max-h-full resize-none overflow-x-auto bg-secondary"
                     {...field}
-                  />
+                  >
+                    {comments}
+                  </Textarea>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -252,4 +233,4 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
   );
 };
 
-export default AddDialogContent;
+export default EditDialogContent;

@@ -14,6 +14,7 @@ import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
 import ViewDialog from "./ViewDialog";
 import { DialogType } from "@/types/Dialog";
+import EditDialog from "./EditDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -340,7 +341,16 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     refetchData={refetchData}
                                   />
                                 </p>
-                                <p>{section.position}</p>
+                                <p>
+                                  <EditDialog
+                                    title={section.title}
+                                    description={section.description}
+                                    comments={section.comments}
+                                    dialogType={DialogType.Section}
+                                    refetchData={refetchData}
+                                  />
+                                </p>
+                                {/* <p>{section.position}</p> */}
                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                   <MessageCircle size={16} />
                                   Comment
@@ -412,7 +422,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     refetchData={refetchData}
                                                   />
                                                 </p>
-                                                <p>{subsection.position}</p>
+                                                {/* <p>{subsection.position}</p> */}
                                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                   <MessageCircle size={16} />
                                                   Comment
@@ -451,7 +461,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                               comments={exhibit.comments}
                                                             />
                                                           </p>
-                                                          <p>{exhibit.position}</p>
+                                                          {/* <p>{exhibit.position}</p> */}
                                                           <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                             <MessageCircle size={16} />
                                                             Comment

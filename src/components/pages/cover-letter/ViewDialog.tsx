@@ -11,6 +11,7 @@ import {
 import { Prisma } from "@prisma/client";
 import EditorOutput from "./utils/EditorOutput";
 import { DialogType } from "@/types/Dialog";
+import EditDialog from "./EditDialog";
 
 interface ViewDialogProps {
   title: string;
