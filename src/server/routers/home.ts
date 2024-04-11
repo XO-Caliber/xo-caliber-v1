@@ -22,7 +22,8 @@ export const homeRouter = router({
         email: session.user.email
       },
       include: {
-        Firm: true
+        Firm: true,
+        Assistants: true
       }
     });
     if (!user) {
@@ -36,6 +37,7 @@ export const homeRouter = router({
         firmId: null
       }
     });
+
     await db.answer.deleteMany({
       where: {
         userId: session.user.id
@@ -482,5 +484,17 @@ export const homeRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  checkHasFirm: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const check = await db.user.findUnique({
+      where: {
+        id: session?.user.id
+      }
+    });
+    if (!check?.firmId) {
+      return false;
+    }
+    return { success: true };
+  })
 });

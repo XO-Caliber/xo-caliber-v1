@@ -74,7 +74,7 @@ export const Navbar = async () => {
         </div>
       </Link> */}
       <div className="cursor-pointer">
-        <WorkSpace />
+        <WorkSpace userRole={session?.user.role} />
       </div>
       <Link href={"/dashboard"}>
         <div className=" cursor-pointer border-2 border-x-0 hover:bg-primary">

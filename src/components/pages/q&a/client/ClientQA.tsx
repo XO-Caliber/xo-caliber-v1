@@ -27,13 +27,14 @@ interface userProfile {
 }
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
-  const [userType, setUserType] = useState("firm");
+  const { data: hasFirm } = trpc.home.checkHasFirm.useQuery();
+  // const [userType, setUserType] = useState("firm");
   const [hidden, setHidden] = useState(false);
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());
   let categoriesList;
 
-  userType === "firm"
+  hasFirm !== false
     ? (categoriesList = trpc.question.getClientQuestions.useQuery())
     : (categoriesList = trpc.question.getClientAdminQuestions.useQuery());
 
@@ -47,7 +48,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
       setListCat(newSet);
       setCatArray(Array.from(newSet));
     }
-  }, [userType, categories]);
+  }, [hasFirm, categories]);
 
   const { mutate: updateChecked } = trpc.question.addClientChecked.useMutation({
     onSuccess({ success }) {
@@ -65,7 +66,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
   const handleChange = (userType: string) => {
     setListCat(new Set());
     setCatArray([]);
-    setUserType(userType);
+    // setUserType(userType);
     setHidden(false);
   };
   return (
@@ -73,7 +74,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
         <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
         <span className="mr-10 w-32">
-          <Select onValueChange={handleChange}>
+          {/* <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
               <SelectValue placeholder="Firm" />
             </SelectTrigger>
@@ -81,7 +82,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               <SelectItem value="firm">Firm</SelectItem>
               <SelectItem value="default">Default</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </span>
       </div>
       {listCat.size > 0 && (
@@ -158,9 +159,9 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
         </div>
       )}
       {!listCat.size &&
-        (userType === "firm" ? (
+        (hasFirm !== false ? (
           <div className="flex h-[70vh] items-center justify-center">
-            <text>Join under a firm to view questions</text>
+            <text>Loading</text>
           </div>
         ) : (
           <div className="flex h-[70vh] items-center justify-center">

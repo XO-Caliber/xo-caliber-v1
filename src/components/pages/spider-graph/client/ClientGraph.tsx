@@ -9,24 +9,26 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/Select";
+import { trpc } from "@/app/_trpc/client";
 interface userProps {
   user: string;
 }
 const ClientGraph = ({ user }: userProps) => {
-  const [userType, setUserType] = useState("firm");
+  const { data: hasFirm } = trpc.home.checkHasFirm.useQuery();
+  // const [userType, setUserType] = useState("firm");
 
-  const handleChange = (userType: string) => {
-    setUserType(userType);
-  };
+  // const handleChange = (userType: string) => {
+  //   setUserType(userType);
+  // };
 
-  console.log(userType);
+  // console.log(userType);
 
   return (
     <div>
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
         <p className="m-4 mt-[1.2rem] font-bold text-muted">Spider Graph</p>
         <span className="mr-10 w-32">
-          <Select onValueChange={handleChange}>
+          {/* <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
               <SelectValue placeholder="Firm" />
             </SelectTrigger>
@@ -34,10 +36,10 @@ const ClientGraph = ({ user }: userProps) => {
               <SelectItem value="firm">Firm</SelectItem>
               <SelectItem value="default">Default</SelectItem>
             </SelectContent>
-          </Select>
+          </Select> */}
         </span>
       </div>
-      {userType === "default" ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
+      {hasFirm === false ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
     </div>
   );
 };
