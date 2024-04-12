@@ -72,6 +72,7 @@ model User {
 
   FirmNote    FirmNote?
   UserChecked UserChecked[]
+  CoverLetter CoverLetter[]
 }
 
 model Firm {
@@ -88,7 +89,6 @@ model Firm {
   categoryId String?
   Note       FirmNote[]
 
-  coverletter  CoverLetter[]
   CheckHeading CheckHeading[]
 }
 
@@ -227,9 +227,8 @@ model CoverLetter {
 
   Admin   Admin?  @relation(fields: [adminId], references: [adminId])
   adminId String?
-
-  Firm   Firm?   @relation(fields: [firmId], references: [firmId])
-  firmId String?
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String?
 }
 
 model Section {

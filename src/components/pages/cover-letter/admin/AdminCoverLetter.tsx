@@ -12,7 +12,7 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
     data: CoverLetterData,
     isLoading,
     error
-  } = trpc.coverletter.getAdminCoverLetter.useQuery(user.id);
+  } = trpc.coverletter.getCoverLetter.useQuery({ role: "ADMIN", userId: user.id });
 
   return (
     <section>
@@ -25,7 +25,7 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
           <UserPlus size={16} className="mr-2" />
           Assign Assistant
         </Button>
-        <AddCoverLetterDialog userId={user.id} />
+        <AddCoverLetterDialog userId={user.id} role="ADMIN" />
         <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>

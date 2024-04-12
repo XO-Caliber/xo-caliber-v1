@@ -129,7 +129,7 @@ export const homeRouter = router({
     return results?.assistant;
   }),
 
-  clientList: adminProcedure.query(async () => {
+  clientList: firmProcedure.query(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
     const clientList = await db.firm.findUnique({

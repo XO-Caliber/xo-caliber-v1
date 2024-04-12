@@ -6,14 +6,15 @@ import { UserPlus } from "lucide-react";
 import AddSectionDialog from "../AddSectionDialog";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { trpc } from "@/app/_trpc/client";
+import AssistantUserSelect from "../../spider-graph/assistant/AssistantUserSelect";
 
-export const FirmCoverLetter = () => {
-  // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
+export const AssistantCoverLetter = () => {
+  // const categoriesResult = trpc.coverletter.getAssistantCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
-    role: "FIRM",
+    role: "ASSISTANT",
     userId: user
   });
 
@@ -34,8 +35,8 @@ export const FirmCoverLetter = () => {
           <UserPlus size={16} className="mr-2" />
           Assign Assistant
         </Button>
-        <AddCoverLetterDialog userId={user} role="FIRM" />
-        <UserSelectList getSelectedUser={getSelectedUser} />
+        <AddCoverLetterDialog userId={user} role="ASSISTANT" />
+        <AssistantUserSelect getSelectedUser={getSelectedUser} />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
@@ -46,4 +47,4 @@ export const FirmCoverLetter = () => {
   );
 };
 
-export default FirmCoverLetter;
+export default AssistantCoverLetter;
