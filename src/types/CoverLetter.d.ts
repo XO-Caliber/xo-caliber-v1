@@ -34,7 +34,7 @@ export interface CoverLetterType {
   id: string;
   title: string;
   adminId: string | null;
-  firmId: string | null;
+  userId: string | null;
   Section: SectionType[];
 }
 

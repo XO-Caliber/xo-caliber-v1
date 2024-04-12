@@ -4,19 +4,29 @@ import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 
 export const coverletterRouter = router({
-  addAdminCoverLetter: adminProcedure
-    .input(z.object({ userId: z.string(), title: z.string() }))
+  addCoverLetter: publiceProcedure
+    .input(z.object({ userId: z.string(), title: z.string(), role: z.string() }))
     .mutation(async ({ input }) => {
-      const { title, userId } = input;
+      const { title, userId, role } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
-      await db.coverLetter.create({
-        data: {
-          title: title,
-          adminId: userId
-        }
-      });
-      return { success: true };
+      if (role === "ADMIN") {
+        await db.coverLetter.create({
+          data: {
+            title: title,
+            adminId: userId
+          }
+        });
+        return { success: true };
+      } else {
+        await db.coverLetter.create({
+          data: {
+            title: title,
+            userId: userId
+          }
+        });
+        return { success: true };
+      }
     }),
 
   addSection: publiceProcedure
@@ -54,25 +64,44 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
-  getAdminCoverLetter: publiceProcedure.input(z.string()).query(async ({ input }) => {
-    const adminId = input;
-    if (!adminId) throw new TRPCError({ code: "UNAUTHORIZED" });
+  getCoverLetter: publiceProcedure
+    .input(z.object({ userId: z.string(), role: z.string() }))
+    .query(async ({ input }) => {
+      const { userId, role } = input;
+      if (!userId || userId === "") throw new TRPCError({ code: "UNAUTHORIZED" });
 
-    const coverLetters = await db.coverLetter.findMany({
-      where: {
-        adminId: adminId
-      },
-      include: {
-        Section: true
+      if (role === "ADMIN") {
+        const coverLetters = await db.coverLetter.findMany({
+          where: {
+            adminId: userId
+          },
+          include: {
+            Section: true
+          }
+        });
+        console.log(
+          "cover letter: ",
+          coverLetters.map((coverLetter) => coverLetter.title)
+        );
+
+        return coverLetters;
+      } else {
+        const coverLetters = await db.coverLetter.findMany({
+          where: {
+            userId: userId
+          },
+          include: {
+            Section: true
+          }
+        });
+        console.log(
+          "cover letter: ",
+          coverLetters.map((coverLetter) => coverLetter.title)
+        );
+
+        return coverLetters;
       }
-    });
-    console.log(
-      "cover letter: ",
-      coverLetters.map((coverLetter) => coverLetter.title)
-    );
-
-    return coverLetters;
-  }),
+    }),
 
   getAdminSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const coverLetterId = input;

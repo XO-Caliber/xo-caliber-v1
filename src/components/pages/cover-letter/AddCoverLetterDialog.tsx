@@ -29,7 +29,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const AddCoverLetterDialog = ({ userId }: { userId: string }) => {
+const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }) => {
   const [loading, setLoading] = useState(false);
 
   const formSchema = z.object({
@@ -45,7 +45,7 @@ const AddCoverLetterDialog = ({ userId }: { userId: string }) => {
     }
   });
 
-  const { mutate: addCategory } = trpc.coverletter.addAdminCoverLetter.useMutation({
+  const { mutate: addCategory } = trpc.coverletter.addCoverLetter.useMutation({
     onSuccess({ success }) {
       if (success) {
         toast({
@@ -68,7 +68,7 @@ const AddCoverLetterDialog = ({ userId }: { userId: string }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
     const title = values.title;
-    addCategory({ userId, title });
+    addCategory({ userId, title, role: role });
     setLoading(true);
   }
 
