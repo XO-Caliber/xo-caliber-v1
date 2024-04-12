@@ -32,7 +32,6 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
         {/* @ts-ignore */}
         <ViewCoverLetter CoverLetterData={CoverLetterData} userId={user.id} />
       </div>
-      {/* <DragNDropSection /> */}
     </section>
   );
 };

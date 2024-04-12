@@ -18,7 +18,7 @@ import EditDialog from "./EditDialog";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
-  const data = trpc.coverletter.getAdminSections.useQuery<SectionType[]>(coverLetterId);
+  const data = trpc.coverletter.getSections.useQuery<SectionType[]>(coverLetterId);
 
   const { data: SectionsData, isLoading, error } = data;
 
@@ -324,29 +324,28 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   Section-{indexSection + 1}
                                 </h2>
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                  {/* {section.title} */}
-                                  <ViewDialog
+                                  {/* <ViewDialog
                                     dialogType={DialogType.Section}
                                     title={section.title}
                                     description={section.description}
                                     comments={section.comments}
+                                  /> */}
+
+                                  <EditDialog
+                                    dialogType={DialogType.Section}
+                                    title={section.title}
+                                    description={section.description}
+                                    comments={section.comments}
+                                    refetchData={refetchData}
                                   />
                                 </p>
+
                                 <p className="m-0">
                                   {/* <AddSubSectionDialog userId={userId} sectionId={section.id} /> */}
                                   <AddDialog
                                     userId={userId}
                                     itemId={section.id}
                                     dialogType={DialogType.Subsection}
-                                    refetchData={refetchData}
-                                  />
-                                </p>
-                                <p>
-                                  <EditDialog
-                                    title={section.title}
-                                    description={section.description}
-                                    comments={section.comments}
-                                    dialogType={DialogType.Section}
                                     refetchData={refetchData}
                                   />
                                 </p>

@@ -54,6 +54,7 @@ const EditDialogContent = ({
 
   const initializeEditor = useCallback(async () => {
     const EditorJS = (await import("@editorjs/editorjs")).default;
+
     const Header = (await import("@editorjs/header")).default;
     // @ts-ignore
     const Table = (await import("@editorjs/table")).default;
@@ -79,7 +80,7 @@ const EditDialogContent = ({
         readOnly: true
       });
     }
-  }, []);
+  }, [description]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {

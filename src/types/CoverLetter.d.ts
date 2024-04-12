@@ -54,9 +54,3 @@ export interface ExhibitPositionType {
   position: number;
   subSectionId: string;
 }
-
-export enum DialogType {
-  Section = "Section",
-  Subsection = "Subsection",
-  Exhibit = "Exhibit"
-}

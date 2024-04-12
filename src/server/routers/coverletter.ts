@@ -74,7 +74,7 @@ export const coverletterRouter = router({
     return coverLetters;
   }),
 
-  getAdminSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
+  getSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const coverLetterId = input;
     console.log("COVERLETTER ID: ", coverLetterId);
     if (!coverLetterId) throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -109,76 +109,6 @@ export const coverletterRouter = router({
 
     return sections;
   }),
-
-  addSubSection: publiceProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-        sectionId: z.string(),
-        title: z.string(),
-        description: z.any(),
-        comments: z.string().optional()
-      })
-    )
-    .mutation(async ({ input }) => {
-      const { sectionId, title, description, userId, comments } = input;
-      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-      console.log("INFO: ", input);
-
-      const lastPosition = await db.subSection.findFirst({
-        where: { sectionId },
-        orderBy: { position: "desc" },
-        select: { position: true }
-      });
-
-      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
-
-      await db.subSection.create({
-        data: {
-          title,
-          description,
-          position: newPosition,
-          sectionId,
-          comments
-        }
-      });
-      return { success: true };
-    }),
-
-  addExhibits: publiceProcedure
-    .input(
-      z.object({
-        userId: z.string(),
-        subSectionId: z.string(),
-        title: z.string(),
-        description: z.any(),
-        comments: z.string().optional()
-      })
-    )
-    .mutation(async ({ input }) => {
-      const { subSectionId, title, description, userId, comments } = input;
-      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-      console.log("INFO: ", input);
-
-      const lastPosition = await db.exhibits.findFirst({
-        where: { subSectionId },
-        orderBy: { position: "desc" },
-        select: { position: true }
-      });
-
-      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
-
-      await db.exhibits.create({
-        data: {
-          title,
-          description,
-          position: newPosition,
-          subSectionId,
-          comments
-        }
-      });
-      return { success: true };
-    }),
 
   updateSectionPostion: publiceProcedure
     .input(

@@ -18,18 +18,10 @@ interface EditDialogProps {
   description: Prisma.JsonArray;
   comments: string | null;
   dialogType: DialogType;
-  children?: ReactNode;
   refetchData: () => void;
 }
 
-const EditDialog = ({
-  title,
-  description,
-  comments,
-  dialogType,
-  refetchData,
-  children
-}: EditDialogProps) => {
+const EditDialog = ({ title, description, comments, dialogType, refetchData }: EditDialogProps) => {
   let dialogTitle, buttonText, contentComponent;
 
   switch (dialogType) {
@@ -63,14 +55,7 @@ const EditDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant={"outline"}
-          size={"sm"}
-          className="border border-dashed border-border py-0 "
-        >
-          <FileTypeIcon size={16} />
-          {children}
-        </Button>
+        <p>{title}</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="border-b-2 border-border pb-2 text-left">
