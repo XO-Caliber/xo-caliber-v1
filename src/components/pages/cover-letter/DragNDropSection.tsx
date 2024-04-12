@@ -330,9 +330,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     description={section.description}
                                     comments={section.comments}
                                   /> */}
-
                                   <EditDialog
                                     dialogType={DialogType.Section}
+                                    id={section.id}
                                     title={section.title}
                                     description={section.description}
                                     comments={section.comments}
@@ -405,11 +405,19 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   Sub-Section-{indexSubsection + 1}
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                  <ViewDialog
+                                                  {/* <ViewDialog
                                                     dialogType={DialogType.Subsection}
                                                     title={subsection.title}
                                                     description={subsection.description}
                                                     comments={subsection.comments}
+                                                  /> */}
+                                                  <EditDialog
+                                                    dialogType={DialogType.Subsection}
+                                                    id={subsection.id}
+                                                    title={subsection.title}
+                                                    description={subsection.description}
+                                                    comments={subsection.comments}
+                                                    refetchData={refetchData}
                                                   />
                                                 </p>
                                                 <p className="m-0">
@@ -453,11 +461,19 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             Exhibit-{index + 1}
                                                           </h2>
                                                           <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                            <ViewDialog
+                                                            {/* <ViewDialog
                                                               dialogType={DialogType.Exhibit}
                                                               title={exhibit.title}
                                                               description={exhibit.description}
                                                               comments={exhibit.comments}
+                                                            /> */}
+                                                            <EditDialog
+                                                              dialogType={DialogType.Exhibit}
+                                                              id={exhibit.id}
+                                                              title={exhibit.title}
+                                                              description={exhibit.description}
+                                                              comments={exhibit.comments}
+                                                              refetchData={refetchData}
                                                             />
                                                           </p>
                                                           {/* <p>{exhibit.position}</p> */}

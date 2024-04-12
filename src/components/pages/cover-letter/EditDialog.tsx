@@ -7,13 +7,11 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { FileTypeIcon } from "lucide-react";
 import { DialogType } from "@/types/Dialog";
 import { Prisma } from "@prisma/client";
 import EditDialogContent from "./EditDialogContent";
-import { ReactNode } from "react";
-
 interface EditDialogProps {
+  id: string;
   title: string;
   description: Prisma.JsonArray;
   comments: string | null;
@@ -21,32 +19,25 @@ interface EditDialogProps {
   refetchData: () => void;
 }
 
-const EditDialog = ({ title, description, comments, dialogType, refetchData }: EditDialogProps) => {
-  let dialogTitle, buttonText, contentComponent;
+const EditDialog = ({
+  id,
+  title,
+  description,
+  comments,
+  dialogType,
+  refetchData
+}: EditDialogProps) => {
+  let dialogTitle;
 
   switch (dialogType) {
     case "Section":
       dialogTitle = "Update Section";
-      buttonText = "Edit Section";
-      contentComponent = (
-        <EditDialogContent
-          contentType={dialogType}
-          title={title}
-          description={description}
-          comments={comments}
-          refetchData={refetchData}
-        />
-      );
       break;
     case "Subsection":
       dialogTitle = "Update Sub section";
-      buttonText = "Edit SubSection";
-      contentComponent = "";
       break;
     case "Exhibit":
       dialogTitle = "Update Exhibit";
-      buttonText = "Edit Exhibit";
-      contentComponent = "";
       break;
     default:
       return null;
@@ -64,7 +55,16 @@ const EditDialog = ({ title, description, comments, dialogType, refetchData }: E
             Make changes to your profile here. Click save when youre done.
           </DialogDescription>
         </DialogHeader>
-        <section className="h-max w-[1000px] ">{contentComponent}</section>
+        <section className="h-max w-[1000px] ">
+          <EditDialogContent
+            contentType={dialogType}
+            id={id}
+            title={title}
+            description={description}
+            comments={comments}
+            refetchData={refetchData}
+          />
+        </section>
       </DialogContent>
     </Dialog>
   );

@@ -22,8 +22,10 @@ import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 import { DialogType } from "@/types/Dialog";
 import { Prisma } from "@prisma/client";
+import { PenBoxIcon } from "lucide-react";
 
 interface EditDialogContentProps {
+  id: string;
   title: string;
   description: Prisma.JsonArray;
   comments: string | null;
@@ -32,6 +34,7 @@ interface EditDialogContentProps {
 }
 
 const EditDialogContent = ({
+  id,
   title,
   description,
   comments,
@@ -40,6 +43,7 @@ const EditDialogContent = ({
 }: EditDialogContentProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [editable, setEditable] = useState(false);
 
   const ref = useRef<EditorJS>();
 
@@ -47,8 +51,9 @@ const EditDialogContent = ({
     resolver: zodResolver(coverLetterSchema),
     mode: "onChange",
     defaultValues: {
-      title: "",
-      description: ""
+      title: title,
+      description: "",
+      comment: comments
     }
   });
 
@@ -97,13 +102,13 @@ const EditDialogContent = ({
     }
   }, [isMounted, initializeEditor]);
 
-  const { mutate: addSection } = trpc.coverletter.addSection.useMutation({
+  const { mutate: updateSection } = trpc.coverletter.updateSection.useMutation({
     onSuccess({ success }) {
       refetchData();
       if (success) {
         toast({
-          title: "New Section Added",
-          description: "Successfully added new section"
+          title: "Edited section successfully",
+          description: "Successfully updated section"
         });
       }
     },
@@ -118,13 +123,13 @@ const EditDialogContent = ({
     }
   });
 
-  const { mutate: addSubSection } = trpc.coverletter.addSubSection.useMutation({
+  const { mutate: updateSubSection } = trpc.coverletter.updateSubSection.useMutation({
     onSuccess({ success }) {
       refetchData();
       if (success) {
         toast({
-          title: "New SubSection Added",
-          description: "Successfully added new sub section"
+          title: "SubSection edited Successfully",
+          description: "Successfully updated sub section"
         });
       }
     },
@@ -139,13 +144,13 @@ const EditDialogContent = ({
     }
   });
 
-  const { mutate: addExhibit } = trpc.coverletter.addExhibits.useMutation({
+  const { mutate: updateExhibit } = trpc.coverletter.updateExhibit.useMutation({
     onSuccess({ success }) {
       refetchData();
       if (success) {
         toast({
-          title: "New Exhibit Added",
-          description: "Successfully added new exhibit"
+          title: "Exhibit edited Successfully ",
+          description: "Successfully updated exhibit"
         });
       }
     },
@@ -165,6 +170,48 @@ const EditDialogContent = ({
     setLoading(true);
     console.log(values);
     console.log(JSON.stringify(blocks));
+    switch (contentType) {
+      case "Section":
+        updateSection({
+          sectionId: id,
+          title: values.title,
+          description: blocks,
+          comments: values.comment
+        });
+        break;
+      case "Subsection":
+        updateSubSection({
+          subSectionId: id,
+          title: values.title,
+          description: blocks,
+          comments: values.comment
+        });
+        break;
+      case "Exhibit":
+        updateExhibit({
+          exhibitId: id,
+          title: values.title,
+          description: blocks,
+          comments: values.comment
+        });
+        break;
+    }
+  };
+
+  const toggleEdit = () => {
+    setEditable(!editable);
+    if (ref.current) {
+      const editor = ref.current;
+      editor.readOnly.toggle();
+
+      // If you want to apply some styling or indication based on the mode, you can do so here
+      const isReadOnly = editor.readOnly.isEnabled;
+      if (isReadOnly) {
+        // Add styles or indication for read-only mode
+      } else {
+        // Add styles or indication for editable mode
+      }
+    }
   };
 
   return (
@@ -178,7 +225,7 @@ const EditDialogContent = ({
               <FormItem className="col-span-2">
                 <FormLabel className="mb-2 text-lg font-bold">{contentType}</FormLabel>
                 <FormControl>
-                  <Input {...field} type="text" value={title} disabled />
+                  <Input {...field} type="text" disabled={!editable} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -188,7 +235,7 @@ const EditDialogContent = ({
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="col-span-2 row-span-2">
+              <FormItem className="col-span-2 row-span-3">
                 {/* <FormLabel className="mb-2 text-2xl font-bold">Description</FormLabel> */}
                 <FormControl>
                   <div
@@ -205,22 +252,29 @@ const EditDialogContent = ({
             control={form.control}
             name="comment"
             render={({ field }) => (
-              <FormItem className="col-start-3 col-end-4 row-start-1 row-end-3">
+              <FormItem className="col-start-3 col-end-4 row-start-1 row-end-4">
                 <FormLabel className="mb-2 text-lg">Comments</FormLabel>
                 <FormControl>
                   <Textarea
-                    disabled={true}
-                    className="h-3/4 max-h-full resize-none overflow-x-auto bg-secondary"
                     {...field}
-                  >
-                    {comments}
-                  </Textarea>
+                    className="h-3/4 max-h-full resize-none overflow-x-auto bg-secondary"
+                    disabled={!editable}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <div className="col-start-3 col-end-3 row-start-3 row-end-3 flex justify-between">
+          <Button
+            type="reset"
+            variant={"dark"}
+            className="col-start-3 col-end-4 row-start-3 row-end-3 flex gap-3 font-bold"
+            onClick={toggleEdit}
+          >
+            <PenBoxIcon size={15} />
+            Edit
+          </Button>
+          <div className="col-start-3 col-end-3 row-start-4 row-end-4 flex justify-between">
             <DialogClose>
               <Button type="reset">Close</Button>
             </DialogClose>

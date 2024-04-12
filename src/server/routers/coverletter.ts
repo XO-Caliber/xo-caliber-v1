@@ -64,6 +64,76 @@ export const coverletterRouter = router({
       return { success: true };
     }),
 
+  addSubSection: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        sectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { sectionId, title, description, userId, comments } = input;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.log("INFO: ", input);
+
+      const lastPosition = await db.subSection.findFirst({
+        where: { sectionId },
+        orderBy: { position: "desc" },
+        select: { position: true }
+      });
+
+      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
+
+      await db.subSection.create({
+        data: {
+          title,
+          description,
+          position: newPosition,
+          sectionId,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
+  addExhibits: publiceProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+        subSectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { subSectionId, title, description, userId, comments } = input;
+      if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
+      console.log("INFO: ", input);
+
+      const lastPosition = await db.exhibits.findFirst({
+        where: { subSectionId },
+        orderBy: { position: "desc" },
+        select: { position: true }
+      });
+
+      const newPosition = lastPosition ? lastPosition.position + 1 : 1;
+
+      await db.exhibits.create({
+        data: {
+          title,
+          description,
+          position: newPosition,
+          subSectionId,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
   getCoverLetter: publiceProcedure
     .input(z.object({ userId: z.string(), role: z.string() }))
     .query(async ({ input }) => {
@@ -227,19 +297,83 @@ export const coverletterRouter = router({
         console.error("Error updating exhibits:", error);
         return { success: false, error: "An error occurred while updating exhibits." };
       }
+    }),
+
+  updateSection: publiceProcedure
+    .input(
+      z.object({
+        sectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { sectionId, title, description, comments } = input;
+      if (!sectionId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      await db.section.update({
+        where: {
+          id: sectionId
+        },
+        data: {
+          title,
+          description,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
+  updateSubSection: publiceProcedure
+    .input(
+      z.object({
+        subSectionId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { subSectionId, title, description, comments } = input;
+      if (!subSectionId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      await db.subSection.update({
+        where: {
+          id: subSectionId
+        },
+        data: {
+          title,
+          description,
+          comments
+        }
+      });
+      return { success: true };
+    }),
+
+  updateExhibit: publiceProcedure
+    .input(
+      z.object({
+        exhibitId: z.string(),
+        title: z.string(),
+        description: z.any(),
+        comments: z.string().optional()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { exhibitId, title, description, comments } = input;
+      if (!exhibitId) throw new TRPCError({ code: "UNAUTHORIZED" });
+
+      await db.exhibits.update({
+        where: {
+          id: exhibitId
+        },
+        data: {
+          title,
+          description,
+          comments
+        }
+      });
+      return { success: true };
     })
-
-  // getFirmCoverLetter: firmProcedure.input().query(async () => {
-
-  //   if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
-  //   const categories = await db.firm.findUnique({
-  //     where: {
-  //       email: session.user.email
-  //     },
-  //     include: {
-  //       category: true
-  //     }
-  //   });
-  //   return categories?.category;
-  // })
 });
