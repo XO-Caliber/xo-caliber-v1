@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
+import { PaymentCard } from "@/components/PaymentCard";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -29,6 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             )}
           >
             <Navbar />
+            <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
+              <PaymentCard />
+            </main>
             {children}
             <Toaster />
           </body>

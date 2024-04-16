@@ -53,7 +53,7 @@ const EditDialogContent = ({
     defaultValues: {
       title: title,
       description: "",
-      comment: comments
+      comment: comments ?? ""
     }
   });
 
