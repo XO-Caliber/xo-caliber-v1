@@ -2,6 +2,8 @@ import { string, z } from "zod";
 import { adminProcedure, firmProcedure, publiceProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
+import { Prisma } from "@prisma/client";
+import { json } from "body-parser";
 
 export const coverletterRouter = router({
   addCoverLetter: publiceProcedure
@@ -375,5 +377,106 @@ export const coverletterRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  downloadTemplate: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const userId = input;
+    if (!userId || userId === "") {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    // Retrieve source user by email
+    const sourceUser = await db.admin.findUnique({
+      where: { email: "vishnudarrshanorp@gmail.com" },
+      include: {
+        coverletter: {
+          include: { Section: { include: { SubSection: { include: { Exhibits: true } } } } }
+        }
+      }
+    });
+
+    // Check if source user exists
+    if (!sourceUser) {
+      throw new Error("Source user not found");
+    }
+
+    console.log("Source user:", sourceUser);
+    console.log("Cover letters:", sourceUser.coverletter);
+
+    // Retrieve target user by ID
+    const targetUser = await db.user.findUnique({
+      where: { id: userId }
+    });
+
+    // Check if target user exists
+    if (!targetUser) {
+      throw new Error("Target user not found");
+    }
+
+    console.log("Target user:", targetUser);
+
+    // Delete existing cover letters of the target user
+    const deletedCoverLetters = await db.coverLetter.deleteMany({
+      where: {
+        userId: userId
+      }
+    });
+
+    console.log("Deleted cover letters:", deletedCoverLetters);
+
+    // Create new cover letters for the target user based on source user's cover letters
+    console.log("Creating new cover letters...");
+    for (const sourceCoverLetter of sourceUser.coverletter || []) {
+      // Create new cover letter for the target user
+      const newCoverLetter = await db.coverLetter.create({
+        data: {
+          title: sourceCoverLetter.title,
+          User: { connect: { id: userId } }
+        }
+      });
+
+      console.log("New cover letter:", newCoverLetter);
+
+      // Copy sections, subsections, and exhibits
+      for (const sourceSection of sourceCoverLetter.Section || []) {
+        const newSection = await db.section.create({
+          data: {
+            title: sourceSection.title,
+            description: sourceSection.description ?? "",
+            comments: sourceSection.comments,
+            position: sourceSection.position,
+            CoverLetter: { connect: { id: newCoverLetter.id } }
+          }
+        });
+
+        console.log("New section:", newSection);
+
+        for (const sourceSubSection of sourceSection.SubSection || []) {
+          const newSubSection = await db.subSection.create({
+            data: {
+              title: sourceSubSection.title,
+              description: sourceSubSection.description ?? "",
+              comments: sourceSubSection.comments,
+              position: sourceSubSection.position,
+              Section: { connect: { id: newSection.id } }
+            }
+          });
+
+          console.log("New sub section:", newSubSection);
+
+          for (const sourceExhibit of sourceSubSection.Exhibits || []) {
+            await db.exhibits.create({
+              data: {
+                title: sourceExhibit.title,
+                description: sourceExhibit.description ?? "",
+                comments: sourceExhibit.comments,
+                position: sourceExhibit.position,
+                SubSection: { connect: { id: newSubSection.id } }
+              }
+            });
+          }
+        }
+      }
+    }
+
+    return { success: true };
+  })
 });
