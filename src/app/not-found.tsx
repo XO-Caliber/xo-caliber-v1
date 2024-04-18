@@ -4,7 +4,7 @@ import React from "react";
 const notfound = () => {
   return (
     <section
-      className="absolute left-0 top-0 flex h-full w-full flex-col
+      className="absolute left-0 top-0 z-50 flex h-full w-full flex-col
               items-center justify-center overflow-hidden
               bg-[radial-gradient(ellipse_at_right,_var(--tw-gradient-stops))] from-rose-100 to-white text-center
               "

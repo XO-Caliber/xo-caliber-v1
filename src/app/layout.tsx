@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
               <PaymentCard />
             </main>
-            {children}
+            <div className="pointer-events-none -z-10">{children}</div>
             <Toaster />
           </body>
         </Providers>
