@@ -9,9 +9,76 @@
     transform: rotate(360deg);
   }
 }
-
+h1.ce-header {
+  @apply text-3xl font-bold;
+}
+h2.ce-header {
+  @apply text-2xl font-semibold;
+}
+h3.ce-header {
+  @apply text-xl font-semibold;
+}
+h4.ce-header {
+  @apply text-lg font-semibold;
+}
+h5.ce-header {
+  @apply text-base font-semibold;
+}
+h6.ce-header {
+  @apply text-base font-semibold;
+}
 .rotate-animation {
   animation: spin 1s linear infinite;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) white;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 15px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 3px solid var(--primary);
+}
+
+/* ClientQA.module.css */
+.scrollableContainer::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollableContainer::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 6px; /* Change the background color of the scrollbar track */
+}
+
+.scrollableContainer::-webkit-scrollbar-thumb {
+  background-color: hsl(12 100% 85%); /* Change the color of the scrollbar thumb */
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+@media (min-width: 651px) {
+  .ce-block__content,
+  .ce-toolbar__content {
+    max-width: calc(100% - 10px) !important;
+    margin: 0 30px;
+  }
+}
+
+.cdx-block {
+  max-width: 100% !important;
 }
 
 @layer base {
@@ -86,19 +153,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-/* ClientQA.module.css */
-.scrollableContainer::-webkit-scrollbar {
-  width: 12px;
-}
-
-.scrollableContainer::-webkit-scrollbar-track {
-  background-color: #f5f5f5;
-  border-radius: 6px; /* Change the background color of the scrollbar track */
-}
-
-.scrollableContainer::-webkit-scrollbar-thumb {
-  background-color: hsl(12 100% 85%); /* Change the color of the scrollbar thumb */
-  border-radius: 6px;
-  cursor: pointer;
 }

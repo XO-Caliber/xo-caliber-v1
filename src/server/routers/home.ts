@@ -9,7 +9,6 @@ import {
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import { use } from "react";
 
 export const homeRouter = router({
   leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {

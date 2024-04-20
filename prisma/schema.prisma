@@ -72,6 +72,8 @@ model User {
 
   FirmNote    FirmNote?
   UserChecked UserChecked[]
+
+  CoverLetter CoverLetter[]
 }
 
 model Firm {
@@ -84,9 +86,10 @@ model Firm {
   User      User[]
   userCount Int         @default(1)
 
-  category     Category[]
-  categoryId   String?
-  Note         FirmNote[]
+  category   Category[]
+  categoryId String?
+  Note       FirmNote[]
+
   CheckHeading CheckHeading[]
 }
 
@@ -110,8 +113,11 @@ model Admin {
 
   hashedPassword String
 
-  category     Category[]
-  categoryId   String?
+  category   Category[]
+  categoryId String?
+
+  coverletter CoverLetter[]
+
   CheckHeading CheckHeading[]
 }
 
@@ -214,4 +220,51 @@ model UserChecked {
 
   userId      String
   checklistId String
+}
+
+model CoverLetter {
+  id      String    @id @default(cuid())
+  title   String
+  Section Section[]
+
+  Admin   Admin?  @relation(fields: [adminId], references: [adminId])
+  adminId String?
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model Section {
+  id          String  @id @default(cuid())
+  title       String
+  description Json
+  comments    String? @db.Text
+  position    Int
+
+  CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id], onDelete: Cascade)
+  coverLetterId String?
+
+  SubSection SubSection[]
+}
+
+model SubSection {
+  id          String  @id @default(cuid())
+  title       String
+  description Json
+  comments    String? @db.Text
+  position    Int
+
+  Section   Section?   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  sectionId String?
+  Exhibits  Exhibits[]
+}
+
+model Exhibits {
+  id          String  @id @default(cuid())
+  title       String
+  description Json
+  comments    String? @db.Text
+  position    Int
+
+  SubSection   SubSection @relation(fields: [subSectionId], references: [id], onDelete: Cascade)
+  subSectionId String
 }

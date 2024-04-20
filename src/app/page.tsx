@@ -1,10 +1,8 @@
 import Header from "@/components/Header";
-import { Button } from "@/components/ui/Button";
 import { getAuthSession } from "./api/auth/[...nextauth]/authOptions";
 import AdminHome from "@/components/pages/home/AdminHome";
 import { FirmHome } from "@/components/pages/home/FirmHome";
 import { UserHome } from "@/components/pages/home/UserHome";
-import ClientFirmList from "@/components/pages/home/client/ClientFirmList";
 import { AssistantHome } from "@/components/pages/home/AssistantHome";
 
 export default async function Home() {
