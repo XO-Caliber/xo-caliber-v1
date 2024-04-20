@@ -84,7 +84,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
 
   return (
     <div>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
         <p className="m-4 mt-[1.2rem] font-bold text-muted">Checklist</p>
       </div>
       <div className="scrollableContainer m-4 ml-60 mt-8 h-[85vh] overflow-y-scroll font-serif shadow-md">
