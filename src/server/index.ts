@@ -7,6 +7,7 @@ import { questionRouter } from "./routers/QARouter/question";
 import { answerRouter } from "./routers/QARouter/answer";
 import { noteRouter } from "./routers/note";
 import { coverletterRouter } from "./routers/coverletter";
+import { paymentRouter } from "./routers/payment";
 
 export const appRouter = router({
   auth: authRouter,
@@ -16,7 +17,8 @@ export const appRouter = router({
   question: questionRouter,
   answer: answerRouter,
   note: noteRouter,
-  coverletter: coverletterRouter
+  coverletter: coverletterRouter,
+  payment: paymentRouter
 });
 
 export type AppRouter = typeof appRouter;

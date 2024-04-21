@@ -6,6 +6,8 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     role: string;
+    stripeCustomerId: string;
+    isPaid: Boolean;
   }
 }
 declare module "next-auth" {
@@ -13,10 +15,14 @@ declare module "next-auth" {
     user: DefaultSession["user"] & {
       id: string;
       role: string;
+      stripeCustomerId: string;
+      isPaid: Boolean;
     };
   }
 
   interface User extends DefaultUser {
     role: string;
+    stripeCustomerId: string;
+    isPaid: Boolean;
   }
 }
