@@ -1,23 +1,19 @@
-import { trpc } from "@/app/_trpc/client";
-import { useRouter } from "next/router";
+"use client";
 import React, { useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { trpc } from "@/app/_trpc/client";
 
-const PaymentSuccess = () => {
-  const router = useRouter();
-  const sessionId = useRouter().query.session_id as string;
+export const PaymentSuccess = () => {
+  const { data: session, update } = useSession();
 
-  const session = trpc.payment.getStripeSession.useQuery(
-    { sessionId },
-    {
-      enabled: router.isReady
-    }
-  );
-
+  const { data } = trpc.payment.checkCheckout.useQuery();
+  console.log(session?.user.isPaid);
+  console.log(session);
   useEffect(() => {
-    if (session.data?.email) {
-      router.push(`/course?email=${session.data.email}`).catch(console.error);
+    if (data?.success === true) {
+      update({ isPaid: true });
     }
-  }, [session.data, router]);
+  }, [data]);
 
   return (
     <>
@@ -27,5 +23,3 @@ const PaymentSuccess = () => {
     </>
   );
 };
-
-export default PaymentSuccess;

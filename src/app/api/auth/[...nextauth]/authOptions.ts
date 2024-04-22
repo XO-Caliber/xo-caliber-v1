@@ -120,7 +120,10 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login"
   },
   callbacks: {
-    async jwt({ token, user, session }) {
+    async jwt({ token, user, session, trigger }) {
+      if (trigger === "update" && session.isPaid) {
+        token.isPaid = session.isPaid;
+      }
       console.log("jwt callbacks", { token, user, session });
       if (user) {
         return {
@@ -128,20 +131,20 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           role: user.role,
           stripeCustomerId: user.stripeCustomerId,
-          isPaid: user.isPaid
+          isPaid: token.isPaid
         };
       }
       return token;
     },
     async session({ session, token, user }) {
-      console.log("session callbacks", { session, token, user });
-      if (user) {
-        session.user.id = user.id;
-        session.user.name = user.name;
-        session.user.email = user.email;
-        session.user.role = user.role;
-        session.user.stripeCustomerId = user.stripeCustomerId;
-        session.user.isPaid = user.isPaid;
+      // console.log("session callbacks", { session, token, user });
+      if (token) {
+        session.user.id = token.id;
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.role = token.role;
+        session.user.stripeCustomerId = token.stripeCustomerId;
+        session.user.isPaid = token.isPaid;
       }
 
       return session;
