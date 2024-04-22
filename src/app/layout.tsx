@@ -6,8 +6,6 @@ import { Navbar } from "@/components/Navbar";
 import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
-import { PaymentCard } from "@/components/PaymentCard";
-import { getAuthSession } from "./api/auth/[...nextauth]/authOptions";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -19,8 +17,7 @@ export const metadata: Metadata = {
   description: "Cover letter generator app"
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getAuthSession();
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <NextAuthProvider>
@@ -31,14 +28,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               fontSans.variable
             )}
           >
-            <Navbar />
-            {session?.user.isPaid ? (
-              <div className="">{children}</div>
-            ) : (
-              <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
-                <PaymentCard />
-              </main>
-            )}
+            {/* <Navbar /> */}
+            {children}
+
+            {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
+              <PaymentCard />
+            </main> */}
+
             <Toaster />
           </body>
         </Providers>

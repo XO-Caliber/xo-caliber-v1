@@ -131,13 +131,13 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           role: user.role,
           stripeCustomerId: user.stripeCustomerId,
-          isPaid: token.isPaid
+          isPaid: user.isPaid
         };
       }
       return token;
     },
     async session({ session, token, user }) {
-      // console.log("session callbacks", { session, token, user });
+      console.log("session callbacks", { session, token, user });
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
