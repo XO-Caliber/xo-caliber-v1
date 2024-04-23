@@ -7,12 +7,12 @@ import {
   ExhibitPositionType,
   SectionPositionType,
   SectionType,
-  SubSectionPositionType
+  SubSectionPositionType,
+  SubSectionType
 } from "@/types/CoverLetter";
 import { Button } from "@/components/ui/Button";
 import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
-import ViewDialog from "./ViewDialog";
 import { DialogType } from "@/types/Dialog";
 import EditDialog from "./EditDialog";
 
@@ -110,7 +110,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   }, [SectionsData, isLoading, error]);
 
   const handleDragDrop = (results: DropResult) => {
-    console.log(JSON.stringify(results));
+    console.log(results);
     // setDropData(results);
     const { source, destination, type, draggableId } = results;
     if (!destination) return;
@@ -189,15 +189,25 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       }
 
       if (type === "subsection") {
+        let sourceSubSection: SubSectionType | undefined,
+          destinationSubSection: SubSectionType | undefined;
+
         const updatedSections = sections.map((section) => {
-          const sourceSubSection = section.SubSection.find(
-            (subSection) => subSection.id === source.droppableId
-          );
-          const destinationSubSection = section.SubSection.find(
-            (subSection) => subSection.id === destination.droppableId
-          );
+          if (!sourceSubSection) {
+            sourceSubSection = section.SubSection.find(
+              (subSection) => subSection.id === source.droppableId
+            );
+          }
+
+          if (!destinationSubSection) {
+            destinationSubSection = section.SubSection.find(
+              (subSection) => subSection.id === destination.droppableId
+            );
+          }
 
           if (!sourceSubSection || !destinationSubSection) return section;
+          if (!sourceSubSection && !destinationSubSection) return section;
+          console.log("after subsection");
 
           // Find the dragged exhibit
           const draggedExhibitIndex = sourceSubSection.Exhibits.findIndex(
@@ -230,7 +240,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
               exhibit.subSectionId = destinationSubSection.id;
             });
           }
-
           return section;
         });
         console.log(updatedSections);
@@ -429,7 +438,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     refetchData={refetchData}
                                                   />
                                                 </p>
-                                                {/* <p>{subsection.position}</p> */}
+                                                <p>{subsection.id}</p>
                                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                   <MessageCircle size={16} />
                                                   Comment
