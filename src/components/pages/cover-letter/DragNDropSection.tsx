@@ -237,7 +237,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
             destinationSubSection.Exhibits.forEach((exhibit, index) => {
               exhibit.position = index;
-              exhibit.subSectionId = destinationSubSection.id;
+              if (destinationSubSection) {
+                exhibit.subSectionId = destinationSubSection.id;
+              }
             });
           }
           return section;
