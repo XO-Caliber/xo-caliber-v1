@@ -8,6 +8,8 @@ import { type Stripe, loadStripe } from "@stripe/stripe-js";
 // const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY as string;
 
 export function PaymentCard() {
+  const { data: hasFirm } = trpc.home.checkHasFirm.useQuery();
+
   const useStripe = () => {
     const stripe = useMemo<Promise<Stripe | null>>(
       () =>
@@ -24,13 +26,18 @@ export function PaymentCard() {
   const stripePromise = useStripe();
 
   async function checkout() {
-    const response = await createCheckout.mutateAsync();
-    const stripe = await stripePromise;
+    if (hasFirm) {
+      const response = await createCheckout.mutateAsync(hasFirm);
+      const stripe = await stripePromise;
 
-    if (stripe !== null) {
-      await stripe.redirectToCheckout({
-        sessionId: response.id
-      });
+      if (stripe !== null) {
+        await stripe.redirectToCheckout({
+          sessionId: response.id
+        });
+      }
+    } else {
+      alert("Something went wrong!");
+      console.error("Something went wrong!");
     }
   }
 
@@ -44,7 +51,7 @@ export function PaymentCard() {
       </CardHeader>
       <CardContent>
         <p className="my-4 text-xl font-semibold">
-          <span className="text-[50px] font-bold">$500</span>/mo
+          <span className="text-[50px] font-bold">{hasFirm ? "$350" : "$500"}</span>/mo
         </p>
       </CardContent>
       <CardFooter className="w-full">

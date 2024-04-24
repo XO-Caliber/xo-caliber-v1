@@ -11,16 +11,20 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 
 export const paymentRouter = router({
-  createCheckout: publiceProcedure.mutation(async () => {
+  createCheckout: publiceProcedure.input(z.boolean()).mutation(async ({ input }) => {
+    const hasFirm = input;
     const session = await getAuthSession();
     console.log("stripeCustomerId", session?.user.stripeCustomerId);
+
+    let priceId = hasFirm ? env.PRICE_ID_WITH_FIRM : env.PRICE_ID_WITHOUT_FIRM;
+
     return stripe.checkout.sessions.create({
       mode: "payment",
       customer: session?.user.stripeCustomerId,
       payment_method_types: ["card"],
       line_items: [
         {
-          price: env.PRICE_ID,
+          price: priceId,
           quantity: 1
         }
       ],
