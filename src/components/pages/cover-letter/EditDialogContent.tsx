@@ -52,8 +52,8 @@ const EditDialogContent = ({
     mode: "onChange",
     defaultValues: {
       title: title,
-      description: "",
-      comment: comments
+      description: description,
+      comment: comments || ""
     }
   });
 

@@ -238,7 +238,7 @@ model Section {
   comments    String? @db.Text
   position    Int
 
-  CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id])
+  CoverLetter   CoverLetter? @relation(fields: [coverLetterId], references: [id], onDelete: Cascade)
   coverLetterId String?
 
   SubSection SubSection[]
@@ -251,7 +251,7 @@ model SubSection {
   comments    String? @db.Text
   position    Int
 
-  Section   Section?   @relation(fields: [sectionId], references: [id])
+  Section   Section?   @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   sectionId String?
   Exhibits  Exhibits[]
 }
@@ -263,6 +263,6 @@ model Exhibits {
   comments    String? @db.Text
   position    Int
 
-  SubSection   SubSection @relation(fields: [subSectionId], references: [id])
+  SubSection   SubSection @relation(fields: [subSectionId], references: [id], onDelete: Cascade)
   subSectionId String
 }
