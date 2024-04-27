@@ -7,7 +7,7 @@ import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans"
 });

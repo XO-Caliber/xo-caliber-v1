@@ -29,7 +29,9 @@ export const authOptions: NextAuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          role: profile.role
+          role: profile.role,
+          isPaid: false,
+          stripeCustomerId: ""
         };
       }
     }),
@@ -40,6 +42,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
         // role: { label: "Types", type: "type" }
       },
+      //@ts-expect-error
       async authorize(credentials) {
         console.log(credentials);
         console.log("Hello from server");
