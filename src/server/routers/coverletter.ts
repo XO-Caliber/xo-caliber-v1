@@ -1,9 +1,7 @@
-import { string, z } from "zod";
-import { adminProcedure, firmProcedure, publiceProcedure, router } from "../trpc";
+import { z } from "zod";
+import { publiceProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
-import { Prisma } from "@prisma/client";
-import { json } from "body-parser";
 
 export const coverletterRouter = router({
   addCoverLetter: publiceProcedure
