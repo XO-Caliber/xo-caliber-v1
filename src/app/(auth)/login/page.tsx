@@ -14,7 +14,7 @@ const page = async () => {
 
   return (
     <section
-      className="absolute left-0 top-0 
+      className="absolute left-0 top-0 z-50
                 h-full w-full overflow-hidden
                 bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-rose-200 to-white"
     >

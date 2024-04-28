@@ -494,6 +494,6 @@ export const homeRouter = router({
     if (!check?.firmId) {
       return false;
     }
-    return { success: true };
+    return true;
   })
 });
