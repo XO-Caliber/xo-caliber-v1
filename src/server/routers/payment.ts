@@ -28,8 +28,8 @@ export const paymentRouter = router({
           quantity: 1
         }
       ],
-      success_url: `${env.HOST_NAME}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${env.HOST_NAME}/`
+      success_url: `${env.PRODUCTION_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${env.PRODUCTION_URL}/`
     });
   }),
 
