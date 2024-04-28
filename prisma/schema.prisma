@@ -73,6 +73,12 @@ model User {
   FirmNote    FirmNote?
   UserChecked UserChecked[]
   CoverLetter CoverLetter[]
+
+  stripeCustomerId String?   @unique
+  isPaid           Boolean?  @default(false)
+  stripeId         String?
+  stripeEmail      String?
+  paidDate         DateTime?
 }
 
 model Firm {

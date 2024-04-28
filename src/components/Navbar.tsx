@@ -23,7 +23,7 @@ import ViewProfile from "./pages/profile/ViewProfile";
 export const Navbar = async () => {
   const session = await getAuthSession();
   return (
-    <nav className="absolute h-screen w-56 border-r-2 border-border bg-white">
+    <nav className="absolute z-50 h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>
         <div className="border-b-2 p-2 pl-8">
           <Image src={navLogo} width={140} height={41} alt="LOGO" />
