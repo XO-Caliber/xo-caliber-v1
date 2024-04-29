@@ -14,9 +14,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <>
       <Navbar />
-      {session?.user.isPaid || session?.user.role !== "INDIVIDUAL" ? (
-        <main>{children}</main>
-      ) : (
+      {/* {session?.user.isPaid || session?.user.role !== "INDIVIDUAL" ? ( */}
+      <main>{children}</main>
+      {/* ) : (
         <>
           <Image
             src="/images/dashboard_bg.png"
@@ -28,7 +28,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <PaymentCard />
           </main>
         </>
-      )}
+      )} */}
     </>
   );
 }

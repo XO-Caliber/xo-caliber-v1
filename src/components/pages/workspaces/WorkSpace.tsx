@@ -1,11 +1,8 @@
 "use client";
 import {
   CandlestickChart,
-  Check,
   CheckSquare,
   CheckSquare2,
-  ChevronDown,
-  ChevronRight,
   DownloadCloud,
   FileEdit,
   Wind
@@ -92,7 +89,7 @@ const WorkSpace = ({ userRole }: Props) => {
         {(userRole === "INDIVIDUAL" || userRole === "FIRM") && (
           <div
             className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push("/checklist")}
+            onClick={() => router.push("/workspaces/checklist")}
           >
             <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">Checklist</h1>
@@ -101,7 +98,7 @@ const WorkSpace = ({ userRole }: Props) => {
         {(userRole === "INDIVIDUAL" || userRole === "ASSISTANT") && (
           <div
             className="mb-2 flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push("/strategy-doc")}
+            onClick={() => router.push("/workspaces/strategy-doc")}
           >
             <DownloadCloud size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">Strategy Doc</h1>

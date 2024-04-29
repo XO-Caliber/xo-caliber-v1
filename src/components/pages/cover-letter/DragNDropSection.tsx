@@ -440,7 +440,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     refetchData={refetchData}
                                                   />
                                                 </p>
-                                                <p>{subsection.id}</p>
+                                                {/* <p>{subsection.id}</p> */}
                                                 <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                   <MessageCircle size={16} />
                                                   Comment

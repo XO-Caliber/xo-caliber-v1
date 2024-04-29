@@ -14,21 +14,21 @@ export default async function Home() {
     <>
       <Navbar />
       <div>
-        {session?.user.isPaid || session?.user.role !== "INDIVIDUAL" ? (
-          <div className="">
-            <div className="text-xl">
-              <Header>Home</Header>
-            </div>
-            <div className=" ml-56">
-              <div className="">
-                {session?.user.role === "ADMIN" && <AdminHome user={session?.user} />}
-                {session?.user.role === "FIRM" && <FirmHome user={session?.user} />}
-                {session?.user.role === "INDIVIDUAL" && <UserHome user={session?.user} />}
-                {session?.user.role === "ASSISTANT" && <AssistantHome />}
-              </div>
+        {/* {session?.user.isPaid || session?.user.role !== "INDIVIDUAL" ? ( */}
+        <div className="">
+          <div className="text-xl">
+            <Header>Home</Header>
+          </div>
+          <div className=" ml-56">
+            <div className="">
+              {session?.user.role === "ADMIN" && <AdminHome user={session?.user} />}
+              {session?.user.role === "FIRM" && <FirmHome user={session?.user} />}
+              {session?.user.role === "INDIVIDUAL" && <UserHome user={session?.user} />}
+              {session?.user.role === "ASSISTANT" && <AssistantHome />}
             </div>
           </div>
-        ) : (
+        </div>
+        {/* ) : (
           <>
             <Image
               src="/images/home_bg.png"
@@ -40,7 +40,7 @@ export default async function Home() {
               <PaymentCard />
             </div>
           </>
-        )}
+        )} */}
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { getAuthSession } from "../api/auth/[...nextauth]/authOptions";
+import { getAuthSession } from "../../api/auth/[...nextauth]/authOptions";
 import ClientStrategy from "@/components/pages/strategy-doc/ClientStrategy";
 import FirmStrategy from "@/components/pages/strategy-doc/FirmStrategy";
 import AssistantStrategy from "@/components/pages/strategy-doc/AssistantStrategy";
