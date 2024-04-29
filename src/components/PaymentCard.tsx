@@ -12,10 +12,7 @@ export function PaymentCard() {
 
   const useStripe = () => {
     const stripe = useMemo<Promise<Stripe | null>>(
-      () =>
-        loadStripe(
-          "pk_test_51MfMulSHLHmLyjpspBcqvqhvnK19uoYZvpUtfAL4wVRSFK1XIz7gavU8bI4gVfLSyrpMmgpem04IM1fZmGTDwNcS00mqAxIc4M"
-        ),
+      () => loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!),
       []
     );
 

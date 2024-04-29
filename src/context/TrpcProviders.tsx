@@ -8,14 +8,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const Providers = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(() => new QueryClient());
-  const baseUrl = process.env.PRODUCTION_URL;
+  const baseUrl: string = process.env.NEXT_PUBLIC_PRODUCTION_URL!;
   // const baseUrl = "http://localhost:3000";
 
   const [trpcClient] = useState(() =>
     trpc.createClient({
       links: [
         httpBatchLink({
-          url: `${baseUrl}/api/trpc`
+          url: baseUrl + "/api/trpc"
         })
       ]
     })
