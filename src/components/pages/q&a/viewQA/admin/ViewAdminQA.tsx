@@ -166,23 +166,18 @@ export const ViewAdminQA = () => {
         </div>
       ) : (
         <div>
-          {!catArray.length ? (
-            <></>
-          ) : (
+          {categoriesList.isFetching && (
             <div className="flex h-[70vh] items-center justify-center">
               <Loader size={45} className="rotate-animation" />
             </div>
           )}
         </div>
       )}
-      {!catArray && <div>Add a question or category</div>}
-      {/* <div className="fixed top-[946px] flex h-[70px] w-full items-center justify-center border-2 border-x-0 bg-gray-100">
-        <div className="flex items-center justify-center space-x-1">
-          <p className="text-sm font-bold">{year}</p>
-          <Copyright size={16} className="font-bold" />
-          <p className="text-sm font-bold">XO Caliber</p>
+      {categoriesList.isFetched && !categoriesList.data?.length && (
+        <div className="flex h-[70vh] items-center justify-center">
+          Please add a question or category
         </div>
-      </div> */}
+      )}
     </div>
   );
 };

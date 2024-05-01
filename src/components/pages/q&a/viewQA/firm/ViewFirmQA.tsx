@@ -163,16 +163,14 @@ export const ViewFirmQA = () => {
         </div>
       ) : (
         <div>
-          {!catArray.length ? (
-            <></>
-          ) : (
+          {categoriesList.isFetching && (
             <div className="flex h-[70vh] items-center justify-center">
               <Loader size={45} className="rotate-animation" />
             </div>
           )}
         </div>
       )}
-      {!catArray.length && (
+      {categoriesList.isFetched && !categoriesList.data?.length && (
         <div className="flex h-[70vh] items-center justify-center">
           Please add a question or category
         </div>
