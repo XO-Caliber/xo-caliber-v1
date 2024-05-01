@@ -17,7 +17,7 @@ interface userProps {
 
 const AdminHome = ({ user }: userProps) => {
   return (
-    <section className="flex h-max items-start justify-normal">
+    <section className="bg-dotted-spacing-3 bg-dotted-gray-200 flex h-max items-start justify-normal">
       <ul className="mr-12 flex h-max w-max flex-col justify-start">
         <HomeLink name={user.name} />
         <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">

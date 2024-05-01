@@ -383,7 +383,7 @@ export const coverletterRouter = router({
     }
     // Retrieve source user by email
     const sourceUser = await db.admin.findUnique({
-      where: { email: "vishnudarrshanorp@gmail.com" },
+      where: { email: "admin@xocaliber.com" },
       include: {
         coverletter: {
           include: { Section: { include: { SubSection: { include: { Exhibits: true } } } } }
@@ -475,6 +475,42 @@ export const coverletterRouter = router({
       }
     }
 
+    return { success: true };
+  }),
+  deleteCase: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const caseId = input;
+    await db.coverLetter.delete({
+      where: {
+        id: caseId
+      }
+    });
+    return { success: true };
+  }),
+  deleteSection: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const sectionId = input;
+    await db.section.delete({
+      where: {
+        id: sectionId
+      }
+    });
+    return { success: true };
+  }),
+  deleteSubSection: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const subSectionId = input;
+    await db.subSection.delete({
+      where: {
+        id: subSectionId
+      }
+    });
+    return { success: true };
+  }),
+  deleteExhibit: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const exhibitId = input;
+    await db.exhibits.delete({
+      where: {
+        id: exhibitId
+      }
+    });
     return { success: true };
   })
 });

@@ -1,5 +1,5 @@
 "use client";
-import { ChevronDown, ChevronRight, GripVertical, MessageCircle } from "lucide-react";
+import { ChevronDown, ChevronRight, Delete, GripVertical, MessageCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import { trpc } from "@/app/_trpc/client";
@@ -24,6 +24,79 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   const refetchData = () => {
     data.refetch();
+  };
+  const { mutate: deleteSection } = trpc.coverletter.deleteSection.useMutation({
+    onSuccess({ success }) {
+      refetchData();
+      if (success) {
+        toast({
+          title: "Deleted Section",
+          description: "Section deleted successfully",
+          variant: "success"
+        });
+      }
+    },
+    onError() {
+      toast({
+        title: "Something went wrong"
+      });
+    }
+  });
+  const deleteSection1 = (id: string) => {
+    try {
+      deleteSection(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const { mutate: deleteSubSection } = trpc.coverletter.deleteSubSection.useMutation({
+    onSuccess({ success }) {
+      refetchData();
+      if (success) {
+        toast({
+          title: "Deleted SubSection",
+          description: "SubSection deleted successfully",
+          variant: "success"
+        });
+      }
+    },
+    onError() {
+      toast({
+        title: "Something went wrong"
+      });
+    }
+  });
+  const deleteSubSection1 = (id: string) => {
+    try {
+      deleteSubSection(id);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const { mutate: deleteExhibit } = trpc.coverletter.deleteExhibit.useMutation({
+    onSuccess({ success }) {
+      refetchData();
+      if (success) {
+        toast({
+          title: "Deleted Exhibit",
+          description: "Exhibit deleted successfully",
+          variant: "success"
+        });
+      }
+    },
+    onError() {
+      toast({
+        title: "Something went wrong"
+      });
+    }
+  });
+  const deleteExhibit1 = (id: string) => {
+    try {
+      deleteExhibit(id);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const { mutate: updateSectionPostion } = trpc.coverletter.updateSectionPostion.useMutation({
@@ -331,8 +404,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   )}
                                 </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
-                                <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                  Section-{indexSection + 1}
+                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                  Section-{indexSection + 1}{" "}
+                                  <Delete
+                                    color="red"
+                                    className="cursor-pointer fill-white"
+                                    onClick={() => deleteSection1(section.id)}
+                                  />
                                 </h2>
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                   {/* <ViewDialog
@@ -412,8 +490,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     />
                                                   )}
                                                 </button>
-                                                <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                                   Sub-Section-{indexSubsection + 1}
+                                                  <Delete
+                                                    color="red"
+                                                    className="cursor-pointer fill-white"
+                                                    onClick={() => deleteSubSection1(subsection.id)}
+                                                  />
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                                   {/* <ViewDialog
@@ -468,8 +551,15 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             size={18}
                                                             className="w-16"
                                                           />
-                                                          <h2 className="text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                          <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                                             Exhibit-{index + 1}
+                                                            <Delete
+                                                              color="red"
+                                                              className="cursor-pointer fill-white"
+                                                              onClick={() =>
+                                                                deleteExhibit1(exhibit.id)
+                                                              }
+                                                            />
                                                           </h2>
                                                           <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
                                                             {/* <ViewDialog

@@ -50,14 +50,14 @@ const ImportAdmin = () => {
             size={"sm"}
             // onClick={handleCategoryPopOpen}
           >
-            Import Default Questions
+            Pull Default Questions
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Import Default Questions</DialogTitle>
+            <DialogTitle>Pull Default Questions</DialogTitle>
           </DialogHeader>
-          <DialogDescription>
+          <DialogDescription className="text-red-600">
             If you import admin questions your existing questions will overwrite,Do you want to
             continue
           </DialogDescription>

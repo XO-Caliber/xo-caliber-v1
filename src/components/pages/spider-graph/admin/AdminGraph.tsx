@@ -287,7 +287,7 @@ function AdminGraph({ userType }: userType) {
           <AllUserSelectList getSelectedUser={getSelectedUser2} />
         </div>
       </div>
-      <main className="grid h-full grid-cols-2 flex-col md:min-h-[87vh] xl:min-h-[93vh]">
+      <main className="grid h-full grid-cols-2 flex-col bg-dotted-spacing-3 bg-dotted-gray-200  md:min-h-[87vh] xl:min-h-[93vh]">
         <div className="border-2 border-y-0 border-l-0">
           <h1 className="ml-8 mt-4 text-2xl font-bold">User Graph 1:</h1>
           <div className="m-8 mb-2 flex flex-col items-center justify-center rounded-xl border  border-red-600 bg-secondary ">

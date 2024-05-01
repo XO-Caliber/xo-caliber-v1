@@ -24,7 +24,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
   switch (dialogType) {
     case "Section":
       title = "Add Section";
-      buttonText = "Create Section";
+      buttonText = "Section";
       contentComponent = (
         <AddDialogContent
           userId={userId}
@@ -36,7 +36,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
       break;
     case "Subsection":
       title = "Add Sub section";
-      buttonText = "Add SubSection";
+      buttonText = "SubSection";
       contentComponent = (
         <AddDialogContent
           userId={userId}
@@ -48,7 +48,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
       break;
     case "Exhibit":
       title = "Add Exhibit";
-      buttonText = "Add Exhibit";
+      buttonText = "Exhibit";
       contentComponent = (
         <AddDialogContent
           userId={userId}
@@ -77,9 +77,6 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
       <DialogContent>
         <DialogHeader className="border-b-2 border-border pb-2 text-left">
           <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
         </DialogHeader>
         <section className="h-max w-[1000px] ">{contentComponent}</section>
       </DialogContent>

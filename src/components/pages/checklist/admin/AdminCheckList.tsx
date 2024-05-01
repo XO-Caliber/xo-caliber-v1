@@ -56,7 +56,7 @@ const AdminCheckList = () => {
           <AddHeading refetchData={refetchData} />
         </div>
       </div>
-      <div className="scrollableContainer m-4 ml-60 mt-8 h-[85vh] overflow-y-scroll font-serif shadow-md">
+      <div className="scrollableContainer  m-4 ml-60 mt-8 h-[85vh] overflow-y-scroll font-serif shadow-md">
         <div>
           <section className="flex w-full flex-col p-8 pt-0 text-black">
             {checkListData &&

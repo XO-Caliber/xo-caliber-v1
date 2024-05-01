@@ -235,7 +235,7 @@ model CoverLetter {
 
   Admin   Admin?  @relation(fields: [adminId], references: [adminId])
   adminId String?
-  User    User?   @relation(fields: [userId], references: [id])
+  User    User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  String?
 }
 

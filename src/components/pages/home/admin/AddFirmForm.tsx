@@ -108,7 +108,7 @@ export const AddFirmForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full space-y-2 rounded-lg border-2 p-8"
+        className="w-full space-y-2 rounded-lg border-2 bg-white p-8"
       >
         <CardTitle>Make Firm</CardTitle>
         <CardDescription>Add your firm details here</CardDescription>

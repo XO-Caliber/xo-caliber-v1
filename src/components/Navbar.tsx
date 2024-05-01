@@ -1,5 +1,6 @@
 import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
+import mainLogo from "../../public/images/Main_Logo.svg";
 import { Input } from "./ui/Input";
 import { ArrowDown, BellIcon, HomeIcon, SearchIcon } from "lucide-react";
 import Link from "next/link";
@@ -25,12 +26,12 @@ export const Navbar = async () => {
   return (
     <nav className="absolute z-50 h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>
-        <div className="border-b-2 p-2 pl-8">
-          <Image src={navLogo} width={140} height={41} alt="LOGO" />
+        <div className="flex  items-center justify-center border-b-2">
+          <Image src={mainLogo} width={117} height={41} alt="LOGO" />
         </div>
       </Link>
       <ul className="p-2">
-        <li className="relative flex items-center justify-center pb-2">
+        {/* <li className="relative flex items-center justify-center pb-2">
           <Input placeholder="Search..." className="h-9 border-2" />
           <SearchIcon
             size={17}
@@ -38,7 +39,7 @@ export const Navbar = async () => {
                         transition-colors duration-300 
                         hover:text-primary focus:text-primary"
           />
-        </li>
+        </li> */}
         <Link href="/">
           <li
             className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500

@@ -90,7 +90,7 @@ export const ViewAdminQA = () => {
 
   return (
     <div>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0 ">
+      <div className="flex  h-[68px] items-center justify-between border-2 border-l-0 ">
         <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
         <div className="mr-4 flex space-x-12">
           <AddAdminQADialog refetchData={refetchData} />
@@ -99,9 +99,9 @@ export const ViewAdminQA = () => {
         </div>
       </div>
       {catArray.length > 0 ? (
-        <div className="h-[70vh] p-4">
+        <div className="h-[70vh] p-4 ">
           {!hidden && (
-            <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
+            <section className="absolute   m-16 mt-44 rounded-lg border-2 bg-white  shadow-lg">
               <ul className="p-8 text-left  text-base">
                 <li className="font-serif">
                   By answering all Yes or No questions, you not only gain insights into the

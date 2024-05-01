@@ -22,7 +22,7 @@ const WorkSpace = ({ userRole }: Props) => {
   const router = useRouter();
   return (
     <div
-      className={`transform border-2 border-x-0 border-y-0 border-t-2 transition-all delay-300 duration-300 ease-in ${
+      className={`transform border-2 border-x-0 border-y-0 border-t-2 pb-2 transition-all delay-300 duration-300 ease-in ${
         isSubMenuHidden && ""
       }`}
     >
@@ -36,7 +36,7 @@ const WorkSpace = ({ userRole }: Props) => {
             isSubMenuHidden ? "mb-4" : "mb-1.5"
           } mr-2 text-secondary-foreground hover:text-black`}
         >
-          Workspaces
+          Workspace
         </span>
         {/* <span className="mr-4 text-sm" id="arrow">
           {isSubMenuHidden ? (
@@ -72,21 +72,16 @@ const WorkSpace = ({ userRole }: Props) => {
           <CandlestickChart size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Spider Graph</h1>
         </div>
-        <div
+        {/* <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-mindmap")}
         >
           <Wind size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Mind Map</h1>
-        </div>
-        <div
-          className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-coverletter")}
-        >
-          <FileEdit size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
-        </div>{" "}
-        {(userRole === "INDIVIDUAL" || userRole === "FIRM") && (
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">
+            Mind Map<sup className="rounded-md bg-green-400">upcoming</sup>
+          </h1>
+        </div> */}
+        {(userRole === "INDIVIDUAL" || userRole === "FIRM" || userRole === "ADMIN") && (
           <div
             className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
             onClick={() => router.push("/workspaces/checklist")}
@@ -97,13 +92,20 @@ const WorkSpace = ({ userRole }: Props) => {
         )}
         {(userRole === "INDIVIDUAL" || userRole === "ASSISTANT") && (
           <div
-            className="mb-2 flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+            className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
             onClick={() => router.push("/workspaces/strategy-doc")}
           >
             <DownloadCloud size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">Strategy Doc</h1>
           </div>
-        )}
+        )}{" "}
+        <div
+          className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
+          onClick={() => router.push("/workspaces/xo-coverletter")}
+        >
+          <FileEdit size={18} className="bi bi-bookmark-fill" />
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
+        </div>
       </div>
     </div>
   );
