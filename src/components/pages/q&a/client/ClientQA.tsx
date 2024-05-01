@@ -158,16 +158,18 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
           </ResizablePanelGroup>
         </div>
       )}
-      {!listCat.size &&
-        (hasFirm !== false ? (
-          <div className="flex h-[70vh] items-center justify-center">
-            <text>Loading</text>
-          </div>
-        ) : (
-          <div className="flex h-[70vh] items-center justify-center">
-            <Loader size={45} className="rotate-animation" />
-          </div>
-        ))}
+      {!listCat.size && (
+        <div>
+          {categoriesList.isFetching && (
+            <div className="flex h-[70vh] items-center justify-center">
+              <Loader size={45} className="rotate-animation" />
+            </div>
+          )}
+          {categoriesList.isFetched && !categoriesList.data?.length && (
+            <div className="flex h-[70vh] items-center justify-center">No question available</div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
