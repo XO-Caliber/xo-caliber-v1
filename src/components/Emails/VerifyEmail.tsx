@@ -12,7 +12,7 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = process.env.PRODUCTION_URL;
 
 export const VerifyEmailTemplate = (email: string, token: string) => (
   <Html>

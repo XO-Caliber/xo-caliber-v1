@@ -5,10 +5,11 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import bcrypt from "bcrypt";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
-// import { sendVerificationRequest } from "@/lib/resend/sendEmailRequest";
+import Stripe from "stripe";
+import { Adapter } from "next-auth/adapters";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -28,7 +29,9 @@ export const authOptions: NextAuthOptions = {
           name: profile.name,
           email: profile.email,
           image: profile.picture,
-          role: profile.role
+          role: profile.role,
+          isPaid: false,
+          stripeCustomerId: ""
         };
       }
     }),
@@ -39,6 +42,7 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" }
         // role: { label: "Types", type: "type" }
       },
+      //@ts-expect-error
       async authorize(credentials) {
         console.log(credentials);
         console.log("Hello from server");
@@ -118,102 +122,64 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login"
   },
-  //! FOOL OF ME TO WRITE THESE CODE !
   callbacks: {
-    // async signIn(args) {
-    //   if (args.account?.type === "credentials") return true;
-
-    //   //   if (args.account?.type === "oauth" && args.user.email && args.user.name) {
-    //   //     if (args.account.provider === "linkedin" || args.account.provider === "google") {
-    //   //       console.log("Hello from server");
-    //   //       console.log("User", args.user);
-    //   //       console.log("Account", args.account);
-    //   //       console.log("Credentials", args.credentials);
-    //   //       console.log("Profile", args.profile);
-    //   //       console.log("Email", args.email);
-
-    //   const isUserExist = await db.user.findUnique({
-    //     where: { email: args.profile?.email }
-    //   });
-
-    //   if (!isUserExist) {
-    //     console.log("User doesnt exist");
-    //     return false;
-    //   }
-    //   if (isUserExist) {
-    //     if (args.user.role === "FIRM") {
-    //       const firm = await db.firm.findUnique({
-    //         where: {
-    //           email: args.profile?.email
-    //         }
-    //       });
-    //       if (!firm) return false;
-    //     }
-    //     if (args.user.role === "ASSISTANT") {
-    //       const assistant = await db.firm.findUnique({
-    //         where: {
-    //           email: args.profile?.email
-    //         }
-    //       });
-    //       if (!assistant) return false;
-    //     }
-    //     return true;
-    //   }
-
-    //   //       if (!isUserExist) {
-    //   //         const isFirmExist = await db.firm.findUnique({
-    //   //           where: { email: args.profile?.email }
-    //   //         });
-
-    //   //         if (isFirmExist) {
-    //   //           console.log("FIRM");
-    //   //           return true;
-    //   //         }
-
-    //   //         const isAssistantExist = await db.assistant.findUnique({
-    //   //           where: { email: args.profile?.email }
-    //   //         });
-
-    //   //         if (isAssistantExist) {
-    //   //           console.log("ASSISTANT");
-    //   //           const newuser = { ...args.user, Role: "Assistant" };
-    //   //           return newuser;
-    //   //         }
-
-    //   //         if (!isUserExist && !isFirmExist && !isAssistantExist) {
-    //   //           console.log("NEW USER");
-    //   //           return true;
-    //   //         }
-    //   //       }
-    //   //     } else return false; // only google and linkedin for now
-    //   //   }
-    //   //   // return args.user;
-    //   return Promise.resolve(false);
-    // },
-    async jwt({ token, user, session }) {
-      // console.log("jwt callbacks", { token, user, session });
+    async jwt({ token, user, session, trigger }) {
+      if (trigger === "update" && session.isPaid) {
+        token.isPaid = session.isPaid;
+      }
+      console.log("jwt callbacks", { token, user, session });
       if (user) {
         return {
           ...token,
           id: user.id,
-          role: user.role
+          role: user.role,
+          stripeCustomerId: user.stripeCustomerId,
+          isPaid: user.isPaid
         };
       }
       return token;
     },
     async session({ session, token, user }) {
-      // console.log("session callbacks", { session, token, user });
+      console.log("session callbacks", { session, token, user });
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
         session.user.email = token.email;
         session.user.role = token.role;
+        session.user.stripeCustomerId = token.stripeCustomerId;
+        session.user.isPaid = token.isPaid;
       }
 
       return session;
     }
   },
-  secret: process.env.NEXTAUTH_URL,
+  events: {
+    createUser: async (message) => {
+      console.log("NEW USER");
+      console.log("NEW USER");
+      console.log(message.user);
+      console.log("NEW USER");
+      console.log("NEW USER");
+      const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+        apiVersion: "2024-04-10"
+      });
+
+      await stripe.customers
+        .create({
+          email: message.user.email!,
+          name: message.user.name!
+        })
+        .then(async (customer) => {
+          return db.user.update({
+            where: { id: message.user.id },
+            data: {
+              stripeCustomerId: customer.id
+            }
+          });
+        });
+    }
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === "development"
 };
 

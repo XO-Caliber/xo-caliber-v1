@@ -82,6 +82,9 @@ export const SignupBox = () => {
         });
         console.log("User exist");
       } else {
+        console.log(err.message);
+        console.log(err.data);
+        console.log(err.shape);
         toast({
           title: "Something went wrong",
           description: `Error:  ${err.data}`,
@@ -97,9 +100,10 @@ export const SignupBox = () => {
 
   const handleSignup = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log({ values });
+    // console.log({ values });
     // Commented for testing
     try {
+      console.log(values);
       registerUser(values);
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");

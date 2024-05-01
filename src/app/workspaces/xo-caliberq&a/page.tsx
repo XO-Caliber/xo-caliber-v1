@@ -6,7 +6,7 @@ import FirmQA from "@/components/pages/q&a/firm/FirmQA";
 import AdminQA from "@/components/pages/q&a/admin/AdminQA";
 import AssistantQA from "@/components/pages/q&a/assistant/AssistantQA";
 
-const page = async () => {
+export default async function page() {
   const session = await getAuthSession();
   return (
     <div>
@@ -31,6 +31,4 @@ const page = async () => {
       )}
     </div>
   );
-};
-
-export default page;
+}

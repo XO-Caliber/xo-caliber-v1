@@ -10,6 +10,11 @@ import {
 } from "@/lib/resend/sendEmailRequest";
 import crypto from "crypto";
 import { z } from "zod";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2024-04-10"
+});
 
 export const authRouter = router({
   register: publiceProcedure.input(user).mutation(async (userData) => {
@@ -25,6 +30,11 @@ export const authRouter = router({
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
+    const customer = await stripe.customers.create({
+      email: emailAddress,
+      name: name
+    });
+
     const emailVerificationToken = crypto.randomBytes(32).toString("base64url");
     const RandomProfile = getRandomImageUrl();
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -33,9 +43,10 @@ export const authRouter = router({
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
-        isEmailVerified: false,
+        isEmailVerified: true,
         emailVerificationToken,
-        image: RandomProfile
+        image: RandomProfile,
+        stripeCustomerId: customer.id
       }
     });
 

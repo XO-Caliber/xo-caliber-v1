@@ -7,7 +7,7 @@ import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans"
 });
@@ -28,8 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontSans.variable
             )}
           >
-            <Navbar />
+            {/* <Navbar /> */}
             {children}
+
+            {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
+              <PaymentCard />
+            </main> */}
+
             <Toaster />
           </body>
         </Providers>
