@@ -37,6 +37,8 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   const headingResult = trpc.checklist.getHeading.useQuery();
   const subHeadingResult = trpc.checklist.getSubHeading.useQuery();
 
+  const topicName = trpc.checklist.getSubHeadingTitle.useQuery(headingId);
+
   const { mutate: deleteSubHeading } = trpc.checklist.deleteSubHeading.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -110,27 +112,23 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <li className="flex cursor-pointer items-center justify-center rounded-md border border-gray-500 bg-white hover:bg-secondary">
-          <Plus className="text-gray-500 text-secondary-foreground" />
+        <li className="flex cursor-pointer items-center justify-center rounded-md  border-gray-500 bg-white hover:bg-secondary">
+          <Plus className="text-gray-500 text-secondary-foreground" size={16} />
         </li>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add SubHeading</DialogTitle>
-          <DialogDescription>Write a question for your client to answer:</DialogDescription>
+          <DialogTitle>Add Subtopic</DialogTitle>
+
           <section className="flex w-[600px] flex-row items-center gap-4">
             <div className="grid w-full gap-1.5 pt-4">
-              <Label htmlFor="message-2">Your Question</Label>
               <Textarea
-                placeholder="Type your message here."
+                placeholder="Add new subtopic"
                 id="message-2"
                 className="w-full"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <p className="text-sm text-muted-foreground">
-                This question will be viewed and answered by all of your clients.
-              </p>
             </div>
             <div className="flex flex-col gap-4">
               {/* <Select onValueChange={(value) => setHeadingId(value)}>
@@ -149,7 +147,7 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
             </div>
           </section>
           <div>
-            {subHeadingResult.data && (
+            {/* {subHeadingResult.data && (
               <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
                 {subHeadingResult.data.map((heading) =>
                   heading.subHeading.map((sub, index) => (
@@ -171,12 +169,12 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
                   ))
                 )}
               </ul>
-            )}
+            )} */}
           </div>
           <DialogFooter>
             <form onSubmit={onSubmit}>
-              <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
-                Add SubHeading
+              <Button type="submit" className="mt-4" variant="dark" isLoading={isLoading}>
+                Add
               </Button>
             </form>
           </DialogFooter>

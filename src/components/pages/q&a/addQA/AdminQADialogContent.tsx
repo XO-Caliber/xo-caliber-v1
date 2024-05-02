@@ -31,17 +31,13 @@ const AdminQADialogContent = ({
     // <Input className="h-40 w-full " />
     <section className="flex w-[600px] flex-row items-center gap-4">
       <div className="grid w-full gap-1.5 pt-4">
-        <Label htmlFor="message-2">Your Question</Label>
         <Textarea
-          placeholder="Type your message here."
+          placeholder="type your questions here"
           id="message-2"
           className="w-full"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
         />
-        <p className="text-sm text-muted-foreground">
-          This question will be viewed and answered by all of your clients.
-        </p>
       </div>
       <div className="flex flex-col gap-4">
         <Select onValueChange={(value) => setMark(value)}>

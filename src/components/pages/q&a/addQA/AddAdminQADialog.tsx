@@ -34,8 +34,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
       if (success) {
         router.refresh();
         toast({
-          title: "Question added",
-          description: "Sucessfully added the question"
+          title: "Sucessfully added the question"
         });
       }
     },
@@ -59,7 +58,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
     if (!question.trim()) {
       toast({
         title: "Validation Error",
-        description: "Please enter a valid question.",
+        description: "Enter a valid question.",
         variant: "destructive"
       });
       return;
@@ -67,7 +66,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
     if (categoryId === "") {
       toast({
         title: "Validation Error",
-        description: "Please select a category",
+        description: "Select a category",
         variant: "destructive"
       });
       return;
@@ -95,8 +94,8 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add Q&A</DialogTitle>
-          <DialogDescription>Write a question for your client to answer:</DialogDescription>
+          <DialogTitle> Add Yes or No Questions</DialogTitle>
+          <DialogDescription>select category and weightage for this question</DialogDescription>
 
           {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
           <AdminQADialogContent
@@ -111,7 +110,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
           <DialogFooter>
             <form onSubmit={onSubmit}>
               <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
-                Add Question
+                Add
               </Button>
             </form>
           </DialogFooter>

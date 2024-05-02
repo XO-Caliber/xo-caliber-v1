@@ -58,8 +58,8 @@ const ImportAdmin = () => {
             <DialogTitle>Pull Default Questions</DialogTitle>
           </DialogHeader>
           <DialogDescription className="text-red-600">
-            If you import admin questions your existing questions will overwrite,Do you want to
-            continue
+            If you pull default questions,then your questions will be overwritten,Export your
+            questions before this action
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>

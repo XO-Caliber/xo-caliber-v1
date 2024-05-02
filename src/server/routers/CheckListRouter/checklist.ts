@@ -292,5 +292,13 @@ export const checkRouter = router({
       }
     });
     return results;
+  }),
+  getSubHeadingTitle: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const results = await db.checkSubHeading.findUnique({
+      where: {
+        id: input
+      }
+    });
+    return results?.name;
   })
 });

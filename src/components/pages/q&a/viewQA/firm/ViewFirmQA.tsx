@@ -105,20 +105,20 @@ export const ViewFirmQA = () => {
                   immigration process but also provide with an opportunity to calibrate your profile
                   accurately. These questions are strategically crafted to assess and guide the
                   development of your narrative, especially for potential visa applications such as
-                  EB1A, EB2 NIW, O1 Visa, or other immigrant visas. It&apos;s crucial to understand
-                  that these questions serve as a tool for profiling and narrative building.
-                  Importantly, they do not determine your eligibility for any specific visa
-                  category. You might be asked these questions by the firm admin if you are under
-                  firm management; otherwise, the XO Caliber team has formulated them based on
-                  expert opinions and a wealth of acquired knowledge. A compartmentalized approach,
-                  coupled with a detailed understanding of immigration requirements, and a strategic
-                  method in approaching these requirements, facilitates a more informed immigration
-                  strategy. By breaking down the process into distinct compartments, each
-                  requirement can be systematically addressed, ensuring a comprehensive evaluation
-                  of your professional situation. Some questions may appear similar, but they are
-                  designed to elicit different responses to better assess and enhance your profile
-                  understanding. This meticulous approach enables a thorough examination of the
-                  immigration landscape, allowing for a strategic and well-informed strategy
+                  EB1A, EB2 NIW and O1 visas. It&apos;s crucial to understand that these questions
+                  serve as a tool for profiling and narrative building. Importantly, the
+                  results/outcome of the exercise do not determine your eligibility for any specific
+                  visa category. You might be asked these questions by the firm admin if you are
+                  under firm management; otherwise, the XO Caliber team has formulated the questions
+                  based on expert opinions and a wealth of acquired knowledge. A compartmentalized
+                  approach, coupled with a detailed understanding of immigration crriteria, and a
+                  strategic method in approaching the eligitble criteria, facilitates a more
+                  informed immigration strategy. By breaking down the process into distinct
+                  compartments, each criteria can be systematically addressed, ensuring a
+                  comprehensive evaluation of your professional situation. Some questions may appear
+                  similar, but they are designed to elicit different responses to better assess and
+                  enhance your profile understanding. This approach enables a thorough examination
+                  of the immigration criteria, allowing for a strategic and well-informed approach
                   tailored to your specific needs. Whether it involves documentation, eligibility
                   criteria, or procedural steps, this methodical strategy enhances the overall
                   effectiveness of your immigration case.
@@ -135,13 +135,16 @@ export const ViewFirmQA = () => {
                       htmlFor="terms1"
                       className="text-sm font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                     >
-                      Please acknowledge that you understand the questions and answer
-                      &apos;yes&apos; or &apos;no&apos; truthfully. If you encounter uncertainty or
-                      lack clarity on any question, kindly reach out to the firm administration for
-                      assistance if you are enrolled to managed under Firm (or) you need a deeper
-                      understanding of each question to grasp the specific requirements of each
-                      compartment before providing your response. In order for the evaluation
-                      process to be effective, accurate and reliable information must be provided.
+                      Please acknowledge that you understand the questions and answer &apos;yes or
+                      no&apos; truthfully. If you encounter uncertainty or lack clarity on any
+                      question, kindly reach out to the firm administration for assistance if you
+                      are enrolled to be managed under Firm (or) you need a deeper understanding of
+                      each question to grasp the specific requirements of each compartment before
+                      providing your response. In order for the evaluation process to be effective,
+                      accurate and reliable information must be provided. Even though the answer
+                      choices are binary, we sincerely request that you dedicate ample time—perhaps
+                      hours or days—to research or contemplate each question. We encourage you to
+                      revisit the questions periodically as you advance on your immigration journey.
                       Please accept sincere thanks and best wishes for your future endeavors on
                       behalf of XO Caliber team.
                     </label>

@@ -34,7 +34,7 @@ h6.ce-header {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) white;
+  scrollbar-color: red white;
 }
 
 /* Chrome, Edge, and Safari */
@@ -43,14 +43,14 @@ h6.ce-header {
 }
 
 *::-webkit-scrollbar-track {
-  background: var(--primary);
+  background: red;
   border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: var(--secondary);
+  background-color: red;
   border-radius: 14px;
-  border: 3px solid var(--primary);
+  border: 3px solid red;
 }
 
 /* ClientQA.module.css */

@@ -90,22 +90,17 @@ const AddHeading = ({ refetchData }: headingProps) => {
           size={"sm"}
           // onClick={handleheadingPopOpen}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create heading</p>
+          <p className="ml-2">Add Topic</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="">
-        <DialogHeader>
-          <DialogTitle>Add heading</DialogTitle>
-          <DialogDescription>
-            Create a heading where a set of questions belongs to:
-          </DialogDescription>
+      <DialogContent>
+        <DialogHeader className="mt-4">
           {/* 
           <headingPopUp
             handleheadingPopOpen={handleheadingPopOpen}
             createheading={createheading}
           /> */}
-          <Input placeholder="New heading" onChange={(e) => setheading(e.target.value)} />
+          <Input placeholder="New Topic" onChange={(e) => setheading(e.target.value)} />
           {headingResult.data && (
             <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
               {headingResult.data.map((heading, index) => (
@@ -133,11 +128,11 @@ const AddHeading = ({ refetchData }: headingProps) => {
             <Button
               type="submit"
               className="mt-4"
-              variant="primary"
+              variant="dark"
               isLoading={isLoading}
               onClick={onSubmit}
             >
-              Add heading
+              Add
             </Button>
           </DialogFooter>
         </DialogHeader>

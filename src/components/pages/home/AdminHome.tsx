@@ -17,7 +17,7 @@ interface userProps {
 
 const AdminHome = ({ user }: userProps) => {
   return (
-    <section className="bg-dotted-spacing-3 bg-dotted-gray-200 flex h-max items-start justify-normal">
+    <section className="flex h-max items-start justify-normal bg-dotted-spacing-3 bg-dotted-gray-200">
       <ul className="mr-12 flex h-max w-max flex-col justify-start">
         <HomeLink name={user.name} />
         <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">
@@ -30,20 +30,19 @@ const AdminHome = ({ user }: userProps) => {
       ></span>
       <li className="flex flex-col">
         <div className="ml-4 w-full pl-4 pt-4 font-bold">
-          <h1 className="text-2xl font-bold">Recent Activities</h1>
-          <h2 className="text-sm font-normal">New firms and users </h2>
+          <h1 className="text-2xl font-bold">User Profiles</h1>
         </div>
         <div className="ml-4 mt-12 flex flex-row items-start justify-start gap-y-4 space-x-4 pl-4 font-bold">
           <div className="flex flex-col items-center justify-center space-y-9">
             <div className="flex flex-row space-x-6">
-              <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+              <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 bg-white p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border   bg-gradient-to-r from-[#39468f]  to-[#dd0839] p-1 text-white">
                   List of Firms
                 </h1>
                 <FirmList />
               </div>
-              <div className="mx-4 flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+              <div className="mx-4 flex w-[360px] flex-col items-center justify-center rounded-md border-2 bg-white p-2 shadow-md">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border  border-pink-400  bg-gradient-to-r from-[#39468f]  to-[#dd0839] p-1 text-white">
                   List of Users
                 </h1>
                 <AllUserList />

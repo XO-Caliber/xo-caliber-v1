@@ -63,14 +63,14 @@ const WorkSpace = ({ userRole }: Props) => {
           onClick={() => router.push("/workspaces/xo-caliberq&a")}
         >
           <CheckSquare size={18} className="bi bi-bookmark-fill" />
-          <h1 className="hover ml-4 text-secondary-foreground hover:text-black">Caliber Q&A</h1>
+          <h1 className="hover ml-4 text-secondary-foreground hover:text-black">Caliber</h1>
         </div>
         <div
           className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
           onClick={() => router.push("/workspaces/xo-spidergraph")}
         >
           <CandlestickChart size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Spider Graph</h1>
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Assess</h1>
         </div>
         {/* <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
@@ -87,7 +87,7 @@ const WorkSpace = ({ userRole }: Props) => {
             onClick={() => router.push("/workspaces/checklist")}
           >
             <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
-            <h1 className="ml-4 text-secondary-foreground hover:text-black">Checklist</h1>
+            <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuCheck</h1>
           </div>
         )}
         {(userRole === "INDIVIDUAL" || userRole === "ASSISTANT") && (
@@ -96,7 +96,7 @@ const WorkSpace = ({ userRole }: Props) => {
             onClick={() => router.push("/workspaces/strategy-doc")}
           >
             <DownloadCloud size={18} className="bi bi-bookmark-fill" />
-            <h1 className="ml-4 text-secondary-foreground hover:text-black">Strategy Doc</h1>
+            <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuView</h1>
           </div>
         )}{" "}
         <div
@@ -104,7 +104,7 @@ const WorkSpace = ({ userRole }: Props) => {
           onClick={() => router.push("/workspaces/xo-coverletter")}
         >
           <FileEdit size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">Cover Letter</h1>
+          <h1 className="ml-4 text-secondary-foreground hover:text-black">Craft</h1>
         </div>
       </div>
     </div>

@@ -121,9 +121,7 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
                           />
                         )}
                       </i>
-                      <h1 className="cursor-pointer p-2 text-xl font-bold text-white">
-                        {checkList.name}
-                      </h1>
+                      <h1 className="cursor-pointer p-2  font-bold text-white">{checkList.name}</h1>
                     </div>
                     <div
                       className={`transition-max-height overflow-hidden duration-500 ${

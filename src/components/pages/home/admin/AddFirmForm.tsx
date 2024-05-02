@@ -52,7 +52,7 @@ export const AddFirmForm = () => {
       if (err.data?.code === "NOT_FOUND") {
         toast({
           title: "User does not exist",
-          description: "Make them signup",
+          description: "Signup them",
           variant: "destructive"
         });
       } else if (err.data?.code === "BAD_REQUEST") {
@@ -64,7 +64,7 @@ export const AddFirmForm = () => {
       } else if (err.data?.code === "FORBIDDEN") {
         toast({
           title: "User didnt verify their email",
-          description: "Make thme verify their email",
+          description: "Make them verify their email",
           variant: "destructive"
         });
       } else if (err.data?.code === "CONFLICT") {
@@ -110,17 +110,17 @@ export const AddFirmForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full space-y-2 rounded-lg border-2 bg-white p-8"
       >
-        <CardTitle>Make Firm</CardTitle>
-        <CardDescription>Add your firm details here</CardDescription>
+        <CardTitle>Add Firm</CardTitle>
+
         <div className="pt-5">
           <FormField
             control={form.control}
             name="emailAddress"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Add Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
