@@ -29,6 +29,8 @@ import { GoogleAuth } from "./GoogleAuth";
 import { LinkedinAuth } from "./LinkedinAuth";
 import { ReactEventHandler, useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { InfoIcon } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/Dialog";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -139,18 +141,29 @@ export const LoginBox = () => {
       <Card className="z-50 w-[500px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleLogin)}>
-            <CardHeader>
+            <CardHeader className="flex items-center justify-center">
               <CardTitle>
                 {/* {type === "individual" && "Individual Login"}
                 {type === "firm" && "Firm Login"}
                 {type === "assistant" && "Assistant Login"} */}
-                Individual Login
+                Welcome back !
               </CardTitle>
-              <CardDescription>Enter your email & password to login</CardDescription>
+              {/* <CardDescription>Enter your email & password to login</CardDescription> */}
             </CardHeader>
             <div className="flex w-full items-center justify-between px-4">
               <GoogleAuth />
-              <LinkedinAuth />
+              <Dialog>
+                <DialogTrigger asChild>
+                  <InfoIcon />
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader className="mt-2">
+                    This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of
+                    Service apply.
+                  </DialogHeader>
+                </DialogContent>
+              </Dialog>
+              {/* <LinkedinAuth /> */}
             </div>
             <div className="flex items-center px-6 py-1">
               <div className="my-4 w-full border-t border-muted"></div>
@@ -190,9 +203,9 @@ export const LoginBox = () => {
               />
             </CardContent>
             <CardFooter className="flex justify-between ">
-              <Button type="reset" className="w-full" variant={"secondary"}>
+              {/* <Button type="reset" className="w-full" variant={"secondary"}>
                 Cancel
-              </Button>
+              </Button> */}
               {/* <button
               type="submit"
               className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
@@ -200,17 +213,17 @@ export const LoginBox = () => {
               Login
             </button> */}
               <Button type="submit" variant={"color"} isLoading={isLoading}>
-                Login
+                Resume your journey
               </Button>
             </CardFooter>
             <div className="flex w-full justify-between px-6 pb-6">
               <p>
                 Dont have an account?
-                <Link className="pl-1 text-primary underline underline-offset-2" href={"/signup"}>
+                <Link className="pl-1 text-[#63156A] underline underline-offset-2" href={"/signup"}>
                   Sign Up
                 </Link>
               </p>
-              <Link className="mr-2 text-primary" href={"/reset-password"}>
+              <Link className="mr-2 text-[#63156A]" href={"/reset-password"}>
                 Reset password
               </Link>
             </div>

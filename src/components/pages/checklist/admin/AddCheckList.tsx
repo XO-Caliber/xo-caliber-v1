@@ -24,6 +24,7 @@ import {
   SelectValue
 } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
+import { Input } from "@/components/ui/Input";
 interface QAProps {
   refetchData: () => void;
   subHeadingId: string;
@@ -86,60 +87,28 @@ const AddCheckList = ({ refetchData, subHeadingId }: QAProps) => {
     addSubHeading(data);
   };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <li className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 hover:bg-secondary">
-          <Plus className="text-secondary-foreground" />
-        </li>
-      </DialogTrigger>
-      <DialogContent className="">
-        <DialogHeader>
-          <DialogTitle>Add Checklist</DialogTitle>
-          <DialogDescription>Write a question for your client to answer:</DialogDescription>
-          <section className="flex w-[600px] flex-row items-center gap-4">
-            <div className="grid w-full gap-1.5 pt-4">
-              <Label htmlFor="message-2">Your Question</Label>
-              <Textarea
-                placeholder="Type your message here."
-                id="message-2"
-                className="w-full"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <p className="text-sm text-muted-foreground">
-                This question will be viewed and answered by all of your clients.
-              </p>
-            </div>
-            <div className="flex flex-col gap-4">
-              {/* <Select onValueChange={(value) => setSubHeadingId(value)}>
-              
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent className=" ">
-                  {subHeadingResult.data &&
-                    subHeadingResult.data.map((head) =>
-                      head.subHeading.map((head, index) => (
-                        <SelectItem key={head.id} value={head.id}>
-                          {head.name}
-                        </SelectItem>
-                      ))
-                    )}
-                </SelectContent>
-              </Select> */}
-            </div>
-          </section>
-
-          <DialogFooter>
-            <form onSubmit={onSubmit}>
-              <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
-                Add Checklist
-              </Button>
-            </form>
-          </DialogFooter>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+    <div>
+      {" "}
+      {/* <li className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 hover:bg-secondary">
+        <Plus className="text-secondary-foreground" />
+      </li> */}
+      <section className="flex  flex-row items-center gap-4">
+        <form onSubmit={onSubmit}>
+          <div className="flex w-full items-center justify-center gap-1.5 ">
+            <Input
+              placeholder="Add your checklist here"
+              id="message-2"
+              className="w-full"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Button type="submit" className="" size={"sm"} isLoading={isLoading}>
+              <Plus size={16} />
+            </Button>
+          </div>
+        </form>
+      </section>
+    </div>
   );
 };
 

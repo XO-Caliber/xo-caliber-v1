@@ -108,7 +108,7 @@ export const AddFirmForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full space-y-2 rounded-lg border-2 bg-white p-8"
+        className="w-full space-y-2 rounded-lg border-2 bg-secondary p-8"
       >
         <CardTitle>Add Firm</CardTitle>
 
@@ -118,18 +118,18 @@ export const AddFirmForm = () => {
             name="emailAddress"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Add Email</FormLabel>
+                <FormLabel></FormLabel>
                 <FormControl>
-                  <Input placeholder="email" {...field} />
+                  <Input placeholder="Add Email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <div className="flex w-full flex-col pb-3 pt-5">
+        <div className=" item-end flex justify-end pb-3 pt-5">
           <Button type="submit" variant={"dark"} isLoading={isLoading}>
-            Submit
+            Add
           </Button>
         </div>
       </form>

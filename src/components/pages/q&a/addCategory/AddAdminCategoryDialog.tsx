@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Input } from "@/components/ui/Input";
+import { Toast } from "@/components/ui/Toast";
 
 interface CategoryProps {
   refetchData: () => void;
@@ -25,6 +26,8 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
   const categoriesResult = trpc.category.getAdminCategory.useQuery();
+  let catLength = categoriesResult.data?.length || 11;
+  console.log(catLength);
 
   const { mutate: deleteCategory } = trpc.category.deleteAdminCategory.useMutation({
     onSuccess({ success }) {
@@ -66,20 +69,28 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
     }
   });
 
-  const onSubmit = () => {
-    if (!category.trim()) {
+  const onSubmit = (categoriesResult: number) => {
+    if (categoriesResult < 10) {
+      if (!category.trim()) {
+        toast({
+          title: "Validation Error",
+          description: "Please enter a valid category.",
+          variant: "destructive"
+        });
+        return;
+      }
+      try {
+        setLoading(true);
+        addCategory(category);
+      } catch (err) {
+        console.log("Something went wrong");
+      }
+    } else {
       toast({
         title: "Validation Error",
-        description: "Please enter a valid category.",
-        variant: "destructive"
+        variant: "destructive",
+        description: "You can add up to 10 categories."
       });
-      return;
-    }
-    try {
-      setLoading(true);
-      addCategory(category);
-    } catch (err) {
-      console.log("Something went wrong");
     }
   };
 
@@ -92,16 +103,13 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
           size={"sm"}
           // onClick={handleCategoryPopOpen}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Category</p>
+          {/* <PlusSquare size={16} /> */}
+          <p className="ml-2">Add Category</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">
-        <DialogHeader>
-          <DialogTitle>Add Category</DialogTitle>
-          <DialogDescription>
-            Create a category where a set of questions belongs to:
-          </DialogDescription>
+        <DialogHeader className="my-4">
+          <DialogDescription>Add upto 10 categories</DialogDescription>
           {/* 
           <CategoryPopUp
             handleCategoryPopOpen={handleCategoryPopOpen}
@@ -135,11 +143,11 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
             <Button
               type="submit"
               className="mt-4"
-              variant="primary"
+              variant="dark"
               isLoading={isLoading}
-              onClick={onSubmit}
+              onClick={() => onSubmit(catLength)}
             >
-              Add Category
+              Add
             </Button>
           </DialogFooter>
         </DialogHeader>

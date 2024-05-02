@@ -115,13 +115,13 @@ export const SignupBox = () => {
     <Card className="z-50 w-[500px]">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSignup)}>
-          <CardHeader>
-            <CardTitle>Sign Up</CardTitle>
-            <CardDescription>Enter your email & password to login</CardDescription>
+          <CardHeader className="flex items-center justify-center">
+            <CardTitle>Seconds to Sign Up !</CardTitle>
+            {/* <CardDescription>Enter your email & password to login</CardDescription> */}
           </CardHeader>
           <div className="flex w-full items-center justify-between px-4">
             <GoogleAuth />
-            <LinkedinAuth />
+            {/* <LinkedinAuth /> */}
           </div>
           <div className="flex items-center px-6 py-1">
             <div className="my-4 w-full border-t border-muted"></div>
@@ -201,11 +201,11 @@ export const SignupBox = () => {
             </div> */}
           </CardContent>
           <CardFooter className="flex justify-between ">
-            <Link href={"/"} className="w-full">
+            {/* <Link href={"/"} className="w-full">
               <Button type="reset" className="w-full" variant={"secondary"}>
                 Cancel
               </Button>
-            </Link>
+            </Link> */}
             {/* <button
               type="submit"
               className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
@@ -213,13 +213,35 @@ export const SignupBox = () => {
               Create account
             </button> */}
             <Button type="submit" variant={"color"} isLoading={isLoading}>
-              Submit
+              Start your journey
             </Button>
           </CardFooter>
+          <div className="flex w-full flex-row justify-between px-6 pb-6 text-xs text-black">
+            <p className="flex flex-row items-center justify-center">
+              <div>
+                <p>
+                  By clicking the button above,you agree to our{" "}
+                  <Link
+                    className="px-1 text-black underline underline-offset-2"
+                    href={"https://xocaliber.tech/privacy-policy/"}
+                  >
+                    Privacy Policy
+                  </Link>
+                  &
+                  <Link
+                    className="pl-1 text-black underline underline-offset-2"
+                    href={"https://xocaliber.tech/tc/"}
+                  >
+                    Terms and Conditions
+                  </Link>
+                </p>
+              </div>
+            </p>
+          </div>
           <div className="flex w-full justify-between px-6 pb-6">
             <p>
               Have an account already?
-              <Link className="pl-1 text-primary underline underline-offset-2" href={"/login"}>
+              <Link className="pl-1 text-[#63156A] underline underline-offset-2" href={"/login"}>
                 Log In
               </Link>
             </p>

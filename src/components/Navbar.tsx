@@ -23,6 +23,7 @@ import ViewProfile from "./pages/profile/ViewProfile";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
+  const refLink = session ? "/" : "https://xocaliber.tech/";
   return (
     <nav className="absolute z-50 h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>
@@ -40,7 +41,7 @@ export const Navbar = async () => {
                         hover:text-primary focus:text-primary"
           />
         </li> */}
-        <Link href="/">
+        <Link href={`${refLink}`}>
           <li
             className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary "

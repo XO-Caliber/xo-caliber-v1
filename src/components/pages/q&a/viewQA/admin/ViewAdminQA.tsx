@@ -90,7 +90,7 @@ export const ViewAdminQA = () => {
   return (
     <div>
       <div className="flex  h-[68px] items-center justify-between border-2 border-l-0 ">
-        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        <p className="m-4 mt-[1.2rem] font-bold  text-[#63156A]">Caliber</p>
         <div className="mr-4 flex space-x-12">
           <AddAdminQADialog refetchData={refetchData} />
           <AddAdminCategoryDialog refetchData={refetchData} />
@@ -99,11 +99,11 @@ export const ViewAdminQA = () => {
       </div>
       <div className="h-[928px] bg-dotted-spacing-3 bg-dotted-gray-200">
         {catArray.length > 0 ? (
-          <div className="h-[70vh] p-4 ">
+          <div className="h-[70vh]  ">
             {!hidden && (
-              <section className="absolute   m-16 mt-44 rounded-lg border-2 bg-white  shadow-lg">
+              <section className="absolute   m-16 mt-44  rounded-lg border-2 bg-white  shadow-lg">
                 <ul className="p-8 text-left  text-base">
-                  <li className="font-serif">
+                  <li className="font-serif text-lg">
                     By answering all Yes or No questions, you not only gain insights into the
                     immigration process but also provide with an opportunity to calibrate your
                     profile accurately. These questions are strategically crafted to assess and
@@ -137,7 +137,7 @@ export const ViewAdminQA = () => {
                     <div className="grid gap-1.5 pl-2 leading-none">
                       <label
                         htmlFor="terms1"
-                        className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                        className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                       >
                         Please acknowledge that you understand the questions and answer &apos;yes or
                         no&apos; truthfully. If you encounter uncertainty or lack clarity on any

@@ -36,13 +36,13 @@ const AdminHome = ({ user }: userProps) => {
           <div className="flex flex-col items-center justify-center space-y-9">
             <div className="flex flex-row space-x-6">
               <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 bg-white p-2 shadow-md">
-                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border   bg-gradient-to-r from-[#39468f]  to-[#dd0839] p-1 text-white">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-white">
                   List of Firms
                 </h1>
                 <FirmList />
               </div>
               <div className="mx-4 flex w-[360px] flex-col items-center justify-center rounded-md border-2 bg-white p-2 shadow-md">
-                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border  border-pink-400  bg-gradient-to-r from-[#39468f]  to-[#dd0839] p-1 text-white">
+                <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border  border-pink-400  bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-white">
                   List of Users
                 </h1>
                 <AllUserList />

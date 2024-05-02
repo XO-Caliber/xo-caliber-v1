@@ -1,10 +1,10 @@
-import { CandlestickChart, CheckSquare, FileEdit, Wind } from "lucide-react";
+import { CandlestickChart, CheckSquare, CheckSquare2, FileEdit, Wind } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 export const HomeLink = (user: { name: string | null | undefined }) => {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className=" flex flex-col items-center justify-center">
       <li className="ml-4 w-full pl-4 pt-4 font-bold">
         <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
         <h2 className="text-sm font-normal ">Immigration Process Overview</h2>
@@ -28,7 +28,7 @@ export const HomeLink = (user: { name: string | null | undefined }) => {
           href={"/workspaces/checklist"}
           className="m-2 flex h-20 w-32 cursor-pointer flex-col items-center justify-center rounded-md border-2 border-border bg-white text-center hover:border-primary"
         >
-          <Wind size={20} className="mb-2" />
+          <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
           <h1>DocuCheck</h1>
         </Link>
         <Link

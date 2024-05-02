@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { toast } from "@/hooks/use-toast";
-import { Info, Trash, XCircle } from "lucide-react";
+import { Info, MinusCircle, Trash, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import {
@@ -90,11 +90,13 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
         <DialogTrigger asChild>
           <section className="mb-3 flex select-none">
             <ul
-              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2  px-4 
+              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 px-4 text-sm 
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border bg-white"}  shadow-md`}
             >
               <li>{questionNumber}.</li>
-              <li className="w-full pl-4 text-left text-base ">{question}</li>
+              <li className="flex w-full items-center justify-start gap-x-1 pl-4 text-left text-base">
+                <p>{question}</p>
+              </li>
 
               {/* <XCircle
                 size={24}
@@ -115,57 +117,58 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
             </div>
           </section>
         </DialogTrigger>
-        <DialogContent className="min-w-60 select-none">
-          <DialogHeader>
-            <DialogTitle>Question {questionNumber}</DialogTitle>
+        <DialogContent className="my-2 min-w-60 select-none">
+          <DialogHeader className="flex flex-row items-center justify-between">
+            <div>
+              <DialogTitle className="flex items-center justify-center space-x-1">
+                <p>Question {questionNumber} </p>
+                <Trash
+                  size={15}
+                  onClick={() => handleDelete(id)}
+                  className="cursor-pointer fill-destructive text-destructive"
+                />
+              </DialogTitle>
+            </div>
           </DialogHeader>
-          <section className="rounded-sm border bg-secondary ">
+          <section className="rounded-sm  ">
             <ul className="flex items-center justify-center p-4">
               <li>
-                <Textarea
-                  value={Question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  className="h-[200px] w-[400px]"
-                />
-              </li>
-              <li className="ml-4 rounded-md bg-secondary-foreground p-1 p-2">
-                <text className="text-white"> Mark:{mark}</text>
-              </li>
-              <li>
-                <div className="ml-4 flex">
-                  <text className="mr-4 font-bold">Change mark:</text>
-                  <Select onValueChange={(value) => setMark(value)}>
-                    {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
-                    <SelectTrigger className="">
-                      <SelectValue placeholder={Mark} />
-                    </SelectTrigger>
-                    <SelectContent className="w-[50px] ">
-                      <SelectItem value={"10"}>10</SelectItem>
-                      <SelectItem value={"20"}>20</SelectItem>
-                      <SelectItem value={"30"}>30</SelectItem>
-                      <SelectItem value={"40"}>40</SelectItem>
-                      <SelectItem value={"50"}>50</SelectItem>
-                      <SelectItem value={"60"}>60</SelectItem>
-                      <SelectItem value={"70"}>70</SelectItem>
-                      <SelectItem value={"80"}>80</SelectItem>
-                      <SelectItem value={"90"}>90</SelectItem>
-                      <SelectItem value={"100"}>100</SelectItem>
-                      <SelectItem value={"1000"}>1000</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                <Input value={Question} onChange={(e) => setQuestion(e.target.value)} />
               </li>
             </ul>
           </section>
-          <DialogFooter>
+          <DialogFooter className="flex items-center justify-center rounded-md bg-secondary p-2">
+            <p>
+              <div className="ml-4 flex items-center justify-center">
+                <text className="mr-2 text-sm"> Weightage:{mark}</text>
+
+                <text className="mr-4 text-sm">Edit</text>
+                <Select onValueChange={(value) => setMark(value)}>
+                  {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
+                  <SelectTrigger className="">
+                    <SelectValue placeholder={Mark} />
+                  </SelectTrigger>
+                  <SelectContent className="w-[50px] ">
+                    <SelectItem value={"10"}>10</SelectItem>
+                    <SelectItem value={"20"}>20</SelectItem>
+                    <SelectItem value={"30"}>30</SelectItem>
+                    <SelectItem value={"40"}>40</SelectItem>
+                    <SelectItem value={"50"}>50</SelectItem>
+                    <SelectItem value={"60"}>60</SelectItem>
+                    <SelectItem value={"70"}>70</SelectItem>
+                    <SelectItem value={"80"}>80</SelectItem>
+                    <SelectItem value={"90"}>90</SelectItem>
+                    <SelectItem value={"100"}>100</SelectItem>
+                    <SelectItem value={"1000"}>1000</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </p>
             <form onSubmit={onSubmit}>
-              <Button variant={"primary"} isLoading={isLoading}>
+              <Button variant={"dark"} size={"sm"} isLoading={isLoading}>
                 Save
               </Button>
             </form>
-            <Button variant={"destructive"} onClick={() => handleDelete(id)}>
-              <Trash size={15} />
-            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

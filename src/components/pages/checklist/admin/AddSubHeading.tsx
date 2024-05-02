@@ -31,7 +31,7 @@ interface QAProps {
 
 const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   const [name, setName] = useState("");
-  // const [headingId, setHeadingId] = useState("");
+  const [headingId1, setHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const headingResult = trpc.checklist.getHeading.useQuery();
@@ -110,7 +110,7 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
   };
 
   return (
-    <Dialog>
+    <Dialog onOpenChange={() => topicName.refetch()}>
       <DialogTrigger asChild>
         <li className="flex cursor-pointer items-center justify-center rounded-md  border-gray-500 bg-white hover:bg-secondary">
           <Plus className="text-gray-500 text-secondary-foreground" size={16} />
@@ -118,7 +118,7 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add Subtopic</DialogTitle>
+          <DialogTitle>Add Subtopic{topicName.data}</DialogTitle>
 
           <section className="flex w-[600px] flex-row items-center gap-4">
             <div className="grid w-full gap-1.5 pt-4">
@@ -131,19 +131,18 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
               />
             </div>
             <div className="flex flex-col gap-4">
-              {/* <Select onValueChange={(value) => setHeadingId(value)}>
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent className=" ">
-                  {headingResult.data &&
-                    headingResult.data.map((head) => (
+              <Select onValueChange={(value) => setHeadingId(value)}>
+                {headingResult.data &&
+                  headingResult.data
+                    .filter((head) => head.id === headingId)
+                    .map((head) => (
                       <SelectItem key={head.id} value={head.id}>
                         {head.name}
                       </SelectItem>
                     ))}
-                </SelectContent>
-              </Select> */}
+
+                <SelectContent className=" "></SelectContent>
+              </Select>
             </div>
           </section>
           <div>

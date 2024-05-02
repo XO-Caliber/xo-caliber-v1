@@ -9,7 +9,7 @@ const Header: React.FC<HeaderProps> = ({ children, workspace }) => {
   return (
     <div className={`ml-56`}>
       <div className="h-[68px] border-2 border-l-0">
-        <p className="m-4 mt-[1.2rem] font-semibold text-muted">{children}</p>
+        <p className="m-4 mt-[1.2rem] font-semibold text-[#63156A]">{children}</p>
         {/* {workspace === "Caliber QA" && (
           <div className="relative bottom-11 left-[1400px]">
             <SaveChanges />

@@ -88,8 +88,8 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
           // onClick={handleOpen}
           size={"sm"}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Q&A</p>
+          {/* <PlusSquare size={16} /> */}
+          <p className="ml-2">Add Q&A</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">
@@ -109,7 +109,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
 
           <DialogFooter>
             <form onSubmit={onSubmit}>
-              <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
+              <Button type="submit" className="mt-4" variant="dark" isLoading={isLoading}>
                 Add
               </Button>
             </form>
