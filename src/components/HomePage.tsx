@@ -24,7 +24,7 @@ export const HomePage = () => {
             <p>
               Embarking on the journey of self petitioned EB1A/EB2-NIW immigrant visas <br />
               is an exciting endeavor, but navigating the process can be daunting. <br />
-              That's where XO Caliber comes in – your all-in-one platform to <br />
+              That&apos;s where XO Caliber comes in – your all-in-one platform to <br />
               Calibrate, Assess, Structure, and Enhance (CASE) <br />
               your cover letter individually or with the support of any attorneys/experts (Firm).
             </p>
