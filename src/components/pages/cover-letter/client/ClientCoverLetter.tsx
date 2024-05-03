@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { UserPlus } from "lucide-react";
+import { Download, UserPlus } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";
@@ -21,6 +21,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
     role: "INDIVIDUAL",
     userId: user.id
   });
+  const defaultTemplate = trpc.coverletter.getAdminTemplate.useQuery();
   const { mutate: downloadTemplate } = trpc.coverletter.downloadTemplate.useMutation({
     onSuccess({ success }) {
       CoverLetterData.refetch();
@@ -33,9 +34,9 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
     }
   });
 
-  const onSubmit = () => {
+  const onSubmit = (id: string) => {
     try {
-      downloadTemplate(user.id);
+      downloadTemplate({ userId: user.id, coverLetterId: id });
     } catch (e) {
       console.log(e);
     }
@@ -53,10 +54,33 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
           </DialogTrigger>
           <DialogContent>
             <DialogTitle className="mt-4">Do you want to download default template</DialogTitle>
+            {defaultTemplate.data && (
+              <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                {defaultTemplate.data.map((coverletter, index) => (
+                  <li
+                    key={coverletter.id}
+                    className={`flex w-fit items-center justify-center 
+                  rounded-md border p-1 px-3 text-sm ${
+                    index % 2 === 0
+                      ? "border-primary bg-primary-light"
+                      : "border-muted bg-secondary"
+                  }`}
+                  >
+                    {coverletter.title}
+                    <Download
+                      className="ml-1 cursor-pointer text-primary"
+                      size={16}
+                      onClick={() => onSubmit(coverletter.id)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+
             <DialogFooter>
-              <Button variant={"dark"} onClick={onSubmit}>
+              {/* <Button variant={"dark"} onClick={onSubmit}>
                 Yes,continue
-              </Button>
+              </Button> */}
             </DialogFooter>
           </DialogContent>
         </Dialog>

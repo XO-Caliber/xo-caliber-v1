@@ -376,54 +376,58 @@ export const coverletterRouter = router({
       });
       return { success: true };
     }),
-  downloadTemplate: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
-    const userId = input;
-    if (!userId || userId === "") {
-      throw new TRPCError({ code: "UNAUTHORIZED" });
-    }
-    // Retrieve source user by email
-    const sourceUser = await db.admin.findUnique({
-      where: { email: "admin@xocaliber.com" },
-      include: {
-        coverletter: {
-          include: { Section: { include: { SubSection: { include: { Exhibits: true } } } } }
-        }
+  downloadTemplate: publiceProcedure
+    .input(z.object({ coverLetterId: z.string(), userId: z.string() }))
+    .mutation(async ({ input }) => {
+      const { coverLetterId, userId } = input;
+      if (!userId || userId === "") {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
       }
-    });
+      // Retrieve source cover letter by ID
+      const sourceCoverLetter = await db.coverLetter.findUnique({
+        where: { id: coverLetterId },
+        include: {
+          Section: {
+            include: {
+              SubSection: {
+                include: { Exhibits: true }
+              }
+            }
+          }
+        }
+      });
 
-    // Check if source user exists
-    if (!sourceUser) {
-      throw new Error("Source user not found");
-    }
+      // Check if source cover letter exists
+      if (!sourceCoverLetter) {
+        throw new Error("Source cover letter not found");
+      }
 
-    console.log("Source user:", sourceUser);
-    console.log("Cover letters:", sourceUser.coverletter);
+      console.log("Source cover letter:", sourceCoverLetter);
 
-    // Retrieve target user by ID
-    const targetUser = await db.user.findUnique({
-      where: { id: userId }
-    });
+      // Retrieve target user by ID
+      const targetUser = await db.user.findUnique({
+        where: { id: userId }
+      });
 
-    // Check if target user exists
-    if (!targetUser) {
-      throw new Error("Target user not found");
-    }
+      // Check if target user exists
+      if (!targetUser) {
+        throw new Error("Target user not found");
+      }
 
-    console.log("Target user:", targetUser);
+      console.log("Target user:", targetUser);
 
-    // Delete existing cover letters of the target user
-    // const deletedCoverLetters = await db.coverLetter.deleteMany({
-    //   where: {
-    //     userId: userId
-    //   }
-    // });
+      // Delete existing cover letters of the target user with the same title
+      // const deletedCoverLetters = await db.coverLetter.deleteMany({
+      //   where: {
+      //     title: sourceCoverLetter.title,
+      //     userId: userId
+      //   }
+      // });
 
-    // console.log("Deleted cover letters:", deletedCoverLetters);
+      // console.log("Deleted cover letters:", deletedCoverLetters);
 
-    // Create new cover letters for the target user based on source user's cover letters
-    console.log("Creating new cover letters...");
-    for (const sourceCoverLetter of sourceUser.coverletter || []) {
-      // Create new cover letter for the target user
+      // Create new cover letter for the target user based on source cover letter
+      console.log("Creating new cover letter...");
       const newCoverLetter = await db.coverLetter.create({
         data: {
           title: sourceCoverLetter.title,
@@ -473,9 +477,19 @@ export const coverletterRouter = router({
           }
         }
       }
-    }
 
-    return { success: true };
+      return { success: true };
+    }),
+  getAdminTemplate: publiceProcedure.query(async () => {
+    const results = await db.admin.findUnique({
+      where: {
+        email: "vishnudarrshanorp@gmail.com"
+      },
+      include: {
+        coverletter: true
+      }
+    });
+    return results?.coverletter;
   }),
   deleteCase: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
     const caseId = input;

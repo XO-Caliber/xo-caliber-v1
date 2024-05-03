@@ -23,12 +23,8 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
           <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
           <h2 className="text-sm font-normal ">Here is the overview</h2>
         </ul>
-        <Button variant={"outline"}>
-          <UserPlus size={16} className="mr-2" />
-          Assign Assistant
-        </Button>
+
         <AddCoverLetterDialog userId={user.id} role="ADMIN" />
-        <UserSelectList />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}

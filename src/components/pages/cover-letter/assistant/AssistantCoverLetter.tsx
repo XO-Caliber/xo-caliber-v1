@@ -29,13 +29,13 @@ export const AssistantCoverLetter = () => {
     }
   });
 
-  const onSubmit = () => {
-    try {
-      downloadTemplate(user);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const onSubmit = () => {
+  //   try {
+  //     downloadTemplate(user);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   const getSelectedUser = (userId: string) => {
     setUser(userId);
   };
@@ -49,9 +49,9 @@ export const AssistantCoverLetter = () => {
           <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
           <h2 className="text-sm font-normal ">Here is the overview</h2>
         </ul> */}
-        <Button variant={"outline"} onClick={onSubmit}>
+        {/* <Button variant={"outline"} onClick={onSubmit}>
           Download Default Template
-        </Button>
+        </Button> */}
         <AddCoverLetterDialog userId={user} role="ASSISTANT" />
         <AssistantUserSelect getSelectedUser={getSelectedUser} />
       </div>

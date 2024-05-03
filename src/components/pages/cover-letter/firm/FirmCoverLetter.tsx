@@ -25,7 +25,6 @@ import {
   DialogTitle
 } from "@/components/ui/Dialog";
 
-
 export const FirmCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
@@ -46,13 +45,13 @@ export const FirmCoverLetter = () => {
     }
   });
 
-  const onSubmit = () => {
-    try {
-      downloadTemplate(user);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const onSubmit = () => {
+  //   try {
+  //     downloadTemplate(user);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
   const handleDownload = ({
     id,
     CoverLetterData
@@ -60,7 +59,7 @@ export const FirmCoverLetter = () => {
     id: string;
     CoverLetterData: CoverLetterType[];
   }) => {
-    selectedCoverLetter = CoverLetterData. find((coverLetter) => coverLetter.id === id);
+    selectedCoverLetter = CoverLetterData.find((coverLetter) => coverLetter.id === id);
   };
   const getSelectedUser = (userId: string) => {
     setUser(userId);
@@ -75,9 +74,9 @@ export const FirmCoverLetter = () => {
           <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
           <h2 className="text-sm font-normal ">Here is the overview</h2>
         </ul> */}
-        <Button variant={"outline"} onClick={onSubmit}>
+        {/* <Button variant={"outline"} onClick={onSubmit}>
           Download Default Template
-        </Button>
+        </Button> */}
         <AddCoverLetterDialog userId={user} role="FIRM" />
         <UserSelectList getSelectedUser={getSelectedUser} />
         <Dialog>
