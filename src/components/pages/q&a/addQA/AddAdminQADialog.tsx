@@ -47,7 +47,7 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
     },
     onSettled() {
       setLoading(false);
-      setCategoryId("");
+
       setQuestion("");
     }
   });

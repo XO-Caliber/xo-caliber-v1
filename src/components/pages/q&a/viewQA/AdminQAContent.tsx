@@ -133,35 +133,41 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
           <section className="rounded-sm  ">
             <ul className="flex items-center justify-center p-4">
               <li>
-                <Input value={Question} onChange={(e) => setQuestion(e.target.value)} />
+                <Textarea
+                  value={Question}
+                  onChange={(e) => setQuestion(e.target.value)}
+                  className="w-[400px]"
+                />
               </li>
             </ul>
           </section>
-          <DialogFooter className="flex items-center justify-center rounded-md bg-secondary p-2">
+          <DialogFooter className="flex flex-row items-center justify-center  rounded-md bg-secondary p-2">
             <p>
-              <div className="ml-4 flex items-center justify-center">
-                <text className="mr-2 text-sm"> Weightage:{mark}</text>
+              <div className=" mr-14 flex flex-row items-center justify-around space-x-12">
+                <p className="mr-2 text-sm"> Weightage:{mark}</p>
 
-                <text className="mr-4 text-sm">Edit</text>
-                <Select onValueChange={(value) => setMark(value)}>
-                  {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
-                  <SelectTrigger className="">
-                    <SelectValue placeholder={Mark} />
-                  </SelectTrigger>
-                  <SelectContent className="w-[50px] ">
-                    <SelectItem value={"10"}>10</SelectItem>
-                    <SelectItem value={"20"}>20</SelectItem>
-                    <SelectItem value={"30"}>30</SelectItem>
-                    <SelectItem value={"40"}>40</SelectItem>
-                    <SelectItem value={"50"}>50</SelectItem>
-                    <SelectItem value={"60"}>60</SelectItem>
-                    <SelectItem value={"70"}>70</SelectItem>
-                    <SelectItem value={"80"}>80</SelectItem>
-                    <SelectItem value={"90"}>90</SelectItem>
-                    <SelectItem value={"100"}>100</SelectItem>
-                    <SelectItem value={"1000"}>1000</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className=" flex flex-row items-center justify-center">
+                  <p className="mr-4 text-sm">Edit</p>
+                  <Select onValueChange={(value) => setMark(value)}>
+                    {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
+                    <SelectTrigger className="">
+                      <SelectValue placeholder={Mark} />
+                    </SelectTrigger>
+                    <SelectContent className="w-[50px] ">
+                      <SelectItem value={"10"}>10</SelectItem>
+                      <SelectItem value={"20"}>20</SelectItem>
+                      <SelectItem value={"30"}>30</SelectItem>
+                      <SelectItem value={"40"}>40</SelectItem>
+                      <SelectItem value={"50"}>50</SelectItem>
+                      <SelectItem value={"60"}>60</SelectItem>
+                      <SelectItem value={"70"}>70</SelectItem>
+                      <SelectItem value={"80"}>80</SelectItem>
+                      <SelectItem value={"90"}>90</SelectItem>
+                      <SelectItem value={"100"}>100</SelectItem>
+                      <SelectItem value={"1000"}>1000</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </p>
             <form onSubmit={onSubmit}>

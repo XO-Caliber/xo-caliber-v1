@@ -495,5 +495,13 @@ export const homeRouter = router({
       return false;
     }
     return true;
+  }),
+  getUserProfile: publiceProcedure.input(z.string()).query(async ({ input }) => {
+    const user = await db.user.findUnique({
+      where: {
+        id: input
+      }
+    });
+    return user;
   })
 });

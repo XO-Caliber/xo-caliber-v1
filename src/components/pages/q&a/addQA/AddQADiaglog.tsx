@@ -46,7 +46,6 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
     },
     onSettled() {
       setLoading(false);
-      setCategoryId("");
       setQuestion("");
     }
   });
