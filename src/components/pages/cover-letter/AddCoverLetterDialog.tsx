@@ -76,17 +76,14 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
     <Dialog>
       <DialogTrigger asChild>
         <Button variant={"dark"}>
-          <PlusSquare size={16} className="mr-2" />
+          {/* <PlusSquare size={16} className="mr-2" /> */}
           Add Cover Letter
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader className="border-b-2 border-border pb-2 text-left">
+        {/* <DialogHeader className=" pb-2 text-left">
           <DialogTitle>Add Cover Letter</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
-        </DialogHeader>
+        </DialogHeader> */}
         <section>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -97,9 +94,9 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
                   <FormItem>
                     <FormLabel>Case Title</FormLabel>
                     <FormControl>
-                      <Input placeholder="Case name..." {...field} />
+                      <Input placeholder="New Case" {...field} />
                     </FormControl>
-                    <FormDescription>This is your public display name.</FormDescription>
+                    {/* <FormDescription>This is your public display name.</FormDescription> */}
                     <FormMessage />
                   </FormItem>
                 )}
@@ -109,7 +106,7 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
                   <Button>Close</Button>
                 </DialogClose>
                 <Button variant={"primary"} isLoading={loading} type="submit">
-                  Submit
+                  Add
                 </Button>
               </div>
             </form>

@@ -42,14 +42,14 @@ export function NotesOfFirm({ selectedUser }: userType) {
       <h1 className="text-lg font-semibold">Your Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
-        className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+        className="my-2 h-full resize-none text-sm font-semibold italic focus-visible:ring-0"
         placeholder="Provide your comments about Spider Graph"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
 
       <div className="flex w-full justify-between">
-        <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
+        <Button variant={"dark"} onClick={onSubmit}>
           Save
         </Button>
       </div>

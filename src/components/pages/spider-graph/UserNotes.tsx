@@ -38,17 +38,17 @@ export function UserNotes({ userType }: userType) {
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
-      <h1 className="text-lg font-semibold">Your Notes:</h1>
+      <h1 className="text-lg font-semibold text-heading ">Your Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
-        className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+        className="my-2 h-full resize-none text-sm  font-semibold italic focus-visible:ring-0"
         placeholder="Provide details on the skills you see in the Spider Graph"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
       />
       {userType === "INDIVIDUAL" && (
-        <div className="flex w-full justify-between">
-          <Button className="mx-4 w-full" variant={"dark"} onClick={onSubmit}>
+        <div className="flex w-full justify-end">
+          <Button className="" variant={"dark"} onClick={onSubmit}>
             Save
           </Button>
         </div>

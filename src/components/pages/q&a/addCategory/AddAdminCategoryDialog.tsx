@@ -26,7 +26,7 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
   const [category, setCategory] = useState("");
   const [isLoading, setLoading] = useState(false);
   const categoriesResult = trpc.category.getAdminCategory.useQuery();
-  let catLength = categoriesResult.data?.length || 11;
+  let catLength = categoriesResult.data?.length || 0;
   console.log(catLength);
 
   const { mutate: deleteCategory } = trpc.category.deleteAdminCategory.useMutation({

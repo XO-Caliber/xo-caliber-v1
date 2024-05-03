@@ -177,29 +177,35 @@ function AdminSpiderGraph() {
             <ResizablePanel defaultSize={40} className="m-3 ">
               <Dialog>
                 <DialogTrigger asChild>
-                  <section className=" rounded-md bg-secondary">
-                    <ul className="p-4 ">
-                      <li className="font-serif text-xs ">
-                        It&apos;s essential to assess profiles from diverse perspectives,
-                        categorizing them into Research, Business, and Art. Each category demands
-                        specific skills and evidence for validation. For example Artists can
-                        showcase art shows, success stories, media mentions, and memberships. In
-                        Business like IT industry, original contributions, critical roles, high
-                        salary, and evaluating others&apos; work matter, backed by scholarly
-                        articles and memberships. Research profiles require original contributions,
-                        critical roles, scholarly publications, and evaluating others&apos; work,
-                        not just media presence. The above examples are merely examples; to win a
-                        case, you must meet at least three criteria. Consider a spider graph to
-                        determine the strength of a profile and strengthen your case by focusing on
-                        the key criteria in your field and gathering a variety of strong evidence to
-                        support your claim. Winning some immigration visa necessitates meeting four
-                        criteria effectively chosen for quality, not quantity. Immigration
-                        authorities use a &quot;preponderance of evidence&quot; standard, demanding
-                        just over 50% certainty, emphasizing the importance of thorough evaluation.
-                        Despite misconceptions, evidence evaluation involves more than counting,
-                        with immigration authorities needing to justify refusals even when criteria
-                        are met. Understanding these standards is crucial, and consulting an
-                        attorney can offer valuable insights into the process.
+                  <section className="rounded-md ">
+                    <ul className="p-4 text-xs">
+                      <li className="relative font-serif">
+                        <span className="blur-sm">
+                          It&apos;s essential to assess profiles from diverse perspectives,
+                          categorizing them into Research, Business, and Art. Each category demands
+                          specific skills and evidence for validation. For example Artists can
+                          showcase art shows, success stories, media mentions, and memberships. In
+                          Business like IT industry, original contributions, critical roles, high
+                          salary, and evaluating others&apos; work matter, backed by scholarly
+                          articles and memberships. Research profiles require original
+                          contributions, critical roles, scholarly publications, and evaluating
+                          others&apos; work, not just media presence. The above examples are merely
+                          examples; to win a case, you must meet at least three criteria. Consider a
+                          spider graph to determine the strength of a profile and strengthen your
+                          case by focusing on the key criteria in your field and gathering a variety
+                          of strong evidence to support your claim. Winning some immigration visa
+                          necessitates meeting four criteria effectively chosen for quality, not
+                          quantity. Immigration authorities use a &quot;preponderance of
+                          evidence&quot; standard, demanding just over 50% certainty, emphasizing
+                          the importance of thorough evaluation. Despite misconceptions, evidence
+                          evaluation involves more than counting, with immigration authorities
+                          needing to justify refusals even when criteria are met. Understanding
+                          these standards is crucial, and consulting an attorney can offer valuable
+                          insights into the process.
+                        </span>
+                        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-md p-1 text-lg font-semibold text-heading">
+                          how to read the spider graph
+                        </span>
                       </li>
                     </ul>
                   </section>

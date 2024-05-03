@@ -37,7 +37,7 @@ export const ClientQANotes = () => {
   return (
     <section className="relative  flex h-full w-full flex-col  justify-between bg-white p-2">
       <ul className="flex justify-between">
-        <h1 className="items-start text-lg font-semibold">Your Notes:</h1>
+        <h1 className="items-start text-lg font-semibold text-heading">Your Notes:</h1>
         <Button variant={"dark"} onClick={notesUpdate} className="mb-1 mr-4 h-7 w-20">
           Save
         </Button>
@@ -45,7 +45,7 @@ export const ClientQANotes = () => {
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         value={Note}
-        className="my-2 h-full resize-none text-base font-semibold italic focus-visible:ring-0"
+        className="my-2 h-full resize-none text-base text-sm font-semibold italic focus-visible:ring-0"
         placeholder="If Yes response:- Provide two cents on the topic"
         onChange={(e) => setNote(e.target.value)}
       />

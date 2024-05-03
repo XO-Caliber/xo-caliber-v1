@@ -72,7 +72,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
   return (
     <div className=" ml-56 text-xl">
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
-        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+        <p className="m-4 mt-[1.2rem] font-bold text-heading">Caliber</p>
         <span className="mr-10 w-32">
           {/* <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">
@@ -92,7 +92,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               {!hidden && (
                 <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
                   <ul className="p-8 text-left  text-base">
-                    <li className="font-serif">
+                    <li className="font-serif text-lg">
                       By answering all Yes or No questions, you not only gain insights into the
                       immigration process but also provide with an opportunity to calibrate your
                       profile accurately. These questions are strategically crafted to assess and
@@ -126,7 +126,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                       <div className="grid gap-1.5 pl-2 leading-none">
                         <label
                           htmlFor="terms1"
-                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
+                          className="text-lgfont-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 "
                         >
                           Please acknowledge that you understand the questions and answer &apos;yes
                           or no&apos; truthfully. If you encounter uncertainty or lack clarity on

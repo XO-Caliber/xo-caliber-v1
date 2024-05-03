@@ -4,7 +4,15 @@ import AddHeading from "./AddHeading";
 import AddSubHeading from "./AddSubHeading";
 import AddCheckList from "./AddCheckList";
 import { trpc } from "@/app/_trpc/client";
-import { ChevronDown, ChevronRight, Info, LucideTrash2, Minus, Plus } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Info,
+  LucideTrash2,
+  Minus,
+  MinusCircle,
+  Plus
+} from "lucide-react";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/Dialog";
@@ -21,7 +29,20 @@ const AdminCheckList = () => {
   const refetchData = () => {
     checkListData.refetch();
   };
-
+  const { mutate: deleteSubHeading } = trpc.checklist.deleteSubHeading.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        refetchData();
+        toast({
+          title: "Deleted heading",
+          description: "The heading was deleted successfully"
+        });
+      }
+    },
+    onError(err) {
+      console.log(err);
+    }
+  });
   const { mutate: deleteCheckList } = trpc.checklist.deleteCheckList.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -53,11 +74,11 @@ const AdminCheckList = () => {
     <div>
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
         <div className="flex items-center justify-center">
-          <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-[#63156A]">DocuCheck</p>
+          <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-heading">DocuCheck</p>
           <div>
             <Dialog>
               <DialogTrigger asChild>
-                <Info size={16} className="cursor-pointer text-[#63156A]" />
+                <Info size={16} className="cursor-pointer text-heading" />
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -116,7 +137,7 @@ const AdminCheckList = () => {
                             />
                           )}
                         </i>
-                        <h1 className="cursor-pointer p-2 text-sm">{checkList.name}</h1>
+                        <h1 className=" p-2 text-sm">{checkList.name}</h1>
                         <AddSubHeading refetchData={refetchData} headingId={checkList.id} />
                       </div>
                       <div
@@ -127,7 +148,14 @@ const AdminCheckList = () => {
                         {checkList.subHeading &&
                           checkList.subHeading.map((subHeading) => (
                             <div key={subHeading.id} className="ml-6 border-2 border-t-0">
-                              <h3 className="bg-[#FFE6E0] p-2 text-sm">{subHeading.name}</h3>
+                              <h3 className="flex flex-row items-center justify-start space-x-1 bg-[#FFE6E0] p-2 text-sm ">
+                                <p>{subHeading.name}</p>
+                                <MinusCircle
+                                  className="cursor-pointer text-destructive"
+                                  onClick={() => deleteSubHeading(subHeading.id)}
+                                  size={14}
+                                />
+                              </h3>
                               <ul className="space-y-2">
                                 {subHeading.Checklist &&
                                   subHeading.Checklist.map((item, itemIndex) => (

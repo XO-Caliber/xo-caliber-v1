@@ -55,6 +55,23 @@ export const SignupBox = () => {
       passwordConfirm: ""
     }
   });
+  const TermsAndPrivacyLinks = () => (
+    <>
+      <Link
+        className="px-1 text-[#333] underline underline-offset-2"
+        href="https://xocaliber.tech/privacy-policy/"
+      >
+        Privacy Policy
+      </Link>
+      &nbsp;
+      <Link
+        className="pl-1 text-[#333] underline underline-offset-2"
+        href="https://xocaliber.tech/tc/"
+      >
+        Terms and Conditions
+      </Link>
+    </>
+  );
   const { mutate: registerUser } = trpc.auth.register.useMutation({
     onSuccess({ success }) {
       console.log("User created successfully");
@@ -217,7 +234,7 @@ export const SignupBox = () => {
             </Button>
           </CardFooter>
           <div className="flex w-full flex-row justify-between px-6 pb-6 text-xs text-black">
-            <p className="flex flex-row items-center justify-center">
+            <p className="flex flex-col items-center justify-start">
               <div>
                 <p>
                   By clicking the button above,you agree to our{" "}
@@ -232,7 +249,13 @@ export const SignupBox = () => {
                     className="pl-1 text-black underline underline-offset-2"
                     href={"https://xocaliber.tech/tc/"}
                   >
-                    Terms and Conditions
+                    T&C.
+                  </Link>
+                  <Link
+                    className="pl-1 text-black underline underline-offset-2"
+                    href={"https://xocaliber.tech/disclaimer/"}
+                  >
+                    Read our disclaimer
                   </Link>
                 </p>
               </div>

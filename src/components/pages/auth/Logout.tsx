@@ -8,7 +8,7 @@ export default function Logout() {
     <DropdownMenuItem
       className="cursor-pointer"
       onClick={() => {
-        signOut();
+        signOut({ callbackUrl: "/login" });
       }}
     >
       <span>Log Out</span>

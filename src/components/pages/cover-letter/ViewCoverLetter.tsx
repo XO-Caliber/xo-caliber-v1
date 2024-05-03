@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Delete, DeleteIcon } from "lucide-react";
+import { ChevronDown, ChevronUp, Delete, DeleteIcon, MinusCircle } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
 import AddDialog from "./AddDialog";
@@ -60,9 +60,10 @@ export const ViewCoverLetter = ({
             </button>
             <h1 className="flex flex-row items-center justify-center text-base font-medium">
               {coverLetter.title}
-              <Delete
+              <MinusCircle
+                size={16}
                 color="red"
-                className="cursor-pointer fill-white"
+                className="ml-1 cursor-pointer fill-white"
                 onClick={() => deleteCase1(coverLetter.id)}
               />
             </h1>

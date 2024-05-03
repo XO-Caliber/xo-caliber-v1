@@ -79,7 +79,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <section className="mb-3 flex select-none">
+        <section className="mb-3 flex select-none text-sm">
           <ul
             className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}

@@ -39,23 +39,6 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
 
   const topicName = trpc.checklist.getSubHeadingTitle.useQuery(headingId);
 
-  const { mutate: deleteSubHeading } = trpc.checklist.deleteSubHeading.useMutation({
-    onSuccess({ success }) {
-      if (success) {
-        refetchData();
-        headingResult.refetch();
-        router.refresh();
-        toast({
-          title: "Deleted heading",
-          description: "The heading was deleted successfully"
-        });
-      }
-    },
-    onError(err) {
-      console.log(err);
-    }
-  });
-
   const { mutate: addSubHeading } = trpc.checklist.addSubHeading.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -118,7 +101,17 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add Subtopic{topicName.data}</DialogTitle>
+          <DialogTitle className="flex items-center justify-center">
+            Add Subtopic for{" "}
+            <div className="ml-1 flex flex-col  ">
+              <Select onValueChange={(value) => setHeadingId(value)}>
+                {headingResult.data &&
+                  headingResult.data
+                    .filter((head) => head.id === headingId)
+                    .map((head) => <SelectValue placeholder={head.name} key={head.id} />)}
+              </Select>
+            </div>
+          </DialogTitle>
 
           <section className="flex w-[600px] flex-row items-center gap-4">
             <div className="grid w-full gap-1.5 pt-4">
@@ -129,20 +122,6 @@ const AddSubHeading = ({ refetchData, headingId }: QAProps) => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
-            <div className="flex flex-col gap-4">
-              <Select onValueChange={(value) => setHeadingId(value)}>
-                {headingResult.data &&
-                  headingResult.data
-                    .filter((head) => head.id === headingId)
-                    .map((head) => (
-                      <SelectItem key={head.id} value={head.id}>
-                        {head.name}
-                      </SelectItem>
-                    ))}
-
-                <SelectContent className=" "></SelectContent>
-              </Select>
             </div>
           </section>
           <div>

@@ -412,13 +412,13 @@ export const coverletterRouter = router({
     console.log("Target user:", targetUser);
 
     // Delete existing cover letters of the target user
-    const deletedCoverLetters = await db.coverLetter.deleteMany({
-      where: {
-        userId: userId
-      }
-    });
+    // const deletedCoverLetters = await db.coverLetter.deleteMany({
+    //   where: {
+    //     userId: userId
+    //   }
+    // });
 
-    console.log("Deleted cover letters:", deletedCoverLetters);
+    // console.log("Deleted cover letters:", deletedCoverLetters);
 
     // Create new cover letters for the target user based on source user's cover letters
     console.log("Creating new cover letters...");

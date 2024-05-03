@@ -91,7 +91,7 @@ const WorkSpace = ({ userRole }: Props) => {
             <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuCheck</h1>
           </div>
         )}
-        {(userRole === "INDIVIDUAL" || userRole === "ASSISTANT") && (
+        {(userRole === "FIRM" || userRole === "ASSISTANT") && (
           <div
             className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
             onClick={() => router.push("/workspaces/strategy-doc")}

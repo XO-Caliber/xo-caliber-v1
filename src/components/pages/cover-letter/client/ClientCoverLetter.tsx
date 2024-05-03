@@ -8,6 +8,13 @@ import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";
 import { toast } from "@/hooks/use-toast";
 import { user } from "@/types/user";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogTitle,
+  DialogTrigger
+} from "@/components/ui/Dialog";
 
 export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
@@ -40,9 +47,19 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
           <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
           <h2 className="text-sm font-normal ">Here is the overview</h2>
         </ul>
-        <Button variant={"outline"} onClick={onSubmit}>
-          Download Default Template
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant={"outline"}>Download Default Template</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogTitle className="mt-4">Do you want to download default template</DialogTitle>
+            <DialogFooter>
+              <Button variant={"dark"} onClick={onSubmit}>
+                Yes,continue
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
         <AddCoverLetterDialog userId={user.id} role="INDIVIDUAL" />
       </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>

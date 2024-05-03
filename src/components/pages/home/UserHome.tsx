@@ -23,13 +23,13 @@ export const UserHome = async ({ user }: userProps) => {
         </li>
         <li className="ml-4 mt-4 flex flex-row items-start justify-start gap-y-4 space-x-4 pl-4 font-bold">
           <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 ">
-            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-white">
               Your Firm
             </h1>
             <ClientFirmList />
           </div>
           <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 ">
-            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-white">
               Assigned Assistants
             </h1>
             <ClientAssistantList />

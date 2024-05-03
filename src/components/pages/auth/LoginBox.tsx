@@ -152,17 +152,14 @@ export const LoginBox = () => {
             </CardHeader>
             <div className="flex w-full items-center justify-between px-4">
               <GoogleAuth />
-              <Dialog>
-                <DialogTrigger asChild>
-                  <InfoIcon />
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader className="mt-2">
-                    This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of
-                    Service apply.
-                  </DialogHeader>
-                </DialogContent>
-              </Dialog>
+
+              <span
+                title=" This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of
+                    Service apply."
+              >
+                <InfoIcon className="cursor-pointer" />
+              </span>
+
               {/* <LinkedinAuth /> */}
             </div>
             <div className="flex items-center px-6 py-1">

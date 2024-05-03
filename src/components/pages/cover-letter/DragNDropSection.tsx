@@ -1,5 +1,12 @@
 "use client";
-import { ChevronDown, ChevronRight, Delete, GripVertical, MessageCircle } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Delete,
+  GripVertical,
+  MessageCircle,
+  MinusCircle
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import { trpc } from "@/app/_trpc/client";
@@ -406,10 +413,11 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                                 <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                   Section-{indexSection + 1}{" "}
-                                  <Delete
+                                  <MinusCircle
                                     color="red"
-                                    className="cursor-pointer fill-white"
+                                    className="ml-1 cursor-pointer fill-white"
                                     onClick={() => deleteSection1(section.id)}
+                                    size={16}
                                   />
                                 </h2>
                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
@@ -492,10 +500,11 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                 </button>
                                                 <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                                   Sub-Section-{indexSubsection + 1}
-                                                  <Delete
+                                                  <MinusCircle
                                                     color="red"
-                                                    className="cursor-pointer fill-white"
+                                                    className="ml-1 cursor-pointer fill-white"
                                                     onClick={() => deleteSubSection1(subsection.id)}
+                                                    size={16}
                                                   />
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
@@ -553,12 +562,13 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                           />
                                                           <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
                                                             Exhibit-{index + 1}
-                                                            <Delete
+                                                            <MinusCircle
                                                               color="red"
-                                                              className="cursor-pointer fill-white"
+                                                              className="ml-1 cursor-pointer fill-white"
                                                               onClick={() =>
                                                                 deleteExhibit1(exhibit.id)
                                                               }
+                                                              size={16}
                                                             />
                                                           </h2>
                                                           <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">

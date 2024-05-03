@@ -33,10 +33,10 @@ export function FirmNotes({ userType }: userType) {
   console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
-      <h1 className="text-lg font-semibold">Firm Notes:</h1>
+      <h1 className="text-lg font-semibold text-heading">Firm Notes:</h1>
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
-        className="my-2 h-full resize-none text-base font-semibold italic text-black focus-visible:ring-0"
+        className="my-2 h-full resize-none text-sm font-semibold italic text-black focus-visible:ring-0"
         placeholder="No data found"
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
