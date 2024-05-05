@@ -43,11 +43,12 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
   };
   return (
     <section>
+      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
+        <div className="flex items-center justify-center">
+          <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+        </div>
+      </div>
       <div className="flex items-center justify-around">
-        <ul className="ml-4 pl-4 pt-4 font-bold">
-          <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
-          <h2 className="text-sm font-normal ">Here is the overview</h2>
-        </ul>
         <Dialog>
           <DialogTrigger asChild>
             <Button variant={"outline"}>Download Default Template</Button>
