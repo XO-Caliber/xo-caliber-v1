@@ -412,7 +412,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                                 <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                  Section-{indexSection + 1}{" "}
+                                  Section
                                   <MinusCircle
                                     color="red"
                                     className="ml-1 cursor-pointer fill-white"
@@ -499,7 +499,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   )}
                                                 </button>
                                                 <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                                  Sub-Section-{indexSubsection + 1}
+                                                  Sub-Section
                                                   <MinusCircle
                                                     color="red"
                                                     className="ml-1 cursor-pointer fill-white"
