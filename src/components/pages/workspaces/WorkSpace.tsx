@@ -26,7 +26,7 @@ const WorkSpace = ({ userRole, userId }: Props) => {
   const router = useRouter();
   return (
     <div
-      className={`transform border-2 border-x-0 border-y-0 border-t-2 pb-2 transition-all delay-300 duration-300 ease-in ${
+      className={`transform border-2 border-x-0 border-y-2  pb-4 transition-all delay-300 duration-300 ease-in ${
         isSubMenuHidden && ""
       }`}
     >

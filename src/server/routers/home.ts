@@ -496,12 +496,35 @@ export const homeRouter = router({
     }
     return true;
   }),
-  getUserProfile: publiceProcedure.input(z.string()).query(async ({ input }) => {
+  getUserProfile: publiceProcedure.query(async () => {
+    const session = await getAuthSession();
+    const userId = session?.user.id;
+    const user = await db.user.findUnique({
+      where: {
+        id: userId
+      }
+    });
+    return user;
+  }),
+  getUserProfileForTimeLine: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const user = await db.user.findUnique({
       where: {
         id: input
       }
     });
     return user;
+  }),
+  updateUserProfile: publiceProcedure.input(z.string()).mutation(async ({ input }) => {
+    const session = await getAuthSession();
+    const userId = session?.user.id;
+    const user = await db.user.update({
+      where: {
+        id: userId
+      },
+      data: {
+        name: input
+      }
+    });
+    return { success: true };
   })
 });

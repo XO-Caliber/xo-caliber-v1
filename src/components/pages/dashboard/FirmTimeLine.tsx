@@ -1,5 +1,13 @@
 "use client";
-import { MoreHorizontal, WorkflowIcon } from "lucide-react";
+import {
+  Badge,
+  BrainCog,
+  CandlestickChart,
+  CheckSquare,
+  Construction,
+  MoreHorizontal,
+  WorkflowIcon
+} from "lucide-react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
 import { trpc } from "@/app/_trpc/client";
@@ -11,13 +19,14 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
 import UserSelectList from "@/components/utils/UserSelectList";
+import AllUserSelectList from "../spider-graph/admin/AllUserSelectList";
 
 interface Props {
   userName?: string;
 }
 export const FirmTimeLine = () => {
   const [user, setUser] = useState("");
-  const userName = trpc.home.getUserProfile.useQuery(user);
+  const userName = trpc.home.getUserProfileForTimeLine.useQuery(user);
   const userTimeLine = trpc.dashboard.getUserTimeLine.useQuery(user);
 
   const [expandedSections, setExpandedSections] = useState<{
@@ -55,9 +64,9 @@ export const FirmTimeLine = () => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Caliber"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#C3946D", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<CheckSquare />}
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
           ></VerticalTimelineElement>
@@ -93,9 +102,9 @@ export const FirmTimeLine = () => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Assess"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: " #05f7e0", color: "black" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<CandlestickChart />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Assess")}
           ></VerticalTimelineElement>
@@ -131,9 +140,9 @@ export const FirmTimeLine = () => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Structure"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#f78605", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<Construction />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
           ></VerticalTimelineElement>
@@ -169,9 +178,9 @@ export const FirmTimeLine = () => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Enhance"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#f3fa2f", color: "black" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<BrainCog />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Enhance")}
           ></VerticalTimelineElement>
@@ -207,9 +216,9 @@ export const FirmTimeLine = () => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Result"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#02f76d", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<Badge />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Result")}
           ></VerticalTimelineElement>

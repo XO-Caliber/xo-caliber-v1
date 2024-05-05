@@ -1,6 +1,10 @@
 "use client";
 import {
+  Badge,
+  BrainCog,
+  CandlestickChart,
   CheckSquare,
+  Construction,
   MoreHorizontal,
   PlusCircle,
   SchoolIcon,
@@ -133,9 +137,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Caliber"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#C3946D", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<CheckSquare />}
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
           ></VerticalTimelineElement>
@@ -200,9 +204,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Assess"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#05f7e0", color: "black" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<CandlestickChart />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Assess")}
           ></VerticalTimelineElement>
@@ -270,9 +274,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Structure"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#f78605", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<Construction />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
           ></VerticalTimelineElement>
@@ -346,9 +350,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Enhance"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#f3fa2f", color: "black" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<BrainCog />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Enhance")}
           ></VerticalTimelineElement>
@@ -412,9 +416,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Result"
-            iconStyle={{ background: "rgb(33, 150, 243)", color: "#fff" }}
+            iconStyle={{ background: "#02f76D", color: "#fff" }}
             position="left"
-            icon={<WorkflowIcon />}
+            icon={<Badge />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Result")}
           ></VerticalTimelineElement>

@@ -2,7 +2,7 @@ import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
 import mainLogo from "../../public/images/side.svg";
 import { Input } from "./ui/Input";
-import { ArrowDown, BellIcon, HomeIcon, SearchIcon } from "lucide-react";
+import { ArrowDown, BellIcon, HomeIcon, SearchIcon, Timer } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/Button";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
@@ -50,6 +50,15 @@ export const Navbar = async () => {
             <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
+        <Link href={"/dashboard"}>
+          <li
+            className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
+                        hover:bg-primary "
+          >
+            <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
+            <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
+          </li>
+        </Link>
         {/* <li
           className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary"
@@ -78,13 +87,7 @@ export const Navbar = async () => {
       <div className="cursor-pointer">
         <WorkSpace userRole={session?.user.role} userId={session?.user.id} />
       </div>
-      <Link href={"/dashboard"}>
-        <div className=" cursor-pointer border-2 border-x-0 hover:bg-primary">
-          <div className="m-4 w-20 text-secondary-foreground  hover:text-black">
-            <span className="mr-0 flex">Dashboard</span>
-          </div>
-        </div>
-      </Link>
+
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">
         {!session ? (
           <div className="flex items-center justify-between">
