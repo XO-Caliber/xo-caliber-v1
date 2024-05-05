@@ -43,18 +43,15 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
   };
   return (
     <section>
-      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
-        <div className="flex items-center justify-center">
-          <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
-        </div>
-      </div>
       <div className="flex items-center justify-around">
         <Dialog>
           <DialogTrigger asChild>
-            <Button variant={"outline"}>Download Default Template</Button>
+            <Button variant={"outline"}>Download Pull Default Template</Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogTitle className="mt-4">Do you want to download default template</DialogTitle>
+            <DialogTitle className="mt-4">
+              Do you want to download pull default template
+            </DialogTitle>
             {defaultTemplate.data && (
               <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
                 {defaultTemplate.data.map((coverletter, index) => (

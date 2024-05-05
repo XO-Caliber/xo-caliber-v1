@@ -69,6 +69,10 @@ h6.ce-header {
   cursor: pointer;
 }
 
+.round-timeline-element {
+  border-radius: 10px; /* Adjust the value as needed */
+}
+
 @media (min-width: 651px) {
   .ce-block__content,
   .ce-toolbar__content {

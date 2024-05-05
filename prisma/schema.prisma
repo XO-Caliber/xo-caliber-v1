@@ -75,11 +75,12 @@ model User {
 
   CoverLetter CoverLetter[]
 
-  stripeCustomerId String?   @unique
-  isPaid           Boolean?  @default(false)
+  stripeCustomerId String?    @unique
+  isPaid           Boolean?   @default(false)
   stripeId         String?
   stripeEmail      String?
   paidDate         DateTime?
+  Timeline         Timeline[]
 }
 
 model Firm {
@@ -125,6 +126,7 @@ model Admin {
   coverletter CoverLetter[]
 
   CheckHeading CheckHeading[]
+  Timeline     Timeline[]
 }
 
 model VerificationToken {
@@ -273,4 +275,15 @@ model Exhibits {
 
   SubSection   SubSection @relation(fields: [subSectionId], references: [id], onDelete: Cascade)
   subSectionId String
+}
+
+model Timeline {
+  id          String  @id @default(cuid())
+  title       String
+  description String  @db.Text()
+  Date        String
+  User        User?   @relation(fields: [userId], references: [id])
+  userId      String?
+  Admin       Admin?  @relation(fields: [adminId], references: [adminId])
+  adminId     String?
 }
