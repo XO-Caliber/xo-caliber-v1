@@ -90,9 +90,9 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
           <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full">
             <ResizablePanel defaultSize={70}>
               {!hidden && (
-                <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
+                <section className="absolute m-16 mt-32 rounded-lg border-2 shadow-lg">
                   <ul className="p-8 text-left  text-base">
-                    <li className="font-serif text-lg">
+                    <li className="font-serif ">
                       By answering all Yes or No questions, you not only gain insights into the
                       immigration process but also provide with an opportunity to calibrate your
                       profile accurately. These questions are strategically crafted to assess and
@@ -150,7 +150,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               <Tabs onClick={() => setHidden(true)}>
                 <QATabsList categories={catArray} />
 
-                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll bg-white shadow-md">
+                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll bg-white ">
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>
