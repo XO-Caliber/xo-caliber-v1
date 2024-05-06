@@ -168,6 +168,7 @@ const EditDialogContent = ({
   const onSubmit = async (values: z.infer<typeof coverLetterSchema>) => {
     const blocks = await ref.current?.save();
     setLoading(true);
+    toggleEdit();
     console.log(values);
     console.log(JSON.stringify(blocks));
     switch (contentType) {
@@ -275,11 +276,8 @@ const EditDialogContent = ({
             Edit
           </Button>
           <div className="col-start-3 col-end-3 row-start-4 row-end-4 flex justify-between">
-            <DialogClose>
-              <Button type="reset">Close</Button>
-            </DialogClose>
-            <Button variant={"primary"} type="submit" isLoading={loading}>
-              Submit
+            <Button variant={"dark"} type="submit" isLoading={loading} disabled={!editable}>
+              Save
             </Button>
           </div>
         </form>

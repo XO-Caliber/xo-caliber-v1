@@ -11,12 +11,11 @@ const Dashboard = async () => {
   return (
     <div>
       {/* <UserDashboard userId={session?.user.id} /> */}
-      {session && session.user.role === "INDIVIDUAL" && (
+      {session?.user.role === "INDIVIDUAL" ? (
         <TimeLine userId={session?.user.id} userName={session?.user.name || ""} />
+      ) : (
+        <AdminTimeLine role={session?.user.role} />
       )}
-      {session && session.user.role === "ADMIN" && <AdminTimeLine />}
-      {session && session.user.role === "FIRM" && <FirmTimeLine />}
-      {session && session.user.role === "ASSISTANT" && <AssistantTimeLine />}
     </div>
   );
 };

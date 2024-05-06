@@ -19,11 +19,14 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
 import AllUserSelectList from "../spider-graph/admin/AllUserSelectList";
+import UserSelectList from "@/components/utils/UserSelectList";
+import AssistantUserSelect from "../spider-graph/assistant/AssistantUserSelect";
 
 interface Props {
   userName?: string;
+  role?: string;
 }
-export const AdminTimeLine = () => {
+export const AdminTimeLine = ({ role }: Props) => {
   const [user, setUser] = useState("");
   const userName = trpc.home.getUserProfileForTimeLine.useQuery(user);
   const userTimeLine = trpc.dashboard.getUserTimeLine.useQuery(user);
@@ -49,7 +52,9 @@ export const AdminTimeLine = () => {
         <div className="flex items-center justify-center">
           <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
         </div>
-        <AllUserSelectList getSelectedUser={handleSelect} />
+        {role === "ADMIN" && <AllUserSelectList getSelectedUser={handleSelect} />}
+        {role === "FIRM" && <UserSelectList getSelectedUser={handleSelect} />}
+        {role === "ASSISTANT" && <AssistantUserSelect getSelectedUser={handleSelect} />}
       </div>
       <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0">
         <div className="flex items-center justify-center">
@@ -64,7 +69,7 @@ export const AdminTimeLine = () => {
             className=" cursor-pointer"
             date="Caliber"
             iconStyle={{ background: "#C3946D", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<CheckSquare />}
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
@@ -79,6 +84,7 @@ export const AdminTimeLine = () => {
                   className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
                   date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -117,6 +123,7 @@ export const AdminTimeLine = () => {
                   className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -132,7 +139,7 @@ export const AdminTimeLine = () => {
                       </DropdownMenu>
                     </span>
                   }
-                  position="right"
+                  position="left"
                 ></VerticalTimelineElement>
               ))}
 
@@ -140,7 +147,7 @@ export const AdminTimeLine = () => {
             className=" cursor-pointer"
             date="Structure"
             iconStyle={{ background: "#f78605", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<Construction />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
@@ -155,6 +162,7 @@ export const AdminTimeLine = () => {
                   className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -193,6 +201,7 @@ export const AdminTimeLine = () => {
                   className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -208,7 +217,7 @@ export const AdminTimeLine = () => {
                       </DropdownMenu>
                     </span>
                   }
-                  position="right"
+                  position="left"
                 ></VerticalTimelineElement>
               ))}
 
@@ -216,7 +225,7 @@ export const AdminTimeLine = () => {
             className=" cursor-pointer"
             date="Result"
             iconStyle={{ background: "#02f76d", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<Badge />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Result")}
@@ -231,6 +240,7 @@ export const AdminTimeLine = () => {
                   className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}

@@ -6,6 +6,7 @@ import {
   CheckSquare,
   Construction,
   MoreHorizontal,
+  Plus,
   PlusCircle,
   SchoolIcon,
   StarIcon,
@@ -132,13 +133,13 @@ export const TimeLine = ({ userId, userName }: Props) => {
           </p>
         </div>
       </div>
-      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll bg-secondary p-2 pt-4 bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll bg-secondary p-2 pt-4 text-lg font-bold text-heading bg-dotted-spacing-3 bg-dotted-gray-200">
         <VerticalTimeline lineColor="black" animate={true}>
           <VerticalTimelineElement
-            className=" cursor-pointer"
+            className=" cursor-pointer text-xl font-bold"
             date="Caliber"
             iconStyle={{ background: "#C3946D", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<CheckSquare />}
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
@@ -150,9 +151,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
               .map((data) => (
                 <VerticalTimelineElement
                   key={data.id}
-                  className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
+                  className="cursor-vertical-text text-xs"
                   date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -177,28 +179,31 @@ export const TimeLine = ({ userId, userName }: Props) => {
           {expandedSections["Caliber"] && (
             <VerticalTimelineElement
               className=" "
-              iconStyle={{ background: "white", color: "#fff", borderWidth: "10px" }}
-              position="left"
+              iconStyle={{ background: "white", color: "black", borderWidth: "10px" }}
+              position="right"
+              icon={
+                <span title="Add Timeline">
+                  <Select
+                    onValueChange={(value) =>
+                      handleSelectChange({ value: value, category: "CALIBER" })
+                    }
+                  >
+                    <SelectTrigger className="   bg-transparent text-xs"></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Answered Yes or No questions">
+                        Answered Yes or No questions
+                      </SelectItem>
+                      <SelectItem value="Retaken Yes or No Question">
+                        Retaken Yes or No Question
+                      </SelectItem>
+                      <SelectItem value="Joined Under Firm">Joined Under Firm</SelectItem>
+                      <SelectItem value="Left Firm">Left Firm</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </span>
+              }
               style={{}}
-            >
-              <Select
-                onValueChange={(value) => handleSelectChange({ value: value, category: "CALIBER" })}
-              >
-                <SelectTrigger className=" border border-white text-xs">
-                  <SelectValue placeholder="select" className="text-black" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Answered Yes or No questions">
-                    Answered Yes or No questions
-                  </SelectItem>
-                  <SelectItem value="Retaken Yes or No Question">
-                    Retaken Yes or No Question
-                  </SelectItem>
-                  <SelectItem value="Joined Under Firm">Joined Under Firm</SelectItem>
-                  <SelectItem value="Left Firm">Left Firm</SelectItem>
-                </SelectContent>
-              </Select>
-            </VerticalTimelineElement>
+            ></VerticalTimelineElement>
           )}
 
           <VerticalTimelineElement
@@ -217,9 +222,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
               .map((data) => (
                 <VerticalTimelineElement
                   key={data.id}
-                  className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
+                  className="cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -238,44 +244,45 @@ export const TimeLine = ({ userId, userName }: Props) => {
                       </DropdownMenu>
                     </span>
                   }
-                  position="right"
+                  position="left"
                 ></VerticalTimelineElement>
               ))}
           {expandedSections["Assess"] && (
             <VerticalTimelineElement
               className=" "
-              iconStyle={{ background: "white", color: "#fff", borderWidth: "10px" }}
+              iconStyle={{ background: "white", color: "black", borderWidth: "10px" }}
               position="left"
-            >
-              <Select
-                onValueChange={(value) => handleSelectChange({ value: value, category: "ASSESS" })}
-              >
-                <SelectTrigger className=" border border-white text-xs">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Self-Evaluation Done">Self-Evaluation Done</SelectItem>
-                  <SelectItem value=" Evaluation Done with Assistance">
-                    Evaluation Done with Assistance
-                  </SelectItem>
-                  <SelectItem value="Re-Evaluation Done">Re-Evaluation Done</SelectItem>
-                  <SelectItem value="Assessment Completed">Assessment Completed</SelectItem>
-                  <SelectItem value="Proceeded with Desired Category">
-                    Proceeded with Desired Category
-                  </SelectItem>
-                  <SelectItem value="Proceeded with Analyzed Category">
-                    Proceeded with Analyzed Category
-                  </SelectItem>
-                  <SelectItem value="Proceeded with Both">Proceeded with Both</SelectItem>
-                </SelectContent>
-              </Select>
-            </VerticalTimelineElement>
+              icon={
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange({ value: value, category: "ASSESS" })
+                  }
+                >
+                  <SelectTrigger className="   bg-transparent text-xs"></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Self-Evaluation Done">Self-Evaluation Done</SelectItem>
+                    <SelectItem value=" Evaluation Done with Assistance">
+                      Evaluation Done with Assistance
+                    </SelectItem>
+                    <SelectItem value="Re-Evaluation Done">Re-Evaluation Done</SelectItem>
+                    <SelectItem value="Assessment Completed">Assessment Completed</SelectItem>
+                    <SelectItem value="Proceeded with Desired Category">
+                      Proceeded with Desired Category
+                    </SelectItem>
+                    <SelectItem value="Proceeded with Analyzed Category">
+                      Proceeded with Analyzed Category
+                    </SelectItem>
+                    <SelectItem value="Proceeded with Both">Proceeded with Both</SelectItem>
+                  </SelectContent>
+                </Select>
+              }
+            ></VerticalTimelineElement>
           )}
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Structure"
             iconStyle={{ background: "#f78605", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<Construction />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
@@ -287,9 +294,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
               .map((data) => (
                 <VerticalTimelineElement
                   key={data.id}
-                  className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
+                  className="cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -314,38 +322,37 @@ export const TimeLine = ({ userId, userName }: Props) => {
           {expandedSections["Structure"] && (
             <VerticalTimelineElement
               className=" "
-              iconStyle={{ background: "white", color: "#fff", borderWidth: "10px" }}
-              position="left"
+              iconStyle={{ background: "white", color: "black", borderWidth: "10px" }}
+              position="right"
+              icon={
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange({ value: value, category: "STRUCTURE" })
+                  }
+                >
+                  <SelectTrigger className="   bg-transparent text-xs"></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Checklist Process Initiated">
+                      Checklist Process Initiated
+                    </SelectItem>
+                    <SelectItem value="Checklist Process Completed">
+                      Checklist Process Completed
+                    </SelectItem>
+                    <SelectItem value="Checklist Process Reinitiated">
+                      Checklist Process Reinitiated
+                    </SelectItem>
+                    <SelectItem value="Finalized Checklists">Finalized Checklists</SelectItem>
+                    <SelectItem value="Self-Start Cover Letter Craft ">
+                      Self-Start Cover Letter Craft
+                    </SelectItem>
+                    <SelectItem value="Cover Letter Craft Started with Assistance">
+                      Cover Letter Craft Started with Assistance
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              }
               style={{}}
-            >
-              <Select
-                onValueChange={(value) =>
-                  handleSelectChange({ value: value, category: "STRUCTURE" })
-                }
-              >
-                <SelectTrigger className=" border border-white text-xs">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Checklist Process Initiated">
-                    Checklist Process Initiated
-                  </SelectItem>
-                  <SelectItem value="Checklist Process Completed">
-                    Checklist Process Completed
-                  </SelectItem>
-                  <SelectItem value="Checklist Process Reinitiated">
-                    Checklist Process Reinitiated
-                  </SelectItem>
-                  <SelectItem value="Finalized Checklists">Finalized Checklists</SelectItem>
-                  <SelectItem value="Self-Start Cover Letter Craft ">
-                    Self-Start Cover Letter Craft
-                  </SelectItem>
-                  <SelectItem value="Cover Letter Craft Started with Assistance">
-                    Cover Letter Craft Started with Assistance
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </VerticalTimelineElement>
+            ></VerticalTimelineElement>
           )}
           <VerticalTimelineElement
             className=" cursor-pointer"
@@ -363,9 +370,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
               .map((data) => (
                 <VerticalTimelineElement
                   key={data.id}
-                  className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
+                  className="cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -384,40 +392,41 @@ export const TimeLine = ({ userId, userName }: Props) => {
                       </DropdownMenu>
                     </span>
                   }
-                  position="right"
+                  position="left"
                 ></VerticalTimelineElement>
               ))}
           {expandedSections["Enhance"] && (
             <VerticalTimelineElement
               className=" "
-              iconStyle={{ background: "white", color: "#fff", borderWidth: "10px" }}
+              iconStyle={{ background: "white", color: "black", borderWidth: "10px" }}
               position="left"
+              icon={
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange({ value: value, category: "ENHANCE" })
+                  }
+                >
+                  <SelectTrigger className="   bg-transparent text-xs"></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Cover Letter Enhanced Myself">
+                      Cover Letter Enhanced Myself
+                    </SelectItem>
+                    <SelectItem value="Cover Letter Enhanced with Assistance">
+                      Cover Letter Enhanced with Assistance
+                    </SelectItem>
+                    <SelectItem value="Cover Letter Completed">Cover Letter Completed</SelectItem>
+                    <SelectItem value="Cover Letter Reviewed">Cover Letter Reviewed</SelectItem>
+                  </SelectContent>
+                </Select>
+              }
               style={{}}
-            >
-              <Select
-                onValueChange={(value) => handleSelectChange({ value: value, category: "ENHANCE" })}
-              >
-                <SelectTrigger className=" border border-white text-xs">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Cover Letter Enhanced Myself">
-                    Cover Letter Enhanced Myself
-                  </SelectItem>
-                  <SelectItem value="Cover Letter Enhanced with Assistance">
-                    Cover Letter Enhanced with Assistance
-                  </SelectItem>
-                  <SelectItem value="Cover Letter Completed">Cover Letter Completed</SelectItem>
-                  <SelectItem value="Cover Letter Reviewed">Cover Letter Reviewed</SelectItem>
-                </SelectContent>
-              </Select>
-            </VerticalTimelineElement>
+            ></VerticalTimelineElement>
           )}
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Result"
             iconStyle={{ background: "#02f76D", color: "#fff" }}
-            position="left"
+            position="right"
             icon={<Badge />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Result")}
@@ -429,9 +438,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
               .map((data) => (
                 <VerticalTimelineElement
                   key={data.id}
-                  className="-timeline-element--work round-timeline-element cursor-vertical-text text-xs"
+                  className="cursor-vertical-text text-xs"
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
+                  style={{ fontFamily: "fantasy" }}
                   icon={
                     <span title="Delete">
                       {" "}
@@ -456,41 +466,42 @@ export const TimeLine = ({ userId, userName }: Props) => {
           {expandedSections["Result"] && (
             <VerticalTimelineElement
               className=" "
-              iconStyle={{ background: "white", color: "#fff", borderWidth: "10px" }}
-              position="left"
+              iconStyle={{ background: "white", color: "#black", borderWidth: "10px" }}
+              position="right"
+              icon={
+                <Select
+                  onValueChange={(value) =>
+                    handleSelectChange({ value: value, category: "RESULT" })
+                  }
+                >
+                  <SelectTrigger className="border border-white text-xs"></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Immigration Petition Applied ">
+                      Immigration Petition Applied
+                    </SelectItem>
+                    <SelectItem value="Desired Immigration Petition Approved">
+                      Desired Immigration Petition Approved
+                    </SelectItem>
+                    <SelectItem value="Desired Immigration Petition Unapproved">
+                      Desired Immigration Petition Unapproved
+                    </SelectItem>
+                    <SelectItem value="Analyzed Immigration Petition Approved">
+                      Analyzed Immigration Petition UnApproved
+                    </SelectItem>
+                    <SelectItem value="Analyzed Immigration Petition Approved">
+                      Analyzed Immigration Petition UnApproved
+                    </SelectItem>
+                    <SelectItem value="Platform Assisted Your Journey">
+                      Platform Assisted Your Journey
+                    </SelectItem>
+                    <SelectItem value=" Both Immigration Petition Approved">
+                      Both Immigration Petition Approved
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              }
               style={{}}
-            >
-              <Select
-                onValueChange={(value) => handleSelectChange({ value: value, category: "RESULT" })}
-              >
-                <SelectTrigger className="border border-white text-xs">
-                  <SelectValue placeholder="select" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Immigration Petition Applied ">
-                    Immigration Petition Applied
-                  </SelectItem>
-                  <SelectItem value="Desired Immigration Petition Approved">
-                    Desired Immigration Petition Approved
-                  </SelectItem>
-                  <SelectItem value="Desired Immigration Petition Unapproved">
-                    Desired Immigration Petition Unapproved
-                  </SelectItem>
-                  <SelectItem value="Analyzed Immigration Petition Approved">
-                    Analyzed Immigration Petition UnApproved
-                  </SelectItem>
-                  <SelectItem value="Analyzed Immigration Petition Approved">
-                    Analyzed Immigration Petition UnApproved
-                  </SelectItem>
-                  <SelectItem value="Platform Assisted Your Journey">
-                    Platform Assisted Your Journey
-                  </SelectItem>
-                  <SelectItem value=" Both Immigration Petition Approved">
-                    Both Immigration Petition Approved
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </VerticalTimelineElement>
+            ></VerticalTimelineElement>
           )}
         </VerticalTimeline>
         ;
