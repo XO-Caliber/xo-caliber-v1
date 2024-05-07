@@ -16,10 +16,14 @@ export const paymentRouter = router({
     const session = await getAuthSession();
     console.log("stripeCustomerId", session?.user.stripeCustomerId);
 
+    if (!session?.user || !session.user.stripeCustomerId) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
     let priceId = hasFirm ? env.PRICE_ID_WITH_FIRM : env.PRICE_ID_WITHOUT_FIRM;
 
     return stripe.checkout.sessions.create({
-      mode: "payment",
+      mode: "subscription",
       customer: session?.user.stripeCustomerId,
       payment_method_types: ["card"],
       line_items: [
@@ -28,8 +32,14 @@ export const paymentRouter = router({
           quantity: 1
         }
       ],
-      success_url: `${env.PRODUCTION_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${env.PRODUCTION_URL}/`
+      success_url: `${env.HOST_NAME}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${env.HOST_NAME}/`,
+      subscription_data: {
+        metadata: {
+          payingUserId: session.user.id
+        },
+        trial_period_days: 7
+      }
     });
   }),
 

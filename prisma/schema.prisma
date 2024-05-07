@@ -75,12 +75,13 @@ model User {
 
   CoverLetter CoverLetter[]
 
-  stripeCustomerId String?    @unique
-  isPaid           Boolean?   @default(false)
-  stripeId         String?
-  stripeEmail      String?
-  paidDate         DateTime?
-  Timeline         Timeline[]
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  isActive             Boolean?  @default(false)
+  stripePriceId        String?
+  paidDate             DateTime?
+
+  Timeline Timeline[]
 }
 
 model Firm {

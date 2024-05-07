@@ -2,23 +2,27 @@
 import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { trpc } from "@/app/_trpc/client";
+import Link from "next/link";
 
 export const PaymentSuccess = () => {
   const { data: session, update } = useSession();
 
   const { data } = trpc.payment.checkCheckout.useQuery();
-  console.log(session?.user.isPaid);
+  console.log(session?.user.isActive);
   console.log(session);
   useEffect(() => {
     if (data?.success === true) {
-      update({ isPaid: true });
+      update({ isActive: true });
     }
   }, [data]);
 
   return (
     <>
       <main className="flex min-h-screen flex-col items-center justify-center">
-        Validating payment...
+        <p>Success</p>
+        <Link href="/" className="text-blue-500">
+          home
+        </Link>
       </main>
     </>
   );

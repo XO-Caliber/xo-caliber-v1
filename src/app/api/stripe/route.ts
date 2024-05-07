@@ -13,25 +13,18 @@ export async function POST(req: NextRequest) {
 
   try {
     let event = stripe.webhooks.constructEvent(payload, sig!, process.env.STRIPE_WEBHOOK_SECRET!);
-
-    console.log("Event: ", event?.type);
-    console.log(dateTime);
+    const subscription = event.data.object as Stripe.Subscription;
 
     switch (event.type) {
-      case "charge.succeeded":
-        const paymentIntentSucceeded = event.data.object;
-        console.log("id: ", paymentIntentSucceeded.id);
-        console.log("email: ", paymentIntentSucceeded.billing_details.email);
-        console.log("User from stripe: ", paymentIntentSucceeded.customer);
+      case "customer.subscription.created":
         try {
           const response = await db.user.update({
             where: {
-              stripeCustomerId: paymentIntentSucceeded.customer as string
+              stripeCustomerId: subscription.customer as string
             },
             data: {
-              isPaid: true,
-              stripeId: paymentIntentSucceeded.id,
-              stripeEmail: paymentIntentSucceeded.billing_details.email,
+              isActive: true,
+              stripeSubscriptionId: subscription.id,
               paidDate: dateTime
             }
           });
@@ -42,6 +35,25 @@ export async function POST(req: NextRequest) {
         }
         console.log("Paid 👍");
         break;
+
+      case "customer.subscription.deleted":
+        try {
+          const response = await db.user.update({
+            where: {
+              stripeCustomerId: subscription.customer as string
+            },
+            data: {
+              isActive: false
+            }
+          });
+          console.log("User data updated successfully:", response);
+        } catch (error) {
+          console.error("Error updating user data:", error);
+          throw error;
+        }
+        console.log("UnPaid 👎");
+        break;
+
       default:
         console.log(`Unhandled event type ${event.type}`);
     }
