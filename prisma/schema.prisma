@@ -55,7 +55,7 @@ model User {
 
   role Role @default(INDIVIDUAL)
 
-  isEmailVerified        Boolean @default(true)
+  isEmailVerified        Boolean @default(false)
   emailVerificationToken String? @unique
 
   answeredAll Boolean @default(false)

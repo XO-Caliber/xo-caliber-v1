@@ -185,7 +185,7 @@ export const questionRouter = router({
     const adminCategories = await db.category.findMany({
       where: {
         Admin: {
-          email: "vishnudarrshanorp@gmail.com"
+          email: process.env.ADMIN_EMAIL
         }
       },
       include: {
@@ -235,7 +235,7 @@ export const questionRouter = router({
     const res = await db.category.findMany({
       where: {
         Admin: {
-          email: "ohnusaavyus@gmail.com"
+          email: process.env.ADMIN_EMAIL
         }
       },
       include: {

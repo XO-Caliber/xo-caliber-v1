@@ -43,7 +43,7 @@ export const authRouter = router({
         name: name,
         email: emailAddress,
         hashedPassword: hashedPassword,
-        isEmailVerified: true,
+        isEmailVerified: false,
         emailVerificationToken,
         image: RandomProfile,
         stripeCustomerId: customer.id

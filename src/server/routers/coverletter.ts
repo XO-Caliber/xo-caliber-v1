@@ -483,7 +483,7 @@ export const coverletterRouter = router({
   getAdminTemplate: publiceProcedure.query(async () => {
     const results = await db.admin.findUnique({
       where: {
-        email: "vishnudarrshanorp@gmail.com"
+        email: process.env.ADMIN_EMAIL
       },
       include: {
         coverletter: true

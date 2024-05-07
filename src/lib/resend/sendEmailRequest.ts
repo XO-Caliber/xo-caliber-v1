@@ -5,7 +5,7 @@ import { ResetPasswordEmail } from "@/components/Emails/ResetPasswordEmail";
 export async function sendPasswordResetRequest(userEmail: string, token: string) {
   try {
     const data = await resend.emails.send({
-      from: "XO Caliber <rohnu@extrao1.com>",
+      from: `XO Caliber <${process.env.RESEND_EMAIL}>`,
       to: [userEmail],
       subject: `Password reset request`,
       //   text: text({ token, host }),
@@ -20,7 +20,7 @@ export async function sendPasswordResetRequest(userEmail: string, token: string)
 export async function sendEmailVerificationRequest(userEmail: string, token: string) {
   try {
     const data = await resend.emails.send({
-      from: "XO Caliber <rohnu@extrao1.com>",
+      from: `XO Caliber <${process.env.RESEND_EMAIL}>`,
       to: [userEmail],
       subject: `Verify Email request `,
       //   text: text({ url, host }),

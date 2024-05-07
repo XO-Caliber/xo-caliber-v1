@@ -30,7 +30,7 @@ const page = ({ searchParams }: ResetPasswordProps) => {
           <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
             <XCircle size={150} color="red" className="mb-10" />
             <h1 className="mb-10 text-3xl font-bold">Invalid token</h1>
-            <Button variant={"primary"}>
+            <Button variant={"dark"}>
               <Link href={"/login"}>Go to Login</Link>
             </Button>
           </div>

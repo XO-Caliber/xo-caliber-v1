@@ -1,6 +1,6 @@
 import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
-import mainLogo from "../../public/images/side.svg";
+import mainLogo from "../../public/images/main_logo.png";
 import { Input } from "./ui/Input";
 import { ArrowDown, BellIcon, HomeIcon, SearchIcon, Timer } from "lucide-react";
 import Link from "next/link";
@@ -28,7 +28,7 @@ export const Navbar = async () => {
     <nav className="absolute z-50 h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>
         <div className="flex  items-center justify-center border-b-2 ">
-          <Image src={mainLogo} width={117} height={41} alt="LOGO" />
+          <Image src={mainLogo} width={220} height={50} className="m-4 w-36" alt="LOGO" />
         </div>
       </Link>
       <ul className="p-2">
