@@ -67,13 +67,33 @@ export const AdminTimeLine = ({ role }: Props) => {
         <VerticalTimeline lineColor="black" animate={true}>
           <VerticalTimelineElement
             className=" cursor-pointer"
-            date="Caliber"
             iconStyle={{ background: "#C3946D", color: "#fff" }}
             position="right"
+            contentStyle={{ background: "#C3946D", color: "#fff" }}
+            contentArrowStyle={{ borderRight: "7px solid  #C3946D" }}
             icon={<CheckSquare />}
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
-          ></VerticalTimelineElement>
+          >
+            <h3 className="vertical-timeline-element-title">Caliber</h3>
+            <ul>
+              <li>
+                Serves as the foundation for understanding one's strengths and weaknesses within the
+                immigration process.
+              </li>
+              <li>
+                Answered Yes or No questions: You answer simple Yes or No questions about yourself.
+              </li>
+              <li>
+                Retaken Yes or No Question: You can redo any questions you answered “NO” earlier if
+                needed.
+              </li>
+              <li>
+                Joined Under Firm: You say if you started working for a company during this process.
+              </li>
+              <li>Left Firm: You say if you stopped working for a company during this process.</li>
+            </ul>
+          </VerticalTimelineElement>
 
           {expandedSections["Caliber"] &&
             userTimeLine.data
@@ -106,13 +126,38 @@ export const AdminTimeLine = ({ role }: Props) => {
 
           <VerticalTimelineElement
             className=" cursor-pointer"
-            date="Assess"
             iconStyle={{ background: " #05f7e0", color: "black" }}
+            contentStyle={{ background: "#05f7e0", color: "#fff" }}
+            contentArrowStyle={{ borderRight: "7px solid  #05f7e0" }}
             position="left"
             icon={<CandlestickChart />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Assess")}
-          ></VerticalTimelineElement>
+          >
+            {" "}
+            <h3 className="vertical-timeline-element-title">Assess</h3>
+            <ul>
+              <li>
+                Following the calibration step, users proceed to assess their profile's standing in
+                relation to key criteria for self-petitioned immigration visas.
+              </li>
+              <li>Self-Evaluation Done: You check how good your application looks on your own.</li>
+              <li>
+                Evaluation Done with Assistance: Firm helps you check how good your application
+                looks.
+              </li>
+              <li>Re-Evaluation Done: You check your application again after making changes.</li>
+              <li>Assessment Completed: You finish checking how good your application looks.</li>
+              <li>
+                Proceeded with Desired Category: You choose the type of immigration application you
+                desire to do.
+              </li>
+              <li>
+                Proceeded with Analyzed Category: You choose a type of immigration application based
+                on asessment.
+              </li>
+            </ul>
+          </VerticalTimelineElement>
 
           {expandedSections["Assess"] &&
             userTimeLine.data
@@ -145,13 +190,34 @@ export const AdminTimeLine = ({ role }: Props) => {
 
           <VerticalTimelineElement
             className=" cursor-pointer"
-            date="Structure"
+            contentStyle={{ background: "#f78605", color: "#fff" }}
+            contentArrowStyle={{ borderRight: "7px solid  #f78605" }}
             iconStyle={{ background: "#f78605", color: "#fff" }}
             position="right"
             icon={<Construction />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
-          ></VerticalTimelineElement>
+          >
+            {" "}
+            <h3 className="vertical-timeline-element-title">Structure</h3>
+            <ul>
+              <li>
+                In this step, users organize and collect evidence that supports their profile and
+                start the craft.
+              </li>
+              <li>Checklist Process Initiated: You start organizing your documents.</li>
+              <li>Checklist Process Completed: You finish organizing your documents.</li>
+              <li>Checklist Process Reinitiated: You start organizing your documents again.</li>
+              <li>Finalized Checklists: Your document organization is complete.</li>
+              <li>
+                Self-Start Cover Letter Craft: You begin writing your cover letter on your own.
+              </li>
+              <li>
+                Cover Letter Craft Started with Assistance: You get help from Firm starting your
+                cover letter.
+              </li>
+            </ul>
+          </VerticalTimelineElement>
 
           {expandedSections["Structure"] &&
             userTimeLine.data
@@ -184,13 +250,29 @@ export const AdminTimeLine = ({ role }: Props) => {
 
           <VerticalTimelineElement
             className=" cursor-pointer"
-            date="Enhance"
+            contentStyle={{ background: "#f3fa2f", color: "#fff" }}
+            contentArrowStyle={{ borderRight: "7px solid  #f3fa2f" }}
             iconStyle={{ background: "#f3fa2f", color: "black" }}
             position="left"
             icon={<BrainCog />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Enhance")}
-          ></VerticalTimelineElement>
+          >
+            {" "}
+            <h3 className="vertical-timeline-element-title">Enhance</h3>
+            <ul>
+              <li>
+                With the evidence structured, users focus on enhancing their cover letter for the
+                self-petitioned immigration process.
+              </li>
+              <li>Cover Letter Enhanced Myself: You improve your cover letter on your own.</li>
+              <li>
+                Cover Letter Enhanced with Assistance: Firm helps you improve your cover letter.
+              </li>
+              <li>Cover Letter Completed: Your cover letter is finished.</li>
+              <li>Cover Letter Reviewed: You check your cover letter to make sure it's good.</li>
+            </ul>
+          </VerticalTimelineElement>
 
           {expandedSections["Enhance"] &&
             userTimeLine.data
@@ -224,12 +306,38 @@ export const AdminTimeLine = ({ role }: Props) => {
           <VerticalTimelineElement
             className=" cursor-pointer"
             date="Result"
+            contentStyle={{ background: "#02f76d", color: "#fff" }}
+            contentArrowStyle={{ borderRight: "7px solid  #02f76d" }}
             iconStyle={{ background: "#02f76d", color: "#fff" }}
             position="right"
             icon={<Badge />}
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Result")}
-          ></VerticalTimelineElement>
+          >
+            {" "}
+            <h3 className="vertical-timeline-element-title">Result</h3>
+            <ul>
+              <li> The final step involves the outcome of the user's immigration petition.</li>
+              <li>Immigration Petition Applied: You send your immigration application.</li>
+              <li>
+                Desired Immigration Petition Approved: The immigration application you desired is
+                approved.
+              </li>
+              <li>
+                Desired Immigration Petition Unapproved: The immigration application you desired is
+                rejected.
+              </li>
+              <li>
+                Analyzed Immigration Petition Approved: A analyzed immigration application you sent
+                is approved.
+              </li>
+              <li>
+                Analyzed Immigration Petition Unapproved: A analyzed immigration application you
+                sent is rejected.
+              </li>
+              <li>Platform Assisted Your Journey: XO Caliber helped you through the process.</li>
+            </ul>
+          </VerticalTimelineElement>
 
           {expandedSections["Result"] &&
             userTimeLine.data
