@@ -150,15 +150,15 @@ export const TimeLine = ({ userId, userName }: Props) => {
             </h3>
             <ul className="ml-6 list-disc text-sm ">
               <li>
-                Serves as the foundation for understanding one's strengths and weaknesses within the
-                immigration process.
+                Serves as the foundation for understanding one&apos;s strengths and weaknesses
+                within the immigration process.
               </li>
               <li>
                 Answered Yes or No questions: You answer simple Yes or No questions about yourself.
               </li>
               <li>
-                Retaken Yes or No Question: You can redo any questions you answered “NO” earlier if
-                needed.
+                Retaken Yes or No Question: You can redo any questions you answered &apos;NO&apos;
+                earlier if needed.
               </li>
               <li>
                 Joined Under Firm: You say if you started working for a company during this process.
@@ -243,8 +243,8 @@ export const TimeLine = ({ userId, userName }: Props) => {
             </h3>
             <ul className="ml-6 list-disc text-sm text-gray-600">
               <li>
-                Following the calibration step, users proceed to assess their profile's standing in
-                relation to key criteria for self-petitioned immigration visas.
+                Following the calibration step, users proceed to assess their profile&apos;s
+                standing in relation to key criteria for self-petitioned immigration visas.
               </li>
               <li>Self-Evaluation Done: You check how good your application looks on your own.</li>
               <li>
@@ -448,7 +448,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 Cover Letter Enhanced with Assistance: Firm helps you improve your cover letter.
               </li>
               <li>Cover Letter Completed: Your cover letter is finished.</li>
-              <li>Cover Letter Reviewed: You check your cover letter to make sure it's good.</li>
+              <li>
+                Cover Letter Reviewed: You check your cover letter to make sure it&apos;s good.
+              </li>
             </ul>
           </VerticalTimelineElement>
 
@@ -525,7 +527,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
               Result
             </h3>
             <ul className="ml-6 list-disc text-sm text-gray-600">
-              <li> The final step involves the outcome of the user's immigration petition.</li>
+              <li> The final step involves the outcome of the user&apos;s immigration petition.</li>
               <li>Immigration Petition Applied: You send your immigration application.</li>
               <li>
                 Desired Immigration Petition Approved: The immigration application you desired is
