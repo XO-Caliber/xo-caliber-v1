@@ -133,10 +133,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
           </p>
         </div>
       </div>
-      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll bg-secondary p-2 pt-4 text-lg font-bold text-heading bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll  p-2 pt-4 text-lg  text-black bg-dotted-spacing-3 bg-dotted-gray-200">
         <VerticalTimeline lineColor="black" animate={true}>
           <VerticalTimelineElement
-            className=" cursor-pointer text-xl font-bold"
+            className=" cursor-pointer"
             iconStyle={{ background: "#C3946D", color: "#fff" }}
             contentStyle={{ background: "#C3946D", color: "#fff" }}
             contentArrowStyle={{ borderRight: "7px solid  #C3946D" }}
@@ -145,8 +145,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
           >
-            <h3 className="vertical-timeline-element-title">Caliber</h3>
-            <ul>
+            <h3 className="vertical-timeline-element-title text-2xl font-bold text-black">
+              Caliber
+            </h3>
+            <ul className="ml-6 list-disc text-sm ">
               <li>
                 Serves as the foundation for understanding one's strengths and weaknesses within the
                 immigration process.
@@ -227,17 +229,19 @@ export const TimeLine = ({ userId, userName }: Props) => {
           )}
 
           <VerticalTimelineElement
-            className=" cursor-pointer"
+            className=" cursor-pointer text-black"
             iconStyle={{ background: "#05f7e0", color: "black" }}
             contentStyle={{ background: "#05f7e0", color: "#fff" }}
             contentArrowStyle={{ borderRight: "7px solid  #05f7e0" }}
             position="left"
             icon={<CandlestickChart />}
-            style={{ marginTop: "120px" }}
+            style={{ marginTop: "120px", color: "black" }}
             iconOnClick={() => toggleSection("Assess")}
           >
-            <h3 className="vertical-timeline-element-title">Assess</h3>
-            <ul>
+            <h3 className="vertical-timeline-element-title text-2xl font-bold text-black">
+              Assess
+            </h3>
+            <ul className="ml-6 list-disc text-sm text-gray-600">
               <li>
                 Following the calibration step, users proceed to assess their profile's standing in
                 relation to key criteria for self-petitioned immigration visas.
@@ -267,7 +271,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 <VerticalTimelineElement
                   key={data.id}
                   className="cursor-vertical-text text-xs"
-                  date={`${data.description} ${data.Date}`}
+                  date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
                   icon={
@@ -332,8 +336,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
             style={{ marginTop: "120px" }}
             iconOnClick={() => toggleSection("Structure")}
           >
-            <h3 className="vertical-timeline-element-title">Structure</h3>
-            <ul>
+            <h3 className="vertical-timeline-element-title text-2xl font-bold text-black ">
+              Structure
+            </h3>
+            <ul className="ml-6 list-disc text-sm ">
               <li>
                 In this step, users organize and collect evidence that supports their profile and
                 start the craft.
@@ -359,7 +365,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 <VerticalTimelineElement
                   key={data.id}
                   className="cursor-vertical-text text-xs"
-                  date={`${data.description} ${data.Date}`}
+                  date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
                   icon={
@@ -429,8 +435,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
             iconOnClick={() => toggleSection("Enhance")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Enhance</h3>
-            <ul>
+            <h3 className="vertical-timeline-element-title text-2xl font-bold text-black">
+              Enhance
+            </h3>
+            <ul className="ml-6 list-disc text-sm text-gray-600">
               <li>
                 With the evidence structured, users focus on enhancing their cover letter for the
                 self-petitioned immigration process.
@@ -451,7 +459,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 <VerticalTimelineElement
                   key={data.id}
                   className="cursor-vertical-text text-xs"
-                  date={`${data.description} ${data.Date}`}
+                  date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
                   icon={
@@ -513,8 +521,10 @@ export const TimeLine = ({ userId, userName }: Props) => {
             iconOnClick={() => toggleSection("Result")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Result</h3>
-            <ul>
+            <h3 className="vertical-timeline-element-title text-2xl font-bold text-black">
+              Result
+            </h3>
+            <ul className="ml-6 list-disc text-sm text-gray-600">
               <li> The final step involves the outcome of the user's immigration petition.</li>
               <li>Immigration Petition Applied: You send your immigration application.</li>
               <li>
@@ -544,7 +554,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 <VerticalTimelineElement
                   key={data.id}
                   className="cursor-vertical-text text-xs"
-                  date={`${data.description} ${data.Date}`}
+                  date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
                   icon={

@@ -7,7 +7,7 @@ declare module "next-auth/jwt" {
     id: string;
     role: string;
     stripeCustomerId: string;
-    isPaid: Boolean;
+    isActive: Boolean;
   }
 }
 declare module "next-auth" {
@@ -16,13 +16,13 @@ declare module "next-auth" {
       id: string;
       role: string;
       stripeCustomerId: string;
-      isPaid: Boolean;
+      isActive: Boolean;
     };
   }
 
   interface User extends DefaultUser {
     role: string;
     stripeCustomerId: string;
-    isPaid: Boolean;
+    isActive: Boolean;
   }
 }

@@ -44,7 +44,7 @@ const page = async () => {
                   w-[620px] rotate-45 transform rounded-[135px]
                   bg-gradient-to-r from-[#da355b]  via-[#39468f] to-[#7e8ace] shadow-custom-shadow lg:block"
       ></div>
-      <div className="flex h-full items-center justify-center lg:ml-32 lg:justify-start">
+      <div className="flex h-full items-center justify-center lg:ml-32 lg:justify-center">
         <LoginBox />
       </div>
     </section>

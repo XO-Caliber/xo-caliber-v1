@@ -23,18 +23,16 @@ export function PaymentCard() {
   const stripePromise = useStripe();
 
   async function checkout() {
-    if (hasFirm) {
-      const response = await createCheckout.mutateAsync(hasFirm);
-      const stripe = await stripePromise;
+    console.log("HAS FIRM", hasFirm);
+    const response = await createCheckout.mutateAsync(hasFirm!);
+    const stripe = await stripePromise;
 
-      if (stripe !== null) {
-        await stripe.redirectToCheckout({
-          sessionId: response.id
-        });
-      }
-    } else {
+    const { error } = await stripe!.redirectToCheckout({
+      sessionId: response.id
+    });
+    console.log(error);
+    if (error) {
       alert("Something went wrong!");
-      console.error("Something went wrong!");
     }
   }
 

@@ -91,15 +91,13 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
           // onClick={handleheadingPopOpen}
         >
           <PlusSquare size={16} />
-          <p className="ml-2">Create heading</p>
+          <p className="ml-2">Add Topic</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add heading</DialogTitle>
-          <DialogDescription>
-            Create a heading where a set of questions belongs to:
-          </DialogDescription>
+          <DialogTitle>Add Topic</DialogTitle>
+
           {/* 
           <headingPopUp
             handleheadingPopOpen={handleheadingPopOpen}

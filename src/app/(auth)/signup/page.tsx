@@ -20,7 +20,7 @@ const page = async () => {
     >
       <Link href={"/"}>
         <Image
-          className="absolute right-0  mr-72"
+          className="absolute right-0 mr-32 w-80"
           priority
           src={logo}
           alt="Logo"
@@ -56,7 +56,7 @@ const page = async () => {
                   hidden h-[650px] 
                   w-[230px] -rotate-45 rounded-full  bg-gradient-to-b from-[#da355b]  via-[#39468f] to-[#7e8ace] shadow-custom-shadow lg:block"
       ></div>
-      <div className="flex h-full items-center justify-center lg:mr-32 lg:justify-end ">
+      <div className="flex h-full items-center justify-center lg:mr-32 lg:justify-center ">
         <SignupBox />
       </div>
     </section>

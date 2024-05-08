@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = {
           email: profile.email,
           image: profile.picture,
           role: profile.role,
-          isPaid: false,
+          isActive: false,
           stripeCustomerId: ""
         };
       }
@@ -124,8 +124,8 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user, session, trigger }) {
-      if (trigger === "update" && session.isPaid) {
-        token.isPaid = session.isPaid;
+      if (trigger === "update" && session.isActive) {
+        token.isActive = session.isActive;
       }
       console.log("jwt callbacks", { token, user, session });
       if (user) {
@@ -134,7 +134,7 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           role: user.role,
           stripeCustomerId: user.stripeCustomerId,
-          isPaid: user.isPaid
+          isActive: user.isActive
         };
       }
       return token;
@@ -147,7 +147,7 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
         session.user.role = token.role;
         session.user.stripeCustomerId = token.stripeCustomerId;
-        session.user.isPaid = token.isPaid;
+        session.user.isActive = token.isActive;
       }
 
       return session;
@@ -155,11 +155,6 @@ export const authOptions: NextAuthOptions = {
   },
   events: {
     createUser: async (message) => {
-      console.log("NEW USER");
-      console.log("NEW USER");
-      console.log(message.user);
-      console.log("NEW USER");
-      console.log("NEW USER");
       const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
         apiVersion: "2024-04-10"
       });

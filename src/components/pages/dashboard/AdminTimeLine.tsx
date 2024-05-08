@@ -50,7 +50,7 @@ export const AdminTimeLine = ({ role }: Props) => {
     <div>
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
         <div className="flex items-center justify-center">
-          <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+          <p className="my-4 ml-6 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
         </div>
         {role === "ADMIN" && <AllUserSelectList getSelectedUser={handleSelect} />}
         {role === "FIRM" && <UserSelectList getSelectedUser={handleSelect} />}
@@ -58,12 +58,12 @@ export const AdminTimeLine = ({ role }: Props) => {
       </div>
       <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0">
         <div className="flex items-center justify-center">
-          <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">
+          <p className="my-4 ml-6 mr-2 mt-[1.2rem] font-bold text-heading">
             {user.trim() ? <p>{userName.data?.name}&apos;s Timeline</p> : <p>Select User</p>}
           </p>
         </div>
       </div>
-      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll bg-secondary p-2 pt-4 bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll  p-2 pt-4 bg-dotted-spacing-3 bg-dotted-gray-200">
         <VerticalTimeline lineColor="black" animate={true}>
           <VerticalTimelineElement
             className=" cursor-pointer"
@@ -75,8 +75,8 @@ export const AdminTimeLine = ({ role }: Props) => {
             style={{ marginTop: "30px" }}
             iconOnClick={() => toggleSection("Caliber")}
           >
-            <h3 className="vertical-timeline-element-title">Caliber</h3>
-            <ul>
+            <h3 className="text-2xl font-bold text-black">Caliber</h3>
+            <ul className="ml-6 list-disc text-sm">
               <li>
                 Serves as the foundation for understanding one's strengths and weaknesses within the
                 immigration process.
@@ -105,21 +105,7 @@ export const AdminTimeLine = ({ role }: Props) => {
                   date={`${data.description} on ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
-                  icon={
-                    <span title="Delete">
-                      {" "}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <MoreHorizontal size={15} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem className="cursor-pointer text-destructive">
-                            <p>Delete </p>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </span>
-                  }
+                  icon={<MoreHorizontal size={15} className="cursor-pointer" />}
                   position="right"
                 ></VerticalTimelineElement>
               ))}
@@ -135,8 +121,8 @@ export const AdminTimeLine = ({ role }: Props) => {
             iconOnClick={() => toggleSection("Assess")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Assess</h3>
-            <ul>
+            <h3 className="text-2xl font-bold text-black">Assess</h3>
+            <ul className="ml-6 list-disc text-sm  text-gray-600">
               <li>
                 Following the calibration step, users proceed to assess their profile's standing in
                 relation to key criteria for self-petitioned immigration visas.
@@ -169,21 +155,7 @@ export const AdminTimeLine = ({ role }: Props) => {
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
-                  icon={
-                    <span title="Delete">
-                      {" "}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <MoreHorizontal size={15} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem className="cursor-pointer text-destructive">
-                            <p>Delete </p>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </span>
-                  }
+                  icon={<MoreHorizontal size={15} className="cursor-pointer" />}
                   position="left"
                 ></VerticalTimelineElement>
               ))}
@@ -199,8 +171,8 @@ export const AdminTimeLine = ({ role }: Props) => {
             iconOnClick={() => toggleSection("Structure")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Structure</h3>
-            <ul>
+            <h3 className="text-2xl font-bold text-black">Structure</h3>
+            <ul className="ml-6 list-disc text-sm">
               <li>
                 In this step, users organize and collect evidence that supports their profile and
                 start the craft.
@@ -229,21 +201,7 @@ export const AdminTimeLine = ({ role }: Props) => {
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
-                  icon={
-                    <span title="Delete">
-                      {" "}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <MoreHorizontal size={15} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem className="cursor-pointer text-destructive">
-                            <p>Delete </p>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </span>
-                  }
+                  icon={<MoreHorizontal size={15} className="cursor-pointer" />}
                   position="right"
                 ></VerticalTimelineElement>
               ))}
@@ -259,8 +217,8 @@ export const AdminTimeLine = ({ role }: Props) => {
             iconOnClick={() => toggleSection("Enhance")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Enhance</h3>
-            <ul>
+            <h3 className="text-2xl font-bold text-black">Enhance</h3>
+            <ul className="ml-6 list-disc text-sm text-gray-600">
               <li>
                 With the evidence structured, users focus on enhancing their cover letter for the
                 self-petitioned immigration process.
@@ -284,21 +242,7 @@ export const AdminTimeLine = ({ role }: Props) => {
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
-                  icon={
-                    <span title="Delete">
-                      {" "}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <MoreHorizontal size={15} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem className="cursor-pointer text-destructive">
-                            <p>Delete </p>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </span>
-                  }
+                  icon={<MoreHorizontal size={15} className="cursor-pointer" />}
                   position="left"
                 ></VerticalTimelineElement>
               ))}
@@ -315,8 +259,8 @@ export const AdminTimeLine = ({ role }: Props) => {
             iconOnClick={() => toggleSection("Result")}
           >
             {" "}
-            <h3 className="vertical-timeline-element-title">Result</h3>
-            <ul>
+            <h3 className="text-2xl font-bold text-black">Result</h3>
+            <ul className="ml-6 list-disc text-sm text-gray-600">
               <li> The final step involves the outcome of the user's immigration petition.</li>
               <li>Immigration Petition Applied: You send your immigration application.</li>
               <li>
@@ -349,21 +293,7 @@ export const AdminTimeLine = ({ role }: Props) => {
                   date={`${data.description} ${data.Date}`}
                   iconStyle={{ background: "black", color: "#fff", borderWidth: "10px" }}
                   style={{ fontFamily: "fantasy" }}
-                  icon={
-                    <span title="Delete">
-                      {" "}
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <MoreHorizontal size={15} className="cursor-pointer" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem className="cursor-pointer text-destructive">
-                            <p>Delete </p>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </span>
-                  }
+                  icon={<MoreHorizontal size={15} className="cursor-pointer" />}
                   position="right"
                 ></VerticalTimelineElement>
               ))}

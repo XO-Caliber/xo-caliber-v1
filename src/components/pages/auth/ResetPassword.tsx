@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import Image from "next/image";
-import logo from "../../../../public/images/LOGO_Trans.png";
+import logo from "../../../../public/images/main_logo.png";
 
 const ResetPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -47,7 +47,7 @@ const ResetPasswordPage = () => {
       </Link>
       <div className="flex min-h-screen items-center justify-center">
         <div className="rounded-md bg-white p-8 shadow-md">
-          <h1 className="mb-4 text-2xl font-bold">Reset Password Page</h1>
+          <h1 className="mb-4 text-2xl font-bold">Reset Password</h1>
 
           {/* Email input */}
           <div className="mb-4">
@@ -61,8 +61,8 @@ const ResetPasswordPage = () => {
             />
           </div>
 
-          <Button variant={"primary"} onClick={handleResetPassword} isLoading={isLoading}>
-            Reset Password
+          <Button variant={"dark"} onClick={handleResetPassword} isLoading={isLoading}>
+            Submit
           </Button>
 
           {/* Display message */}

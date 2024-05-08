@@ -206,7 +206,7 @@ export const checkRouter = router({
     const checklists = await db.checkHeading.findMany({
       where: {
         Admin: {
-          email: "vishnudarrshanorp@gmail.com"
+          email: process.env.ADMIN_EMAIL
         }
       },
       include: {

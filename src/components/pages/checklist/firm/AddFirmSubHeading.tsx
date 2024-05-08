@@ -31,7 +31,7 @@ interface QAProps {
 
 const AddFirmSubHeading = ({ refetchData, headingId }: QAProps) => {
   const [name, setName] = useState("");
-  // const [headingId, setHeadingId] = useState("");
+  const [headingId1, setHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
   const headingResult = trpc.checklist.getFirmHeading.useQuery();
@@ -116,8 +116,18 @@ const AddFirmSubHeading = ({ refetchData, headingId }: QAProps) => {
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add SubHeading</DialogTitle>
-          <DialogDescription>Write a question for your client to answer:</DialogDescription>
+          <DialogTitle className="flex items-center justify-center">
+            Add Subtopic for{" "}
+            <div className="ml-1 flex flex-col  ">
+              <Select onValueChange={(value) => setHeadingId(value)}>
+                {headingResult.data &&
+                  headingResult.data
+                    .filter((head) => head.id === headingId)
+                    .map((head) => <SelectValue placeholder={head.name} key={head.id} />)}
+              </Select>
+            </div>
+          </DialogTitle>
+
           <section className="flex w-[600px] flex-row items-center gap-4">
             <div className="grid w-full gap-1.5 pt-4">
               <Label htmlFor="message-2">Your Question</Label>
