@@ -2,21 +2,38 @@
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { UserPlus } from "lucide-react";
+import { Download, DownloadIcon, UserPlus, X } from "lucide-react";
+import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
-import AssistantUserSelect from "../../spider-graph/assistant/AssistantUserSelect";
 import { toast } from "@/hooks/use-toast";
+import {
+  Select,
+  SelectItem,
+  SelectContent,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/Select";
+import {
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle
+} from "@/components/ui/Dialog";
 
 export const AssistantCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getAssistantCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
+  let selectedCoverLetter;
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
     role: "ASSISTANT",
     userId: user
   });
+  const defaultTemplate = trpc.coverletter.getAdminTemplate.useQuery();
   const { mutate: downloadTemplate } = trpc.coverletter.downloadTemplate.useMutation({
     onSuccess({ success }) {
       CoverLetterData.refetch();
@@ -28,14 +45,23 @@ export const AssistantCoverLetter = () => {
       }
     }
   });
+  const onSubmit = (id: string) => {
+    try {
+      downloadTemplate({ userId: user, coverLetterId: id });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const handleDownload = ({
+    id,
+    CoverLetterData
+  }: {
+    id: string;
+    CoverLetterData: CoverLetterType[];
+  }) => {
+    selectedCoverLetter = CoverLetterData.find((coverLetter) => coverLetter.id === id);
+  };
 
-  // const onSubmit = () => {
-  //   try {
-  //     downloadTemplate(user);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
   const getSelectedUser = (userId: string) => {
     setUser(userId);
   };
@@ -44,15 +70,90 @@ export const AssistantCoverLetter = () => {
   }, [user]);
   return (
     <section>
-      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 pr-4">
+      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
-
-        <div className="flex space-x-9">
-          <AddCoverLetterDialog userId={user} role="ASSISTANT" />
-          <AssistantUserSelect getSelectedUser={getSelectedUser} />
+        <div className="flex items-center space-x-9">
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="outline">
+                <DownloadIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Download PDF</DialogTitle>
+                <DialogDescription>Here you can download your case files</DialogDescription>
+                {CoverLetterData.data && (
+                  <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                    {CoverLetterData.data.map((coverletter: any, index) => (
+                      <li
+                        key={coverletter.id}
+                        className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${index % 2 === 0 ? "border-primary bg-primary-light" : "border-muted bg-secondary"}`}
+                      >
+                        {coverletter.title}
+                        <DownloadIcon
+                          className="ml-1 cursor-pointer text-primary"
+                          size={16}
+                          onClick={() => handleDownload(coverletter.id)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>{" "}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant={"outline"}>Download Pull Default Template</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle className="mt-4">
+                Do you want to download pull default template
+              </DialogTitle>
+              {defaultTemplate.data && (
+                <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                  {defaultTemplate.data.map((coverletter, index) => (
+                    <li
+                      key={coverletter.id}
+                      className={`flex w-fit items-center justify-center 
+                  rounded-md border p-1 px-3 text-sm ${
+                    index % 2 === 0
+                      ? "border-primary bg-primary-light"
+                      : "border-muted bg-secondary"
+                  }`}
+                    >
+                      {coverletter.title}
+                      <Download
+                        className="ml-1 cursor-pointer text-primary"
+                        size={16}
+                        onClick={() => onSubmit(coverletter.id)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </DialogContent>
+          </Dialog>
+          <AddCoverLetterDialog userId={user} role="FIRM" />
+          <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
       </div>
-      <div className="flex items-center justify-around"></div>
+      <div className="mt-2 flex items-center justify-around pb-4">
+        {/* <Select>
+          <SelectTrigger>
+            <SelectValue placeholder="Download pdf"></SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            {CoverLetterData.data &&
+              CoverLetterData.data.map((coverLetter) => (
+                <SelectItem key={coverLetter.id} value={coverLetter.id}>
+                  {coverLetter.title}
+                </SelectItem>
+              ))}
+          </SelectContent>
+        </Select> */}
+      </div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
         <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user} />

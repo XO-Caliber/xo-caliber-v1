@@ -82,7 +82,7 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
         <section className="mb-3 flex select-none text-sm">
           <ul
             className={`mr-2 flex w-full items-center justify-between gap-2 rounded-lg border-2  p-4
-        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
+        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border bg-white"} shadow-md`}
           >
             <li>{questionNumber}.</li>
             <li className="w-full pl-4 text-left text-base">{question}</li>

@@ -97,7 +97,7 @@ const AdminCheckList = () => {
         </div>
       </div>
       <div className=" h-[91vh] p-2 ">
-        <div className="scrollableContainer ml-60 h-[85vh]  overflow-y-scroll font-serif shadow-md">
+        <div className="scrollableContainer ml-60 h-[85vh]  overflow-y-scroll font-serif ">
           <div className="mt-4">
             <section className="flex w-full flex-col p-8 pt-0 text-black">
               {checkListData &&

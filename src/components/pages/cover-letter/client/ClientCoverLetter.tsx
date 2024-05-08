@@ -2,8 +2,9 @@
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { Download, UserPlus } from "lucide-react";
+import { Download, DownloadIcon, UserPlus } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
+import { CoverLetterType } from "@/types/CoverLetter";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";
 import { toast } from "@/hooks/use-toast";
@@ -11,7 +12,9 @@ import { user } from "@/types/user";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
@@ -21,6 +24,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
     role: "INDIVIDUAL",
     userId: user.id
   });
+  let selectedCoverLetter;
   const defaultTemplate = trpc.coverletter.getAdminTemplate.useQuery();
   const { mutate: downloadTemplate } = trpc.coverletter.downloadTemplate.useMutation({
     onSuccess({ success }) {
@@ -41,12 +45,51 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
       console.log(e);
     }
   };
+  const handleDownload = ({
+    id,
+    CoverLetterData
+  }: {
+    id: string;
+    CoverLetterData: CoverLetterType[];
+  }) => {
+    selectedCoverLetter = CoverLetterData.find((coverLetter) => coverLetter.id === id);
+  };
   return (
     <section>
-      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 pr-4">
+      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white pr-4">
         <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
 
-        <div className="space-x-9">
+        <div className="flex items-center space-x-9">
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="outline">
+                <DownloadIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Download PDF</DialogTitle>
+                <DialogDescription>Here you can download your case files</DialogDescription>
+                {CoverLetterData.data && (
+                  <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                    {CoverLetterData.data.map((coverletter: any, index) => (
+                      <li
+                        key={coverletter.id}
+                        className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${index % 2 === 0 ? "border-primary bg-primary-light" : "border-muted bg-secondary"}`}
+                      >
+                        {coverletter.title}
+                        <DownloadIcon
+                          className="ml-1 cursor-pointer text-primary"
+                          size={16}
+                          onClick={() => handleDownload(coverletter.id)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           <Dialog>
             <DialogTrigger asChild>
               <Button variant={"outline"}>Download Pull Default Template</Button>
@@ -78,11 +121,11 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
                 </ul>
               )}
 
-              <DialogFooter>
-                {/* <Button variant={"dark"} onClick={onSubmit}>
-                Yes,continue
-              </Button> */}
-              </DialogFooter>
+              {/* <DialogFooter>
+                <Button variant={"dark"} onClick={onSubmit}>
+                  Yes,continue
+                </Button>
+              </DialogFooter> */}
             </DialogContent>
           </Dialog>
           <AddCoverLetterDialog userId={user.id} role="INDIVIDUAL" />

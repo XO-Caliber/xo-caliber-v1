@@ -130,7 +130,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
             <Button
               type="submit"
               className="mt-4"
-              variant="primary"
+              variant="dark"
               isLoading={isLoading}
               onClick={onSubmit}
             >

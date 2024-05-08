@@ -35,7 +35,7 @@ export const ClientQANotes = () => {
   };
 
   return (
-    <section className="relative  flex h-full w-full flex-col  justify-between bg-white p-2">
+    <section className="relative  flex h-full w-full flex-col  justify-between  p-2">
       <ul className="flex justify-between">
         <h1 className="items-start text-lg font-semibold text-heading">Your Notes:</h1>
         <Button variant={"dark"} onClick={notesUpdate} className="mb-1 mr-4 h-7 w-20">

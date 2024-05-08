@@ -12,7 +12,7 @@ const page = async () => {
   return (
     <>
       <main className="">
-        <div className="ml-56">
+        <div className="ml-56 h-screen bg-dotted-spacing-3 bg-dotted-gray-200">
           {session && session?.user.role === "INDIVIDUAL" && (
             <ClientCoverLetter user={session.user} />
           )}

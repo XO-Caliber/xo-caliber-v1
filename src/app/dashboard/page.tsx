@@ -11,11 +11,13 @@ const Dashboard = async () => {
   return (
     <div className="h-[100vh] bg-dotted-spacing-3 bg-dotted-gray-200">
       {/* <UserDashboard userId={session?.user.id} /> */}
-      {session?.user.role === "INDIVIDUAL" ? (
-        <TimeLine userId={session?.user.id} userName={session?.user.name || ""} />
-      ) : (
-        <AdminTimeLine role={session?.user.role} />
-      )}
+      {!session && <Header>Timeline</Header>}
+      {session &&
+        (session?.user.role === "INDIVIDUAL" ? (
+          <TimeLine userId={session?.user.id} userName={session?.user.name || ""} />
+        ) : (
+          <AdminTimeLine role={session?.user.role} />
+        ))}
     </div>
   );
 };
