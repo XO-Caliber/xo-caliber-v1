@@ -90,11 +90,13 @@ export const FirmQAContent: React.FC<AddQAProps> = ({
         <DialogTrigger asChild>
           <section className="mb-3 flex select-none">
             <ul
-              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 px-4  text-sm 
-        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"}  shadow-md`}
+              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 px-4 text-xs 
+        ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border bg-white"}  shadow-md`}
             >
               <li>{questionNumber}.</li>
-              <li className="w-full pl-4 text-left text-base ">{question}</li>
+              <li className="flex w-full items-center justify-start gap-x-1 pl-4 text-left text-base">
+                <p>{question}</p>
+              </li>
 
               {/* <XCircle
                 size={24}
@@ -104,36 +106,48 @@ export const FirmQAContent: React.FC<AddQAProps> = ({
 
               {/* <Info
                 xlinkTitle="Tap to see detailed question overFirm "
-                className="cursor-pointer"
+                className="cursor-pointer p-1"
               /> */}
             </ul>
             <div
-              className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
+              className={`flex justify-between gap-2 rounded-lg border-2 border-border p-2 text-xs 
       ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
             >
               {mark}
             </div>
           </section>
         </DialogTrigger>
-        <DialogContent className="min-w-60 select-none">
-          <DialogHeader>
-            <DialogTitle>Question {questionNumber}</DialogTitle>
+        <DialogContent className="my-2 min-w-60 select-none">
+          <DialogHeader className="flex flex-row items-center justify-between">
+            <div>
+              <DialogTitle className="flex items-center justify-center space-x-1">
+                <p>Question {questionNumber} </p>
+                <Trash
+                  size={15}
+                  onClick={() => handleDelete(id)}
+                  className="cursor-pointer fill-destructive text-destructive"
+                />
+              </DialogTitle>
+            </div>
           </DialogHeader>
-          <section className="rounded-sm border bg-secondary ">
+          <section className="rounded-sm  ">
             <ul className="flex items-center justify-center p-4">
               <li>
                 <Textarea
                   value={Question}
                   onChange={(e) => setQuestion(e.target.value)}
-                  className="h-[200px] w-[400px]"
+                  className="w-[400px]"
                 />
               </li>
-              <li className="ml-4 rounded-md bg-secondary-foreground p-1 p-2">
-                <text className="text-white"> Mark:{mark}</text>
-              </li>
-              <li>
-                <div className="ml-4 flex">
-                  <text className="mr-4 font-bold">Change mark:</text>
+            </ul>
+          </section>
+          <DialogFooter className="flex flex-row items-center justify-center  rounded-md bg-secondary p-2">
+            <p>
+              <div className=" mr-14 flex flex-row items-center justify-around space-x-12">
+                <p className="mr-2 text-sm"> Weightage:{mark}</p>
+
+                <div className=" flex flex-row items-center justify-center">
+                  <p className="mr-4 text-sm">Edit</p>
                   <Select onValueChange={(value) => setMark(value)}>
                     {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
                     <SelectTrigger className="">
@@ -154,18 +168,13 @@ export const FirmQAContent: React.FC<AddQAProps> = ({
                     </SelectContent>
                   </Select>
                 </div>
-              </li>
-            </ul>
-          </section>
-          <DialogFooter>
+              </div>
+            </p>
             <form onSubmit={onSubmit}>
-              <Button variant={"primary"} isLoading={isLoading}>
+              <Button variant={"dark"} size={"sm"} isLoading={isLoading}>
                 Save
               </Button>
             </form>
-            <Button variant={"destructive"} onClick={() => handleDelete(id)}>
-              <Trash size={15} />
-            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

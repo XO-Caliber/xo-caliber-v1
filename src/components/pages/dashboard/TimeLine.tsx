@@ -120,20 +120,20 @@ export const TimeLine = ({ userId, userName }: Props) => {
   };
 
   return (
-    <div>
-      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
-        <div className="flex items-center justify-center">
+    <div className="h-full ">
+      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
+        <div className="flex items-center justify-center ">
           <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
         </div>
       </div>
-      <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0">
+      <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0 bg-white">
         <div className="flex items-center justify-center">
           <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">
             {userName}&apos;s Timeline
           </p>
         </div>
       </div>
-      <div className="scrollableContainer ml-28 h-[87vh] overflow-y-scroll  p-2 pt-4 text-lg  text-black bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className="scrollableContainer  ml-56 h-[83vh]  overflow-y-scroll  p-2  text-lg text-black">
         <VerticalTimeline lineColor="black" animate={true}>
           <VerticalTimelineElement
             className=" cursor-pointer"
@@ -621,7 +621,6 @@ export const TimeLine = ({ userId, userName }: Props) => {
             ></VerticalTimelineElement>
           )}
         </VerticalTimeline>
-        ;
       </div>
     </div>
   );

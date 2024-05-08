@@ -44,17 +44,15 @@ export const AssistantCoverLetter = () => {
   }, [user]);
   return (
     <section>
-      <div className="flex items-center justify-around">
-        {/* <ul className="ml-4 pl-4 pt-4 font-bold">
-          <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
-          <h2 className="text-sm font-normal ">Here is the overview</h2>
-        </ul> */}
-        {/* <Button variant={"outline"} onClick={onSubmit}>
-          Download Default Template
-        </Button> */}
-        <AddCoverLetterDialog userId={user} role="ASSISTANT" />
-        <AssistantUserSelect getSelectedUser={getSelectedUser} />
+      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 pr-4">
+        <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+
+        <div className="flex space-x-9">
+          <AddCoverLetterDialog userId={user} role="ASSISTANT" />
+          <AssistantUserSelect getSelectedUser={getSelectedUser} />
+        </div>
       </div>
+      <div className="flex items-center justify-around"></div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
         <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user} />

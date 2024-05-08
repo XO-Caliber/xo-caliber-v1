@@ -90,7 +90,7 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
         <DialogTrigger asChild>
           <section className="mb-3 flex select-none">
             <ul
-              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 px-4 text-sm 
+              className={` mr-2 flex w-full items-center justify-between rounded-lg border-2 px-4 text-xs 
         ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border bg-white"}  shadow-md`}
             >
               <li>{questionNumber}.</li>
@@ -110,7 +110,7 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
               /> */}
             </ul>
             <div
-              className={`flex justify-between gap-2 rounded-lg border-2 border-border p-4 
+              className={`flex justify-between gap-2 rounded-lg border-2 border-border p-2 text-xs 
       ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
             >
               {mark}

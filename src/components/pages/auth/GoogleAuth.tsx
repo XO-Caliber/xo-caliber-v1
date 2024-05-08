@@ -16,7 +16,7 @@ export const GoogleAuth = () => {
     setIsLoading(true);
     try {
       console.log("Hello from client");
-      const result = await signIn("google", { callbackUrl: "/" });
+      const result = await signIn("google", { callbackUrl: "/home_page" });
 
       if (result?.ok) {
         setIsLoading(false);

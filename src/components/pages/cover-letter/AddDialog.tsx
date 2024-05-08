@@ -68,7 +68,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
         <Button
           variant={"outline"}
           size={"sm"}
-          className="border border-dashed border-border py-0 "
+          className="max-h-[25px] border border-dashed border-border p-1 py-0 text-xs"
         >
           <PlusSquare size={16} className="mr-2" />
           {buttonText}
@@ -78,7 +78,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
         <DialogHeader className="border-b-2 border-border pb-2 text-left">
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
-        <section className="h-max w-[1000px] ">{contentComponent}</section>
+        <section className="h-max w-[1000px] text-xs">{contentComponent}</section>
       </DialogContent>
     </Dialog>
   );

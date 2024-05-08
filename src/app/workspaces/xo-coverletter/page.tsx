@@ -12,7 +12,6 @@ const page = async () => {
   return (
     <>
       <main className="">
-        <Header>Craft</Header>
         <div className="ml-56">
           {session && session?.user.role === "INDIVIDUAL" && (
             <ClientCoverLetter user={session.user} />

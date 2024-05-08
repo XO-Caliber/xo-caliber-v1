@@ -136,7 +136,7 @@ export const AddAssistantForm = () => {
             )}
           />
         </div>
-        <div className="flex w-full flex-col pt-4">
+        <div className="flex  justify-end pt-4">
           <Button type="submit" variant={"dark"} isLoading={isLoading}>
             Submit
           </Button>

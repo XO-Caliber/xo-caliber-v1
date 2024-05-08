@@ -372,7 +372,22 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   };
 
   return (
-    <main className="h-max w-full p-2 pt-0">
+    <main className="h-max w-full p-2 pt-0 ">
+      {" "}
+      {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
+        <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
+          <Button variant={"secondary"} className="max-h-[30px]  p-2">
+            Cancel
+          </Button>
+          <Button
+            variant={"dark"}
+            onClick={updateSubSectionPostionInDb}
+            className="max-h-[30px]  p-2"
+          >
+            Save changes
+          </Button>
+        </div>
+      ) : null}
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
@@ -390,7 +405,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                         <Droppable droppableId={section.id} type="section">
                           {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef} className="">
-                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-[#f6f6f7] p-3">
+                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-[#f6f6f7] p-1">
                                 <GripVertical size={18} className="w-16" />
                                 <button
                                   onClick={() => toggleSubSection(indexSection)}
@@ -398,20 +413,18 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 >
                                   {isSubSectionVisible[indexSection] ? (
                                     <ChevronDown
-                                      size={50}
                                       strokeWidth={1.5}
                                       className="h-full w-full opacity-60"
                                     />
                                   ) : (
                                     <ChevronRight
-                                      size={50}
                                       strokeWidth={1.5}
                                       className="h-full w-full opacity-60"
                                     />
                                   )}
                                 </button>
                                 {/* <h1 className="text-base">Section-{index + 1}</h1> */}
-                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-xs font-semibold">
                                   Section
                                   <MinusCircle
                                     color="red"
@@ -447,7 +460,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                   />
                                 </p>
                                 {/* <p>{section.position}</p> */}
-                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
                                   <MessageCircle size={16} />
                                   Comment
                                 </i>
@@ -476,7 +489,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                               ref={provided.innerRef}
                                               className="pl-12"
                                             >
-                                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-3">
+                                              <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-1">
                                                 <GripVertical size={18} className="w-16" />
                                                 <button
                                                   onClick={() =>
@@ -487,18 +500,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   {isExhibitVisible[indexSection]?.[
                                                     indexSubsection
                                                   ] ? (
-                                                    <ChevronDown
-                                                      size={45}
-                                                      className="h-full w-full opacity-60"
-                                                    />
+                                                    <ChevronDown className="h-full w-full opacity-60" />
                                                   ) : (
-                                                    <ChevronRight
-                                                      size={45}
-                                                      className="h-full w-full opacity-60"
-                                                    />
+                                                    <ChevronRight className="h-full w-full opacity-60" />
                                                   )}
                                                 </button>
-                                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-xs font-semibold">
                                                   Sub-Section
                                                   <MinusCircle
                                                     color="red"
@@ -533,7 +540,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   />
                                                 </p>
                                                 {/* <p>{subsection.id}</p> */}
-                                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
                                                   <MessageCircle size={16} />
                                                   Comment
                                                 </i>
@@ -555,12 +562,12 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                         ref={provided.innerRef}
                                                         className="pl-16"
                                                       >
-                                                        <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-3">
+                                                        <section className="flex h-full w-full items-center justify-normal gap-6 border-b border-border bg-white p-1">
                                                           <GripVertical
                                                             size={18}
                                                             className="w-16"
                                                           />
-                                                          <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                          <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-xs font-semibold">
                                                             Exhibit-{index + 1}
                                                             <MinusCircle
                                                               color="red"
@@ -588,7 +595,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             />
                                                           </p>
                                                           {/* <p>{exhibit.position}</p> */}
-                                                          <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
+                                                          <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
                                                             <MessageCircle size={16} />
                                                             Comment
                                                           </i>
@@ -620,14 +627,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           )}
         </Droppable>
       </DragDropContext>
-      {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
-        <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
-          <Button variant={"secondary"}>Cancel</Button>
-          <Button variant={"primary"} onClick={updateSubSectionPostionInDb}>
-            Save changes
-          </Button>
-        </div>
-      ) : null}
     </main>
   );
 };

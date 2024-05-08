@@ -276,8 +276,8 @@ function AdminGraph({ userType }: userType) {
 
   return (
     <>
-      <div className="flex  items-center justify-between border-2 border-l-0">
-        <p className="text-heading m-4 mt-[1.2rem] text-xl font-bold">Assess</p>{" "}
+      <div className="flex  items-center justify-between border-2 border-l-0 bg-white">
+        <p className="m-4 mt-[1.2rem] text-xl font-bold text-heading">Assess</p>{" "}
         <div className="mr-72 flex items-center justify-center">
           <span className="font-bold">User 1:</span>
           <AllUserSelectList getSelectedUser={getSelectedUser} />
@@ -287,9 +287,9 @@ function AdminGraph({ userType }: userType) {
           <AllUserSelectList getSelectedUser={getSelectedUser2} />
         </div>
       </div>
-      <main className="grid h-full grid-cols-2 flex-col bg-dotted-spacing-3 bg-dotted-gray-200  md:min-h-[87vh] xl:min-h-[93vh]">
+      <main className="grid h-full grid-cols-2 flex-col  md:min-h-[87vh] xl:min-h-[93vh]">
         <div className="border-2 border-y-0 border-l-0">
-          <h1 className="text-heading ml-8 mt-4 text-2xl font-bold">User Graph 1:</h1>
+          <h1 className="ml-8 mt-4 text-2xl font-bold text-heading">User Graph 1:</h1>
           <div className="m-8 mb-2 flex flex-col items-center justify-center rounded-xl border  border-red-600 bg-secondary ">
             <canvas className="min-w-20" id="myChart">
               myChart
@@ -298,7 +298,7 @@ function AdminGraph({ userType }: userType) {
         </div>
 
         <div className="mt-4">
-          <h1 className="text-heading ml-8 text-2xl font-bold">User Graph 2:</h1>
+          <h1 className="ml-8 text-2xl font-bold text-heading">User Graph 2:</h1>
           <div className="m-8 flex items-center justify-center rounded-xl border border-red-600 bg-secondary ">
             <canvas className="min-w-20" id="myChart2">
               myChart

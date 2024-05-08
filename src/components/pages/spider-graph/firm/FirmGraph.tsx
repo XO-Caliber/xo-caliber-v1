@@ -14,6 +14,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import NotesOfFirm from "./NotesOfFirm";
 import NotesOfClient from "./NotesOfClient";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import { Info } from "lucide-react";
 
 interface UserAnswer {
   category: string | null;
@@ -158,14 +159,40 @@ function FirmGraph({ userType }: userType) {
 
   return (
     <>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
-        <p className="m-4 mt-[1.2rem] text-xl font-bold text-muted">Spider Graph</p>{" "}
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
+        <div className="flex items-center justify-start">
+          <p className="m-4 mr-2 mt-[1.2rem] text-xl font-bold text-heading">Assess</p>
+          <span
+            title="It's essential to assess profiles from diverse perspectives,
+                        categorizing them into Research, Business, and Art. Each category demands
+                        specific skills and evidence for validation. For example Artists can
+                        showcase art shows, success stories, media mentions, and memberships. In
+                        Business like IT industry, original contributions, critical roles, high
+                        salary, and evaluating others' work matter, backed by scholarly
+                        articles and memberships. Research profiles require original contributions,
+                        critical roles, scholarly publications, and evaluating others' work,
+                        not just media presence. The above examples are merely examples; to win a
+                        case, you must meet at least three criteria. Consider a spider graph to
+                        determine the strength of a profile and strengthen your case by focusing on
+                        the key criteria in your field and gathering a variety of strong evidence to
+                        support your claim. Winning some immigration visa necessitates meeting four
+                        criteria effectively chosen for quality, not quantity. Immigration
+                        authorities use a &quot;preponderance of evidence&quot; standard, demanding
+                        just over 50% certainty, emphasizing the importance of thorough evaluation.
+                        Despite misconceptions, evidence evaluation involves more than counting,
+                        with immigration authorities needing to justify refusals even when criteria
+                        are met. Understanding these standards is crucial, and consulting an
+                        attorney can offer valuable insights into the process."
+          >
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
+        </div>
         <UserSelectList getSelectedUser={getSelectedUser} />
       </div>
-      <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
-        <ResizablePanel defaultSize={40} className="m-2">
+      <ResizablePanelGroup direction="horizontal" className="min-h-[91vh] max-w-full ">
+        <ResizablePanel defaultSize={40} className="m-2 bg-dotted-spacing-3 bg-dotted-gray-200">
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={120} className="m-3">
+            <ResizablePanel defaultSize={120} className="m-3 mt-24">
               <main className="flex h-full flex-col p-3">
                 <div className="flex items-center justify-between"></div>
                 <div className="m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
@@ -173,73 +200,12 @@ function FirmGraph({ userType }: userType) {
                 </div>
               </main>
             </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={40} className="m-3 ">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <section className=" rounded-md bg-secondary">
-                    <ul className="p-4 ">
-                      <li className="font-serif text-xs ">
-                        It&apos;s essential to assess profiles from diverse perspectives,
-                        categorizing them into Research, Business, and Art. Each category demands
-                        specific skills and evidence for validation. For example Artists can
-                        showcase art shows, success stories, media mentions, and memberships. In
-                        Business like IT industry, original contributions, critical roles, high
-                        salary, and evaluating others&apos; work matter, backed by scholarly
-                        articles and memberships. Research profiles require original contributions,
-                        critical roles, scholarly publications, and evaluating others&apos; work,
-                        not just media presence. The above examples are merely examples; to win a
-                        case, you must meet at least three criteria. Consider a spider graph to
-                        determine the strength of a profile and strengthen your case by focusing on
-                        the key criteria in your field and gathering a variety of strong evidence to
-                        support your claim. Winning some immigration visa necessitates meeting four
-                        criteria effectively chosen for quality, not quantity. Immigration
-                        authorities use a &quot;preponderance of evidence&quot; standard, demanding
-                        just over 50% certainty, emphasizing the importance of thorough evaluation.
-                        Despite misconceptions, evidence evaluation involves more than counting,
-                        with immigration authorities needing to justify refusals even when criteria
-                        are met. Understanding these standards is crucial, and consulting an
-                        attorney can offer valuable insights into the process.
-                      </li>
-                    </ul>
-                  </section>
-                </DialogTrigger>
-                <DialogContent>
-                  <section className=" rounded-md ">
-                    <ul className="p-4 ">
-                      <li className="font-serif ">
-                        It&apos;s essential to assess profiles from diverse perspectives,
-                        categorizing them into Research, Business, and Art. Each category demands
-                        specific skills and evidence for validation. For example Artists can
-                        showcase art shows, success stories, media mentions, and memberships. In
-                        Business like IT industry, original contributions, critical roles, high
-                        salary, and evaluating others&apos; work matter, backed by scholarly
-                        articles and memberships. Research profiles require original contributions,
-                        critical roles, scholarly publications, and evaluating others&apos; work,
-                        not just media presence. The above examples are merely examples; to win a
-                        case, you must meet at least three criteria. Consider a spider graph to
-                        determine the strength of a profile and strengthen your case by focusing on
-                        the key criteria in your field and gathering a variety of strong evidence to
-                        support your claim. Winning some immigration visa necessitates meeting four
-                        criteria effectively chosen for quality, not quantity. Immigration
-                        authorities use a &quot;preponderance of evidence&quot; standard, demanding
-                        just over 50% certainty, emphasizing the importance of thorough evaluation.
-                        Despite misconceptions, evidence evaluation involves more than counting,
-                        with immigration authorities needing to justify refusals even when criteria
-                        are met. Understanding these standards is crucial, and consulting an
-                        attorney can offer valuable insights into the process.
-                      </li>
-                    </ul>
-                  </section>
-                </DialogContent>
-              </Dialog>
-            </ResizablePanel>
           </ResizablePanelGroup>
         </ResizablePanel>
         <ResizableHandle withHandle />
-        <ResizablePanel defaultSize={50}>
+        <ResizablePanel defaultSize={50} className="m-2">
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={50} className="m-3">
+            <ResizablePanel defaultSize={50} className="m-3 ">
               <NotesOfClient selectedUser={user} userType={userType} />
             </ResizablePanel>
             <ResizableHandle withHandle />

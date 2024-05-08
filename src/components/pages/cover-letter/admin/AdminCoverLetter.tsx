@@ -18,9 +18,12 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
   };
   return (
     <section className="bg-dotted-spacing-3 bg-dotted-gray-200">
-      <div className="flex items-center justify-around">
+      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 pr-4">
+        <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+
         <AddCoverLetterDialog userId={user.id} role="ADMIN" />
       </div>
+
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
         <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user.id} />

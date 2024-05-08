@@ -1,6 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Delete, DeleteIcon, MinusCircle } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronUp,
+  Delete,
+  DeleteIcon,
+  MinusCircle
+} from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
 import AddDialog from "./AddDialog";
@@ -54,11 +61,11 @@ export const ViewCoverLetter = ({
     <main>
       {CoverLetterData?.map((coverLetter, index) => (
         <div key={coverLetter.id}>
-          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-border bg-primary p-3">
+          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-border bg-[#dfd9d5] p-1.5">
             <button onClick={() => toggleSectionVisibility(index)}>
-              {isSectionVisible[index] ? <ChevronDown /> : <ChevronUp />}
+              {isSectionVisible[index] ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
             </button>
-            <h1 className="flex flex-row items-center justify-center text-base font-medium">
+            <h1 className="flex flex-row items-center justify-center text-xs font-medium">
               {coverLetter.title}
               <MinusCircle
                 size={16}
@@ -67,8 +74,7 @@ export const ViewCoverLetter = ({
                 onClick={() => deleteCase1(coverLetter.id)}
               />
             </h1>
-            <p className="pr-2 text-left text-sm font-medium text-muted-foreground">Type</p>
-            <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
+
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
               <AddDialog
@@ -78,7 +84,7 @@ export const ViewCoverLetter = ({
                 refetchData={refetchData}
               />
             </div>
-            <p className="ml-auto mr-10 justify-items-end text-sm font-medium text-muted-foreground">
+            <p className="ml-auto mr-10 justify-items-end text-xs font-medium  text-black">
               Comments
             </p>
           </div>

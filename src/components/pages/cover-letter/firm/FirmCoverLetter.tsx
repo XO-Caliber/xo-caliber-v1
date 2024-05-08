@@ -69,46 +69,45 @@ export const FirmCoverLetter = () => {
   }, [user]);
   return (
     <section>
+      <div className=" flex h-[68px] items-center justify-between border-2 border-l-0">
+        <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+        <div className="space-x-9">
+          {" "}
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="outline">
+                <DownloadIcon />
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Download PDF</DialogTitle>
+                <DialogDescription>Here you can download your case files</DialogDescription>
+                {CoverLetterData.data && (
+                  <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                    {CoverLetterData.data.map((coverletter: any, index) => (
+                      <li
+                        key={coverletter.id}
+                        className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${index % 2 === 0 ? "border-primary bg-primary-light" : "border-muted bg-secondary"}`}
+                      >
+                        {coverletter.title}
+                        <DownloadIcon
+                          className="ml-1 cursor-pointer text-primary"
+                          size={16}
+                          onClick={() => handleDownload(coverletter.id)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+          <AddCoverLetterDialog userId={user} role="FIRM" />
+          <UserSelectList getSelectedUser={getSelectedUser} />
+        </div>
+      </div>
       <div className="mt-2 flex items-center justify-around pb-4">
-        {/* <ul className="ml-4 pl-4 pt-4 font-bold">
-          <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
-          <h2 className="text-sm font-normal ">Here is the overview</h2>
-        </ul> */}
-        {/* <Button variant={"outline"} onClick={onSubmit}>
-          Download Default Template
-        </Button> */}
-        <AddCoverLetterDialog userId={user} role="FIRM" />
-        <UserSelectList getSelectedUser={getSelectedUser} />
-        <Dialog>
-          <DialogTrigger>
-            <Button variant="outline">
-              <DownloadIcon />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Download PDF</DialogTitle>
-              <DialogDescription>Here you can download your case files</DialogDescription>
-              {CoverLetterData.data && (
-                <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
-                  {CoverLetterData.data.map((coverletter: any, index) => (
-                    <li
-                      key={coverletter.id}
-                      className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${index % 2 === 0 ? "border-primary bg-primary-light" : "border-muted bg-secondary"}`}
-                    >
-                      {coverletter.title}
-                      <DownloadIcon
-                        className="ml-1 cursor-pointer text-primary"
-                        size={16}
-                        onClick={() => handleDownload(coverletter.id)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
         {/* <Select>
           <SelectTrigger>
             <SelectValue placeholder="Download pdf"></SelectValue>

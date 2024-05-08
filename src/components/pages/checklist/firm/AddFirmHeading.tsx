@@ -90,8 +90,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
           size={"sm"}
           // onClick={handleheadingPopOpen}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Add Topic</p>
+          <p className="">Add Topic</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">

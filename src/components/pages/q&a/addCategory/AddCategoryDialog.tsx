@@ -90,16 +90,13 @@ const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
           size={"sm"}
           // onClick={handleCategoryPopOpen}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Category</p>
+          <p className="">Add Category</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
           <DialogTitle>Add Category</DialogTitle>
-          <DialogDescription>
-            Create a category where a set of questions belongs to:
-          </DialogDescription>
+          <DialogDescription>Add upto 10 categories</DialogDescription>
           {/* 
           <CategoryPopUp
             handleCategoryPopOpen={handleCategoryPopOpen}
@@ -133,11 +130,11 @@ const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
             <Button
               type="submit"
               className="mt-4"
-              variant="primary"
+              variant="dark"
               isLoading={isLoading}
               onClick={onSubmit}
             >
-              Add Category
+              Add
             </Button>
           </DialogFooter>
         </DialogHeader>

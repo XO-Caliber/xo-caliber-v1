@@ -72,18 +72,12 @@ const AdminCheckList = () => {
 
   return (
     <div>
-      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0">
+      <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center">
           <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-heading">DocuCheck</p>
           <div>
-            <Dialog>
-              <DialogTrigger asChild>
-                <Info size={16} className="cursor-pointer text-heading" />
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <p>
-                    The required documentation can vary based on the self petitioned employment
+            <span
+              title="The required documentation can vary based on the self petitioned employment
                     based immigration visa that you are applying for due to the nature. However, the
                     XO caliber team provided a generic overview of the types of documents that are
                     commonly required. Keep in mind that DocuCheck provides a checklist to address
@@ -91,18 +85,18 @@ const AdminCheckList = () => {
                     eighty percent. Thus, you should always choose the right set of documentation
                     through self-assessment or with the help of case handlers i.e. Firm. The
                     checklist can be created by XO Caliber admin or Firm. Based on your profile, the
-                    DocuCheck list may vary.
-                  </p>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+                    DocuCheck list may vary."
+            >
+              {" "}
+              <Info size={18} className="mt-1 cursor-pointer text-heading" />
+            </span>
           </div>
         </div>
         <div className="mr-4 flex space-x-12">
           <AddHeading refetchData={refetchData} />
         </div>
       </div>
-      <div className=" h-[928px] p-2 bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className=" h-[91vh] p-2 ">
         <div className="scrollableContainer ml-60 h-[85vh]  overflow-y-scroll font-serif shadow-md">
           <div className="mt-4">
             <section className="flex w-full flex-col p-8 pt-0 text-black">
@@ -124,20 +118,22 @@ const AdminCheckList = () => {
                           openSubMenus[checkList.id] ? "border-b-0" : ""
                         } rounded-md`}
                       >
-                        <i>
+                        <i className="ml-1">
                           {openSubMenus[checkList.id] ? (
                             <ChevronDown
                               className="duration-800 cursor-pointer text-black transition-all"
                               onClick={() => toggleSubMenu(checkList.id)}
+                              size={15}
                             />
                           ) : (
                             <ChevronRight
                               className="duration-800 cursor-pointer text-black transition-all"
                               onClick={() => toggleSubMenu(checkList.id)}
+                              size={15}
                             />
                           )}
                         </i>
-                        <h1 className=" p-2 text-sm">{checkList.name}</h1>
+                        <h1 className=" p-2 text-xs">{checkList.name}</h1>
                         <AddSubHeading refetchData={refetchData} headingId={checkList.id} />
                       </div>
                       <div
@@ -148,7 +144,7 @@ const AdminCheckList = () => {
                         {checkList.subHeading &&
                           checkList.subHeading.map((subHeading) => (
                             <div key={subHeading.id} className="ml-6 border-2 border-t-0">
-                              <h3 className="flex flex-row items-center justify-start space-x-1 bg-[#FFE6E0] p-2 text-sm ">
+                              <h3 className="flex flex-row items-center justify-start space-x-1 bg-[#FFE6E0] p-2 text-xs ">
                                 <p>{subHeading.name}</p>
                                 <MinusCircle
                                   className="cursor-pointer text-destructive"
@@ -168,7 +164,7 @@ const AdminCheckList = () => {
                                       }`}
                                     >
                                       <Checkbox className="" />
-                                      <p className="flex w-full text-sm">{item.name}</p>
+                                      <p className="flex w-full text-xs">{item.name}</p>
                                       <Minus
                                         className="cursor pointer cursor-pointer fill-destructive text-red-700 hover:fill-red-400"
                                         onClick={() => onDelete(item.id)}

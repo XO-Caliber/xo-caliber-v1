@@ -98,7 +98,7 @@ export const ViewFirmQA = () => {
       {catArray.length > 0 ? (
         <div className="h-[70vh] p-4">
           {!hidden && (
-            <section className="absolute  m-16 mt-44 rounded-lg border-2  shadow-lg">
+            <section className="absolute  m-16 mt-28 rounded-lg border-2  shadow-lg">
               <ul className="p-8 text-left  text-base">
                 <li className="font-serif">
                   By answering all Yes or No questions, you not only gain insights into the

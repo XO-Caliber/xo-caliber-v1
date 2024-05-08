@@ -11,7 +11,7 @@ export default async function page() {
   return (
     <div>
       {session ? (
-        <div className="h-screen">
+        <div className="h-screen bg-dotted-spacing-3 bg-dotted-gray-200">
           {session.user.role === "FIRM" && <FirmQA />}
           {session.user.role === "ADMIN" && <AdminQA />}
           {session.user.role === "INDIVIDUAL" && (

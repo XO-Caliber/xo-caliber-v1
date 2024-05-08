@@ -4,7 +4,7 @@ import React from "react";
 
 export const HomeLink = (user: { name: string | null | undefined }) => {
   return (
-    <div className=" flex flex-col items-center justify-center">
+    <div className=" flex flex-col items-start justify-center">
       <li className="ml-4 w-full pl-4 pt-4 font-bold">
         <h1 className="text-2xl font-bold ">Welcome {user.name}</h1>
         <h2 className="text-sm font-normal ">Immigration Process Overview</h2>

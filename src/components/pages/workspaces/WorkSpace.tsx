@@ -110,9 +110,9 @@ const WorkSpace = ({ userRole, userId }: Props) => {
           <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Craft</h1>
         </div>
-        <div className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary">
+        {/* <div className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary">
           <ViewProfile userId={userId} />
-        </div>
+        </div> */}
       </div>
     </div>
   );

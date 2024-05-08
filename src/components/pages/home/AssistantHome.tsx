@@ -14,13 +14,13 @@ export const AssistantHome = async () => {
               <div className="flex flex-col items-center justify-center space-y-9">
                 <div className="flex flex-row space-x-6">
                   <div className="flex w-[320px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-                    <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                    <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground bg-gradient-to-r from-[#dd0839] to-[#39468f]  p-1 text-white">
                       Your Firm
                     </h1>
                     <AssistantFirmList user={session?.user.id} />
                   </div>
                   <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-                    <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
+                    <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground bg-gradient-to-r from-[#dd0839] to-[#39468f]  p-1 text-white">
                       Assigned Assistants
                     </h1>
                     <AssistantUserList />

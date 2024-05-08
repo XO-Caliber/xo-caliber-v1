@@ -9,7 +9,7 @@ const Page = async () => {
   const session = await getAuthSession();
   return (
     <>
-      <div className="ml-56">
+      <div className="ml-56 bg-dotted-spacing-3 bg-dotted-gray-200">
         {session && session?.user.role === "INDIVIDUAL" && <ClientGraph user="INDIVIDUAL" />}
         {session && session?.user.role === "FIRM" && <FirmGraph userType="FIRM" />}
         {session && session.user.role === "ADMIN" && <AdminGraph userType="ADMIN" />}

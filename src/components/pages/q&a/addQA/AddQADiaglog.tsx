@@ -85,14 +85,13 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
           className="ml-4 border-dashed border-gray-400 font-medium hover:border"
           size={"sm"}
         >
-          <PlusSquare size={16} />
-          <p className="ml-2">Create Q&A</p>
+          <p className="">Add Q&A</p>
         </Button>
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add Q&A</DialogTitle>
-          <DialogDescription>Write a question for your client to answer:</DialogDescription>
+          <DialogTitle> Add Yes or No Questions</DialogTitle>
+          <DialogDescription>select category and weightage for this question</DialogDescription>
 
           {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
           <QADialogContent
@@ -106,8 +105,8 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
 
           <DialogFooter>
             <form onSubmit={onSubmit}>
-              <Button type="submit" className="mt-4" variant="primary" isLoading={isLoading}>
-                Add Question
+              <Button type="submit" className="mt-4" variant="dark" isLoading={isLoading}>
+                Add
               </Button>
             </form>
           </DialogFooter>

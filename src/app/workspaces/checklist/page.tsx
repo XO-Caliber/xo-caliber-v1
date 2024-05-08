@@ -8,7 +8,7 @@ import Checklist from "@/components/pages/checklist/Checklist";
 const page = async () => {
   const session = await getAuthSession();
   return (
-    <div>
+    <div className="h-screen bg-dotted-spacing-3 bg-dotted-gray-200">
       {session && session.user.role === "ADMIN" && <AdminCheckList />}
       {session && session.user.role === "FIRM" && <FirmCheckList />}
       {session && session.user.role === "INDIVIDUAL" && <Checklist userId={session.user.id} />}

@@ -85,7 +85,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
 
   return (
     <div>
-      <div className="ml-56 flex h-[68px] items-center justify-start border-2 border-l-0">
+      <div className="ml-56 flex h-[68px] items-center justify-start border-2 border-l-0 bg-white">
         <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-heading">DocuCheck</p>
         <div>
           <span
@@ -103,7 +103,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
           </span>
         </div>
       </div>
-      <div className=" h-[93.2vh] p-2 bg-dotted-spacing-3 bg-dotted-gray-200">
+      <div className=" h-[91vh] p-2 ">
         <div className="scrollableContainer  ml-60  h-[85vh] overflow-y-scroll font-serif shadow-md">
           <div className="mt-4">
             <section className="flex w-full flex-col p-8 pt-0 text-black">
@@ -138,7 +138,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                             />
                           )}
                         </i>
-                        <h1 className=" p-2 text-sm font-bold ">{checkList.name}</h1>
+                        <h1 className=" p-2 text-xs font-bold ">{checkList.name}</h1>
                       </div>
                       <div
                         className={`transition-max-height overflow-hidden duration-500 ${
@@ -150,7 +150,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                             <div key={subHeading.id} className="ml-6 border-2 border-t-0">
                               <div className="flex items-center justify-between  bg-[#FFE6E0] text-sm">
                                 <h3 className=" p-2  ">{subHeading.name}</h3>
-                                <h3 className="  mr-28 border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 text-sm font-bold text-heading">
+                                <h3 className="  mr-28 border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 text-xs font-bold text-heading">
                                   Ref Link
                                 </h3>
                               </div>
@@ -179,7 +179,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                                           })
                                         }
                                       />
-                                      <p className="flex w-full text-sm">{item.name}</p>
+                                      <p className="flex w-full text-xs">{item.name}</p>
                                       {item.UserChecked.map(
                                         (checked) =>
                                           checked.isChecked && (

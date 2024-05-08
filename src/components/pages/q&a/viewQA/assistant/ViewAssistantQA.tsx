@@ -35,8 +35,8 @@ export const ViewAssistantQA = () => {
 
   return (
     <div>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
-        <p className="m-4 mt-[1.2rem] font-bold text-muted">Caliber Q&A</p>
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white pr-4">
+        <p className="m-4 mt-[1.2rem] font-bold text-heading">Caliber</p>
         <DownloadAssistantQuestions />
       </div>
       {catArray.length > 0 ? (

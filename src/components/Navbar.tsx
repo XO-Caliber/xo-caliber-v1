@@ -23,7 +23,7 @@ import ViewProfile from "./pages/profile/ViewProfile";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
-  const refLink = session ? "/" : "https://xocaliber.tech/";
+  const refLink = session ? "/home_page" : "https://xocaliber.tech/";
   return (
     <nav className="absolute z-50 h-screen w-56 border-r-2 border-border bg-white">
       <Link href={"/"}>

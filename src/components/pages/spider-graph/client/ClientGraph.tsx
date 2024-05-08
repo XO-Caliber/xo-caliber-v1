@@ -25,7 +25,7 @@ const ClientGraph = ({ user }: userProps) => {
 
   return (
     <div>
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0">
+      <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <p className="m-4 mt-[1.2rem] font-bold text-heading">Assess</p>
         <span className="mr-10 w-32">
           {/* <Select onValueChange={handleChange}>

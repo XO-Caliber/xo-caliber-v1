@@ -64,7 +64,7 @@ export const LoginBox = () => {
 
       if (result?.ok) {
         setIsLoading(false);
-        router.push("/");
+        router.push("/home_page");
         router.refresh();
         toast({
           title: "Logged In successfully",

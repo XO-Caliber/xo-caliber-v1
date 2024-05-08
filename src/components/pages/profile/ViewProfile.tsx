@@ -19,16 +19,21 @@ import {
 } from "@/components/ui/Dropdown-menu";
 import { Input } from "@/components/ui/Input";
 import { toast } from "@/hooks/use-toast";
+import { user } from "@/types/user";
 import {} from "@radix-ui/react-dialog";
 import { MoreHorizontal, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ViewProfile = ({ userId }: { userId?: string }) => {
   const userData = trpc.home.getUserProfile.useQuery();
   const [userName, setUserName] = useState(userData.data?.name);
   const email = userData.data?.email;
+  useEffect(() => {
+    setUserName(userData.data?.name);
+  }, [userData]);
+
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [nameDisabled, setNameDisabled] = useState(true);
   const userType = userData.data?.role;
