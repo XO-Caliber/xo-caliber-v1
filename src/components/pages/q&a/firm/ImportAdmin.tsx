@@ -63,7 +63,7 @@ const ImportAdmin = () => {
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>
-              <Button variant={"primary"} isLoading={isLoading}>
+              <Button variant={"dark"} isLoading={isLoading}>
                 Yes,continue
               </Button>
             </form>

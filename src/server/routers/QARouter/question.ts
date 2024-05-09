@@ -192,7 +192,7 @@ export const questionRouter = router({
         questions: true
       }
     });
-
+    console.log(adminCategories);
     // Create categories and questions for the firm
     for (const adminCategory of adminCategories) {
       const createdCategory = await db.category.create({
@@ -201,7 +201,7 @@ export const questionRouter = router({
           firmId: session.user.id // Connect category to firm
         }
       });
-
+      console.log(adminCategory.name);
       for (const adminQuestion of adminCategory.questions) {
         await db.question.create({
           data: {
@@ -210,6 +210,7 @@ export const questionRouter = router({
             mark: adminQuestion.mark
           }
         });
+        console.log(adminCategory.name);
       }
     }
 
