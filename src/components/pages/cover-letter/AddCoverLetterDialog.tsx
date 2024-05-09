@@ -105,7 +105,7 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
                 <DialogClose>
                   <Button>Close</Button>
                 </DialogClose>
-                <Button variant={"primary"} isLoading={loading} type="submit">
+                <Button variant={"dark"} isLoading={loading} type="submit">
                   Add
                 </Button>
               </div>

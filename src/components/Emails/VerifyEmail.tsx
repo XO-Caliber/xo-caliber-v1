@@ -26,7 +26,6 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
           alt="XO caliber"
           style={logo}
         />
-        <Text style={paragraph}>Hey,</Text>
         <Text style={paragraph}>
           Thank you for signing up.To confirm your account {email} please follow the button below.
         </Text>
@@ -35,7 +34,7 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
             Confirm
           </Button>
         </Section>
-        <Text style={paragraph}>Embarge your journey with XO Caliber.</Text>
+        <Text style={paragraph}>Embark your journey with XO Caliber.</Text>
         <Hr style={hr} />
         <Text style={footer}>Address here | Token will expire once used</Text>
       </Container>

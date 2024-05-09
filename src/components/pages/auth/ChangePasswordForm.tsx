@@ -93,7 +93,7 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
             />
             <p>{message && <div className="mt-4 text-sm text-gray-600">{message}</div>}</p>
           </div>
-          <Button type="submit" variant={"primary"} className="w-full">
+          <Button type="submit" variant={"dark"} className="w-full">
             Change Password
           </Button>
         </form>

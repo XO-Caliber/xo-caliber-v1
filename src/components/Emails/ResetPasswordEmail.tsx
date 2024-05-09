@@ -20,7 +20,7 @@ export const ResetPasswordEmail = (token: string) => (
     <Preview>We recieved a request to reset your password</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Img src="https://i.postimg.cc/Ls2FCWvJ/LOGO-Trans.png" width="80" alt="Dropbox" />
+        <Img src="https://i.postimg.cc/RVMWjVnT/Main-logo-500x-100.jpg" width="80" alt="Dropbox" />
         <Section>
           <Text style={text}>Hey,</Text>
           <Text style={text}>

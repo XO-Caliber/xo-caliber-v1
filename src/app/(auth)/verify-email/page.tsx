@@ -24,7 +24,7 @@ const VerifyEmailPage = ({ searchParams }: VerifyEmailPageProps) => {
           <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
             <CheckCircle size={150} color="green" className="mb-10" />
             <h1 className="mb-10 text-3xl font-bold">Email verified !</h1>
-            <Button variant={"primary"}>
+            <Button variant={"dark"}>
               <Link href={"/"}>Go to Home</Link>
             </Button>
           </div>
