@@ -17,7 +17,7 @@ const baseUrl = "https://starfish-app-c34pl.ondigitalocean.app";
 export const ResetPasswordEmail = (token: string) => (
   <Html>
     <Head />
-    <Preview>XO Caliber reset your password</Preview>
+    <Preview>We recieved a request to reset your password</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img src="https://i.postimg.cc/Ls2FCWvJ/LOGO-Trans.png" width="80" alt="Dropbox" />

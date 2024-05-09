@@ -7,7 +7,7 @@ export async function sendPasswordResetRequest(userEmail: string, token: string)
     const data = await resend.emails.send({
       from: `XO Caliber <${process.env.RESEND_EMAIL}>`,
       to: [userEmail],
-      subject: `Password reset request`,
+      subject: `Request to reset password`,
       //   text: text({ token, host }),
       react: ResetPasswordEmail(token)
     });
@@ -22,7 +22,7 @@ export async function sendEmailVerificationRequest(userEmail: string, token: str
     const data = await resend.emails.send({
       from: `XO Caliber <${process.env.RESEND_EMAIL}>`,
       to: [userEmail],
-      subject: `Verify Email request `,
+      subject: `Verify your XO Caliber email request`,
       //   text: text({ url, host }),
       react: VerifyEmailTemplate(userEmail, token)
     });

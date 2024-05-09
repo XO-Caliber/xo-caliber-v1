@@ -12,12 +12,12 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-const baseUrl = process.env.PRODUCTION_URL;
+const baseUrl = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
 export const VerifyEmailTemplate = (email: string, token: string) => (
   <Html>
     <Head />
-    <Preview>The sales intelligence platform that helps you uncover qualified leads.</Preview>
+    <Preview>Before you start immigration journey,we need to confirm your account.</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
@@ -28,18 +28,14 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
         />
         <Text style={paragraph}>Hey,</Text>
         <Text style={paragraph}>
-          Welcome to XO Caliber, Please verify your Email {email} by pressing this button
+          Thank you for signing up.To confirm your account {email} please follow the button below.
         </Text>
         <Section style={btnContainer}>
           <Button style={button} href={`${baseUrl}/verify-email?token=${token}`}>
-            Verify Email
+            Confirm
           </Button>
         </Section>
-        <Text style={paragraph}>
-          Best,
-          <br />
-          The XO Caliber team
-        </Text>
+        <Text style={paragraph}>Embarge your journey with XO Caliber.</Text>
         <Hr style={hr} />
         <Text style={footer}>Address here | Token will expire once used</Text>
       </Container>
