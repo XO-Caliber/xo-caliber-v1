@@ -190,7 +190,7 @@ function FirmGraph({ userType }: userType) {
         <UserSelectList getSelectedUser={getSelectedUser} />
       </div>
       <ResizablePanelGroup direction="horizontal" className="min-h-[91vh] max-w-full ">
-        <ResizablePanel defaultSize={40} className="m-2 bg-dotted-spacing-3 bg-dotted-gray-200">
+        <ResizablePanel defaultSize={40} className="m-2 ">
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={120} className="m-3 mt-24">
               <main className="flex h-full flex-col p-3">

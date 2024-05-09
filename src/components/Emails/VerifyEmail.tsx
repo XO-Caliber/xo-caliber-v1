@@ -21,7 +21,7 @@ export const VerifyEmailTemplate = (email: string, token: string) => (
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://i.postimg.cc/Ls2FCWvJ/LOGO-Trans.png"
+          src="https://i.postimg.cc/RVMWjVnT/Main-logo-500x-100.jpg"
           width="170"
           alt="XO caliber"
           style={logo}
