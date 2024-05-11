@@ -301,5 +301,43 @@ export const checkRouter = router({
       }
     });
     return results?.name;
-  })
+  }),
+  updateHeadingName: publiceProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        id: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { name, id } = input;
+      await db.checkHeading.update({
+        where: {
+          id: id
+        },
+        data: {
+          name: name
+        }
+      });
+      return { success: true };
+    }),
+  updateSubHeadingName: publiceProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        id: z.string()
+      })
+    )
+    .mutation(async ({ input }) => {
+      const { name, id } = input;
+      await db.checkSubHeading.update({
+        where: {
+          id: id
+        },
+        data: {
+          name: name
+        }
+      });
+      return { success: true };
+    })
 });

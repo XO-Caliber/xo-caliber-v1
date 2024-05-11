@@ -35,7 +35,7 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
     return links;
   });
 
-  const [Link, setLink] = useState("");
+  // const [Link, setLink] = useState("");
 
   const toggleSubMenu = (subHeadingId: string) => {
     setOpenSubMenus((prevState) => ({
@@ -58,7 +58,7 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
 
   const { mutate: updateLink } = trpc.checklist.addReferenceLink.useMutation({
     onSuccess({ success }) {
-      setLink("");
+      // setLink("");
       userData.refetch();
       if (success) {
         toast({

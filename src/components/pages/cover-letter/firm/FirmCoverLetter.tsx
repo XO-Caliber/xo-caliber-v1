@@ -134,9 +134,9 @@ export const FirmCoverLetter = () => {
                 </ul>
               )}
             </DialogContent>
-          </Dialog>
-          <AddCoverLetterDialog userId={user} role="FIRM" />
+          </Dialog>{" "}
           <UserSelectList getSelectedUser={getSelectedUser} />
+          <AddCoverLetterDialog userId={user} role="FIRM" />
         </div>
       </div>
       <div className="mt-2 flex items-center justify-around pb-4">

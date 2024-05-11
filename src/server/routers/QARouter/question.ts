@@ -154,6 +154,7 @@ export const questionRouter = router({
   importAdminQuestions: firmProcedure.mutation(async () => {
     const session = await getAuthSession();
     if (!session?.user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    console.log(session.user.email);
 
     // Delete existing categories for the firm and related questions
     const categoriesToDelete = await db.category.findMany({

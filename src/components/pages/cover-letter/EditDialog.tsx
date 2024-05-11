@@ -51,9 +51,6 @@ const EditDialog = ({
       <DialogContent>
         <DialogHeader className="border-b-2 border-border pb-2 text-left">
           <DialogTitle>{dialogTitle}</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when youre done.
-          </DialogDescription>
         </DialogHeader>
         <section className="h-max w-[1000px] ">
           <EditDialogContent
