@@ -103,7 +103,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
             createheading={createheading}
           /> */}
           <Input placeholder="New heading" onChange={(e) => setheading(e.target.value)} />
-          {headingResult.data && (
+          {/* {headingResult.data && (
             <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
               {headingResult.data.map((heading, index) => (
                 <li
@@ -124,7 +124,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
                 </li>
               ))}
             </ul>
-          )}
+          )} */}
 
           <DialogFooter>
             <Button

@@ -32,20 +32,26 @@ import {
 } from "@/components/ui/Dropdown-menu";
 
 interface Props {
-  userId?: string;
+  userId: string;
   userName?: string;
 }
 export const TimeLine = ({ userId, userName }: Props) => {
   const userTimeLine = trpc.dashboard.getUserTimeLine.useQuery(userId || "");
+  const getUserCase = trpc.home.getUserProfile.useQuery().data?.selectedCase || "";
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [showSelects, setShowSelects] = useState<{ [key: string]: boolean }>({});
+  const [case1, setCase1] = useState("");
+  const [editable, setEditable] = useState(false);
   const date = new Date().getDate() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
   console.log(description, category, date);
 
   useEffect(() => {
     handleSubmit();
   }, [description]);
+
+  useEffect(() => {
+    setCase1(getUserCase);
+  }, [getUserCase]);
 
   const { mutate: addTimeLine } = trpc.dashboard.addUserTimeline.useMutation({
     onSuccess({ success }) {
@@ -106,9 +112,28 @@ export const TimeLine = ({ userId, userName }: Props) => {
           title: "Timeline Deleted"
         });
       }
+    },
+    onSettled() {
+      setEditable(false);
     }
   });
 
+  const { mutate: updateCase } = trpc.dashboard.selectCase.useMutation({
+    onSuccess({ success }) {
+      userTimeLine.refetch();
+      if (success) {
+        toast({
+          title: "Case Updated"
+        });
+      }
+    }
+  });
+
+  const handleChange = (case1: string) => {
+    setCase1(case1);
+    updateCase({ id: userId, case1: case1 });
+    setEditable(false);
+  };
   const handleDelete = (id: string) => {
     try {
       console.log("delete");
@@ -124,6 +149,34 @@ export const TimeLine = ({ userId, userName }: Props) => {
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center ">
           <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+        </div>
+        <div className="mr-2">
+          {editable || case1 === "" ? (
+            <Select onValueChange={(value) => handleChange(value)}>
+              <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">
+                <SelectValue placeholder="Select Case" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="EB1A">EB1A</SelectItem>
+                <SelectItem value="EB2">EB2</SelectItem>
+                <SelectItem value="O1A">O1A</SelectItem>
+              </SelectContent>
+            </Select>
+          ) : (
+            <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
+              <p className="text-sm">Selected Case: {case1}</p>
+              <span title="Edit">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <MoreHorizontal size={14} />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setEditable(true)}>Edit</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </span>
+            </div>
+          )}
         </div>
       </div>
       <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0 bg-white">

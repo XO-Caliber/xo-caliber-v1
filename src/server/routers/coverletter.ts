@@ -526,5 +526,27 @@ export const coverletterRouter = router({
       }
     });
     return { success: true };
-  })
+  }),
+  updateCaseName: publiceProcedure
+    .input(z.object({ id: z.string(), title: z.string() }))
+    .mutation(async ({ input }) => {
+      const { id, title } = input;
+      const checkPresent = await db.coverLetter.findUnique({
+        where: {
+          id: id
+        }
+      });
+      if (!checkPresent) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+      await db.coverLetter.update({
+        where: {
+          id: id
+        },
+        data: {
+          title: title
+        }
+      });
+      return { success: true };
+    })
 });

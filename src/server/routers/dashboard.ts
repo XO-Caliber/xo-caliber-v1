@@ -44,5 +44,19 @@ export const dashboardRouter = router({
       }
     });
     return { success: true };
-  })
+  }),
+  selectCase: publiceProcedure
+    .input(z.object({ id: z.string(), case1: z.string() }))
+    .mutation(async ({ input }) => {
+      const { id, case1 } = input;
+      await db.user.update({
+        where: {
+          id: id
+        },
+        data: {
+          selectedCase: case1
+        }
+      });
+      return { success: true };
+    })
 });

@@ -2,10 +2,31 @@
 import { useState } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { ChevronDown, ChevronRight, Info, Save, SaveIcon } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  Info,
+  LinkIcon,
+  MoreHorizontal,
+  Save,
+  SaveIcon
+} from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/Input";
+import Link from "next/link";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/Dialog";
+import { useRouter } from "next/navigation";
+import {} from "@radix-ui/react-dropdown-menu";
+import {
+  DropdownMenuContent,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuItem,
+  DropdownMenuSub,
+  DropdownMenuPortal,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger
+} from "@/components/ui/Dropdown-menu";
 
 interface UserProps {
   userId: string;
@@ -16,9 +37,19 @@ interface SubMenuState {
 }
 
 const ViewAdminCheckList = ({ userId }: UserProps) => {
+  const router = useRouter();
   const checkListData = trpc.checklist.getClientAdminCheckList.useQuery(userId);
   const userData = trpc.checklist.getClientAnswer.useQuery(userId);
   const [openSubMenus, setOpenSubMenus] = useState<SubMenuState>({});
+  const [editingItems, setEditingItems] = useState<{ [key: string]: boolean }>({});
+
+  const handleEditItemClick = (itemId: string) => {
+    setEditingItems((prev) => ({
+      ...prev,
+      [itemId]: true
+    }));
+  };
+
   const [referenceLinks, setReferenceLinks] = useState<{ [key: string]: string }>(() => {
     const links: { [key: string]: string } = {};
     checkListData.data?.forEach((checkList) => {
@@ -95,7 +126,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                   commonly required. Keep in mind that DocuCheck provides a checklist to address
                   documentations involved in both EB1A/EB2-NIW and I485 applications at most eighty
                   percent. Thus, you should always choose the right set of documentation through
-                  self-assessment or with the help of case handlers i.e. Firm. The checklist can be
+                  self-assessment or with the help of case handlers i.Admin. The checklist can be
                   created by XO Caliber admin or Firm. Based on your profile, the DocuCheck list may
                   vary."
           >
@@ -150,7 +181,7 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                             <div key={subHeading.id} className="ml-6 border-2 border-t-0">
                               <div className="flex items-center justify-between  bg-[#FFE6E0] text-sm">
                                 <h3 className=" p-2  ">{subHeading.name}</h3>
-                                <h3 className="  mr-28 border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 text-xs font-bold text-heading">
+                                <h3 className="  border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 pl-28 text-xs font-bold text-heading">
                                   Ref Link
                                 </h3>
                               </div>
@@ -184,40 +215,64 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
                                         (checked) =>
                                           checked.isChecked && (
                                             <div
-                                              className="flex flex-row items-center justify-center"
+                                              className=" flex flex-row items-center justify-center"
                                               key={checked.id}
                                             >
-                                              <Input
-                                                className="h-[30px] w-[135px] border-gray-500"
-                                                autoFocus={true}
-                                                placeholder="Enter the reference link"
-                                                value={
-                                                  referenceLinks[checked.id] ||
-                                                  item.UserChecked.find(
-                                                    (checked) => checked.referenceLink
-                                                  )?.referenceLink ||
-                                                  ""
-                                                }
-                                                onChange={(e) =>
-                                                  setReferenceLinks((prevLinks) => ({
-                                                    ...prevLinks,
-                                                    [checked.id]: e.target.value
-                                                  }))
-                                                }
-                                              />
-                                              <span title="Save">
-                                                <SaveIcon
-                                                  className="ml-1 inline-block h-[30px]  cursor-pointer fill-sky-400  p-0.5 text-white"
-                                                  xlinkTitle="Save"
+                                              <div className="mr-2 flex w-[150px] items-center justify-between">
+                                                <DropdownMenu>
+                                                  <span title="add link">
+                                                    <DropdownMenuTrigger asChild>
+                                                      <MoreHorizontal
+                                                        size={14}
+                                                        className="cursor-pointer"
+                                                      />
+                                                    </DropdownMenuTrigger>
+                                                  </span>
+                                                  <DropdownMenuContent>
+                                                    <DropdownMenuSub>
+                                                      <DropdownMenuSubTrigger>
+                                                        <p className="text-xs">Link</p>
+                                                      </DropdownMenuSubTrigger>
+                                                      <DropdownMenuPortal>
+                                                        <DropdownMenuSubContent>
+                                                          <Input
+                                                            className="h-[30px]  border-gray-500"
+                                                            autoFocus={true}
+                                                            placeholder="Enter the reference link"
+                                                            value={
+                                                              referenceLinks[checked.id] ||
+                                                              item.UserChecked.find(
+                                                                (checked) => checked.referenceLink
+                                                              )?.referenceLink ||
+                                                              ""
+                                                            }
+                                                            onChange={(e) =>
+                                                              setReferenceLinks((prevLinks) => ({
+                                                                ...prevLinks,
+                                                                [checked.id]: e.target.value
+                                                              }))
+                                                            }
+                                                            onKeyDown={(e) => {
+                                                              if (e.key == "Enter") {
+                                                                handleChange(
+                                                                  checked.id,
+                                                                  referenceLinks[checked.id]
+                                                                );
+                                                              }
+                                                            }}
+                                                          />
+                                                        </DropdownMenuSubContent>
+                                                      </DropdownMenuPortal>
+                                                    </DropdownMenuSub>
+                                                  </DropdownMenuContent>
+                                                </DropdownMenu>
+                                                <LinkIcon
+                                                  className="cursor-pointer text-sky-400"
                                                   onClick={() =>
-                                                    handleChange(
-                                                      checked.id,
-                                                      referenceLinks[checked.id]
-                                                    )
+                                                    router.push(referenceLinks[checked.id])
                                                   }
-                                                  width={25}
                                                 />
-                                              </span>
+                                              </div>
                                             </div>
                                           )
                                       )}
