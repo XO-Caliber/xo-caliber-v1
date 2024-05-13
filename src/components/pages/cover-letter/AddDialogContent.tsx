@@ -27,9 +27,16 @@ interface AddDialogContentProps {
   itemId: string;
   contentType: DialogType;
   refetchData: () => void;
+  coverletterId?: string;
 }
 
-const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialogContentProps) => {
+const AddDialogContent = ({
+  userId,
+  itemId,
+  contentType,
+  refetchData,
+  coverletterId
+}: AddDialogContentProps) => {
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -182,7 +189,8 @@ const AddDialogContent = ({ userId, itemId, contentType, refetchData }: AddDialo
           subSectionId: itemId,
           title: values.title,
           description: blocks,
-          comments: values.comment
+          comments: values.comment,
+          coverletterId: coverletterId!
         });
         break;
     }

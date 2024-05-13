@@ -103,6 +103,7 @@ export const coverletterRouter = router({
     .input(
       z.object({
         userId: z.string(),
+        coverletterId: z.string(),
         subSectionId: z.string(),
         title: z.string(),
         description: z.any(),
@@ -110,7 +111,7 @@ export const coverletterRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-      const { subSectionId, title, description, userId, comments } = input;
+      const { subSectionId, title, description, userId, comments, coverletterId } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
       console.log("INFO: ", input);
 
@@ -122,13 +123,26 @@ export const coverletterRouter = router({
 
       const newPosition = lastPosition ? lastPosition.position + 1 : 1;
 
+      const exhibitsCount = await db.exhibits.count({
+        where: {
+          SubSection: {
+            Section: {
+              coverLetterId: coverletterId
+            }
+          }
+        }
+      });
+
+      const globalPosition = exhibitsCount ? exhibitsCount + 1 : 1;
+
       await db.exhibits.create({
         data: {
           title,
           description,
           position: newPosition,
           subSectionId,
-          comments
+          comments,
+          globalPosition: globalPosition
         }
       });
       return { success: true };

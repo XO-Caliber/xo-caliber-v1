@@ -81,7 +81,8 @@ model User {
   stripePriceId        String?
   paidDate             DateTime?
 
-  Timeline Timeline[]
+  selectedCase String?
+  Timeline     Timeline[]
 }
 
 model Firm {
@@ -268,11 +269,12 @@ model SubSection {
 }
 
 model Exhibits {
-  id          String  @id @default(cuid())
-  title       String
-  description Json
-  comments    String? @db.Text
-  position    Int
+  id             String  @id @default(cuid())
+  title          String
+  description    Json
+  comments       String? @db.Text
+  position       Int
+  globalPosition Int?
 
   SubSection   SubSection @relation(fields: [subSectionId], references: [id], onDelete: Cascade)
   subSectionId String

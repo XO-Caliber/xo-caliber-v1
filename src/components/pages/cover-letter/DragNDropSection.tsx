@@ -530,6 +530,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     itemId={subsection.id}
                                                     dialogType={DialogType.Exhibit}
                                                     refetchData={refetchData}
+                                                    coverletterId={coverLetterId}
                                                   />
                                                 </p>
                                                 {/* <p>{subsection.id}</p> */}
@@ -587,7 +588,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                               refetchData={refetchData}
                                                             />
                                                           </p>
-                                                          {/* <p>{exhibit.position}</p> */}
+                                                          <p>{exhibit.globalPosition}</p>
                                                           <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                             <MessageCircle size={16} />
                                                             Comment

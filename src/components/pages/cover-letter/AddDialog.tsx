@@ -16,9 +16,10 @@ interface AddDialogProps {
   itemId: string;
   dialogType: DialogType;
   refetchData: () => void;
+  coverletterId?: string;
 }
 
-const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) => {
+const AddDialog = ({ userId, itemId, dialogType, refetchData, coverletterId }: AddDialogProps) => {
   let title, buttonText, contentComponent;
 
   switch (dialogType) {
@@ -55,6 +56,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData }: AddDialogProps) 
           itemId={itemId}
           contentType={dialogType}
           refetchData={refetchData}
+          coverletterId={coverletterId}
         />
       );
       break;

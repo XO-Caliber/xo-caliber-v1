@@ -7,6 +7,7 @@ import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
+import ExportPDF from "@/components/reactpdf/test";
 
 export const ViewCoverLetter = ({
   CoverLetterData,
@@ -69,6 +70,7 @@ export const ViewCoverLetter = ({
             </h1>
             <p className="pr-2 text-left text-sm font-medium text-muted-foreground">Type</p>
             <p className="pr-8 text-left text-sm font-medium text-muted-foreground">Title</p>
+            <ExportPDF data={coverLetter.Section} />
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
               <AddDialog
