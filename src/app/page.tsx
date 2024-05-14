@@ -14,7 +14,7 @@ export default async function Home() {
     <>
       <Navbar />
       <div>
-        {!session?.user.isActive || session?.user.role !== "INDIVIDUAL" ? (
+        {session?.user.isActive || session?.user.role !== "INDIVIDUAL" ? (
           <div className="">
             <div className="text-xl">
               <Header>Home</Header>

@@ -127,7 +127,7 @@ export const authOptions: NextAuthOptions = {
       if (trigger === "update" && session.isActive) {
         token.isActive = session.isActive;
       }
-      console.log("jwt callbacks", { token, user, session });
+      // console.log("jwt callbacks", { token, user, session });
       if (user) {
         return {
           ...token,
@@ -140,7 +140,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      console.log("session callbacks", { session, token, user });
+      // console.log("session callbacks", { session, token, user });
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;

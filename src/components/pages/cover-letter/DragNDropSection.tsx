@@ -22,6 +22,7 @@ import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import EditDialog from "./EditDialog";
+import ExportPDF from "@/components/reactpdf/test";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -373,6 +374,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   return (
     <main className="h-max w-full p-2 pt-0">
+      <ExportPDF data={sections} />
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
