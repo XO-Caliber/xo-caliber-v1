@@ -1,13 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronUp,
-  Delete,
-  DeleteIcon,
-  MinusCircle
-} from "lucide-react";
+import { ChevronDown, ChevronRight, MoreHorizontal } from "lucide-react";
+import { Input } from "@/components/ui/Input";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
 import AddDialog from "./AddDialog";
@@ -15,20 +9,48 @@ import { DialogType } from "@/types/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 
-export const ViewCoverLetter = ({
-  CoverLetterData,
-  userId
-}: {
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger
+} from "@/components/ui/Dropdown-menu";
+interface Props {
   CoverLetterData: CoverLetterType[];
   userId: string;
-}) => {
+}
+export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
   const [isSectionVisible, setIsSectionVisible] = useState<{ [key: number]: boolean }>({});
+  const [caseName, setCaseName] = useState("");
   const { mutate: deleteCase } = trpc.coverletter.deleteCase.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchData1();
         toast({
           title: "Deleted Case",
           description: "Case deleted successfully",
+          variant: "success"
+        });
+      }
+    },
+    onError() {
+      toast({
+        title: "Something went wrong"
+      });
+    }
+  });
+
+  const { mutate: updateCaseName } = trpc.coverletter.updateCaseName.useMutation({
+    onSuccess({ success }) {
+      if (success) {
+        refetchData1();
+        toast({
+          title: "Updated Case Name",
+          description: "Case name updated successfully",
           variant: "success"
         });
       }
@@ -53,8 +75,14 @@ export const ViewCoverLetter = ({
     }));
   };
 
-  const refetchData = () => {
-    console.log("Data refetch");
+  const handleChange = (id: string, title: string) => {
+    try {
+      updateCaseName({ id: id, title: title });
+    } catch {}
+  };
+
+  const refetchData1 = () => {
+    console.log();
   };
 
   return (
@@ -65,15 +93,45 @@ export const ViewCoverLetter = ({
             <button onClick={() => toggleSectionVisibility(index)}>
               {isSectionVisible[index] ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
             </button>
-            <h1 className="flex flex-row items-center justify-center text-xs font-medium">
-              {coverLetter.title}
-              <MinusCircle
-                size={16}
-                color="red"
-                className="ml-1 cursor-pointer fill-white"
-                onClick={() => deleteCase1(coverLetter.id)}
-              />
-            </h1>
+            <div className="flex items-center space-x-2">
+              <h1 className="flex flex-row items-center justify-center text-xs font-medium">
+                {coverLetter.title}
+              </h1>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <MoreHorizontal size={14} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="ml-20">
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger
+                      className="text-xs"
+                      onMouseMove={() => setCaseName(coverLetter.title)}
+                    >
+                      Edit
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <Input
+                          value={caseName}
+                          placeholder="enter a test"
+                          className="h-[25px] text-xs"
+                          onChange={(e) => setCaseName(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault();
+                              handleChange(coverLetter.id, coverLetter.title);
+                            }
+                          }}
+                        />
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuItem className="text-xs" onClick={() => deleteCase1(coverLetter.id)}>
+                    Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
 
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
@@ -81,7 +139,7 @@ export const ViewCoverLetter = ({
                 userId={userId}
                 itemId={coverLetter.id}
                 dialogType={DialogType.Section}
-                refetchData={refetchData}
+                refetchData={refetchData1}
               />
             </div>
             <p className="ml-auto mr-10 justify-items-end text-xs font-medium  text-black">

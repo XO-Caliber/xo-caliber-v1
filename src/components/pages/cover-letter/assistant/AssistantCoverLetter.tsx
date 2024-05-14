@@ -52,6 +52,9 @@ export const AssistantCoverLetter = () => {
       console.log(e);
     }
   };
+  const refetchData = () => {
+    CoverLetterData.refetch();
+  };
   const handleDownload = ({
     id,
     CoverLetterData
@@ -103,38 +106,20 @@ export const AssistantCoverLetter = () => {
               </DialogHeader>
             </DialogContent>
           </Dialog>{" "}
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={"outline"}>Download Pull Default Template</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogTitle className="mt-4">
-                Do you want to download pull default template
-              </DialogTitle>
-              {defaultTemplate.data && (
-                <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
-                  {defaultTemplate.data.map((coverletter, index) => (
-                    <li
-                      key={coverletter.id}
-                      className={`flex w-fit items-center justify-center 
-                  rounded-md border p-1 px-3 text-sm ${
-                    index % 2 === 0
-                      ? "border-primary bg-primary-light"
-                      : "border-muted bg-secondary"
-                  }`}
-                    >
-                      {coverletter.title}
-                      <Download
-                        className="ml-1 cursor-pointer text-primary"
-                        size={16}
-                        onClick={() => onSubmit(coverletter.id)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </DialogContent>
-          </Dialog>
+          {defaultTemplate.data && (
+            <Select onValueChange={(value) => onSubmit(value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select template" />
+              </SelectTrigger>
+              <SelectContent>
+                {defaultTemplate.data.map((coverletter) => (
+                  <SelectItem value={coverletter.id} onClick={() => onSubmit(coverletter.id)}>
+                    {coverletter.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
           <AddCoverLetterDialog userId={user} role="FIRM" />
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
