@@ -55,7 +55,7 @@ model User {
 
   role Role @default(INDIVIDUAL)
 
-  isEmailVerified        Boolean @default(false)
+  isEmailVerified        Boolean @default(true)
   emailVerificationToken String? @unique
 
   answeredAll Boolean @default(false)
@@ -224,7 +224,7 @@ model Checklist {
 model UserChecked {
   id            String    @id @default(cuid())
   isChecked     Boolean   @default(false)
-  Checklist     Checklist @relation(fields: [checklistId], references: [id])
+  Checklist     Checklist @relation(fields: [checklistId], references: [id], onDelete: Cascade)
   referenceLink String?
   User          User      @relation(fields: [userId], references: [id])
 
@@ -269,11 +269,12 @@ model SubSection {
 }
 
 model Exhibits {
-  id          String  @id @default(cuid())
-  title       String
-  description Json
-  comments    String? @db.Text
-  position    Int
+  id             String  @id @default(cuid())
+  title          String
+  description    Json
+  comments       String? @db.Text
+  position       Int
+  globalPosition Int?
 
   SubSection   SubSection @relation(fields: [subSectionId], references: [id], onDelete: Cascade)
   subSectionId String

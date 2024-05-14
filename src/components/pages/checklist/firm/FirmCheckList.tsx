@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/Dropdown-menu";
 import { Input } from "@/components/ui/Input";
 import AddFirmHeading from "./AddFirmHeading";
+import PullDefaultCheckList from "./PullDefaultCheckList";
 
 interface SubMenuState {
   [key: string]: boolean;
@@ -227,6 +228,7 @@ const FirmCheckList = () => {
         </div>
         <div className="mr-4 flex space-x-12">
           <AddFirmHeading refetchData={refetchData} />
+          <PullDefaultCheckList refetchData={refetchData} />
         </div>
       </div>
       <div className="h-[91vh] p-2">

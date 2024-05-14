@@ -117,25 +117,25 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
   return (
     <div>
       <div className="ml-56 flex h-[68px] items-center justify-start border-2 border-l-0 bg-white">
-        <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-heading">DocuCheck</p>
-        <div>
+        <div className="flex items-center justify-start">
+          <p className=" my-4 ml-4 mr-2  mt-[1.2rem]  font-bold text-heading">DocuCheck</p>
           <span
             title=" The required documentation can vary based on the self petitioned employment based
-                  immigration visa that you are applying for due to the nature. However, the XO
-                  caliber team provided a generic overview of the types of documents that are
-                  commonly required. Keep in mind that DocuCheck provides a checklist to address
-                  documentations involved in both EB1A/EB2-NIW and I485 applications at most eighty
-                  percent. Thus, you should always choose the right set of documentation through
-                  self-assessment or with the help of case handlers i.e. Firm. The checklist can be
-                  created by XO Caliber admin or Firm. Based on your profile, the DocuCheck list may
-                  vary."
+                immigration visa that you are applying for due to the nature. However, the XO
+                caliber team provided a generic overview of the types of documents that are
+                commonly required. Keep in mind that DocuCheck provides a checklist to address
+                documentations involved in both EB1A/EB2-NIW and I485 applications at most eighty
+                percent. Thus, you should always choose the right set of documentation through
+                self-assessment or with the help of case handlers i.e. Firm. The checklist can be
+                created by XO Caliber admin or Firm. Based on your profile, the DocuCheck list may
+                vary."
           >
-            <Info size={16} className="cursor-pointer text-heading" />
+            <Info size={16} className="mt-1.5 cursor-pointer text-heading" />
           </span>
         </div>
       </div>
       <div className=" h-[91vh] p-2 ">
-        <div className="scrollableContainer  ml-60  h-[85vh] overflow-y-scroll font-serif shadow-md">
+        <div className="scrollableContainer  ml-60  h-[85vh] overflow-y-scroll font-serif ">
           <div className="mt-4">
             <section className="flex w-full flex-col p-8 pt-0 text-black">
               {checkListData &&
@@ -156,20 +156,22 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
                           openSubMenus[checkList.id] ? "border-b-0" : ""
                         } rounded-md`}
                       >
-                        <i>
+                        <i className="ml-1">
                           {openSubMenus[checkList.id] ? (
                             <ChevronDown
                               className="duration-800 cursor-pointer  transition-all"
                               onClick={() => toggleSubMenu(checkList.id)}
+                              size={15}
                             />
                           ) : (
                             <ChevronRight
                               className="duration-800 cursor-pointer  transition-all"
                               onClick={() => toggleSubMenu(checkList.id)}
+                              size={15}
                             />
                           )}
                         </i>
-                        <h1 className=" p-2 text-xs font-bold ">{checkList.name}</h1>
+                        <h1 className=" p-2 text-xs  ">{checkList.name}</h1>
                       </div>
                       <div
                         className={`transition-max-height overflow-hidden duration-500 ${
@@ -229,41 +231,32 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
                                                     </DropdownMenuTrigger>
                                                   </span>
                                                   <DropdownMenuContent>
-                                                    <DropdownMenuSub>
-                                                      <DropdownMenuSubTrigger>
-                                                        <p className="text-xs">Link</p>
-                                                      </DropdownMenuSubTrigger>
-                                                      <DropdownMenuPortal>
-                                                        <DropdownMenuSubContent>
-                                                          <Input
-                                                            className="h-[30px]  border-gray-500"
-                                                            autoFocus={true}
-                                                            placeholder="Enter the reference link"
-                                                            value={
-                                                              referenceLinks[checked.id] ||
-                                                              item.UserChecked.find(
-                                                                (checked) => checked.referenceLink
-                                                              )?.referenceLink ||
-                                                              ""
-                                                            }
-                                                            onChange={(e) =>
-                                                              setReferenceLinks((prevLinks) => ({
-                                                                ...prevLinks,
-                                                                [checked.id]: e.target.value
-                                                              }))
-                                                            }
-                                                            onKeyDown={(e) => {
-                                                              if (e.key == "Enter") {
-                                                                handleChange(
-                                                                  checked.id,
-                                                                  referenceLinks[checked.id]
-                                                                );
-                                                              }
-                                                            }}
-                                                          />
-                                                        </DropdownMenuSubContent>
-                                                      </DropdownMenuPortal>
-                                                    </DropdownMenuSub>
+                                                    <Input
+                                                      className="h-[30px]  border-gray-500"
+                                                      autoFocus={true}
+                                                      placeholder="Enter the reference link"
+                                                      value={
+                                                        referenceLinks[checked.id] ||
+                                                        item.UserChecked.find(
+                                                          (checked) => checked.referenceLink
+                                                        )?.referenceLink ||
+                                                        ""
+                                                      }
+                                                      onChange={(e) =>
+                                                        setReferenceLinks((prevLinks) => ({
+                                                          ...prevLinks,
+                                                          [checked.id]: e.target.value
+                                                        }))
+                                                      }
+                                                      onKeyDown={(e) => {
+                                                        if (e.key == "Enter") {
+                                                          handleChange(
+                                                            checked.id,
+                                                            referenceLinks[checked.id]
+                                                          );
+                                                        }
+                                                      }}
+                                                    />
                                                   </DropdownMenuContent>
                                                 </DropdownMenu>
                                                 <LinkIcon

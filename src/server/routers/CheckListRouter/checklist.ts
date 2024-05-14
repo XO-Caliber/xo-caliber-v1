@@ -2,6 +2,7 @@ import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { adminProcedure, firmProcedure, publiceProcedure, router } from "@/server/trpc";
 import { TRPCError } from "@trpc/server";
+import { use } from "react";
 import { z } from "zod";
 
 export const checkRouter = router({
@@ -339,5 +340,61 @@ export const checkRouter = router({
         }
       });
       return { success: true };
-    })
+    }),
+  importDefaultCheckList: firmProcedure.mutation(async () => {
+    const session = await getAuthSession();
+    const userId = session?.user.id;
+    const checkList = await db.admin.findUnique({
+      where: {
+        email: process.env.ADMIN_EMAIL
+      },
+      include: {
+        CheckHeading: {
+          include: {
+            subHeading: {
+              include: {
+                Checklist: true
+              }
+            }
+          }
+        }
+      }
+    });
+    await db.checkHeading.deleteMany({
+      where: {
+        firmId: userId
+      }
+    });
+    console.log("Deleted firm checklist data");
+
+    for (const checkHeading of checkList?.CheckHeading || []) {
+      const newHeading = await db.checkHeading.create({
+        data: {
+          name: checkHeading.name,
+          Firm: {
+            connect: {
+              firmId: userId
+            }
+          }
+        }
+      });
+      for (const checkSubHeading of checkHeading.subHeading) {
+        const newSubHeading = await db.checkSubHeading.create({
+          data: {
+            name: checkSubHeading.name,
+            checkHeadingId: newHeading.id
+          }
+        });
+        for (const checkList of checkSubHeading.Checklist) {
+          const checklist = await db.checklist.create({
+            data: {
+              name: checkList.name,
+              checkSubHeadingId: newSubHeading.id
+            }
+          });
+        }
+      }
+    }
+    return { success: true };
+  })
 });
