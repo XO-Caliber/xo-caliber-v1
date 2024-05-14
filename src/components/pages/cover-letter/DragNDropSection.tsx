@@ -22,7 +22,7 @@ import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import EditDialog from "./EditDialog";
-import ExportPDF from "@/components/reactpdf/test";
+import ExportPDF from "@/components/reactpdf/ExportPDF";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -374,7 +374,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   return (
     <main className="h-max w-full p-2 pt-0">
-      <ExportPDF data={sections} />
+      <div className="">
+        <ExportPDF data={sections!} />
+      </div>
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
@@ -564,7 +566,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             className="w-16"
                                                           />
                                                           <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
-                                                            Exhibit-{index + 1}
+                                                            Exhibit
                                                             <MinusCircle
                                                               color="red"
                                                               className="ml-1 cursor-pointer fill-white"
@@ -590,7 +592,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                               refetchData={refetchData}
                                                             />
                                                           </p>
-                                                          <p>{exhibit.globalPosition}</p>
+                                                          {/* <p>{exhibit.globalPosition}</p> */}
                                                           <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-base">
                                                             <MessageCircle size={16} />
                                                             Comment

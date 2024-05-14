@@ -7,7 +7,7 @@ import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
-import ExportPDF from "@/components/reactpdf/test";
+import ExportPDF from "@/components/reactpdf/ExportPDF";
 
 export const ViewCoverLetter = ({
   CoverLetterData,
