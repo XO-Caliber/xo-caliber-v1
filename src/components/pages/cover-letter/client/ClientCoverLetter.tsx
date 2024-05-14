@@ -108,7 +108,11 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
               </SelectTrigger>
               <SelectContent>
                 {defaultTemplate.data.map((coverletter) => (
-                  <SelectItem value={coverletter.id} onClick={() => onSubmit(coverletter.id)}>
+                  <SelectItem
+                    key={coverletter.id}
+                    value={coverletter.id}
+                    onClick={() => onSubmit(coverletter.id)}
+                  >
                     {coverletter.title}
                   </SelectItem>
                 ))}
