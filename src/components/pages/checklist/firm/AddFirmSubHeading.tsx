@@ -186,7 +186,7 @@ const AddFirmSubHeading = ({ refetchData, headingId }: QAProps) => {
           <DialogFooter>
             <form onSubmit={onSubmit}>
               <Button type="submit" className="mt-4" variant="dark" isLoading={isLoading}>
-                Add SubHeading
+                Add
               </Button>
             </form>
           </DialogFooter>

@@ -41,7 +41,7 @@ export function PaymentCard() {
       <CardHeader>
         <CardTitle>Individual user</CardTitle>
         <CardDescription>
-          All the features including creating an dediting questions and cover letter
+          All the features including creating an editing questions and cover letter
         </CardDescription>
       </CardHeader>
       <CardContent>

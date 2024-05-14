@@ -95,7 +95,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
       </DialogTrigger>
       <DialogContent className="">
         <DialogHeader>
-          <DialogTitle>Add Topic</DialogTitle>
+          {/* <DialogTitle>Add Topic</DialogTitle> */}
 
           {/* 
           <headingPopUp
@@ -134,7 +134,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
               isLoading={isLoading}
               onClick={onSubmit}
             >
-              Add heading
+              Add
             </Button>
           </DialogFooter>
         </DialogHeader>

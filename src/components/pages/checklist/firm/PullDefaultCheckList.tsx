@@ -30,22 +30,21 @@ const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
 
     try {
       pullDefaultCheckList();
-      setDialogOpen(false);
     } catch (err) {
       console.log(err);
     }
   };
   return (
     <div>
-      <Dialog open={dialogOpen}>
+      <Dialog>
         <DialogTrigger asChild>
           <Button onClick={() => setDialogOpen(true)}>Pull Default Checklist</Button>
         </DialogTrigger>
         <DialogContent>
-          <DialogHeader>Pull Default CHecklist</DialogHeader>
+          <DialogHeader>Pull Default Checklist</DialogHeader>
           <DialogDescription className="text-destructive">
-            If you pull default checklist,then your checklist will be overwritten,Do you want to
-            continue
+            If you pull default checklist,then you and your client will lose your data,So please be
+            mindfull.
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>

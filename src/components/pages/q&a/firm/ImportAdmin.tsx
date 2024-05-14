@@ -58,8 +58,8 @@ const ImportAdmin = () => {
             <DialogTitle>Pull Default Questions</DialogTitle>
           </DialogHeader>
           <DialogDescription className="text-red-600">
-            If you pull default questions,then your questions will be overwritten,Export your
-            questions before this action
+            If you pull default questions,then you and your client will lose the data,export your
+            questions before this action.Do you like to proceed?
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>
