@@ -83,7 +83,7 @@ export const FirmCoverLetter = () => {
         <div className="flex items-center space-x-9">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant={"outline"}> Pull Default Template</Button>
+              <Button variant={"dark"}> Pull Default Template</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogTitle className="mt-4">Select your template and click to pull</DialogTitle>

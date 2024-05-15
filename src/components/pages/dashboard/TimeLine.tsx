@@ -180,7 +180,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
             {editable || case1 === "" ? (
               <Select onValueChange={(value) => handleChange(value)}>
                 <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">
-                  <SelectValue placeholder="Select desire Case" />
+                  <SelectValue placeholder="Select desired visa" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="EB1A">EB1A</SelectItem>
@@ -190,7 +190,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
               </Select>
             ) : (
               <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
-                <p className="text-sm">Desire Case: {case1}</p>
+                <p className="text-sm">Desired Visa: {case1}</p>
                 <span title="Edit">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -218,7 +218,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
               </Select>
             ) : (
               <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
-                <p className="text-sm">Analyzed Case: {case2}</p>
+                <p className="text-sm">Analyzed Visa: {case2}</p>
                 <span title="Edit">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

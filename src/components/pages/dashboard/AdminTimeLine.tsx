@@ -58,10 +58,10 @@ export const AdminTimeLine = ({ role }: Props) => {
         </div>
         <ul className="flex items-center justify-center gap-x-4">
           <li className="rounded-md bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-base font-bold text-white">
-            Desire Case: {userName.data?.selectedCase || "null"}
+            Desired Visa: {userName.data?.selectedCase || "null"}
           </li>
           <li className="rounded-md bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-base font-bold text-white">
-            Analyzed Case: {userName.data?.selectedCase2 || "null"}
+            Analyzed Visa: {userName.data?.selectedCase2 || "null"}
           </li>
           <li>
             {role === "ADMIN" && <AllUserSelectList getSelectedUser={handleSelect} />}
