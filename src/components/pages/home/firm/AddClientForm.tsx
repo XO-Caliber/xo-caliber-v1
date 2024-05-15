@@ -112,7 +112,7 @@ export const AddClientForm = () => {
         className="space-y-2 rounded-lg border-2 bg-white p-8 pl-8"
       >
         <CardTitle>Add Client</CardTitle>
-        <CardDescription>Add your client details here</CardDescription>
+        <CardDescription>Ask your client to sign up first</CardDescription>
         <div className="pt-4">
           <FormField
             control={form.control}
@@ -121,7 +121,7 @@ export const AddClientForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="firm@gmail.com" {...field} />
+                  <Input placeholder="Enter your client email here" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -120,7 +120,7 @@ export const AddAssistantForm = () => {
         className="space-y-2 rounded-lg border-2 bg-white p-8  pl-8"
       >
         <CardTitle>Add Assistant</CardTitle>
-        <CardDescription>Add your assistant details here</CardDescription>
+        <CardDescription>Ask your assistant to sign up first</CardDescription>
         <div className="pt-4">
           <FormField
             control={form.control}
@@ -129,7 +129,7 @@ export const AddAssistantForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="assistant@gmail.com" {...field} />
+                  <Input placeholder="Enter your assistant email here" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

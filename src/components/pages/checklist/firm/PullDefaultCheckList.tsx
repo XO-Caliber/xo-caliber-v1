@@ -38,13 +38,15 @@ const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button onClick={() => setDialogOpen(true)}>Pull Default Checklist</Button>
+          <Button variant={"dark"} onClick={() => setDialogOpen(true)}>
+            Pull Default Checklist
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>Pull Default Checklist</DialogHeader>
           <DialogDescription className="text-destructive">
-            If you pull default checklist,then you and your client will lose your data,So please be
-            mindfull.
+            If you pull default checklists,then you and your client will lose the data,So please be
+            mindful.Do you like to proceed
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>

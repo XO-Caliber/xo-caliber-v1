@@ -150,7 +150,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               <Tabs onClick={() => setHidden(true)}>
                 <QATabsList categories={catArray} />
 
-                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll rounded-md border-2 bg-white">
+                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll rounded-md  bg-white">
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>

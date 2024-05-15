@@ -77,53 +77,43 @@ export const AssistantCoverLetter = () => {
         <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
         <div className="flex items-center space-x-9">
           <Dialog>
-            <DialogTrigger>
-              <Button variant="outline">
-                <DownloadIcon />
-              </Button>
+            <DialogTrigger asChild>
+              <Button variant={"outline"}>Download Pull Default Template</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Download PDF</DialogTitle>
-                <DialogDescription>Here you can download your case files</DialogDescription>
-                {CoverLetterData.data && (
-                  <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
-                    {CoverLetterData.data.map((coverletter: any, index) => (
-                      <li
-                        key={coverletter.id}
-                        className={`flex w-fit items-center justify-center rounded-md border p-1 px-3 text-sm ${index % 2 === 0 ? "border-primary bg-primary-light" : "border-muted bg-secondary"}`}
-                      >
-                        {coverletter.title}
-                        <DownloadIcon
-                          className="ml-1 cursor-pointer text-primary"
-                          size={16}
-                          onClick={() => handleDownload(coverletter.id)}
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </DialogHeader>
+              <DialogTitle className="mt-4">
+                Do you want to download pull default template
+              </DialogTitle>
+              {defaultTemplate.data && (
+                <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                  {defaultTemplate.data.map((coverletter, index) => (
+                    <li
+                      key={coverletter.id}
+                      className={`flex w-fit items-center justify-center 
+                  rounded-md border p-1 px-3 text-sm ${
+                    index % 2 === 0
+                      ? "border-primary bg-primary-light"
+                      : "border-muted bg-secondary"
+                  }`}
+                    >
+                      {coverletter.title}
+                      <Download
+                        className="ml-1 cursor-pointer text-primary"
+                        size={16}
+                        onClick={() => onSubmit(coverletter.id)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              {/* <DialogFooter>
+                <Button variant={"dark"} onClick={onSubmit}>
+                  Yes,continue
+                </Button>
+              </DialogFooter> */}
             </DialogContent>
-          </Dialog>{" "}
-          {defaultTemplate.data && (
-            <Select onValueChange={(value) => onSubmit(value)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select template" />
-              </SelectTrigger>
-              <SelectContent>
-                {defaultTemplate.data.map((coverletter) => (
-                  <SelectItem
-                    key={coverletter.id}
-                    value={coverletter.id}
-                    onClick={() => onSubmit(coverletter.id)}
-                  >
-                    {coverletter.title}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          )}
+          </Dialog>
           <AddCoverLetterDialog userId={user} role="FIRM" />
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>

@@ -102,7 +102,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
             handleheadingPopOpen={handleheadingPopOpen}
             createheading={createheading}
           /> */}
-          <Input placeholder="New heading" onChange={(e) => setheading(e.target.value)} />
+          <Input placeholder="New topic" onChange={(e) => setheading(e.target.value)} />
           {/* {headingResult.data && (
             <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
               {headingResult.data.map((heading, index) => (

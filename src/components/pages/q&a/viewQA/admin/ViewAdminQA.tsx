@@ -158,7 +158,7 @@ export const ViewAdminQA = () => {
           )}
           <Tabs onClick={() => setHidden(true)}>
             <QATabsList categories={catArray} />
-            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll rounded-md border-2 bg-white">
+            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll rounded-md  bg-white">
               <AdminTabsContent
                 data={categories}
                 handleDelete={handleDelete}

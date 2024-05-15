@@ -25,7 +25,7 @@ const page = async () => {
                 {session?.user.role === "ADMIN" && <AdminHome user={session?.user} />}
                 {session?.user.role === "FIRM" && <FirmHome user={session?.user} />}
                 {session?.user.role === "INDIVIDUAL" && <UserHome user={session?.user} />}
-                {session?.user.role === "ASSISTANT" && <AssistantHome />}
+                {session?.user.role === "ASSISTANT" && <AssistantHome user={session.user} />}
               </div>
             </div>
           </div>

@@ -155,7 +155,7 @@ export const ViewFirmQA = () => {
           )}
           <Tabs onClick={() => setHidden(true)}>
             <QATabsList categories={catArray} />
-            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll rounded-md border-2">
+            <div className="scrollableContainer mr-2 mt-2 h-[75vh] overflow-y-scroll rounded-md ">
               <FirmTabsContent
                 data={categories}
                 handleDelete={handleDelete}

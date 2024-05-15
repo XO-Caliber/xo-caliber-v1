@@ -30,14 +30,16 @@ export const FirmHome = async ({ user }: userProps) => {
         className="border-l-2 border-border pr-4"
         style={{ height: "calc(100vh - 70px)" }}
       ></span>
-      <ul className="mr-12 flex h-max w-max flex-col justify-start">
-        <HomeLink name={user.name} />
-        {/* <div className="flex w-[400px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
-          <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground p-1 text-white">
-            Assign Assistant
-          </h1>
-          <AssistantDialog />
-        </div> */}
+      <ul className="mr-12 mt-4 flex h-max w-max flex-col justify-start">
+        <div className="flex flex-row gap-x-20">
+          <HomeLink name={user.name} />
+          <div className="flex w-[400px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
+            <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground bg-gradient-to-r from-[#dd0839] to-[#39468f] p-1 font-bold text-white">
+              Assign Assistant
+            </h1>
+            <AssistantDialog />
+          </div>
+        </div>
         <li className="ml-4 mt-12 flex flex-row items-start justify-start gap-y-4 space-x-4 pl-4 font-bold">
           <div className="flex flex-col items-center justify-center space-y-9">
             <div className="flex flex-row space-x-6">
