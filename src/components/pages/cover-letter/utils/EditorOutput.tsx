@@ -17,47 +17,40 @@ const renderers = {
 
 const style = {
   paragraph: {
-    fontSize: "0.875rem",
-    lineHeight: "1.25rem"
+    fontSize: "14px"
+    // lineHeight: "20px"
   },
   header: {
     h1: {
-      fontSize: "2em",
+      fontSize: "32px",
       fontWeight: "bold",
-      marginttom: "0.5em"
+      marginBottom: "4px"
     },
-
     h2: {
-      fontSize: "1.5em",
+      fontSize: "24px",
       fontWeight: "bold",
-      marginBottom: "0.5em"
+      marginBottom: "4px"
     },
-
     h3: {
-      fontSize: "1.17em",
+      fontSize: "19.52px",
       fontWeight: "bold",
-      marginBottom: "0.5em"
+      marginBottom: "4px"
     }
   },
   list: {
     container: {
-      margin: 0,
-      padding: 0,
+      margin: "0px",
+      padding: "0px",
       listStyleType: "decimal"
     },
     listItem: {
-      marginTop: 0,
-      marginBottom: "1em",
-      marginLeft: "1.5em",
-      fontSize: "1rem",
+      marginTop: "0px",
+      marginBottom: "16px",
+      marginLeft: "24px",
+      fontSize: "16px",
       listStyleType: "decimal"
     }
   }
-};
-
-const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
-  //@ts-ignore
-  return <Output style={style} className="text-sm" renderers={renderers} data={content} />;
 };
 
 function CustomImageRenderer({ data }: any) {
@@ -69,5 +62,10 @@ function CustomImageRenderer({ data }: any) {
     </div>
   );
 }
+
+const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
+  //@ts-ignore
+  return <Output style={style} className="text-sm" renderers={renderers} data={content} />;
+};
 
 export default EditorOutput;

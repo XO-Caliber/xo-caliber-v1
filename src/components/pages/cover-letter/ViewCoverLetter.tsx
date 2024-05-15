@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { ChevronDown, ChevronRight, MoreHorizontal } from "lucide-react";
+import { ChevronDown, ChevronRight, MinusCircle, MoreHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
@@ -8,6 +8,7 @@ import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
+import ExportPDF from "@/components/reactpdf/ExportPDF";
 
 import {
   DropdownMenu,
@@ -133,6 +134,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
               </DropdownMenu>
             </div>
 
+            <ExportPDF data={coverLetter.Section} />
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
               <AddDialog

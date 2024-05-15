@@ -37,27 +37,25 @@ export function PaymentCard() {
   }
 
   return (
-    <Card className="relative z-50 w-[350px]">
+    <Card className="relative z-50 w-[500px]">
       <CardHeader>
-        <CardTitle>Individual user</CardTitle>
-        <CardDescription>
-          All the features including creating an editing questions and cover letter
+        <CardTitle className="mb-4 text-center leading-8">
+          Empower Your Immigration Visas Journey through Our User-Friendly Self-Service Web Platform
+        </CardTitle>
+        <CardDescription className="text-center">
+          Activate 7 days trial period NOW!!!
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <p className="my-4 text-xl font-semibold">
-          <span className="text-[50px] font-bold">{hasFirm ? "$350" : "$500"}</span>/mo
-        </p>
-      </CardContent>
+      <CardContent></CardContent>
       <CardFooter className="w-full">
         <Button
           variant={"dark"}
-          className="w-full"
+          className="w-full font-semibold"
           onClick={() => {
             checkout().catch(console.error);
           }}
         >
-          Buy
+          Purchase Today
         </Button>
       </CardFooter>
     </Card>

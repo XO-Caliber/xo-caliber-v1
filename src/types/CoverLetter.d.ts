@@ -8,6 +8,7 @@ interface ExhibitType {
   comments: string | null;
   position: number;
   subSectionId: string;
+  globalPosition?: string;
 }
 
 interface SubSectionType {

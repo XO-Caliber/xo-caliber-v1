@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function WorkspaceLayout({ children }: { children: React.ReactNode }) {
   const session = await getAuthSession();
-  // console.log("isPaid: ", session?.user.isPaid);
+  console.log("isPaid: ", session?.user.isActive);
   return (
     <>
       <Navbar />

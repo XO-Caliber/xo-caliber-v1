@@ -22,6 +22,7 @@ import { toast } from "@/hooks/use-toast";
 import AddDialog from "./AddDialog";
 import { DialogType } from "@/types/Dialog";
 import EditDialog from "./EditDialog";
+import ExportPDF from "@/components/reactpdf/ExportPDF";
 
 const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLetterId: string }) => {
   //@ts-ignore
@@ -388,6 +389,9 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           </Button>
         </div>
       ) : null}
+      {/* <div className="">
+        <ExportPDF data={sections!} />
+      </div> */}
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
@@ -537,6 +541,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     itemId={subsection.id}
                                                     dialogType={DialogType.Exhibit}
                                                     refetchData={refetchData}
+                                                    coverletterId={coverLetterId}
                                                   />
                                                 </p>
                                                 {/* <p>{subsection.id}</p> */}
@@ -567,8 +572,8 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             size={18}
                                                             className="w-16"
                                                           />
-                                                          <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-xs font-semibold">
-                                                            Exhibit-{index + 1}
+                                                          <h2 className="flex flex-row items-center justify-center text-nowrap rounded-md border border-border bg-white p-1 text-sm font-semibold">
+                                                            Exhibit
                                                             <MinusCircle
                                                               color="red"
                                                               className="ml-1 cursor-pointer fill-white"
