@@ -57,5 +57,20 @@ export const paymentRouter = router({
     } else {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
+  }),
+
+  cancelSubscription: publiceProcedure.mutation(async () => {
+    const session = await getAuthSession();
+
+    if (!session?.user || !session.user.stripeCustomerId) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const stripeSubscriptionId = session.user.stripeCustomerId;
+
+    const subscription = await stripe.subscriptions.update(stripeSubscriptionId, {
+      cancel_at_period_end: true
+      // metadata : {payingUserEmail : session.user?.email!}
+    });
+    return { success: true, data: subscription };
   })
 });
