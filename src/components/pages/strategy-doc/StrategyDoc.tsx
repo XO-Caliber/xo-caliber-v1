@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { ChevronDown, ChevronRight, Save } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, Save } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/Input";
 import UserSelectList from "@/components/utils/UserSelectList";
@@ -49,7 +49,12 @@ const StrategyDoc = ({ role }: { role?: string }) => {
   return (
     <div>
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
-        <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">DocuView</p>
+        <div className="flex items-center justify-center">
+          <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">DocuView</p>
+          <span title="">
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
+        </div>
         {role === "FIRM" ? (
           <UserSelectList getSelectedUser={getSelectedUser} />
         ) : (

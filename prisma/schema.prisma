@@ -81,8 +81,9 @@ model User {
   stripePriceId        String?
   paidDate             DateTime?
 
-  selectedCase String?
-  Timeline     Timeline[]
+  selectedCase  String?
+  selectedCase2 String?
+  Timeline      Timeline[]
 }
 
 model Firm {

@@ -262,7 +262,13 @@ const ViewFirmCheckList = ({ userId }: UserProps) => {
                                                 <LinkIcon
                                                   className="cursor-pointer text-sky-400"
                                                   onClick={() =>
-                                                    router.push(referenceLinks[checked.id])
+                                                    router.push(
+                                                      referenceLinks[checked.id] ||
+                                                        item.UserChecked.find(
+                                                          (checked) => checked.referenceLink
+                                                        )?.referenceLink ||
+                                                        ""
+                                                    )
                                                   }
                                                 />
                                               </div>

@@ -73,7 +73,7 @@ export const AssistantDialog = () => {
         </div>
         <div className="flex min-w-96 items-center justify-start py-4">
           <Label htmlFor="username" className="text-right">
-            Assign Assistant:
+            Assign Assistant for User:
           </Label>
           {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
           <AssistantSelectList getSelectedAssistant={getSelectedAssistant} />
@@ -87,7 +87,7 @@ export const AssistantDialog = () => {
           onClick={onSubmit}
           isLoading={isLoading}
         >
-          Save changes
+          Submit
         </Button>
       </div>
     </div>

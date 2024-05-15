@@ -17,7 +17,7 @@ export const AssistantHome = async ({ user }: userProps) => {
   return (
     <>
       {session && (
-        <section className="flex flex-row items-start justify-normal ">
+        <section className="flex flex-row items-start justify-normal overflow-scroll">
           <ul className="flex w-1/2 flex-col  justify-start">
             <HomeLink name={user.name} />
             <li className="ml-4 mt-12 flex flex-row items-start justify-start gap-y-4 space-x-4 pl-4 font-bold">

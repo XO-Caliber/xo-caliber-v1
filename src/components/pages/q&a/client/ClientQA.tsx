@@ -17,7 +17,7 @@ import { ClientQANotes } from "./ClientQANotes";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Toast } from "@/components/ui/Toast";
-import { Loader } from "lucide-react";
+import { Info, Loader } from "lucide-react";
 
 interface userProfile {
   userId: string;
@@ -72,18 +72,13 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
   return (
     <div className=" ml-56 text-xl">
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
-        <p className="m-4 mt-[1.2rem] font-bold text-heading">Caliber</p>
-        <span className="mr-10 w-32">
-          {/* <Select onValueChange={handleChange}>
-            <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Firm" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="firm">Firm</SelectItem>
-              <SelectItem value="default">Default</SelectItem>
-            </SelectContent>
-          </Select> */}
-        </span>
+        <div className="flex items-center justify-center gap-x-1">
+          {" "}
+          <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>
+          <span title="By answering a series of Yes or No weighted questions for each section, you provide an opportunity to calibrate your own profile accurately. Weighted questions of each section are strategically crafted based on expert opinions and a wealth of acquired knowledge to assess and guide the development of your narrative for your self petitioned immigration cases. This process serves as the foundation for building a compelling narrative that aligns with the criteria of your desired visa category.">
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
+        </div>
       </div>
       {listCat.size > 0 && (
         <div>
@@ -150,7 +145,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
               <Tabs onClick={() => setHidden(true)}>
                 <QATabsList categories={catArray} />
 
-                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll rounded-md  bg-white">
+                <div className="scrollableContainer m-4 mt-2 h-[60vh] overflow-y-scroll rounded-md  ">
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>

@@ -15,7 +15,7 @@ interface userProps {
 
 export const UserHome = async ({ user }: userProps) => {
   return (
-    <section className="flex flex-row items-start justify-normal ">
+    <section className="pverflow-scroll flex flex-row items-start justify-normal">
       <ul className="flex w-full flex-col justify-start ">
         <HomeLink name={user.name} />
         <li className="ml-4 w-full pl-4 pt-4 font-bold">

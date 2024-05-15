@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { Download, DownloadIcon, UserPlus } from "lucide-react";
+import { Download, DownloadIcon, Info, UserPlus } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { CoverLetterType } from "@/types/CoverLetter";
 import { trpc } from "@/app/_trpc/client";
@@ -66,19 +66,22 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
     selectedCoverLetter = CoverLetterData.find((coverLetter) => coverLetter.id === id);
   };
   return (
-    <section>
+    <section className="overflow-x-scroll">
       <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white pr-4">
-        <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+        <div className="flex items-center justify-center">
+          <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+          <span title="">
+            <Info size={18} className="mt-1  cursor-pointer text-heading" />
+          </span>
+        </div>
 
         <div className="flex items-center space-x-9">
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant={"outline"}>Download Pull Default Template</Button>
+              <Button variant={"outline"}>Pull Default Template</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogTitle className="mt-4">
-                Do you want to download pull default template
-              </DialogTitle>
+              <DialogTitle className="mt-4">Select your template and click to pull</DialogTitle>
               {defaultTemplate.data && (
                 <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
                   {defaultTemplate.data.map((coverletter, index) => (

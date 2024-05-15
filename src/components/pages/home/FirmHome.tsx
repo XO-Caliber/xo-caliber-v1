@@ -20,7 +20,7 @@ interface userProps {
 
 export const FirmHome = async ({ user }: userProps) => {
   return (
-    <section className="flex flex-row items-start justify-normal bg-dotted-spacing-3 bg-dotted-gray-200">
+    <section className="flex flex-row items-start justify-normal overflow-scroll bg-dotted-spacing-3 bg-dotted-gray-200">
       <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">
         <AddClientForm />
         <br />
@@ -30,8 +30,8 @@ export const FirmHome = async ({ user }: userProps) => {
         className="border-l-2 border-border pr-4"
         style={{ height: "calc(100vh - 70px)" }}
       ></span>
-      <ul className="mr-12 mt-4 flex h-max w-max flex-col justify-start">
-        <div className="flex flex-row gap-x-20">
+      <ul className="mr-12 mt-4 flex h-max w-max flex-col justify-start gap-y-20 pl-12">
+        <div className="flex flex-row gap-x-20 ">
           <HomeLink name={user.name} />
           <div className="flex w-[400px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
             <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground bg-gradient-to-r from-[#dd0839] to-[#39468f] p-1 font-bold text-white">

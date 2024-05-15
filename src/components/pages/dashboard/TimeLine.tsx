@@ -5,6 +5,7 @@ import {
   CandlestickChart,
   CheckSquare,
   Construction,
+  Info,
   MoreHorizontal,
   Plus,
   PlusCircle,
@@ -38,10 +39,13 @@ interface Props {
 export const TimeLine = ({ userId, userName }: Props) => {
   const userTimeLine = trpc.dashboard.getUserTimeLine.useQuery(userId || "");
   const getUserCase = trpc.home.getUserProfile.useQuery().data?.selectedCase || "";
+  const getAnalyzedCase = trpc.home.getUserProfile.useQuery().data?.selectedCase2 || "";
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [case1, setCase1] = useState("");
+  const [case2, setCase2] = useState("");
   const [editable, setEditable] = useState(false);
+  const [editable2, setEditable2] = useState(false);
   const date = new Date().getDate() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
   console.log(description, category, date);
 
@@ -52,6 +56,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
   useEffect(() => {
     setCase1(getUserCase);
   }, [getUserCase]);
+  useEffect(() => {
+    setCase2(getAnalyzedCase);
+  }, [getAnalyzedCase]);
 
   const { mutate: addTimeLine } = trpc.dashboard.addUserTimeline.useMutation({
     onSuccess({ success }) {
@@ -128,11 +135,26 @@ export const TimeLine = ({ userId, userName }: Props) => {
       }
     }
   });
+  const { mutate: updateAnalyzeCase } = trpc.dashboard.analysedCase.useMutation({
+    onSuccess({ success }) {
+      userTimeLine.refetch();
+      if (success) {
+        toast({
+          title: "Case Updated"
+        });
+      }
+    }
+  });
 
   const handleChange = (case1: string) => {
     setCase1(case1);
     updateCase({ id: userId, case1: case1 });
     setEditable(false);
+  };
+  const handleChange2 = (case2: string) => {
+    setCase1(case2);
+    updateAnalyzeCase({ id: userId, case2: case2 });
+    setEditable2(false);
   };
   const handleDelete = (id: string) => {
     try {
@@ -147,36 +169,69 @@ export const TimeLine = ({ userId, userName }: Props) => {
   return (
     <div className="h-full ">
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
-        <div className="flex items-center justify-center ">
-          <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+        <div className="flex items-center justify-center">
+          <p className="my-4 ml-6 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+          <span title="">
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
         </div>
-        <div className="mr-2">
-          {editable || case1 === "" ? (
-            <Select onValueChange={(value) => handleChange(value)}>
-              <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">
-                <SelectValue placeholder="Select Case" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="EB1A">EB1A</SelectItem>
-                <SelectItem value="EB2">EB2</SelectItem>
-                <SelectItem value="O1A">O1A</SelectItem>
-              </SelectContent>
-            </Select>
-          ) : (
-            <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
-              <p className="text-sm">Selected Case: {case1}</p>
-              <span title="Edit">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <MoreHorizontal size={14} />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => setEditable(true)}>Edit</DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </span>
-            </div>
-          )}
+        <div className="flex items-center justify-center">
+          <div className="mr-2">
+            {editable || case1 === "" ? (
+              <Select onValueChange={(value) => handleChange(value)}>
+                <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">
+                  <SelectValue placeholder="Select desire Case" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="EB1A">EB1A</SelectItem>
+                  <SelectItem value="EB2">EB2-NIW</SelectItem>
+                  <SelectItem value="O1A">O1A</SelectItem>
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
+                <p className="text-sm">Desire Case: {case1}</p>
+                <span title="Edit">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <MoreHorizontal size={14} />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => setEditable(true)}>Edit</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </span>
+              </div>
+            )}
+          </div>
+          <div className="mr-2">
+            {editable2 || case2 === "" ? (
+              <Select onValueChange={(value) => handleChange2(value)}>
+                <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">
+                  <SelectValue placeholder="Select analyzed Case" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="EB1A">EB1A</SelectItem>
+                  <SelectItem value="EB2">EB2-NIW</SelectItem>
+                  <SelectItem value="O1A">O1A</SelectItem>
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="bg- mr-2 flex items-center space-x-3 rounded-lg bg-gradient-to-r  from-[#dd0839] to-[#39468f] p-2 font-bold text-white">
+                <p className="text-sm">Analyzed Case: {case2}</p>
+                <span title="Edit">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <MoreHorizontal size={14} />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => setEditable2(true)}>Edit</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0 bg-white">
@@ -214,9 +269,9 @@ export const TimeLine = ({ userId, userName }: Props) => {
                 earlier if needed.
               </li>
               <li>
-                Joined Under Firm: You say if you started working for a company during this process.
+                Joined Under Firm: You say if you started working under a firm during this process.
               </li>
-              <li>Left Firm: You say if you stopped working for a company during this process.</li>
+              <li>Left Firm: You say if you stopped working under a firm during this process.</li>
             </ul>
           </VerticalTimelineElement>
 

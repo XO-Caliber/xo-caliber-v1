@@ -300,7 +300,6 @@ const AdminCheckList = () => {
                                 className="cursor-pointer"
                                 onClick={() => {
                                   handleAddSubHeadingClick(checkList.id);
-                                  toggleSubMenu(checkList.id);
                                 }}
                               >
                                 Add Subtopic
@@ -348,7 +347,7 @@ const AdminCheckList = () => {
                             <X
                               size={18}
                               onClick={() => setShowNewSubHeadingInput(null)}
-                              className="text-destructive"
+                              className="cursor-pointer text-destructive"
                             />
                           </h3>
                         )}

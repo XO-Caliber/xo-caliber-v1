@@ -37,7 +37,7 @@ const page = async () => {
               fill
               className="absolute grid h-full w-full place-items-center object-cover pl-52"
             />
-            <div className="absolute grid h-full w-full place-items-center backdrop-blur-sm">
+            <div className="absolute grid h-full w-full place-items-center backdrop-blur-sm bg-dotted-spacing-3 bg-dotted-gray-200">
               <PaymentCard />
             </div>
           </>

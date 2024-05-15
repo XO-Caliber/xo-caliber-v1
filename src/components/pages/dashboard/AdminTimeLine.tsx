@@ -5,6 +5,7 @@ import {
   CandlestickChart,
   CheckSquare,
   Construction,
+  Info,
   MoreHorizontal,
   WorkflowIcon
 } from "lucide-react";
@@ -51,10 +52,23 @@ export const AdminTimeLine = ({ role }: Props) => {
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center">
           <p className="my-4 ml-6 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
+          <span title="">
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
         </div>
-        {role === "ADMIN" && <AllUserSelectList getSelectedUser={handleSelect} />}
-        {role === "FIRM" && <UserSelectList getSelectedUser={handleSelect} />}
-        {role === "ASSISTANT" && <AssistantUserSelect getSelectedUser={handleSelect} />}
+        <ul className="flex items-center justify-center gap-x-4">
+          <li className="rounded-md bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-base font-bold text-white">
+            Desire Case: {userName.data?.selectedCase || "null"}
+          </li>
+          <li className="rounded-md bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-1 text-base font-bold text-white">
+            Analyzed Case: {userName.data?.selectedCase2 || "null"}
+          </li>
+          <li>
+            {role === "ADMIN" && <AllUserSelectList getSelectedUser={handleSelect} />}
+            {role === "FIRM" && <UserSelectList getSelectedUser={handleSelect} />}
+            {role === "ASSISTANT" && <AssistantUserSelect getSelectedUser={handleSelect} />}
+          </li>
+        </ul>
       </div>
       <div className="ml-56 flex h-[58px] items-center justify-center border-2 border-l-0 border-t-0 bg-white">
         <div className="flex items-center justify-center">
@@ -89,9 +103,9 @@ export const AdminTimeLine = ({ role }: Props) => {
                 earlier if needed.
               </li>
               <li>
-                Joined Under Firm: You say if you started working for a company during this process.
+                Joined Under Firm: You say if you started working under a firm during this process.
               </li>
-              <li>Left Firm: You say if you stopped working for a company during this process.</li>
+              <li>Left Firm: You say if you stopped working under a firm during this process.</li>
             </ul>
           </VerticalTimelineElement>
 

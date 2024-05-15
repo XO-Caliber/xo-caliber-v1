@@ -6,7 +6,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
 import FirmTabsContent from "../FirmTabsContent";
-import { Loader } from "lucide-react";
+import { Info, Loader } from "lucide-react";
 import AddQADiaglog from "../../addQA/AddQADiaglog";
 import AddCategoryDialog from "../../addCategory/AddCategoryDialog";
 import ImportAdmin from "../../firm/ImportAdmin";
@@ -85,7 +85,13 @@ export const ViewFirmQA = () => {
   return (
     <div>
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
-        <p className="m-4 mt-[1.2rem] font-bold text-heading">Caliber </p>
+        <div className="flex items-center justify-center gap-x-1">
+          {" "}
+          <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>
+          <span title="By answering a series of Yes or No weighted questions for each section, you provide an opportunity to calibrate your own profile accurately. Weighted questions of each section are strategically crafted based on expert opinions and a wealth of acquired knowledge to assess and guide the development of your narrative for your self petitioned immigration cases. This process serves as the foundation for building a compelling narrative that aligns with the criteria of your desired visa category.">
+            <Info size={18} className="mt-1 cursor-pointer text-heading" />
+          </span>
+        </div>
         <div className="mr-4 flex space-x-12">
           <AddQADiaglog refetchData={refetchData} />
           <AddCategoryDialog refetchData={refetchData} />
