@@ -2,11 +2,12 @@
 import { useState } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { ChevronDown, ChevronRight, Info, Save } from "lucide-react";
+import { ChevronDown, ChevronRight, Info, LinkIcon, Save } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/Input";
 import UserSelectList from "@/components/utils/UserSelectList";
 import AssistantUserSelect from "../spider-graph/assistant/AssistantUserSelect";
+import { useRouter } from "next/navigation";
 
 interface SubMenuState {
   [key: string]: boolean;
@@ -19,6 +20,7 @@ const StrategyDoc = ({ role }: { role?: string }) => {
   const getSelectedUser = (userId: string) => {
     setUser(userId);
   };
+  const router = useRouter();
 
   const [openSubMenus, setOpenSubMenus] = useState<SubMenuState>({});
   const [referenceLinks, setReferenceLinks] = useState<{ [key: string]: string }>(() => {
@@ -115,8 +117,8 @@ const StrategyDoc = ({ role }: { role?: string }) => {
                                 <div key={subHeading.id} className="ml-6 border-2 border-t-0">
                                   <div className="flex items-center justify-between bg-[#FFE6E0] text-xs">
                                     <h3 className=" p-2 ">{subHeading.name}</h3>
-                                    <h3 className="  mr-16 border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 text-xs font-bold text-heading">
-                                      Reference Link
+                                    <h3 className="  mr-2 border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 text-xs font-bold text-heading">
+                                      Ref Link
                                     </h3>
                                   </div>
                                   <ul className="space-y-2">
@@ -143,21 +145,20 @@ const StrategyDoc = ({ role }: { role?: string }) => {
                                               (checked) =>
                                                 checked.isChecked && (
                                                   <div
-                                                    className="flex flex-row items-center justify-center"
+                                                    className="mr-4 flex flex-row items-center justify-center"
                                                     key={checked.id}
                                                   >
-                                                    <Input
-                                                      className="mr-1 h-[30px] border-gray-500"
-                                                      autoFocus={true}
-                                                      placeholder="Enter the reference link"
-                                                      value={
-                                                        referenceLinks[checked.id] ||
-                                                        item.UserChecked.find(
-                                                          (checked) => checked.referenceLink
-                                                        )?.referenceLink ||
-                                                        ""
-                                                      }
-                                                      disabled={true}
+                                                    <LinkIcon
+                                                      className="mr-4 cursor-pointer text-sky-400"
+                                                      onClick={() => {
+                                                        router.push(
+                                                          referenceLinks[checked.id] ||
+                                                            item.UserChecked.find(
+                                                              (checked) => checked.referenceLink
+                                                            )?.referenceLink ||
+                                                            ""
+                                                        );
+                                                      }}
                                                     />
                                                   </div>
                                                 )

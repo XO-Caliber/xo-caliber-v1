@@ -2,7 +2,7 @@ import Image from "next/image";
 import navLogo from "../../public/images/LOGO_Trans.png";
 import mainLogo from "../../public/images/main_logo.png";
 import { Input } from "./ui/Input";
-import { ArrowDown, BellIcon, HomeIcon, SearchIcon, Timer } from "lucide-react";
+import { ArrowDown, BellIcon, HomeIcon, SearchIcon, Timer, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/Button";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
@@ -20,6 +20,7 @@ import WorkSpace from "./pages/workspaces/WorkSpace";
 import { UserProfile } from "./utils/UserProfile";
 import { user } from "@/types/user";
 import ViewProfile from "./pages/profile/ViewProfile";
+import { Dialog, DialogTrigger } from "./ui/Dialog";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -101,26 +102,35 @@ export const Navbar = async () => {
             </Link>
           </div>
         ) : (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <UserProfile
-                email={session.user.email}
-                name={session.user.name}
-                image={session.user.image}
-              />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-48">
-              <DropdownMenuLabel>My Profile</DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-border" />
-              <DropdownMenuItem>{session.user.role}</DropdownMenuItem>
-              <DropdownMenuItem>
-                <ViewProfile />
-              </DropdownMenuItem>
-              <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+          <Dialog>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <UserProfile
+                  email={session.user.email}
+                  name={session.user.name}
+                  image={session.user.image}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-48">
+                <DropdownMenuLabel>My Profile</DropdownMenuLabel>
+                <DropdownMenuSeparator className="bg-border" />
+                <DropdownMenuItem>{session.user.role}</DropdownMenuItem>
 
-              <Logout />
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <DialogTrigger asChild>
+                  <DropdownMenuItem>
+                    <div className="flex items-center justify-center">
+                      <User size={18} className="bi bi-bookmark-fill" />
+                      <h1 className="ml-4 text-secondary-foreground hover:text-black">Profile</h1>
+                    </div>
+                  </DropdownMenuItem>
+                </DialogTrigger>
+                <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+
+                <Logout />
+              </DropdownMenuContent>
+            </DropdownMenu>{" "}
+            <ViewProfile />
+          </Dialog>
         )}
       </footer>
     </nav>

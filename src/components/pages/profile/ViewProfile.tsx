@@ -70,66 +70,56 @@ const ViewProfile = ({ userId }: { userId?: string }) => {
 
   return (
     <div>
-      <Dialog>
-        <DialogTrigger asChild>
-          <div className="flex items-center justify-center">
-            <User size={18} className="bi bi-bookmark-fill" />
-            <h1 className="ml-4 text-secondary-foreground hover:text-black">Profile</h1>
-          </div>
-        </DialogTrigger>
-        <DialogContent className="item-center flex  flex-col justify-start">
-          <DialogHeader className="w-[700px] border border-x-0 border-t-0 border-black p-2">
-            <DialogTitle className="text-xl">Your Profile</DialogTitle>
-          </DialogHeader>
-          <section>
-            <ul>
-              <li>
-                <p className=" font-bold text-black">Name</p>
-                <div className="flex items-center justify-between gap-x-2">
-                  <Input
-                    className="text-black "
-                    value={userName || ""}
-                    onChange={(e) => {
-                      setUserName(e.target.value);
-                      handleChange();
-                    }}
-                    disabled={nameDisabled}
-                  />
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <MoreHorizontal className="cursor-pointer" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem onClick={() => setNameDisabled(false)}>
-                        Edit
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </li>
-              <li>
-                <p className="flex items-center justify-start font-bold text-black">Email</p>
-                <Input className="text-black " value={email || ""} disabled={true} />
-              </li>
-              <li>
-                <p className="flex items-center justify-start font-bold text-black">Role</p>
-                <Input className="text-black " value={userType || ""} disabled={true} />
-              </li>
-              <li>
-                {" "}
-                <Link className="mr-2 text-[#63156A]" href={"/reset-password"}>
-                  Reset password
-                </Link>
-              </li>
-            </ul>
-          </section>
-          <DialogFooter>
-            <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
-              Save
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <DialogContent className="item-center flex  flex-col justify-start">
+        <DialogHeader className="w-[700px] border border-x-0 border-t-0 border-black p-2">
+          <DialogTitle className="text-xl">Your Profile</DialogTitle>
+        </DialogHeader>
+        <section>
+          <ul>
+            <li>
+              <p className=" font-bold text-black">Name</p>
+              <div className="flex items-center justify-between gap-x-2">
+                <Input
+                  className="text-black "
+                  value={userName || ""}
+                  onChange={(e) => {
+                    setUserName(e.target.value);
+                    handleChange();
+                  }}
+                  disabled={nameDisabled}
+                />
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <MoreHorizontal className="cursor-pointer" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem onClick={() => setNameDisabled(false)}>Edit</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </li>
+            <li>
+              <p className="flex items-center justify-start font-bold text-black">Email</p>
+              <Input className="text-black " value={email || ""} disabled={true} />
+            </li>
+            <li>
+              <p className="flex items-center justify-start font-bold text-black">Role</p>
+              <Input className="text-black " value={userType || ""} disabled={true} />
+            </li>
+            <li>
+              {" "}
+              <Link className="mr-2 text-[#63156A]" href={"/reset-password"}>
+                Reset password
+              </Link>
+            </li>
+          </ul>
+        </section>
+        <DialogFooter>
+          <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
+            Save
+          </Button>
+        </DialogFooter>
+      </DialogContent>
     </div>
   );
 };
