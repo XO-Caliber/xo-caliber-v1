@@ -35,7 +35,7 @@ export const AssistantDialog = () => {
         router.refresh();
         toast({
           title: "Assigned Successfully",
-          description: "Assigned assistant for the user"
+          description: "Assigned assistant for the client"
         });
       }
     },
@@ -62,18 +62,18 @@ export const AssistantDialog = () => {
   };
   return (
     <div className="flex w-[400px] flex-col  p-4">
-      <p>Select an assistant from the below list:</p>
+      <p>Assign an assistant for your client:</p>
       <div className="flex w-96 flex-col items-start gap-2">
         <div className="flex  items-center justify-start py-4">
           <Label htmlFor="name" className="text-right">
-            For User:
+            Pick Client:
           </Label>
           {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
         <div className="flex min-w-96 items-center justify-start py-4">
           <Label htmlFor="username" className="text-right">
-            Assign Assistant for User:
+            Pick Assistant:
           </Label>
           {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
           <AssistantSelectList getSelectedAssistant={getSelectedAssistant} />
