@@ -14,7 +14,10 @@ const fontSans = FontSans({
 
 export const metadata: Metadata = {
   title: "XO Caliber",
-  description: "Cover letter generator app"
+  description: "Cover letter generator app",
+  icons: {
+    icon: "/favicon.png"
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

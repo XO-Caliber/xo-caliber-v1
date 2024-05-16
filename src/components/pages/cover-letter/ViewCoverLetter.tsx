@@ -90,7 +90,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
     <main>
       {CoverLetterData?.map((coverLetter, index) => (
         <div key={coverLetter.id}>
-          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-border bg-[#dfd9d5] p-1.5">
+          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-b-0 border-border bg-[#dfd9d5] p-1.5">
             <button onClick={() => toggleSectionVisibility(index)}>
               {isSectionVisible[index] ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
             </button>
@@ -137,12 +137,12 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
             {/* <ExportPDF data={coverLetter.Section} /> */}
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
-              <AddDialog
+              {/* <AddDialog
                 userId={userId}
                 itemId={coverLetter.id}
                 dialogType={DialogType.Section}
                 refetchData={refetchData1}
-              />
+              /> */}
             </div>
             <p className="ml-auto mr-10 justify-items-end text-xs font-medium  text-black">
               Comments
