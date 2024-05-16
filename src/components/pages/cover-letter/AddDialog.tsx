@@ -70,7 +70,7 @@ const AddDialog = ({ userId, itemId, dialogType, refetchData, coverletterId }: A
         <Button
           variant={"outline"}
           size={"sm"}
-          className="max-h-[25px] border border-dashed border-border p-1 py-0 text-xs"
+          className="max-h-[30px] border border-dashed border-border p-1 py-0 text-xs"
         >
           <PlusSquare size={16} className="mr-2" />
           {buttonText}

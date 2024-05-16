@@ -3,7 +3,14 @@ import React from "react";
 import Html from "react-pdf-html";
 import { Page, Text, Document, StyleSheet, Font } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "../ui/Dialog";
 import { Button } from "../ui/Button";
 import { SectionType } from "@/types/CoverLetter";
 import EditorOutput from "../pages/cover-letter/utils/EditorOutput";
@@ -46,7 +53,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
                         return (
                           <React.Fragment key={index}>
                             <div style={styles.exhibitDiv}>
-                              <Text style={styles.header}>Exhibit-{exno}:</Text>
+                              <Text style={styles.header}>Exhibit-{exno}</Text>
                               <div style={styles.exhibitSub}>
                                 <Text style={styles.exhibitTitle}>{exhibit.title}</Text>
                                 <Html style={styles.text}>
@@ -63,6 +70,11 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
                 ))}
             </React.Fragment>
           ))}
+        <Text
+          style={styles.pageNumber}
+          render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`}
+          fixed
+        />
       </Page>
     </Document>
   );
@@ -97,14 +109,15 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       paddingHorizontal: 50
     },
     title: {
-      paddingHorizontal: 50,
+      // paddingHorizontal: 50,
       fontSize: 16,
       textAlign: "left",
       fontWeight: "bold",
-      fontFamily: "Times-Roman"
+      fontFamily: "Times-Roman",
+      lineHeight: 1
     },
     sectionTitle: {
-      paddingHorizontal: 50,
+      // paddingHorizontal: 50,
       fontSize: 16,
       textAlign: "left",
       fontWeight: "extrabold",
@@ -129,10 +142,11 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       fontFamily: "Times-Roman"
     },
     text: {
-      margin: 5,
+      // margin: 5,
       fontSize: 12,
       textAlign: "justify",
-      fontFamily: "Times-Roman"
+      fontFamily: "Times-Roman",
+      lineHeight: 1.5
     },
     image: {
       marginVertical: 20,
@@ -143,12 +157,12 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       marginBottom: 30,
       fontWeight: "bold",
       textAlign: "center",
-      color: "grey",
+      color: "black",
       fontFamily: "Times-Roman"
     },
     pageNumber: {
       position: "absolute",
-      fontSize: 14,
+      fontSize: 8,
       bottom: 30,
       left: 0,
       right: 0,
@@ -170,30 +184,36 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     },
     exhibitDiv: {
       display: "flex",
-      flexDirection: "row",
-      marginHorizontal: 50,
-      alignItems: "flex-start",
-      justifyContent: "space-around"
+      flexDirection: "column",
+      // marginHorizontal: 50,
+      alignItems: "center",
+      justifyContent: "space-between"
     },
     exhibitSub: {
       display: "flex",
       flexDirection: "column",
-      marginHorizontal: 50,
+      // marginHorizontal: 50,
       alignItems: "flex-start",
-      justifyContent: "space-around"
+      justifyContent: "space-between",
+      fontStyle: "italic"
     }
   });
 
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant={"dark"} className="h-[25px]">
+        <Button variant={"dark"} className="max-h-[30px]">
           Open as PDF
         </Button>
       </DialogTrigger>
       <DialogContent className=" h-screen ">
         <DialogHeader>
           <DialogTitle>View and Download the pdf here!</DialogTitle>
+          <DialogDescription>
+            Note: Loading the PDF may take some time. If it doesn&apos;t load on the first attempt,
+            please try opening it again.
+          </DialogDescription>
+
           <main className="flex h-full w-[1000px] items-center justify-center">
             <PDFViewer className="h-full w-full">
               <MyDocument />
