@@ -65,9 +65,17 @@ export const paymentRouter = router({
     if (!session?.user || !session.user.stripeCustomerId) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
-    const stripeSubscriptionId = session.user.stripeCustomerId;
 
-    const subscription = await stripe.subscriptions.update(stripeSubscriptionId, {
+    const user = await db.user.findUnique({
+      where: {
+        id: session.user.id
+      }
+    });
+    if (!user?.stripeSubscriptionId) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    const subscription = await stripe.subscriptions.update(user?.stripeSubscriptionId, {
       cancel_at_period_end: true
       // metadata : {payingUserEmail : session.user?.email!}
     });
