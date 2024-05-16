@@ -31,12 +31,6 @@ const page = async () => {
           </div>
         ) : (
           <>
-            <Image
-              src="/images/home_bg.png"
-              alt="Home BG"
-              fill
-              className="absolute grid h-full w-full place-items-center object-cover pl-52"
-            />
             <div className="absolute grid h-full w-full place-items-center backdrop-blur-sm bg-dotted-spacing-3 bg-dotted-gray-200">
               <PaymentCard />
             </div>

@@ -24,7 +24,6 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
           data.map((section, index) => (
             <React.Fragment key={index}>
               <div style={styles.sectionDiv}>
-                <Text style={styles.header}>Section-{index + 1}:</Text>
                 <Text style={styles.title}>{section.title}</Text>
               </div>
               <Html style={styles.text}>
@@ -34,9 +33,6 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
                 section.SubSection.map((subsection, subIndex) => (
                   <React.Fragment key={subIndex}>
                     <div style={styles.sectionDiv}>
-                      <Text style={styles.header}>
-                        SubSection-{index + 1}.{subIndex + 1}:
-                      </Text>
                       <Text style={styles.title}>{subsection.title}</Text>
                     </div>
                     <Html style={styles.text}>
@@ -155,6 +151,8 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       display: "flex",
       flexDirection: "row",
       paddingTop: 12,
+      textAlign: "left",
+      marginRight: "300px",
       paddingBottom: 12,
       paddingHorizontal: 35,
       alignItems: "center",
@@ -183,8 +181,8 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button variant={"outline"} className="h-[25px]">
-          Open
+        <Button variant={"dark"} className="h-[25px]">
+          Open as PDF
         </Button>
       </DialogTrigger>
       <DialogContent className=" h-screen ">

@@ -134,7 +134,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
               </DropdownMenu>
             </div>
 
-            <ExportPDF data={coverLetter.Section} />
+            {/* <ExportPDF data={coverLetter.Section} /> */}
             <div className="ml-auto">
               {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
               <AddDialog

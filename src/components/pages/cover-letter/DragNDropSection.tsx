@@ -377,21 +377,21 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
       {" "}
       {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
         <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
-          <Button variant={"secondary"} className="max-h-[30px]  p-2">
+          {/* <Button variant={"secondary"} className="max-h-[30px]  p-2">
             Cancel
-          </Button>
+          </Button> */}
           <Button
             variant={"dark"}
             onClick={updateSubSectionPostionInDb}
             className="max-h-[30px]  p-2"
           >
-            Save changes
+            Commit
           </Button>
         </div>
       ) : null}
-      {/* <div className="">
+      <div className="mr-10 flex justify-end py-2">
         <ExportPDF data={sections!} />
-      </div> */}
+      </div>
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">
           {(provided) => (
