@@ -374,23 +374,27 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
   return (
     <main className="h-max w-full p-2 pt-0 ">
-      {" "}
-      {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
-        <div className="flex w-full justify-end gap-8 rounded-b-md border border-t-0 px-4 py-2 ">
-          {/* <Button variant={"secondary"} className="max-h-[30px]  p-2">
-            Cancel
-          </Button> */}
+      <div className="flex w-full justify-between gap-8 bg-[#dfd9d5] p-2">
+        <ExportPDF data={sections!} />
+        <AddDialog
+          userId={userId}
+          itemId={coverLetterId}
+          dialogType={DialogType.Section}
+          refetchData={refetchData}
+        />
+        {updatedSectionsPosition || updatedSubSectionsPosition || updatedExhibitsPosition ? (
           <Button
             variant={"dark"}
             onClick={updateSubSectionPostionInDb}
-            className="max-h-[30px]  p-2"
+            className="max-h-[30px] p-2"
           >
             Commit
           </Button>
-        </div>
-      ) : null}
-      <div className="mr-10 flex justify-end py-2">
-        <ExportPDF data={sections!} />
+        ) : (
+          <Button variant={"dark"} disabled className="max-h-[30px] p-2">
+            Commit
+          </Button>
+        )}
       </div>
       <DragDropContext onDragEnd={handleDragDrop}>
         <Droppable droppableId="ROOT" type="group">

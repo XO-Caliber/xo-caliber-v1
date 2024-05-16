@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { FC } from "react";
 import dynamic from "next/dynamic";
+import { table } from "console";
 //@ts-ignore
 const Output = dynamic(async () => (await import("editorjs-react-renderer")).default, {
   ssr: false
@@ -17,22 +18,22 @@ const renderers = {
 
 const style = {
   paragraph: {
-    fontSize: "14px"
+    fontSize: "12px"
     // lineHeight: "20px"
   },
   header: {
     h1: {
-      fontSize: "32px",
+      fontSize: "18px",
       fontWeight: "bold",
       marginBottom: "4px"
     },
     h2: {
-      fontSize: "24px",
+      fontSize: "16px",
       fontWeight: "bold",
       marginBottom: "4px"
     },
     h3: {
-      fontSize: "19.52px",
+      fontSize: "14px",
       fontWeight: "bold",
       marginBottom: "4px"
     }
@@ -45,10 +46,38 @@ const style = {
     },
     listItem: {
       marginTop: "0px",
-      marginBottom: "16px",
-      marginLeft: "24px",
-      fontSize: "16px",
+      marginBottom: "0px",
+      marginLeft: "4px",
+      fontSize: "12px",
       listStyleType: "decimal"
+    }
+  },
+  table: {
+    /* Table */
+    /* Table */
+    table: {
+      borderCollapse: "collapse",
+      border: "1px solid black"
+    },
+
+    /* Table Row */
+    tr: {
+      backgroundColor: "white"
+    },
+
+    /* Table Header */
+    th: {
+      padding: "8px",
+      textAlign: "left",
+      borderBottom: "1px solid #ddd",
+      backgroundColor: "#f2f2f2"
+    },
+
+    /* Table Data */
+    td: {
+      padding: "8px",
+      textAlign: "left",
+      borderBottom: "1px solid #ddd"
     }
   }
 };
