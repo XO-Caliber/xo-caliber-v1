@@ -51,42 +51,35 @@ export const Navbar = async () => {
             <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
-        <Link href={"/dashboard"}>
-          <li
-            className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
+        {session?.user.isActive ? (
+          <Link href={"/dashboard"}>
+            <li
+              className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary "
-          >
-            <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
-            <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
-          </li>
-        </Link>
-        {/* <li
-          className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                        hover:bg-primary"
-        >
-          <BellIcon color="var(--accent-foreground)" size={16} className="mx-2" />
-          <p className="mx-1 text-base text-secondary-foreground  hover:text-black">
-            Notifications
-          </p>
-        </li> */}
-        {/* <li
-          className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                        hover:bg-primary"
-        >
-          <ArrowDown color="var(--accent-foreground)" size={16} className="mx-2" />
-          <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Show more</p>
-        </li> */}
+            >
+              <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
+              <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
+            </li>
+          </Link>
+        ) : (
+          <Link href={"/home_page"}>
+            <li
+              className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
+                    hover:bg-primary "
+            >
+              <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
+              <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
+            </li>
+          </Link>
+        )}
       </ul>
 
-      {/* <Link href={"/favorites"}>
-        <div className=" cursor-pointer border-2 border-x-0  hover:bg-primary">
-          <div className="m-4 w-20 text-secondary-foreground  hover:text-black">
-            <span className="mr-0 flex">Favorites</span>
-          </div>
-        </div>
-      </Link> */}
       <div className="cursor-pointer">
-        <WorkSpace userRole={session?.user.role} userId={session?.user.id} />
+        <WorkSpace
+          userRole={session?.user.role}
+          userId={session?.user.id}
+          isActive={session?.user.isActive}
+        />
       </div>
 
       <footer className="absolute bottom-0 h-max w-full border-t-2 border-border p-2">

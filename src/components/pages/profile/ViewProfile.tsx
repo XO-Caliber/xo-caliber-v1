@@ -1,5 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
+import PaymentCancel from "@/components/payment/PaymentCancel";
 import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import {
@@ -118,6 +119,7 @@ const ViewProfile = ({ userId }: { userId?: string }) => {
           <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
             Save
           </Button>
+          <PaymentCancel />
         </DialogFooter>
       </DialogContent>
     </div>

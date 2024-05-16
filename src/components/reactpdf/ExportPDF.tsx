@@ -19,7 +19,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
   let exno = 0;
   const MyDocument = () => (
     <Document>
-      <Page size="A4" style={styles.body}>
+      <Page size="LETTER" style={styles.body}>
         {data &&
           data.map((section, index) => (
             <React.Fragment key={index}>

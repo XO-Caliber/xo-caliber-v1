@@ -16,8 +16,9 @@ import ViewProfile from "../profile/ViewProfile";
 interface Props {
   userRole?: string;
   userId?: string;
+  isActive?: Boolean | undefined;
 }
-const WorkSpace = ({ userRole, userId }: Props) => {
+const WorkSpace = ({ userRole, userId, isActive }: Props) => {
   const [isSubMenuHidden, setIsSubMenuHidden] = useState(false);
 
   const toggleSubMenu = () => {
@@ -64,14 +65,14 @@ const WorkSpace = ({ userRole, userId }: Props) => {
       >
         <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-caliberq&a")}
+          onClick={() => router.push(isActive ? "/workspaces/xo-caliberq&a" : "/home_page")}
         >
           <CheckSquare size={18} className="bi bi-bookmark-fill" />
           <h1 className="hover ml-4 text-secondary-foreground hover:text-black">Caliber</h1>
         </div>
         <div
           className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-spidergraph")}
+          onClick={() => router.push(isActive ? "/workspaces/xo-spidergraph" : "home_page")}
         >
           <CandlestickChart size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Assess</h1>
@@ -88,7 +89,7 @@ const WorkSpace = ({ userRole, userId }: Props) => {
         {(userRole === "INDIVIDUAL" || userRole === "FIRM" || userRole === "ADMIN") && (
           <div
             className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push("/workspaces/checklist")}
+            onClick={() => router.push(isActive ? "/workspaces/checklist" : "home_page")}
           >
             <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuCheck</h1>
@@ -97,7 +98,7 @@ const WorkSpace = ({ userRole, userId }: Props) => {
         {(userRole === "FIRM" || userRole === "ASSISTANT") && (
           <div
             className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push("/workspaces/strategy-doc")}
+            onClick={() => router.push(isActive ? "/workspaces/strategy-doc" : "home_page")}
           >
             <EyeIcon size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuView</h1>
@@ -105,7 +106,7 @@ const WorkSpace = ({ userRole, userId }: Props) => {
         )}{" "}
         <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-coverletter")}
+          onClick={() => router.push(isActive ? "/workspaces/xo-coverletter" : "home_page")}
         >
           <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Craft</h1>

@@ -37,25 +37,25 @@ export function PaymentCard() {
   }
 
   return (
-    <Card className="relative z-50 w-[500px]">
+    <Card className="relative z-50 w-[900px]  bg-gradient-to-r from-[#dd0839]  to-[#39468f] p-20">
       <CardHeader>
-        <CardTitle className="mb-4 text-center leading-8">
-          Empower Your Immigration Visas Journey through Our User-Friendly Self-Service Web Platform
+        <CardTitle className="mb-4 text-center text-3xl leading-8 text-white">
+          Unlock Your Immigration Visas Journey through Our User-Friendly Self-Service Web Platform
         </CardTitle>
-        <CardDescription className="text-center">
+        <CardDescription className="text-center font-bold text-white">
           Activate 7 days trial period NOW!!!
         </CardDescription>
       </CardHeader>
       <CardContent></CardContent>
       <CardFooter className="w-full">
         <Button
-          variant={"dark"}
+          variant={"outline"}
           className="w-full font-semibold"
           onClick={() => {
             checkout().catch(console.error);
           }}
         >
-          Purchase Today
+          START YOUR SUBSCRIPTION (Y)EARLY
         </Button>
       </CardFooter>
     </Card>
