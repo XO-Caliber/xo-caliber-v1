@@ -92,55 +92,56 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
 
   const styles = StyleSheet.create({
     body: {
-      paddingTop: 35,
-      paddingBottom: 65,
-      paddingHorizontal: 35
+      paddingTop: 50,
+      paddingBottom: 50,
+      paddingHorizontal: 50
     },
     title: {
-      paddingHorizontal: 35,
-      fontSize: 14,
+      paddingHorizontal: 50,
+      fontSize: 16,
       textAlign: "left",
-      fontWeight: "extrabold",
+      fontWeight: "bold",
       fontFamily: "Times-Roman"
     },
     exhibitTitle: {
-      fontSize: 12,
+      fontSize: 14,
       textAlign: "left",
       fontWeight: "bold",
+      fontStyle: "italic",
       textWrap: "wrap",
       fontFamily: "Times-Roman"
     },
     author: {
-      fontSize: 12,
+      fontSize: 14,
       textAlign: "center",
       marginBottom: 40
     },
     subtitle: {
-      fontSize: 18,
+      fontSize: 20,
       margin: 12,
       fontFamily: "Times-Roman"
     },
     text: {
-      margin: 2,
-      fontSize: 11,
+      margin: 5,
+      fontSize: 12,
       textAlign: "justify",
       fontFamily: "Times-Roman"
     },
     image: {
-      marginVertical: 15,
-      marginHorizontal: 100
+      marginVertical: 20,
+      marginHorizontal: 150
     },
     header: {
-      fontSize: 12,
-      marginBottom: 20,
-      fontWeight: "extrabold",
+      fontSize: 14,
+      marginBottom: 30,
+      fontWeight: "bold",
       textAlign: "center",
       color: "grey",
       fontFamily: "Times-Roman"
     },
     pageNumber: {
       position: "absolute",
-      fontSize: 12,
+      fontSize: 14,
       bottom: 30,
       left: 0,
       right: 0,
@@ -150,11 +151,9 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     sectionDiv: {
       display: "flex",
       flexDirection: "row",
-      paddingTop: 12,
-      textAlign: "left",
-      marginRight: "300px",
-      paddingBottom: 12,
-      paddingHorizontal: 35,
+      paddingTop: 15,
+      paddingBottom: 15,
+      paddingHorizontal: 50,
       alignItems: "center",
       justifyContent: "flex-end"
     },
@@ -165,14 +164,14 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     exhibitDiv: {
       display: "flex",
       flexDirection: "row",
-      marginHorizontal: 34,
+      marginHorizontal: 50,
       alignItems: "flex-start",
       justifyContent: "space-around"
     },
     exhibitSub: {
       display: "flex",
       flexDirection: "column",
-      marginHorizontal: 34,
+      marginHorizontal: 50,
       alignItems: "flex-start",
       justifyContent: "space-around"
     }
