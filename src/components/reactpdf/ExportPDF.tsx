@@ -23,7 +23,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
         {data &&
           data.map((section, index) => (
             <React.Fragment key={index}>
-              <div style={styles.sectionDiv}>
+              <div style={styles.sectionTitle}>
                 <Text style={styles.title}>{section.title}</Text>
               </div>
               <Html style={styles.text}>
@@ -32,7 +32,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
               {section.SubSection &&
                 section.SubSection.map((subsection, subIndex) => (
                   <React.Fragment key={subIndex}>
-                    <div style={styles.sectionDiv}>
+                    <div style={styles.sectionTitle}>
                       <Text style={styles.title}>{subsection.title}</Text>
                     </div>
                     <Html style={styles.text}>
@@ -101,6 +101,13 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       fontSize: 16,
       textAlign: "left",
       fontWeight: "bold",
+      fontFamily: "Times-Roman"
+    },
+    sectionTitle: {
+      paddingHorizontal: 50,
+      fontSize: 16,
+      textAlign: "left",
+      fontWeight: "extrabold",
       fontFamily: "Times-Roman"
     },
     exhibitTitle: {

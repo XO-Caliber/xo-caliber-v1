@@ -4,17 +4,21 @@ import AdminCheckList from "@/components/pages/checklist/admin/AdminCheckList";
 import Header from "@/components/Header";
 import FirmCheckList from "@/components/pages/checklist/firm/FirmCheckList";
 import Checklist from "@/components/pages/checklist/Checklist";
+import { PaymentCard } from "@/components/PaymentCard";
 
 const page = async () => {
   const session = await getAuthSession();
   return (
-    <div className="h-screen bg-dotted-spacing-3 bg-dotted-gray-200">
-      {session && session.user.role === "ADMIN" && <AdminCheckList />}
-      {session && session.user.role === "FIRM" && <FirmCheckList />}
-      {session && session.user.role === "INDIVIDUAL" && <Checklist userId={session.user.id} />}
-      {!session && (
-        <div className="text-xl">
-          <Header>CheckList</Header>
+    <div>
+      {session?.user.isActive || session?.user.role !== "INDIVIDUAL" ? (
+        <div className="h-screen bg-dotted-spacing-3 bg-dotted-gray-200">
+          {session?.user.role === "ADMIN" && <AdminCheckList />}
+          {session?.user.role === "FIRM" && <FirmCheckList />}
+          {session?.user.role === "INDIVIDUAL" && <Checklist userId={session.user.id} />}
+        </div>
+      ) : (
+        <div className="absolute grid h-full w-full place-items-center backdrop-blur-sm bg-dotted-spacing-3 bg-dotted-gray-200">
+          <PaymentCard />
         </div>
       )}
     </div>
