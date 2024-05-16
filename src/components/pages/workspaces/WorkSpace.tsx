@@ -65,14 +65,14 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
       >
         <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground duration-300 hover:bg-primary"
-          onClick={() => router.push(isActive ? "/workspaces/xo-caliberq&a" : "/home_page")}
+          onClick={() => router.push("/workspaces/xo-caliberq&a")}
         >
           <CheckSquare size={18} className="bi bi-bookmark-fill" />
           <h1 className="hover ml-4 text-secondary-foreground hover:text-black">Caliber</h1>
         </div>
         <div
           className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push(isActive ? "/workspaces/xo-spidergraph" : "home_page")}
+          onClick={() => router.push("/workspaces/xo-spidergraph")}
         >
           <CandlestickChart size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Assess</h1>
@@ -89,7 +89,7 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
         {(userRole === "INDIVIDUAL" || userRole === "FIRM" || userRole === "ADMIN") && (
           <div
             className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push(isActive ? "/workspaces/checklist" : "home_page")}
+            onClick={() => router.push("/workspaces/checklist")}
           >
             <CheckSquare2 size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuCheck</h1>
@@ -98,7 +98,7 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
         {(userRole === "FIRM" || userRole === "ASSISTANT") && (
           <div
             className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-            onClick={() => router.push(isActive ? "/workspaces/strategy-doc" : "home_page")}
+            onClick={() => router.push("/workspaces/strategy-doc")}
           >
             <EyeIcon size={18} className="bi bi-bookmark-fill" />
             <h1 className="ml-4 text-secondary-foreground hover:text-black">DocuView</h1>
@@ -106,7 +106,7 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
         )}{" "}
         <div
           className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push(isActive ? "/workspaces/xo-coverletter" : "home_page")}
+          onClick={() => router.push("/workspaces/xo-coverletter")}
         >
           <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Craft</h1>
