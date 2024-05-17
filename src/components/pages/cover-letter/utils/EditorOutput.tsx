@@ -18,7 +18,9 @@ const renderers = {
 
 const style = {
   paragraph: {
-    fontSize: "12px"
+    fontSize: "12px",
+    margin: "0px", // Remove margin
+    padding: "0px" // Remove padding
     // lineHeight: "20px"
   },
   header: {
@@ -56,7 +58,7 @@ const style = {
     /* Table */
     table: {
       borderCollapse: "collapse",
-      border: "1px solid black"
+      border: "0.5px solid grey"
     },
 
     /* Table Row */

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Html from "react-pdf-html";
 import { Page, Text, Document, StyleSheet, Font } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
@@ -110,18 +110,21 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     },
     title: {
       // paddingHorizontal: 50,
-      fontSize: 16,
+      fontSize: "16px",
       textAlign: "left",
       fontWeight: "bold",
       fontFamily: "Times-Roman",
-      lineHeight: 1
+      lineHeight: "1.5px",
+      marginBottom: "10px"
     },
     sectionTitle: {
       // paddingHorizontal: 50,
-      fontSize: 16,
+      fontSize: "16px",
       textAlign: "left",
       fontWeight: "extrabold",
-      fontFamily: "Times-Roman"
+      fontFamily: "Times-Roman",
+      lineHeight: "1.5px",
+      marginBottom: "10px"
     },
     exhibitTitle: {
       fontSize: 14,
@@ -129,7 +132,9 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       fontWeight: "bold",
       fontStyle: "italic",
       textWrap: "wrap",
-      fontFamily: "Times-Roman"
+      fontFamily: "Times-Roman",
+      lineHeight: "1.5px",
+      marginBottom: "10px"
     },
     author: {
       fontSize: 14,
@@ -139,14 +144,20 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     subtitle: {
       fontSize: 20,
       margin: 12,
-      fontFamily: "Times-Roman"
+      fontFamily: "Times-Roman",
+      lineHeight: 1.5
     },
     text: {
       // margin: 5,
+      display: "flex",
+      flexDirection: "column",
       fontSize: 12,
       textAlign: "justify",
+      textIndent : "50px",
       fontFamily: "Times-Roman",
-      lineHeight: 1.5
+      lineHeight: 1.5,
+      marginBottom: 2,
+      gap: 4
     },
     image: {
       marginVertical: 20,
@@ -184,18 +195,20 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
     },
     exhibitDiv: {
       display: "flex",
+      textAlign: "left",
       flexDirection: "column",
       // marginHorizontal: 50,
-      alignItems: "center",
-      justifyContent: "space-between"
+      alignItems: "flex-start",
+      justifyContent: "space-between",
+      lineHeight: 1.5
     },
     exhibitSub: {
       display: "flex",
       flexDirection: "column",
       // marginHorizontal: 50,
       alignItems: "flex-start",
-      justifyContent: "space-between",
-      fontStyle: "italic"
+      fontStyle: "italic",
+      lineHeight: 1.5
     }
   });
 
@@ -210,7 +223,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
         <DialogHeader>
           <DialogTitle>View and Download the pdf here!</DialogTitle>
           <DialogDescription>
-            Note: Loading the PDF may take some time. If it doesn&apos;t load on the first attempt,
+            Note: Loading the PDF may take some time. If it doesn&apos;t load  properly on the first attempt,
             please try opening it again.
           </DialogDescription>
 
