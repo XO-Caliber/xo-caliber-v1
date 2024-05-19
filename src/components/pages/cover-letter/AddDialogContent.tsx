@@ -60,7 +60,7 @@ const AddDialogContent = ({
     const List = (await import("@editorjs/list")).default;
 
     if (!ref.current) {
-      const editor = new EditorJS({
+      const editorConfig = {
         holder: "editor",
         onReady() {
           ref.current = editor;
@@ -71,12 +71,20 @@ const AddDialogContent = ({
           blocks: []
         },
         tools: {
-          header: Header,
-          table: Table,
-          list: List
+          header: Header
+          // Other tools can be added conditionally below
         },
         autofocus: true
-      });
+      };
+
+      if (contentType === "Exhibit") {
+        //@ts-ignore
+        editorConfig.tools.table = Table;
+        //@ts-ignore
+        editorConfig.tools.list = List;
+      }
+
+      const editor = new EditorJS(editorConfig);
     }
   }, []);
 

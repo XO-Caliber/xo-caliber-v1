@@ -90,12 +90,12 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
     <main>
       {CoverLetterData?.map((coverLetter, index) => (
         <div key={coverLetter.id}>
-          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-b-0 border-border bg-[#dfd9d5] p-1.5">
+          <div className="m-2 mb-0 flex items-center gap-12 rounded-t-lg border border-b-0 border-border bg-[#dfd9d5] p-3">
             <button onClick={() => toggleSectionVisibility(index)}>
               {isSectionVisible[index] ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
             </button>
             <div className="flex items-center space-x-2">
-              <h1 className="flex flex-row items-center justify-center text-xs font-medium">
+              <h1 className="flex flex-row items-center justify-center text-base font-medium">
                 {coverLetter.title}
               </h1>
               <DropdownMenu>
