@@ -63,7 +63,7 @@ export const AssistantList = () => {
   } else {
     return (
       <div className="flex h-[280px] items-center justify-center bg-blend-color-burn">
-        <h1 className=" font-bold">You aren't under a firm</h1>
+        <h1 className=" font-bold">You aren&apos;t under a firm</h1>
       </div>
     );
   }
