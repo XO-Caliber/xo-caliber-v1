@@ -61,11 +61,11 @@ export const AssistantDialog = () => {
     }
   };
   return (
-    <div className="flex w-[400px] flex-col  p-4">
+    <div className=" flex w-[395px]  flex-col bg-white p-4">
       <p>Assign an assistant for your client:</p>
       <div className="flex w-96 flex-col items-start gap-2">
         <div className="flex  items-center justify-start py-4">
-          <Label htmlFor="name" className="text-right">
+          <Label htmlFor="name" className="text-center">
             Pick Client:
           </Label>
           {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}

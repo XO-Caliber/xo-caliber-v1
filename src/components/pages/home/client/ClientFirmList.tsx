@@ -28,7 +28,7 @@ const ClientFirmList = () => {
         </div>
       </section>
     );
-  } else {
+  } else if (clientFirmList.isFetching || clientFirmList.isRefetching) {
     // If the user does not exist, return an error message
     return (
       <div className=" scrollableContainer flex h-max max-h-72 w-[310px] flex-col items-center overflow-y-scroll">
@@ -41,6 +41,12 @@ const ClientFirmList = () => {
       // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
       //   Loading...
       // </div>
+    );
+  } else {
+    return (
+      <div className="flex h-[200px] items-center justify-center bg-blend-color-burn">
+        <h1 className=" font-bold">You are not a client</h1>
+      </div>
     );
   }
 };

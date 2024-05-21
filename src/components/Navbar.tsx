@@ -21,6 +21,7 @@ import { UserProfile } from "./utils/UserProfile";
 import { user } from "@/types/user";
 import ViewProfile from "./pages/profile/ViewProfile";
 import { Dialog, DialogTrigger } from "./ui/Dialog";
+import InstructionVideo from "./pages/home/InstructionVideo";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -72,6 +73,9 @@ export const Navbar = async () => {
             </li>
           </Link>
         )}
+        {/* <li>
+          <InstructionVideo />
+        </li> */}
       </ul>
 
       <div className="cursor-pointer">
@@ -122,7 +126,7 @@ export const Navbar = async () => {
                 <Logout />
               </DropdownMenuContent>
             </DropdownMenu>{" "}
-            <ViewProfile />
+            <ViewProfile role={session.user.role} />
           </Dialog>
         )}
       </footer>

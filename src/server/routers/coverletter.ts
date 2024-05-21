@@ -561,6 +561,7 @@ export const coverletterRouter = router({
           title: title
         }
       });
+
       return { success: true };
     })
 });

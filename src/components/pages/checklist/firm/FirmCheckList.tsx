@@ -5,6 +5,7 @@ import {
   ChevronDown,
   ChevronRight,
   Info,
+  Loader,
   LucideTrash2,
   Minus,
   MinusCircle,
@@ -232,278 +233,286 @@ const FirmCheckList = () => {
         </div>
       </div>
       <div className="h-[91vh] p-2">
-        <div className="scrollableContainer ml-60 h-[85vh]  overflow-y-scroll font-serif">
-          <div className="mt-4">
-            <section className="flex w-full flex-col p-8 pt-0 text-black">
-              {checkListData &&
-                checkListData.data?.map((checkList, index) => (
-                  <div
-                    key={checkList.id}
-                    className={`mb-1 space-y-2 border-2 bg-white 
+        {checkListData.data ? (
+          <div className="scrollableContainer ml-60 h-[85vh]  overflow-y-scroll font-serif">
+            <div className="mt-4">
+              <section className="flex w-full flex-col p-8 pt-0 text-black">
+                {checkListData &&
+                  checkListData.data?.map((checkList, index) => (
+                    <div
+                      key={checkList.id}
+                      className={`mb-1 space-y-2 border-2 bg-white 
                      p-4`}
-                  >
-                    <div className="pb-2">
-                      <div
-                        className={`flex items-center justify-start bg-gray-200 ${
-                          openSubMenus[checkList.id] ? "border-b-0" : ""
-                        } rounded-md`}
-                      >
-                        <i className="ml-1">
-                          {openSubMenus[checkList.id] ? (
-                            <ChevronDown
-                              className="duration-800 cursor-pointer text-black transition-all"
-                              onClick={() => toggleSubMenu(checkList.id)}
-                              size={15}
-                            />
-                          ) : (
-                            <ChevronRight
-                              className="duration-800 cursor-pointer text-xs text-black transition-all"
-                              onClick={() => toggleSubMenu(checkList.id)}
-                              size={15}
-                            />
-                          )}
-                        </i>
-                        {editingItems[checkList.id] ? (
-                          <div className="p-1">
-                            <Input
-                              onChange={(e) => {
-                                checkList.name = e.target.value;
-                              }}
-                              className="h-[20px]  text-xs"
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  handleSaveItemClick(checkList.id, checkList.name, true);
-                                }
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <h1 className="p-2 text-xs">{checkList.name}</h1>
-                        )}
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <MoreHorizontal size={14} className="cursor-pointer" />
-                          </DropdownMenuTrigger>
-
-                          {!editingItems[checkList.id] && (
-                            <DropdownMenuContent>
-                              <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => handleEditItemClick(checkList.id)}
-                              >
-                                Edit
-                              </DropdownMenuItem>
-
-                              <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => deleteHeading(checkList.id)}
-                              >
-                                Delete
-                              </DropdownMenuItem>
-                              <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  handleAddSubHeadingClick(checkList.id);
+                    >
+                      <div className="pb-2">
+                        <div
+                          className={`flex items-center justify-start bg-gray-200 ${
+                            openSubMenus[checkList.id] ? "border-b-0" : ""
+                          } rounded-md`}
+                        >
+                          <i className="ml-1">
+                            {openSubMenus[checkList.id] ? (
+                              <ChevronDown
+                                className="duration-800 cursor-pointer text-black transition-all"
+                                onClick={() => toggleSubMenu(checkList.id)}
+                                size={15}
+                              />
+                            ) : (
+                              <ChevronRight
+                                className="duration-800 cursor-pointer text-xs text-black transition-all"
+                                onClick={() => toggleSubMenu(checkList.id)}
+                                size={15}
+                              />
+                            )}
+                          </i>
+                          {editingItems[checkList.id] ? (
+                            <div className="p-1">
+                              <Input
+                                onChange={(e) => {
+                                  checkList.name = e.target.value;
                                 }}
-                              >
-                                Add Subtopic
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
+                                className="h-[20px]  text-xs"
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleSaveItemClick(checkList.id, checkList.name, true);
+                                  }
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <h1 className="p-2 text-xs">{checkList.name}</h1>
                           )}
-                          {editingItems[checkList.id] && (
-                            <DropdownMenuContent>
-                              <DropdownMenuItem
-                                className="cursor-pointer"
-                                onClick={() => handleCancelEditItemClick(checkList.id)}
-                              >
-                                Cancel
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          )}
-                        </DropdownMenu>
-                      </div>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <MoreHorizontal size={14} className="cursor-pointer" />
+                            </DropdownMenuTrigger>
 
-                      <div
-                        className={`transition-max-height overflow-hidden duration-500 ${
-                          openSubMenus[checkList.id] ? "max-h-[2000px]" : "max-h-0"
-                        }`}
-                      >
-                        {showNewSubHeadingInput === checkList.id && (
-                          <h3 className="mb-1 ml-6 mt-1 flex flex-row items-center justify-start space-x-1 border border-border bg-[#FFE6E0] p-2 text-xs">
-                            <Input
-                              ref={newSubHeadingInputRefs[checkList.id]}
-                              value={newSubHeadings[checkList.id] || ""}
-                              className="h-[20px] w-[300px] border border-gray-400 text-xs "
-                              placeholder="new subheading"
-                              autoFocus={true}
-                              onChange={(e) =>
-                                setNewSubHeadings({
-                                  ...newSubHeadings,
-                                  [checkList.id]: e.target.value
-                                })
-                              }
-                              onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                  e.preventDefault();
-                                  handleNewSubHeadingSubmit(checkList.id);
+                            {!editingItems[checkList.id] && (
+                              <DropdownMenuContent>
+                                <DropdownMenuItem
+                                  className="cursor-pointer"
+                                  onClick={() => handleEditItemClick(checkList.id)}
+                                >
+                                  Edit
+                                </DropdownMenuItem>
+
+                                <DropdownMenuItem
+                                  className="cursor-pointer"
+                                  onClick={() => deleteHeading(checkList.id)}
+                                >
+                                  Delete
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                  className="cursor-pointer"
+                                  onClick={() => {
+                                    handleAddSubHeadingClick(checkList.id);
+                                  }}
+                                >
+                                  Add Subtopic
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            )}
+                            {editingItems[checkList.id] && (
+                              <DropdownMenuContent>
+                                <DropdownMenuItem
+                                  className="cursor-pointer"
+                                  onClick={() => handleCancelEditItemClick(checkList.id)}
+                                >
+                                  Cancel
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            )}
+                          </DropdownMenu>
+                        </div>
+
+                        <div
+                          className={`transition-max-height overflow-hidden duration-500 ${
+                            openSubMenus[checkList.id] ? "max-h-[2000px]" : "max-h-0"
+                          }`}
+                        >
+                          {showNewSubHeadingInput === checkList.id && (
+                            <h3 className="mb-1 ml-6 mt-1 flex flex-row items-center justify-start space-x-1 border border-border bg-[#FFE6E0] p-2 text-xs">
+                              <Input
+                                value={newSubHeadings[checkList.id] || ""}
+                                className="h-[20px] w-[300px] border border-gray-400 text-xs "
+                                placeholder="new subheading"
+                                autoFocus={true}
+                                onChange={(e) =>
+                                  setNewSubHeadings({
+                                    ...newSubHeadings,
+                                    [checkList.id]: e.target.value
+                                  })
                                 }
-                              }}
-                            />
-                            <X
-                              size={18}
-                              onClick={() => setShowNewSubHeadingInput(null)}
-                              className="cursor-pointer text-destructive"
-                            />
-                          </h3>
-                        )}
+                                onKeyDown={(e) => {
+                                  if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleNewSubHeadingSubmit(checkList.id);
+                                  }
+                                }}
+                              />
+                              <X
+                                size={18}
+                                onClick={() => setShowNewSubHeadingInput(null)}
+                                className="cursor-pointer text-destructive"
+                              />
+                            </h3>
+                          )}
 
-                        {checkList.subHeading &&
-                          checkList.subHeading.map((subHeading) => (
-                            <div key={subHeading.id} className="mb-1 ml-6 border-2">
-                              <h3 className="flex flex-row items-center justify-start space-x-1 bg-[#FFE6E0] p-2 text-xs">
-                                {editingItems[subHeading.id] ? (
-                                  <div>
-                                    <Input
-                                      className="h-[20px] text-xs"
-                                      onChange={(e) => {
-                                        subHeading.name = e.target.value;
-                                      }}
-                                      onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                          e.preventDefault();
-                                          handleSaveItemClick(
-                                            subHeading.id,
-                                            subHeading.name,
-                                            false
-                                          );
-                                        }
-                                      }}
-                                    />
-                                  </div>
-                                ) : (
-                                  <div>
-                                    <h2 className="text-xs">{subHeading.name}</h2>
-                                  </div>
-                                )}
-                                <DropdownMenu>
-                                  <DropdownMenuTrigger asChild>
-                                    <MoreHorizontal size={14} className="cursor-pointer" />
-                                  </DropdownMenuTrigger>
-                                  {!editingItems[subHeading.id] && (
-                                    <DropdownMenuContent>
-                                      <DropdownMenuItem
-                                        onClick={() => {
-                                          handleEditItemClick(subHeading.id);
-                                        }}
-                                        className="cursor-pointer"
-                                      >
-                                        Edit
-                                      </DropdownMenuItem>
-                                      <DropdownMenuItem
-                                        className="cursor-pointer"
-                                        onClick={() => deleteSubHeading(subHeading.id)}
-                                      >
-                                        Delete
-                                      </DropdownMenuItem>
-                                      <DropdownMenuItem
-                                        className="cursor-pointer"
-                                        onClick={() => handleAddChecklistClick(subHeading.id)}
-                                      >
-                                        Add Checklist
-                                      </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                  )}
-                                  {editingItems[subHeading.id] && (
-                                    <DropdownMenuContent>
-                                      <DropdownMenuItem
-                                        onClick={() => handleCancelEditItemClick(subHeading.id)}
-                                      >
-                                        Cancel
-                                      </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                  )}
-                                </DropdownMenu>
-                              </h3>
-                              <ul className="space-y-2">
-                                {subHeading.Checklist &&
-                                  subHeading.Checklist.map((item, itemIndex) => (
-                                    <li
-                                      key={item.id}
-                                      className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary ${
-                                        itemIndex === subHeading.Checklist.length - 1
-                                          ? "border-b-0"
-                                          : ""
-                                      }`}
-                                    >
-                                      <Checkbox className="" />
-                                      <p className="flex w-full text-xs">{item.name}</p>
-                                      <DropdownMenu>
-                                        <DropdownMenuTrigger asChild>
-                                          <MoreHorizontal size={14} />
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent>
-                                          <DropdownMenuItem
-                                            onClick={() => {
-                                              deleteCheckList(item.id);
-                                            }}
-                                          >
-                                            Delete
-                                          </DropdownMenuItem>
-                                        </DropdownMenuContent>
-                                      </DropdownMenu>
-                                    </li>
-                                  ))}
-                                {openSubMenus[subHeading.id] && (
-                                  <li
-                                    className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary`}
-                                  >
-                                    <Checkbox className="" />
-                                    <p className="flex w-full items-center text-xs">
+                          {checkList.subHeading &&
+                            checkList.subHeading.map((subHeading) => (
+                              <div key={subHeading.id} className="mb-1 ml-6 border-2">
+                                <h3 className="flex flex-row items-center justify-start space-x-1 bg-[#FFE6E0] p-2 text-xs">
+                                  {editingItems[subHeading.id] ? (
+                                    <div>
                                       <Input
-                                        ref={newChecklistInputRefs[subHeading.id]}
-                                        value={newChecklists[subHeading.id]}
-                                        placeholder="New checklist"
-                                        className="h-[25px] text-xs"
-                                        autoFocus={true}
-                                        onChange={(e) =>
-                                          setNewChecklists({
-                                            ...newChecklists,
-                                            [subHeading.id]: e.target.value
-                                          })
-                                        }
+                                        className="h-[20px] text-xs"
+                                        onChange={(e) => {
+                                          subHeading.name = e.target.value;
+                                        }}
                                         onKeyDown={(e) => {
                                           if (e.key === "Enter") {
                                             e.preventDefault();
-                                            handleNewChecklistSubmit(subHeading.id);
+                                            handleSaveItemClick(
+                                              subHeading.id,
+                                              subHeading.name,
+                                              false
+                                            );
                                           }
                                         }}
                                       />
-                                      <span title="close">
-                                        <X
-                                          onClick={() =>
-                                            setOpenSubMenus((prevState) => ({
-                                              ...prevState,
-                                              [subHeading.id]: false
-                                            }))
+                                    </div>
+                                  ) : (
+                                    <div>
+                                      <h2 className="text-xs">{subHeading.name}</h2>
+                                    </div>
+                                  )}
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <MoreHorizontal size={14} className="cursor-pointer" />
+                                    </DropdownMenuTrigger>
+                                    {!editingItems[subHeading.id] && (
+                                      <DropdownMenuContent>
+                                        <DropdownMenuItem
+                                          onClick={() => {
+                                            handleEditItemClick(subHeading.id);
+                                          }}
+                                          className="cursor-pointer"
+                                        >
+                                          Edit
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                          className="cursor-pointer"
+                                          onClick={() => deleteSubHeading(subHeading.id)}
+                                        >
+                                          Delete
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                          className="cursor-pointer"
+                                          onClick={() => handleAddChecklistClick(subHeading.id)}
+                                        >
+                                          Add Checklist
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    )}
+                                    {editingItems[subHeading.id] && (
+                                      <DropdownMenuContent>
+                                        <DropdownMenuItem
+                                          onClick={() => handleCancelEditItemClick(subHeading.id)}
+                                        >
+                                          Cancel
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    )}
+                                  </DropdownMenu>
+                                </h3>
+                                <ul className="space-y-2">
+                                  {subHeading.Checklist &&
+                                    subHeading.Checklist.map((item, itemIndex) => (
+                                      <li
+                                        key={item.id}
+                                        className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary ${
+                                          itemIndex === subHeading.Checklist.length - 1
+                                            ? "border-b-0"
+                                            : ""
+                                        }`}
+                                      >
+                                        <Checkbox className="" />
+                                        <p className="flex w-full text-xs">{item.name}</p>
+                                        <DropdownMenu>
+                                          <DropdownMenuTrigger asChild>
+                                            <MoreHorizontal size={14} />
+                                          </DropdownMenuTrigger>
+                                          <DropdownMenuContent>
+                                            <DropdownMenuItem
+                                              onClick={() => {
+                                                deleteCheckList(item.id);
+                                              }}
+                                            >
+                                              Delete
+                                            </DropdownMenuItem>
+                                          </DropdownMenuContent>
+                                        </DropdownMenu>
+                                      </li>
+                                    ))}
+                                  {openSubMenus[subHeading.id] && (
+                                    <li
+                                      className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary`}
+                                    >
+                                      <Checkbox className="" />
+                                      <p className="flex w-full items-center text-xs">
+                                        <Input
+                                          value={newChecklists[subHeading.id]}
+                                          placeholder="New checklist"
+                                          className="h-[25px] text-xs"
+                                          autoFocus={true}
+                                          onChange={(e) =>
+                                            setNewChecklists({
+                                              ...newChecklists,
+                                              [subHeading.id]: e.target.value
+                                            })
                                           }
-                                          size={18}
-                                          className="ml-4 cursor-pointer  text-destructive"
+                                          onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                              e.preventDefault();
+                                              handleNewChecklistSubmit(subHeading.id);
+                                            }
+                                          }}
                                         />
-                                      </span>
-                                    </p>
-                                  </li>
-                                )}
-                              </ul>
-                            </div>
-                          ))}
+                                        <span title="close">
+                                          <X
+                                            onClick={() =>
+                                              setOpenSubMenus((prevState) => ({
+                                                ...prevState,
+                                                [subHeading.id]: false
+                                              }))
+                                            }
+                                            size={18}
+                                            className="ml-4 cursor-pointer  text-destructive"
+                                          />
+                                        </span>
+                                      </p>
+                                    </li>
+                                  )}
+                                </ul>
+                              </div>
+                            ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-            </section>
+                  ))}
+              </section>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            {checkListData.isFetching && (
+              <div className="ml-56 flex h-[70vh] items-center justify-center ">
+                <Loader size={45} className="rotate-animation text-gray-600" />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

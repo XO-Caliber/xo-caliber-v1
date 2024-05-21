@@ -20,7 +20,7 @@ interface userProps {
 
 export const FirmHome = async ({ user }: userProps) => {
   return (
-    <section className="flex flex-row items-start justify-normal overflow-scroll bg-dotted-spacing-3 bg-dotted-gray-200">
+    <section className="flex flex-row items-start justify-normal  bg-dotted-spacing-3 bg-dotted-gray-200">
       <div className="ml-8 mt-4 w-[350px] justify-self-center p-4">
         <AddClientForm />
         <br />

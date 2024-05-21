@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
+import MobileWarning from "@/components/MobileWarning";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -27,18 +28,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Providers>
           <body
             className={cn(
-              "min-h-screen  bg-background  font-sans text-lg antialiased bg-dotted-spacing-3 bg-dotted-gray-200",
+              "min-h-screen bg-background font-sans text-lg antialiased bg-dotted-spacing-3 bg-dotted-gray-200",
               fontSans.variable
             )}
           >
-            {/* <Navbar /> */}
-            {children}
-
-            {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
-              <PaymentCard />
-            </main> */}
-
-            <Toaster />
+            <div className="block lg:hidden">
+              <MobileWarning />
+            </div>
+            <div className="hidden lg:block">
+              {/* <Navbar /> */}
+              {children}
+              {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
+                <PaymentCard />
+              </main> */}
+              <Toaster />
+            </div>
           </body>
         </Providers>
       </NextAuthProvider>

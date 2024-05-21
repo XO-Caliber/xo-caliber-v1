@@ -27,7 +27,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
-const ViewProfile = ({ userId }: { userId?: string }) => {
+const ViewProfile = ({ role }: { role: string | undefined }) => {
   const userData = trpc.home.getUserProfile.useQuery();
   const [userName, setUserName] = useState(userData.data?.name);
   const email = userData.data?.email;
@@ -107,9 +107,9 @@ const ViewProfile = ({ userId }: { userId?: string }) => {
               <p className="flex items-center justify-start font-bold text-black">Role</p>
               <Input className="text-black " value={userType || ""} disabled={true} />
             </li>
-            <li>
+            <li className="mt-4">
               {" "}
-              <Link className="mr-2 text-[#63156A]" href={"/reset-password"}>
+              <Link className="mr-2 text-sm text-heading" href={"/reset-password"}>
                 Reset password
               </Link>
             </li>
@@ -119,7 +119,7 @@ const ViewProfile = ({ userId }: { userId?: string }) => {
           <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
             Save
           </Button>
-          <PaymentCancel />
+          {role === "INDIVIDUAL" && <PaymentCancel />}
         </DialogFooter>
       </DialogContent>
     </div>

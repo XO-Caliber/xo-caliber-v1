@@ -8,7 +8,7 @@ import {
 } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
-import { z } from "zod";
+import { nullable, z } from "zod";
 
 export const homeRouter = router({
   leaveFirm: publiceProcedure.mutation(async ({ ctx }) => {
@@ -28,14 +28,61 @@ export const homeRouter = router({
     if (!user) {
       throw new TRPCError({ code: "NOT_FOUND" });
     }
-    await db.user.update({
+    for (const assistants of user.Assistants) {
+      await db.user.update({
+        where: {
+          email: session.user.email
+        },
+        data: {
+          firmId: null,
+          Assistants: {
+            disconnect: {
+              email: assistants.email
+            }
+          }
+        }
+      });
+    }
+
+    await db.answer.deleteMany({
+      where: {
+        userId: session.user.id
+      }
+    });
+    return { success: true };
+  }),
+  leaveAssistantFirm: publiceProcedure.mutation(async ({ ctx }) => {
+    const session = await getAuthSession();
+    if (!session?.user.email) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    const user = await db.assistant.findUnique({
       where: {
         email: session.user.email
       },
-      data: {
-        firmId: null
+      include: {
+        firm: true,
+        User: true
       }
     });
+    if (!user) {
+      throw new TRPCError({ code: "NOT_FOUND" });
+    }
+    for (const users of user.User) {
+      await db.assistant.update({
+        where: {
+          email: session.user.email
+        },
+        data: {
+          firmId: null,
+          User: {
+            disconnect: {
+              email: users.email
+            }
+          }
+        }
+      });
+    }
 
     await db.answer.deleteMany({
       where: {
@@ -76,7 +123,7 @@ export const homeRouter = router({
     if (!results) {
       throw new Error("No assistant was found");
     }
-    return results.Assistants.filter((user) => user.assistantId !== "");
+    return results;
   }),
 
   getAllUser: publiceProcedure.query(async () => {
@@ -163,8 +210,8 @@ export const homeRouter = router({
         User: true
       }
     });
-    const filteredUsers = assistantData?.User.filter((data) => data.id !== "");
-    return filteredUsers;
+
+    return assistantData;
   }),
   getAssistantsUser: publiceProcedure.input(z.string().email()).query(async ({ input }) => {
     const assistantData = await db.assistant.findUnique({

@@ -172,7 +172,7 @@ export const ViewFirmQA = () => {
         </div>
       ) : (
         <div>
-          {categoriesList.isFetching && (
+          {(categoriesList.isFetching || !categoriesList.isSuccess) && (
             <div className="flex h-[70vh] items-center justify-center">
               <Loader size={45} className="rotate-animation" />
             </div>

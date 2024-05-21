@@ -77,7 +77,7 @@ const AddDialogContent = ({
         autofocus: true
       };
 
-      if (contentType === "Exhibit") {
+      if (contentType === "Section" || contentType === "Subsection") {
         //@ts-ignore
         editorConfig.tools.table = Table;
         //@ts-ignore

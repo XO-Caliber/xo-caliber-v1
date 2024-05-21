@@ -159,7 +159,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
       )}
       {!listCat.size && (
         <div>
-          {categoriesList.isFetching && (
+          {(categoriesList.isFetching || categoriesList.isRefetching) && (
             <div className="flex h-[70vh] items-center justify-center">
               <Loader size={45} className="rotate-animation" />
             </div>

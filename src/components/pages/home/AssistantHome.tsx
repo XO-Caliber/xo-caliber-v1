@@ -31,7 +31,7 @@ export const AssistantHome = async ({ user }: userProps) => {
                   </div>
                   <div className="flex w-[360px] flex-col items-center justify-center rounded-md border-2 p-2 shadow-md">
                     <h1 className="mb-1 flex w-full items-center justify-center rounded-lg border bg-secondary-foreground bg-gradient-to-r from-[#dd0839] to-[#39468f]  p-1 text-white">
-                      Assigned Assistants
+                      Your Clients
                     </h1>
                     <AssistantUserList />
                   </div>

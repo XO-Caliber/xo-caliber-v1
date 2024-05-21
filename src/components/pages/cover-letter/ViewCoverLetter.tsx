@@ -76,9 +76,9 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
     }));
   };
 
-  const handleChange = (id: string, title: string) => {
+  const handleChange = (id: string) => {
     try {
-      updateCaseName({ id: id, title: title });
+      updateCaseName({ id: id, title: caseName });
     } catch {}
   };
 
@@ -95,7 +95,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
               {isSectionVisible[index] ? <ChevronDown size={17} /> : <ChevronRight size={17} />}
             </button>
             <div className="flex items-center space-x-2">
-              <h1 className="flex flex-row items-center justify-center text-base font-medium">
+              <h1 className="flex flex-row items-center justify-center text-sm font-medium">
                 {coverLetter.title}
               </h1>
               <DropdownMenu>
@@ -104,12 +104,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="ml-20">
                   <DropdownMenuSub>
-                    <DropdownMenuSubTrigger
-                      className="text-xs"
-                      onMouseMove={() => setCaseName(coverLetter.title)}
-                    >
-                      Edit
-                    </DropdownMenuSubTrigger>
+                    <DropdownMenuSubTrigger className="text-xs">Edit</DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
                         <Input
@@ -120,7 +115,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
                               e.preventDefault();
-                              handleChange(coverLetter.id, coverLetter.title);
+                              handleChange(coverLetter.id);
                             }
                           }}
                         />
