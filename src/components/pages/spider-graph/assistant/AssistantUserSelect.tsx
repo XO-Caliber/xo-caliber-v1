@@ -16,8 +16,6 @@ interface UserProps {
 const AssistantUserSelect = ({ getSelectedUser }: UserProps) => {
   const clientListResult = trpc.home.getAssistantUser.useQuery();
 
-  const clientList = clientListResult?.data || [];
-
   return (
     <div className="flex flex-row items-center justify-center gap-2 px-4">
       <Select onValueChange={getSelectedUser}>
@@ -25,11 +23,12 @@ const AssistantUserSelect = ({ getSelectedUser }: UserProps) => {
           <SelectValue placeholder="Change User" />
         </SelectTrigger>
         <SelectContent>
-          {clientList.map((user) => (
-            <SelectItem key={user.id} value={user.id}>
-              <UserProfile image={user.image} name={user.name} email={user.email} />
-            </SelectItem>
-          ))}
+          {clientListResult &&
+            clientListResult.data?.User.map((user) => (
+              <SelectItem key={user.id} value={user.id}>
+                <UserProfile image={user.image} name={user.name} email={user.email} />
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>
