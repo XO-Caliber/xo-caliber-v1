@@ -1,33 +1,24 @@
 "use client";
 import { Button } from "@/components/ui/Button";
-import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { Download, DownloadIcon, Info, UserPlus } from "lucide-react";
+import { Download, Info, Loader2 } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { CoverLetterType } from "@/types/CoverLetter";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";
 import { toast } from "@/hooks/use-toast";
-import { user } from "@/types/user";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
 import { useState } from "react";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
+  const [loading, setLoading] = useState(false);
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
     role: "INDIVIDUAL",
     userId: user.id
@@ -36,6 +27,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
   const defaultTemplate = trpc.coverletter.getAdminTemplate.useQuery();
   const { mutate: downloadTemplate } = trpc.coverletter.downloadTemplate.useMutation({
     onSuccess({ success }) {
+      setLoading(false);
       CoverLetterData.refetch();
       if (success) {
         toast({
@@ -48,6 +40,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
 
   const onSubmit = (id: string) => {
     try {
+      setLoading(true);
       downloadTemplate({ userId: user.id, coverLetterId: id });
     } catch (e) {
       console.log(e);
@@ -67,14 +60,18 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
   };
   return (
     <section className="overflow-x-scroll">
+      {/* {loading && (
+        <div className="absolute z-50 grid h-screen w-full place-content-center bg-black/30">
+          <Loader2 size={50} className="animate-spin" />
+        </div>
+      )} */}
       <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white pr-4">
         <div className="flex items-center justify-center">
-          <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
+          <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem] font-bold text-heading ">Craft</p>
           <span title="">
             <Info size={18} className="mt-1  cursor-pointer text-heading" />
           </span>
         </div>
-
         <div className="flex items-center space-x-9">
           <Dialog>
             <DialogTrigger asChild>
@@ -82,34 +79,30 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
             </DialogTrigger>
             <DialogContent>
               <DialogTitle className="mt-4">Select your template and click to pull</DialogTitle>
-              {defaultTemplate.data && (
-                <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
-                  {defaultTemplate.data.map((coverletter, index) => (
-                    <li
-                      key={coverletter.id}
-                      className={`flex w-fit items-center justify-center 
-                  rounded-md border p-1 px-3 text-sm ${
-                    index % 2 === 0
-                      ? "border-primary bg-primary-light"
-                      : "border-muted bg-secondary"
-                  }`}
-                    >
-                      {coverletter.title}
-                      <Download
-                        className="ml-1 cursor-pointer text-primary"
-                        size={16}
-                        onClick={() => onSubmit(coverletter.id)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              {/* <DialogFooter>
-                <Button variant={"dark"} onClick={onSubmit}>
-                  Yes,continue
-                </Button>
-              </DialogFooter> */}
+              <DialogClose>
+                {defaultTemplate.data && (
+                  <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
+                    {defaultTemplate.data.map((coverletter, index) => (
+                      <li
+                        key={coverletter.id}
+                        className={`flex w-fit items-center justify-center 
+                    rounded-md border p-1 px-3 text-sm ${
+                      index % 2 === 0
+                        ? "border-primary bg-primary-light"
+                        : "border-muted bg-secondary"
+                    }`}
+                      >
+                        {coverletter.title}
+                        <Download
+                          className="ml-1 cursor-pointer text-primary"
+                          size={16}
+                          onClick={() => onSubmit(coverletter.id)}
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </DialogClose>
             </DialogContent>
           </Dialog>
           <AddCoverLetterDialog userId={user.id} role="INDIVIDUAL" refetchCaseData={refetchData} />
@@ -124,8 +117,8 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
           userId={user.id}
           refetchCaseData={refetchData}
         />
+        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
       </div>
-      {/* <DragNDropSection /> */}
     </section>
   );
 };

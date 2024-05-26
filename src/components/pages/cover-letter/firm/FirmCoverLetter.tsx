@@ -8,18 +8,14 @@ import { ViewCoverLetter } from "../ViewCoverLetter";
 import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle
-} from "@/components/ui/Dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export const FirmCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(false);
+
   let selectedCoverLetter;
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
     role: "FIRM",
@@ -30,6 +26,7 @@ export const FirmCoverLetter = () => {
     onSuccess({ success }) {
       CoverLetterData.refetch();
       if (success) {
+        setLoading(false);
         toast({
           title: "Template Downloaded",
           description: "Template Downloaded Successfully"
@@ -42,6 +39,7 @@ export const FirmCoverLetter = () => {
   };
   const onSubmit = (id: string) => {
     try {
+      setLoading(true);
       downloadTemplate({ userId: user, coverLetterId: id });
     } catch (e) {
       console.log(e);
@@ -136,8 +134,8 @@ export const FirmCoverLetter = () => {
           userId={user}
           refetchCaseData={refetchData}
         />
+        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
       </div>
-      {/* <DragNDropSection /> */}
     </section>
   );
 };

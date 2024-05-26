@@ -397,6 +397,7 @@ export const coverletterRouter = router({
       if (!userId || userId === "") {
         throw new TRPCError({ code: "UNAUTHORIZED" });
       }
+
       // Retrieve source cover letter by ID
       const sourceCoverLetter = await db.coverLetter.findUnique({
         where: { id: coverLetterId },
@@ -452,45 +453,51 @@ export const coverletterRouter = router({
       console.log("New cover letter:", newCoverLetter);
 
       // Copy sections, subsections, and exhibits
-      for (const sourceSection of sourceCoverLetter.Section || []) {
-        const newSection = await db.section.create({
-          data: {
-            title: sourceSection.title,
-            description: sourceSection.description ?? "",
-            comments: sourceSection.comments,
-            position: sourceSection.position,
-            CoverLetter: { connect: { id: newCoverLetter.id } }
-          }
-        });
-
-        console.log("New section:", newSection);
-
-        for (const sourceSubSection of sourceSection.SubSection || []) {
-          const newSubSection = await db.subSection.create({
+      await Promise.all(
+        (sourceCoverLetter.Section || []).map(async (sourceSection) => {
+          const newSection = await db.section.create({
             data: {
-              title: sourceSubSection.title,
-              description: sourceSubSection.description ?? "",
-              comments: sourceSubSection.comments,
-              position: sourceSubSection.position,
-              Section: { connect: { id: newSection.id } }
+              title: sourceSection.title,
+              description: sourceSection.description ?? "",
+              comments: sourceSection.comments,
+              position: sourceSection.position,
+              CoverLetter: { connect: { id: newCoverLetter.id } }
             }
           });
 
-          console.log("New sub section:", newSubSection);
+          console.log("New section:", newSection);
 
-          for (const sourceExhibit of sourceSubSection.Exhibits || []) {
-            await db.exhibits.create({
-              data: {
-                title: sourceExhibit.title,
-                description: sourceExhibit.description ?? "",
-                comments: sourceExhibit.comments,
-                position: sourceExhibit.position,
-                SubSection: { connect: { id: newSubSection.id } }
-              }
-            });
-          }
-        }
-      }
+          await Promise.all(
+            (sourceSection.SubSection || []).map(async (sourceSubSection) => {
+              const newSubSection = await db.subSection.create({
+                data: {
+                  title: sourceSubSection.title,
+                  description: sourceSubSection.description ?? "",
+                  comments: sourceSubSection.comments,
+                  position: sourceSubSection.position,
+                  Section: { connect: { id: newSection.id } }
+                }
+              });
+
+              console.log("New sub section:", newSubSection);
+
+              await Promise.all(
+                (sourceSubSection.Exhibits || []).map(async (sourceExhibit) => {
+                  await db.exhibits.create({
+                    data: {
+                      title: sourceExhibit.title,
+                      description: sourceExhibit.description ?? "",
+                      comments: sourceExhibit.comments,
+                      position: sourceExhibit.position,
+                      SubSection: { connect: { id: newSubSection.id } }
+                    }
+                  });
+                })
+              );
+            })
+          );
+        })
+      );
 
       return { success: true };
     }),

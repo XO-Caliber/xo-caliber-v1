@@ -153,7 +153,7 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
       flexDirection: "column",
       fontSize: 12,
       textAlign: "justify",
-      textIndent : "50px",
+      textIndent: "50px",
       fontFamily: "Times-Roman",
       lineHeight: 1.5,
       marginBottom: 2,
@@ -223,8 +223,8 @@ const ExportPDF = ({ data }: { data: SectionType[] }) => {
         <DialogHeader>
           <DialogTitle>View and Download the pdf here!</DialogTitle>
           <DialogDescription>
-            Note: Loading the PDF may take some time. If it doesn&apos;t load  properly on the first attempt,
-            please try opening it again.
+            Note: Loading the PDF may take some time. If it doesn&apos;t load properly on the first
+            attempt, please try opening it again.
           </DialogDescription>
 
           <main className="flex h-full w-[1000px] items-center justify-center">

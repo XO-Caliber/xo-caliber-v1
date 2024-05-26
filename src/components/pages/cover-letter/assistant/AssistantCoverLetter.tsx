@@ -1,33 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
-import { Baseuser } from "@/types/BaseUser";
-import { Download, DownloadIcon, Info, UserPlus, X } from "lucide-react";
+import { Download, Info } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
 import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
-import {
-  Dialog,
-  DialogDescription,
-  DialogHeader,
-  DialogTrigger,
-  DialogContent,
-  DialogTitle
-} from "@/components/ui/Dialog";
+import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export const AssistantCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getAssistantCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
+  const [loading, setLoading] = useState(false);
+
   let selectedCoverLetter;
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
     role: "ASSISTANT",
@@ -38,6 +26,7 @@ export const AssistantCoverLetter = () => {
     onSuccess({ success }) {
       CoverLetterData.refetch();
       if (success) {
+        setLoading(false);
         toast({
           title: "Template Downloaded",
           description: "Template Downloaded Successfully"
@@ -47,6 +36,7 @@ export const AssistantCoverLetter = () => {
   });
   const onSubmit = (id: string) => {
     try {
+      setLoading(true);
       downloadTemplate({ userId: user, coverLetterId: id });
     } catch (e) {
       console.log(e);
@@ -109,32 +99,11 @@ export const AssistantCoverLetter = () => {
                   ))}
                 </ul>
               )}
-
-              {/* <DialogFooter>
-                <Button variant={"dark"} onClick={onSubmit}>
-                  Yes,continue
-                </Button>
-              </DialogFooter> */}
             </DialogContent>
           </Dialog>
           <AddCoverLetterDialog userId={user} role="FIRM" refetchCaseData={refetchData} />
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
-      </div>
-      <div className="mt-2 flex items-center justify-around pb-4">
-        {/* <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Download pdf"></SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {CoverLetterData.data &&
-              CoverLetterData.data.map((coverLetter) => (
-                <SelectItem key={coverLetter.id} value={coverLetter.id}>
-                  {coverLetter.title}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select> */}
       </div>
       <div className="overflow-y-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
@@ -144,8 +113,8 @@ export const AssistantCoverLetter = () => {
           userId={user}
           refetchCaseData={refetchData}
         />
+        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
       </div>
-      {/* <DragNDropSection /> */}
     </section>
   );
 };
