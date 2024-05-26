@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
-import { Baseuser } from "@/types/BaseUser";
 import { Download, DownloadIcon, Info, UserPlus, X } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
@@ -9,13 +8,6 @@ import { ViewCoverLetter } from "../ViewCoverLetter";
 import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
-import {
-  Select,
-  SelectItem,
-  SelectContent,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
 import {
   Dialog,
   DialogDescription,
@@ -118,7 +110,7 @@ export const FirmCoverLetter = () => {
             </DialogContent>
           </Dialog>
           <UserSelectList getSelectedUser={getSelectedUser} />
-          <AddCoverLetterDialog userId={user} role="FIRM" />
+          <AddCoverLetterDialog userId={user} role="FIRM" refetchCaseData={refetchData} />
         </div>
       </div>
       <div className="mt-2 flex items-center justify-around pb-4">
@@ -138,7 +130,12 @@ export const FirmCoverLetter = () => {
       </div>
       <div className="overflow-y-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
-        <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user} />
+        <ViewCoverLetter
+          //@ts-ignore
+          CoverLetterData={CoverLetterData.data}
+          userId={user}
+          refetchCaseData={refetchData}
+        />
       </div>
       {/* <DragNDropSection /> */}
     </section>

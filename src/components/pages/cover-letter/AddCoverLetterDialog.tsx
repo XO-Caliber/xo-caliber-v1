@@ -2,20 +2,10 @@
 import { trpc } from "@/app/_trpc/client";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { Button } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/Dialog";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,12 +14,19 @@ import {
 import { Input } from "@/components/ui/Input";
 import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PlusSquare } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }) => {
+const AddCoverLetterDialog = ({
+  userId,
+  role,
+  refetchCaseData
+}: {
+  userId: string;
+  role: string;
+  refetchCaseData: () => void;
+}) => {
   const [loading, setLoading] = useState(false);
 
   const formSchema = z.object({
@@ -48,6 +45,7 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
   const { mutate: addCategory } = trpc.coverletter.addCoverLetter.useMutation({
     onSuccess({ success }) {
       if (success) {
+        refetchCaseData();
         toast({
           title: "Cover Letter Added",
           description: "Successfully added new cover letter"
@@ -103,7 +101,7 @@ const AddCoverLetterDialog = ({ userId, role }: { userId: string; role: string }
               />
               <div className=" flex justify-between">
                 <DialogClose>
-                  <Button>Close</Button>
+                  <Button type="reset">Close</Button>
                 </DialogClose>
                 <Button variant={"dark"} isLoading={loading} type="submit">
                   Add

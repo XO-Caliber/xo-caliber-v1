@@ -112,13 +112,18 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
               </DialogFooter> */}
             </DialogContent>
           </Dialog>
-          <AddCoverLetterDialog userId={user.id} role="INDIVIDUAL" />
+          <AddCoverLetterDialog userId={user.id} role="INDIVIDUAL" refetchCaseData={refetchData} />
         </div>
       </div>
       <div className="flex items-center justify-around p-2"></div>
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
-        <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user.id} />
+        <ViewCoverLetter
+          //@ts-ignore
+          CoverLetterData={CoverLetterData.data}
+          userId={user.id}
+          refetchCaseData={refetchData}
+        />
       </div>
       {/* <DragNDropSection /> */}
     </section>

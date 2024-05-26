@@ -20,17 +20,22 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
-interface Props {
-  CoverLetterData: CoverLetterType[];
+interface ViewCoverLetterProps {
+  CoverLetterData: CoverLetterType[] | null;
   userId: string;
+  refetchCaseData: () => void;
 }
-export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
+export const ViewCoverLetter = ({
+  CoverLetterData,
+  userId,
+  refetchCaseData
+}: ViewCoverLetterProps) => {
   const [isSectionVisible, setIsSectionVisible] = useState<{ [key: number]: boolean }>({});
   const [caseName, setCaseName] = useState("");
   const { mutate: deleteCase } = trpc.coverletter.deleteCase.useMutation({
     onSuccess({ success }) {
       if (success) {
-        refetchData1();
+        refetchCaseData();
         toast({
           title: "Deleted Case",
           description: "Case deleted successfully",
@@ -48,7 +53,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
   const { mutate: updateCaseName } = trpc.coverletter.updateCaseName.useMutation({
     onSuccess({ success }) {
       if (success) {
-        refetchData1();
+        refetchCaseData();
         toast({
           title: "Updated Case Name",
           description: "Case name updated successfully",
@@ -82,9 +87,9 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
     } catch {}
   };
 
-  const refetchData1 = () => {
-    console.log();
-  };
+  // const refetchCaseData = () => {
+  //   console.log();
+  // };
 
   return (
     <main>
@@ -136,7 +141,7 @@ export const ViewCoverLetter = ({ CoverLetterData, userId }: Props) => {
                 userId={userId}
                 itemId={coverLetter.id}
                 dialogType={DialogType.Section}
-                refetchData={refetchData1}
+                refetchData={refetchCaseData}
               /> */}
             </div>
             <p className="ml-auto mr-10 justify-items-end text-xs font-medium  text-black">

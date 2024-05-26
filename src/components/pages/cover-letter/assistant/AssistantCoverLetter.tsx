@@ -117,7 +117,7 @@ export const AssistantCoverLetter = () => {
               </DialogFooter> */}
             </DialogContent>
           </Dialog>
-          <AddCoverLetterDialog userId={user} role="FIRM" />
+          <AddCoverLetterDialog userId={user} role="FIRM" refetchCaseData={refetchData} />
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
       </div>
@@ -138,7 +138,12 @@ export const AssistantCoverLetter = () => {
       </div>
       <div className="overflow-y-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
-        <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user} />
+        <ViewCoverLetter
+          //@ts-ignore
+          CoverLetterData={CoverLetterData.data}
+          userId={user}
+          refetchCaseData={refetchData}
+        />
       </div>
       {/* <DragNDropSection /> */}
     </section>

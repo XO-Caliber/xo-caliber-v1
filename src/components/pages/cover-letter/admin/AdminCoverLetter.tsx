@@ -13,7 +13,7 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
     userId: user.id
   });
 
-  const refetchData1 = () => {
+  const refetchData = () => {
     CoverLetterData.refetch();
   };
   return (
@@ -26,12 +26,17 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
           </span>
         </div>
 
-        <AddCoverLetterDialog userId={user.id} role="ADMIN" />
+        <AddCoverLetterDialog userId={user.id} role="ADMIN" refetchCaseData={refetchData} />
       </div>
 
       <div className="overflow-scroll" style={{ height: "calc(100vh - 150px)" }}>
-        {/* @ts-ignore */}
-        <ViewCoverLetter CoverLetterData={CoverLetterData.data} userId={user.id} />
+        {/*@ts-ignore */}
+        <ViewCoverLetter
+          //@ts-ignore
+          CoverLetterData={CoverLetterData.data}
+          userId={user.id}
+          refetchCaseData={refetchData}
+        />
       </div>
     </section>
   );
