@@ -1,8 +1,14 @@
 import { Button } from "@/components/ui/Button";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/Dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger
+} from "@/components/ui/Dialog";
 import React from "react";
 
-const InstructionVideo = () => {
+const InstructionVideo = ({ videoLink }: { videoLink: string }) => {
   return (
     <div>
       <Dialog>
@@ -19,13 +25,14 @@ const InstructionVideo = () => {
             {" "}
             {/* 16:9 aspect ratio */}
             <iframe
-              src="https://share.synthesia.io/embeds/videos/31fbae8b-bb12-4c2c-9669-10badefa9e82"
+              src={videoLink}
               loading="lazy"
               className="absolute left-0 top-0 h-full w-full"
               title="Synthesia video player - XO Caliber: Caliber and Assess"
               allow="encrypted-media; fullscreen;"
             ></iframe>
           </div>
+          <DialogFooter></DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

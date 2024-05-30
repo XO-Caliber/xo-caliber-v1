@@ -18,6 +18,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/componen
 import { Checkbox } from "@/components/ui/Checkbox";
 import { Toast } from "@/components/ui/Toast";
 import { Info, Loader } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 
 interface userProfile {
   userId: string;
@@ -71,18 +72,28 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
   };
   return (
     <div className=" ml-56 text-xl">
-      <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
+      <div className="flex h-[68px] items-center justify-between overflow-scroll border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center gap-x-1">
           {" "}
           <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>
-          <span title="By answering a series of Yes or No weighted questions for each section, you provide an opportunity to calibrate your own profile accurately. Weighted questions of each section are strategically crafted based on expert opinions and a wealth of acquired knowledge to assess and guide the development of your narrative for your self petitioned immigration cases. This process serves as the foundation for building a compelling narrative that aligns with the criteria of your desired visa category.">
-            <Info size={18} className="mt-1 cursor-pointer text-heading" />
-          </span>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Info size={18} className="mt-1 cursor-pointer text-heading" />
+            </DialogTrigger>
+            <DialogContent>
+              By answering a series of Yes or No weighted questions for each section, you provide an
+              opportunity to calibrate your own profile accurately. Weighted questions of each
+              section are strategically crafted based on expert opinions and a wealth of acquired
+              knowledge to assess and guide the development of your narrative for your self
+              petitioned immigration cases. This process serves as the foundation for building a
+              compelling narrative that aligns with the criteria of your desired visa category.
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       {listCat.size > 0 && (
         <div>
-          <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full">
+          <ResizablePanelGroup direction="vertical" className="min-h-[90vh] max-w-full ">
             <ResizablePanel defaultSize={70}>
               {!hidden && (
                 <section className="absolute m-16 mt-32 rounded-lg border-2 shadow-lg">

@@ -31,6 +31,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/Dialog";
+import InstructionVideo from "../home/InstructionVideo";
 
 interface Props {
   userId: string;
@@ -46,7 +48,8 @@ export const TimeLine = ({ userId, userName }: Props) => {
   const [case2, setCase2] = useState("");
   const [editable, setEditable] = useState(false);
   const [editable2, setEditable2] = useState(false);
-  const date = new Date().getDate() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
+  const date =
+    new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + "/" + new Date().getFullYear();
   console.log(description, category, date);
 
   useEffect(() => {
@@ -171,12 +174,16 @@ export const TimeLine = ({ userId, userName }: Props) => {
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center">
           <p className="my-4 ml-6 mr-2 mt-[1.2rem] font-bold text-heading">Timeline</p>
-          <span title="">
-            <Info size={18} className="mt-1 cursor-pointer text-heading" />
-          </span>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Info size={18} className="mt-1.5 cursor-pointer text-heading" />
+            </DialogTrigger>
+            <DialogContent></DialogContent>
+          </Dialog>
         </div>
         <div className="flex items-center justify-center">
-          <div className="mr-2">
+          <InstructionVideo videoLink="https://www.youtube.com/embed/90Ex87Cy1RA?si=fWmnXUn2vWVj-7Nf" />
+          <div className="ml-2 mr-2">
             {editable || case1 === "" ? (
               <Select onValueChange={(value) => handleChange(value)}>
                 <SelectTrigger className="bg-gradient-to-r  from-[#dd0839] to-[#39468f] text-white">

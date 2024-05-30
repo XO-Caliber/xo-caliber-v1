@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/Dropdown-menu";
 import { Input } from "@/components/ui/Input";
 import AddHeading from "./AddHeading";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import InstructionVideo from "../../home/InstructionVideo";
 
 interface SubMenuState {
   [key: string]: boolean;
@@ -199,20 +201,24 @@ const AdminCheckList = () => {
       <div className="ml-56 flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center">
           <p className="my-4 ml-4 mr-2 mt-[1.2rem] font-bold text-heading">DocuCheck</p>
-          <span
-            title="The required documentation can vary based on the self petitioned employment based
-            immigration visa that you are applying for due to the nature. However, the XO caliber
-            team provided a generic overview of the types of documents that are commonly required.
-            Keep in mind that DocuCheck provides a checklist to address documentations involved in
-            both EB1A/EB2-NIW and I485 applications at most eighty percent. Thus, you should always
-            choose the right set of documentation through self-assessment or with the help of case
-            handlers i.e. Firm. The checklist can be created by XO Caliber admin or Firm. Based on
-            your profile, the DocuCheck list may vary."
-          >
-            <Info size={18} className="mt-1 cursor-pointer text-heading " />
-          </span>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Info size={18} className="mt-1.5 cursor-pointer text-heading" />
+            </DialogTrigger>
+            <DialogContent>
+              The required documentation can vary based on the self petitioned employment based
+              immigration visa that you are applying for due to the nature. However, the XO caliber
+              team provided a generic overview of the types of documents that are commonly required.
+              Keep in mind that DocuCheck provides a checklist to address documentations involved in
+              both EB1A/EB2-NIW and I485 applications at most eighty percent. Thus, you should
+              always choose the right set of documentation through self-assessment or with the help
+              of case handlers i.e. Firm. The checklist can be created by XO Caliber admin or Firm.
+              Based on your profile, the DocuCheck list may vary.
+            </DialogContent>
+          </Dialog>
         </div>
         <div className="mr-4 flex space-x-12">
+          <InstructionVideo videoLink="https://www.youtube.com/embed/zhVdN3XGk78?si=xD8AHf1WjPZ5PwLS" />
           <AddHeading refetchData={refetchData} />
         </div>
       </div>

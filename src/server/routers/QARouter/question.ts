@@ -167,18 +167,20 @@ export const questionRouter = router({
     });
 
     // Delete existing categories and related questions
-    for (const category of categoriesToDelete) {
-      await db.question.deleteMany({
-        where: {
-          categoryId: category.id
-        }
-      });
-      await db.category.delete({
-        where: {
-          id: category.id
-        }
-      });
-    }
+    await Promise.all(
+      categoriesToDelete.map(async (category) => {
+        await db.question.deleteMany({
+          where: {
+            categoryId: category.id
+          }
+        });
+        await db.category.delete({
+          where: {
+            id: category.id
+          }
+        });
+      })
+    );
 
     console.log("Related categories and questions deleted successfully");
 
@@ -193,27 +195,34 @@ export const questionRouter = router({
         questions: true
       }
     });
+
     console.log(adminCategories);
+
     // Create categories and questions for the firm
-    for (const adminCategory of adminCategories) {
-      const createdCategory = await db.category.create({
-        data: {
-          name: adminCategory.name,
-          firmId: session.user.id // Connect category to firm
-        }
-      });
-      console.log(adminCategory.name);
-      for (const adminQuestion of adminCategory.questions) {
-        await db.question.create({
+    await Promise.all(
+      adminCategories.map(async (adminCategory) => {
+        const createdCategory = await db.category.create({
           data: {
-            categoryId: createdCategory.id,
-            question: adminQuestion.question,
-            mark: adminQuestion.mark
+            name: adminCategory.name,
+            firmId: session.user.id // Connect category to firm
           }
         });
+
         console.log(adminCategory.name);
-      }
-    }
+
+        await Promise.all(
+          adminCategory.questions.map(async (adminQuestion) => {
+            await db.question.create({
+              data: {
+                categoryId: createdCategory.id,
+                question: adminQuestion.question,
+                mark: adminQuestion.mark
+              }
+            });
+          })
+        );
+      })
+    );
 
     // Delete existing answers for users of the firm
     const users = await db.user.findMany({
@@ -222,13 +231,15 @@ export const questionRouter = router({
       }
     });
 
-    for (const user of users) {
-      await db.answer.deleteMany({
-        where: {
-          userId: user.id
-        }
-      });
-    }
+    await Promise.all(
+      users.map(async (user) => {
+        await db.answer.deleteMany({
+          where: {
+            userId: user.id
+          }
+        });
+      })
+    );
 
     return { success: true };
   }),

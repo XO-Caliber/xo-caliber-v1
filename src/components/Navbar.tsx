@@ -22,6 +22,7 @@ import { user } from "@/types/user";
 import ViewProfile from "./pages/profile/ViewProfile";
 import { Dialog, DialogTrigger } from "./ui/Dialog";
 import InstructionVideo from "./pages/home/InstructionVideo";
+import FeedbackForm from "./FeedbackForm";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -52,30 +53,21 @@ export const Navbar = async () => {
             <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
-        {session?.user.isActive ? (
-          <Link href={"/dashboard"}>
-            <li
-              className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
+
+        <Link href={"/dashboard"}>
+          <li
+            className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
                         hover:bg-primary "
-            >
-              <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
-              <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
-            </li>
-          </Link>
-        ) : (
-          <Link href={"/home_page"}>
-            <li
-              className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
-                    hover:bg-primary "
-            >
-              <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
-              <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
-            </li>
-          </Link>
-        )}
+          >
+            <Timer color="var(--accent-foreground)" size={16} className="mx-2" />
+            <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Timeline</p>
+          </li>
+        </Link>
+
         {/* <li>
           <InstructionVideo />
         </li> */}
+        {/* <FeedbackForm /> */}
       </ul>
 
       <div className="cursor-pointer">

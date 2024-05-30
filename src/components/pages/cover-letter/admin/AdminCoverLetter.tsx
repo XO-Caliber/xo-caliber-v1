@@ -6,6 +6,7 @@ import { Info, UserPlus } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";
+import InstructionVideo from "../../home/InstructionVideo";
 
 export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
   const CoverLetterData = trpc.coverletter.getCoverLetter.useQuery({
@@ -25,7 +26,7 @@ export const AdminCoverLetter = ({ user }: { user: Baseuser }) => {
             <Info size={18} className="mt-1  cursor-pointer text-heading" />
           </span>
         </div>
-
+        <InstructionVideo videoLink="https://www.youtube.com/embed/5XpS1ztDkYs?si=pi7cJN48ZI2D1Qb5" />
         <AddCoverLetterDialog userId={user.id} role="ADMIN" refetchCaseData={refetchData} />
       </div>
 

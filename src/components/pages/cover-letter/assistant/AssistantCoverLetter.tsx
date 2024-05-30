@@ -10,6 +10,7 @@ import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
 import { Skeleton } from "@/components/ui/Skeleton";
+import InstructionVideo from "../../home/InstructionVideo";
 
 export const AssistantCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getAssistantCoverLetter.useQuery(user);
@@ -66,11 +67,15 @@ export const AssistantCoverLetter = () => {
       <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
         <div className="flex items-center justify-center">
           <p className=" m-4 my-4 ml-4 mr-2  mt-[1.2rem]   font-bold text-heading ">Craft</p>
-          <span title="">
-            <Info size={18} className="mt-1  cursor-pointer text-heading" />
-          </span>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Info size={18} className="mt-1.5 cursor-pointer text-heading" />
+            </DialogTrigger>
+            <DialogContent></DialogContent>
+          </Dialog>
         </div>
         <div className="flex items-center space-x-9">
+          <InstructionVideo videoLink="https://www.youtube.com/embed/5XpS1ztDkYs?si=pi7cJN48ZI2D1Qb5" />
           <Dialog>
             <DialogTrigger asChild>
               <Button variant={"dark"}>Pull Default Template</Button>

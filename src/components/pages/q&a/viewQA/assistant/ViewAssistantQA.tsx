@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { Info, Loader } from "lucide-react";
 import AssistantTabsContent from "../AssistantTabsContent";
 import DownloadAssistantQuestions from "./DownloadAssistantQuestions";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 
 export const ViewAssistantQA = () => {
   const router = useRouter();
@@ -37,10 +38,20 @@ export const ViewAssistantQA = () => {
     <div>
       <div className="flex h-[68px] items-center justify-between border-2 border-l-0 bg-white pr-4">
         <div className="flex items-center justify-center gap-x-1">
-          <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>
-          <span title="By answering a series of Yes or No weighted questions for each section, you provide an opportunity to calibrate your own profile accurately. Weighted questions of each section are strategically crafted based on expert opinions and a wealth of acquired knowledge to assess and guide the development of your narrative for your self petitioned immigration cases. This process serves as the foundation for building a compelling narrative that aligns with the criteria of your desired visa category.">
-            <Info size={18} className="mt-1 cursor-pointer text-heading" />
-          </span>
+          <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>{" "}
+          <Dialog>
+            <DialogTrigger asChild>
+              <Info size={18} className="mt-1 cursor-pointer text-heading" />
+            </DialogTrigger>
+            <DialogContent>
+              By answering a series of Yes or No weighted questions for each section, you provide an
+              opportunity to calibrate your own profile accurately. Weighted questions of each
+              section are strategically crafted based on expert opinions and a wealth of acquired
+              knowledge to assess and guide the development of your narrative for your self
+              petitioned immigration cases. This process serves as the foundation for building a
+              compelling narrative that aligns with the criteria of your desired visa category.
+            </DialogContent>
+          </Dialog>
         </div>
         <DownloadAssistantQuestions />
       </div>
