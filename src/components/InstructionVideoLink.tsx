@@ -1,5 +1,5 @@
 "use client";
-import { FormInput } from "lucide-react";
+import { FormInput, Video } from "lucide-react";
 import React from "react";
 
 const InstructionVideoLink = () => {
@@ -10,8 +10,10 @@ const InstructionVideoLink = () => {
                         hover:bg-primary "
         onClick={() => window.open("https://xocaliber.tech/instructional-videos/")}
       >
-        <FormInput color="var(--accent-foreground)" size={16} className="mx-2" />
-        <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Feedback Form</p>
+        <Video color="var(--accent-foreground)" size={16} className="mx-2" />
+        <p className="mx-1 text-base text-secondary-foreground  hover:text-black">
+          Instruction Videos
+        </p>
       </li>
     </div>
   );
