@@ -19,6 +19,7 @@ import { Checkbox } from "@/components/ui/Checkbox";
 import { Toast } from "@/components/ui/Toast";
 import { Info, Loader } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import InstructionVideo from "../../home/InstructionVideo";
 
 interface userProfile {
   userId: string;
@@ -71,8 +72,8 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
     setHidden(false);
   };
   return (
-    <div className=" ml-56 text-xl">
-      <div className="flex h-[68px] items-center justify-between overflow-scroll border-2 border-l-0 bg-white">
+    <div className=" ml-56 text-xl ">
+      <div className="flex h-[68px] items-center justify-between  border-2 border-l-0 bg-white pr-4">
         <div className="flex items-center justify-center gap-x-1">
           {" "}
           <p className="m-4 mr-1 mt-[1.2rem] font-bold text-heading">Caliber</p>
@@ -90,6 +91,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
             </DialogContent>
           </Dialog>
         </div>
+        <InstructionVideo videoLink="https://www.youtube.com/embed/wY8ulLafP_g?si=hZ5EHaJGX99O53eb" />
       </div>
       {listCat.size > 0 && (
         <div>
@@ -110,7 +112,7 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                       questions by the firm admin if you are under firm management; otherwise, the
                       XO Caliber team has formulated the questions based on expert opinions and a
                       wealth of acquired knowledge. A compartmentalized approach, coupled with a
-                      detailed understanding of immigration crriteria, and a strategic method in
+                      detailed understanding of immigration criteria, and a strategic method in
                       approaching the eligitble criteria, facilitates a more informed immigration
                       strategy. By breaking down the process into distinct compartments, each
                       criteria can be systematically addressed, ensuring a comprehensive evaluation
@@ -160,10 +162,6 @@ const ClientQA = ({ userId, name, email, image }: userProfile) => {
                   <ClientTabsContent data={categories} userId={userId} />
                 </div>
               </Tabs>
-            </ResizablePanel>
-            <ResizableHandle withHandle />
-            <ResizablePanel defaultSize={15.6}>
-              <ClientQANotes />
             </ResizablePanel>
           </ResizablePanelGroup>
         </div>

@@ -15,6 +15,7 @@ import FirmsNote from "./FirmsNote";
 import ClientsNote from "./ClientsNote";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 import { Info } from "lucide-react";
+import InstructionVideo from "../../home/InstructionVideo";
 
 interface UserAnswer {
   category: string | null;
@@ -189,6 +190,7 @@ function AssistantGraph({ userType }: userType) {
             </DialogContent>
           </Dialog>
         </div>
+        <InstructionVideo videoLink="https://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriYps://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriY" />
         <AssistantUserSelect getSelectedUser={getSelectedUser} />
       </div>
       <ResizablePanelGroup direction="horizontal" className="min-h-[91vh] max-w-full ">

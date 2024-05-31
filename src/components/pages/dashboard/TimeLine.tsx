@@ -49,7 +49,7 @@ export const TimeLine = ({ userId, userName }: Props) => {
   const [editable, setEditable] = useState(false);
   const [editable2, setEditable2] = useState(false);
   const date =
-    new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + "/" + new Date().getFullYear();
+    new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear();
   console.log(description, category, date);
 
   useEffect(() => {

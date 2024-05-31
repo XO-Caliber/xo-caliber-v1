@@ -12,6 +12,7 @@ import {
 import { trpc } from "@/app/_trpc/client";
 import { Info } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import InstructionVideo from "../../home/InstructionVideo";
 interface userProps {
   user: string;
 }
@@ -57,6 +58,7 @@ const ClientGraph = ({ user }: userProps) => {
             </DialogContent>
           </Dialog>
         </div>
+        <InstructionVideo videoLink="https://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriYps://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriY" />
         <span className="mr-10 w-32">
           {/* <Select onValueChange={handleChange}>
             <SelectTrigger className="bg-black text-white">

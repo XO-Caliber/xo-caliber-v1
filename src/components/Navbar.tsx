@@ -1,12 +1,9 @@
 import Image from "next/image";
-import navLogo from "../../public/images/LOGO_Trans.png";
 import mainLogo from "../../public/images/main_logo.png";
-import { Input } from "./ui/Input";
-import { ArrowDown, BellIcon, HomeIcon, SearchIcon, Timer, User } from "lucide-react";
+import { HomeIcon, Timer, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/Button";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +15,10 @@ import {
 import Logout from "./pages/auth/Logout";
 import WorkSpace from "./pages/workspaces/WorkSpace";
 import { UserProfile } from "./utils/UserProfile";
-import { user } from "@/types/user";
 import ViewProfile from "./pages/profile/ViewProfile";
 import { Dialog, DialogTrigger } from "./ui/Dialog";
-import InstructionVideo from "./pages/home/InstructionVideo";
 import FeedbackForm from "./FeedbackForm";
+import InstructionVideoLink from "./InstructionVideoLink";
 
 export const Navbar = async () => {
   const session = await getAuthSession();
@@ -53,7 +49,6 @@ export const Navbar = async () => {
             <p className="mx-1 text-base text-secondary-foreground  hover:text-black">Home</p>
           </li>
         </Link>
-
         <Link href={"/dashboard"}>
           <li
             className="flex cursor-pointer items-center rounded-md py-2 transition-all duration-500
@@ -64,10 +59,8 @@ export const Navbar = async () => {
           </li>
         </Link>
 
-        {/* <li>
-          <InstructionVideo />
-        </li> */}
-        {/* <FeedbackForm /> */}
+        <FeedbackForm />
+        <InstructionVideoLink />
       </ul>
 
       <div className="cursor-pointer">
