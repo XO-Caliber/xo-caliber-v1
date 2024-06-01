@@ -32,10 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               fontSans.variable
             )}
           >
-            <div className="block lg:hidden">
+            <div className="block md:hidden">
               <MobileWarning />
             </div>
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               {/* <Navbar /> */}
               {children}
               {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
