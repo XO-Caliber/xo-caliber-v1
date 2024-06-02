@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import Image from "next/image";
 import {
   Chart,
   Filler,
@@ -10,9 +11,8 @@ import {
 } from "chart.js";
 import { trpc } from "@/app/_trpc/client";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
-import { Loader2 } from "lucide-react";
 import { ClientQANotes } from "../../q&a/client/ClientQANotes";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
+import XOCaliber from "../../../../../public/images/black Logo@500x-8.png";
 
 interface UserAnswer {
   category: string | null;
@@ -139,7 +139,7 @@ function AdminSpiderGraph() {
         scales: {
           r: {
             grid: {
-              color: "gray" // Set the color of the gridlines
+              color: "black" // Set the color of the gridlines
             },
 
             min: 0,
@@ -167,9 +167,15 @@ function AdminSpiderGraph() {
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={100} className="m-3 mt-20">
               <main className="flex h-full flex-col p-3">
-                <div className="flex items-center justify-between"></div>
-                <div className="m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary pl-2">
+                <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
                   <canvas id="myChart">myChart</canvas>
+                  <Image
+                    src={XOCaliber}
+                    alt="Overlay"
+                    width={220}
+                    height={50}
+                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+                  />
                 </div>
               </main>
             </ResizablePanel>

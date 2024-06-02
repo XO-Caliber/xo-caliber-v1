@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import XOCaliber from "../../../../../public/images/black Logo@500x-8.png";
 import {
   Chart,
   Filler,
@@ -145,7 +147,7 @@ function AdminGraph({ userType }: userType) {
         scales: {
           r: {
             grid: {
-              color: "gray" // Set the color of the gridlines
+              color: "black" // Set the color of the gridlines
             },
 
             min: 0,
@@ -255,7 +257,7 @@ function AdminGraph({ userType }: userType) {
         scales: {
           r: {
             grid: {
-              color: "gray" // Set the color of the gridlines
+              color: "black" // Set the color of the gridlines
             },
 
             min: 0,
@@ -320,6 +322,13 @@ function AdminGraph({ userType }: userType) {
             <canvas className="min-w-20" id="myChart">
               myChart
             </canvas>
+            <Image
+              src={XOCaliber}
+              alt="Overlay"
+              width={220}
+              height={50}
+              className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+            />
           </div>
         </div>
 
@@ -329,6 +338,13 @@ function AdminGraph({ userType }: userType) {
             <canvas className="min-w-20" id="myChart2">
               myChart
             </canvas>
+            <Image
+              src={XOCaliber}
+              alt="Overlay"
+              width={220}
+              height={50}
+              className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+            />
           </div>
         </div>
       </main>
