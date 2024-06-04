@@ -202,13 +202,13 @@ function FirmGraph({ userType }: userType) {
               <main className="flex h-full flex-col p-3">
                 <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
                   <canvas id="myChart">myChart</canvas>
-                  <Image
+                  {/* <Image
                     src={XOCaliber}
                     alt="Overlay"
                     width={220}
                     height={50}
                     className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
-                  />
+                  /> */}
                 </div>
               </main>
             </ResizablePanel>

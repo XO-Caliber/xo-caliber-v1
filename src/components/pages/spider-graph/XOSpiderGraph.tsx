@@ -164,18 +164,35 @@ function XOSpiderGraph({ userType }: userProps) {
       <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
         <ResizablePanel defaultSize={50} className="m-2">
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={50} className="m-3 mt-20">
+            <ResizablePanel defaultSize={50} className="m-3 ">
               <main className="flex h-full flex-col p-3">
-                <div className="flex items-center justify-between"></div>
+                <div className="rounded-md bg-gray-200 p-2 text-center text-xs font-bold">
+                  <p>
+                    For help understanding the Spider graph, please contact the XO Caliber team at
+                    <a href="mailto:insight@xocaliber.tech" className="ml-1 text-sky-600 underline">
+                      insight@xocaliber.tech
+                    </a>
+                    .
+                  </p>
+                  <p>
+                    Use your registered email to send your queries, and you will receive a response
+                    within 48 hours.
+                  </p>
+                  <p>
+                    For privacy and security reasons, we cannot view your answers to yes or no
+                    questions. Please provide detailed queries to receive comprehensive insights
+                    about your Spider graph.
+                  </p>
+                </div>
                 <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
-                  <canvas id="myChart">myChart</canvas>
-                  <Image
+                  <canvas id="myChart">myChart</canvas>{" "}
+                  {/* <Image
                     src={XOCaliber}
                     alt="Overlay"
                     width={220}
                     height={50}
                     className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
-                  />
+                  /> */}
                 </div>
               </main>
             </ResizablePanel>

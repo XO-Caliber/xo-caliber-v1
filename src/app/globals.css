@@ -158,3 +158,17 @@ h6.ce-header {
     @apply bg-background text-foreground;
   }
 }
+.scrolling-text {
+  white-space: wrap; /* Prevent text wrapping */
+  /* Hide overflowing content */
+  animation: scroll-text 20s linear infinite; /* Animation properties */
+}
+
+@keyframes scroll-text {
+  0% {
+    transform: translateX(0); /* Start from left */
+  }
+  100% {
+    transform: translateX(-100%); /* Move text to the left continuously */
+  }
+}
