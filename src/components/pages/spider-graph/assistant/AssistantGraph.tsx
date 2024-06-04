@@ -207,7 +207,7 @@ function AssistantGraph({ userType }: userType) {
                     alt="Overlay"
                     width={220}
                     height={50}
-                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-10"
                   /> */}
                 </div>
               </main>

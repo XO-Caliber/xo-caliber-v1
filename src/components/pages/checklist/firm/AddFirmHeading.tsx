@@ -82,7 +82,7 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
   };
 
   return (
-    <Dialog onOpenChange={() => setheading("")}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button
           variant={"dark"}
@@ -93,8 +93,8 @@ const AddFirmHeading = ({ refetchData }: headingProps) => {
           <p className="">Add Topic</p>
         </Button>
       </DialogTrigger>
-      <DialogContent className="">
-        <DialogHeader>
+      <DialogContent>
+        <DialogHeader className="mt-4">
           {/* <DialogTitle>Add Topic</DialogTitle> */}
 
           {/* 

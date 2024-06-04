@@ -13,7 +13,7 @@ import { toast } from "@/hooks/use-toast";
 import React, { useState } from "react";
 
 const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const { mutate: pullDefaultCheckList } = trpc.checklist.importDefaultCheckList.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -23,6 +23,9 @@ const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
           description: "Wait for 5 mins to see changes"
         });
       }
+    },
+    onSettled() {
+      setLoading(false);
     }
   });
   const onSubmit = (e: React.FormEvent) => {
@@ -38,9 +41,7 @@ const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant={"dark"} onClick={() => setDialogOpen(true)}>
-            Pull Default Checklist
-          </Button>
+          <Button variant={"dark"}>Pull Default Checklist</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>Pull Default Checklist</DialogHeader>
@@ -50,7 +51,7 @@ const PullDefaultCheckList = ({ refetchData }: { refetchData: () => void }) => {
           </DialogDescription>
           <DialogFooter>
             <form onSubmit={onSubmit}>
-              <Button variant={"dark"} isLoading={!dialogOpen}>
+              <Button variant={"dark"} onClick={() => setLoading(true)} isLoading={isLoading}>
                 Yes,continue
               </Button>
             </form>

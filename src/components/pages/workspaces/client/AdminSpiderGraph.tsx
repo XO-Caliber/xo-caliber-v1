@@ -12,7 +12,7 @@ import {
 import { trpc } from "@/app/_trpc/client";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import { ClientQANotes } from "../../q&a/client/ClientQANotes";
-import XOCaliber from "../../../../../public/images/black Logo@500x-8.png";
+import XOCaliber from "../../../../../public/images/black Logo@500x8.png";
 
 interface UserAnswer {
   category: string | null;
@@ -170,32 +170,32 @@ function AdminSpiderGraph() {
                 {" "}
                 <div className="rounded-md bg-gray-200 p-2 text-center text-xs font-bold">
                   <p>
-                    For help understanding the Spider graph, please contact the XO Caliber team at
+                    Please reach out to the XO Caliber team at
                     <a href="mailto:insight@xocaliber.tech" className="ml-1 text-sky-600 underline">
                       insight@xocaliber.tech
                     </a>
                     .
                   </p>
                   <p>
-                    Use your registered email to send your queries, and you will receive a response
-                    within 48 hours.
+                    To help you understand the Spider graph. Use your registered email to send your
+                    queries, and you will receive a response within 48 hours.
                   </p>
                   <p>
-                    For privacy and security reasons, we cannot view your answers to yes or no
-                    questions. Please provide detailed queries to receive comprehensive insights
-                    about your Spider graph.
+                    For privacy and security reasons, no one cannot view your answers to yes or no
+                    questions. Therefore, please write your queries in detail to receive
+                    comprehensive insights about your Spider graph“ in Assess page below graph.
                   </p>
                 </div>
                 <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
                   <canvas id="myChart">myChart</canvas>
-                  {/* <Image
+                  <Image
                     src={XOCaliber}
                     alt="Overlay"
                     width={220}
                     height={50}
-                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-10"
                     unoptimized
-                  /> */}
+                  />
                 </div>
               </main>
             </ResizablePanel>

@@ -173,10 +173,12 @@ const ClientStrategy = ({ userId }: UserProps) => {
           </div>
         ) : (
           <div>
-            {checkListData.isFetching && (
-              <div className="ml-56 flex h-[70vh] items-center justify-center ">
+            {checkListData.isFetching ? (
+              <div className="ml-56 flex h-[70vh] items-center justify-center">
                 <Loader size={45} className="rotate-animation text-gray-600" />
               </div>
+            ) : (
+              <div className="ml-56 flex h-[70vh] items-center justify-center">No data</div>
             )}
           </div>
         )}

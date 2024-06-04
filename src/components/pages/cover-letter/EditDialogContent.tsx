@@ -67,31 +67,23 @@ const EditDialogContent = ({
     const List = (await import("@editorjs/list")).default;
 
     if (!ref.current) {
-      const editorConfig = {
+      const editor = new EditorJS({
         holder: "editor",
         onReady() {
           ref.current = editor;
         },
         placeholder: "Type here your description here...",
         inlineToolbar: true,
-        data: {
-          blocks: []
-        },
+        //@ts-ignore
+        data: description,
         tools: {
-          header: Header
-          // Other tools can be added conditionally below
+          header: Header,
+          table: Table,
+          list: List
         },
-        autofocus: true
-      };
-
-      if (contentType === "Section" || contentType === "Subsection") {
-        //@ts-ignore
-        editorConfig.tools.table = Table;
-        //@ts-ignore
-        editorConfig.tools.list = List;
-      }
-
-      const editor = new EditorJS(editorConfig);
+        autofocus: true,
+        readOnly: true
+      });
     }
   }, [description]);
 
