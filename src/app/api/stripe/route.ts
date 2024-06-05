@@ -28,6 +28,24 @@ export async function POST(req: NextRequest) {
               paidDate: dateTime
             }
           });
+
+          const user = await db.user.findUnique({
+            where: {
+              stripeCustomerId: subscription.customer as string
+            }
+          });
+
+          if (user) {
+            if (!user.trialUsed) {
+              await db.user.update({
+                where: {
+                  stripeCustomerId: subscription.customer as string
+                },
+                data: { trialUsed: true }
+              });
+            }
+          }
+
           console.log("User data updated successfully:", response);
         } catch (error) {
           console.error("Error updating user data:", error);

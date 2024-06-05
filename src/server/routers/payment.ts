@@ -31,7 +31,7 @@ export const paymentRouter = router({
 
     let priceId = hasFirm ? env.PRICE_ID_WITH_FIRM : env.PRICE_ID_WITHOUT_FIRM;
 
-    const trialDays = user.trialUsed ? 0 : 7;
+    const trialDays = user.trialUsed ? 0 : parseInt(env.TRIAL_PERIOD!);
 
     const checkoutSession = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -52,13 +52,6 @@ export const paymentRouter = router({
         trial_period_days: trialDays
       }
     });
-
-    if (!user.trialUsed) {
-      await db.user.update({
-        where: { id: session.user.id },
-        data: { trialUsed: true }
-      });
-    }
 
     return checkoutSession;
   }),
