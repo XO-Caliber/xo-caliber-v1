@@ -46,7 +46,7 @@ const EditDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <p className="text-xs">{title}</p>
+        <p className="">{title}</p>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader className="border-b-2 border-border pb-2 text-left">

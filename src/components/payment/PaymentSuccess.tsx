@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export const PaymentSuccess = () => {
   const { data: session, update } = useSession();
@@ -13,6 +14,7 @@ export const PaymentSuccess = () => {
   useEffect(() => {
     if (data?.success === true) {
       update({ isActive: true });
+      redirect("/home_page");
     }
   }, [data]);
 

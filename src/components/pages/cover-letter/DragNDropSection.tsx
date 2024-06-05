@@ -431,7 +431,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     />
                                   )}
                                 </button>
-                                {/* <h1 className="text-base">Section-{index + 1}</h1> */}
                                 <h2 className="flex flex-row items-center justify-center gap-x-2 text-nowrap rounded-md border border-border bg-white p-1 text-xs font-semibold">
                                   Section
                                   <MinusCircle
@@ -441,13 +440,7 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     size={16}
                                   />
                                 </h2>
-                                <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                  {/* <ViewDialog
-                                    dialogType={DialogType.Section}
-                                    title={section.title}
-                                    description={section.description}
-                                    comments={section.comments}
-                                  /> */}
+                                <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-xs font-medium ">
                                   <EditDialog
                                     dialogType={DialogType.Section}
                                     id={section.id}
@@ -459,7 +452,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                 </p>
 
                                 <p className="m-0">
-                                  {/* <AddSubSectionDialog userId={userId} sectionId={section.id} /> */}
                                   <AddDialog
                                     userId={userId}
                                     itemId={section.id}
@@ -467,10 +459,17 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                     refetchData={refetchData}
                                   />
                                 </p>
-                                {/* <p>{section.position}</p> */}
-                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
+                                <i className="ml-auto mr-8 flex cursor-pointer flex-row items-center justify-items-end gap-1 text-sm font-medium">
                                   <MessageCircle size={16} />
-                                  Comment
+                                  {/* Comment */}
+                                  <EditDialog
+                                    dialogType={DialogType.Section}
+                                    id={section.id}
+                                    title="Comment"
+                                    description={section.description}
+                                    comments={section.comments}
+                                    refetchData={refetchData}
+                                  />
                                 </i>
                               </section>
                               {/* Subsection Drag and Drop */}
@@ -523,12 +522,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   />
                                                 </h2>
                                                 <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                  {/* <ViewDialog
-                                                    dialogType={DialogType.Subsection}
-                                                    title={subsection.title}
-                                                    description={subsection.description}
-                                                    comments={subsection.comments}
-                                                  /> */}
                                                   <EditDialog
                                                     dialogType={DialogType.Subsection}
                                                     id={subsection.id}
@@ -539,7 +532,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                   />
                                                 </p>
                                                 <p className="m-0">
-                                                  {/* <AddSubSectionDialog userId={userId} sectionId={subsection.id} /> */}
                                                   <AddDialog
                                                     userId={userId}
                                                     itemId={subsection.id}
@@ -548,10 +540,17 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                     coverletterId={coverLetterId}
                                                   />
                                                 </p>
-                                                {/* <p>{subsection.id}</p> */}
-                                                <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
+                                                <i className="ml-auto mr-8 flex cursor-pointer flex-row items-center justify-items-end gap-1 text-xs">
                                                   <MessageCircle size={16} />
-                                                  Comment
+                                                  {/* Comment */}
+                                                  <EditDialog
+                                                    dialogType={DialogType.Section}
+                                                    id={section.id}
+                                                    title="Comment"
+                                                    description={section.description}
+                                                    comments={section.comments}
+                                                    refetchData={refetchData}
+                                                  />
                                                 </i>
                                               </section>
                                               {/* Exhibits Drag and Drop */}
@@ -588,12 +587,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                             />
                                                           </h2>
                                                           <p className="w-full cursor-pointer overflow-hidden overflow-ellipsis text-nowrap text-left text-[15px] font-medium ">
-                                                            {/* <ViewDialog
-                                                              dialogType={DialogType.Exhibit}
-                                                              title={exhibit.title}
-                                                              description={exhibit.description}
-                                                              comments={exhibit.comments}
-                                                            /> */}
                                                             <EditDialog
                                                               dialogType={DialogType.Exhibit}
                                                               id={exhibit.id}
@@ -603,10 +596,17 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
                                                               refetchData={refetchData}
                                                             />
                                                           </p>
-                                                          {/* <p>{exhibit.position}</p> */}
-                                                          <i className="ml-auto mr-8 flex flex-row items-center justify-items-end gap-1 text-xs">
+                                                          <i className="ml-auto mr-8 flex cursor-pointer flex-row items-center justify-items-end gap-1 text-xs">
                                                             <MessageCircle size={16} />
-                                                            Comment
+                                                            {/* Comment */}
+                                                            <EditDialog
+                                                              dialogType={DialogType.Section}
+                                                              id={section.id}
+                                                              title="Comment"
+                                                              description={section.description}
+                                                              comments={section.comments}
+                                                              refetchData={refetchData}
+                                                            />
                                                           </i>
                                                         </section>
                                                       </div>
