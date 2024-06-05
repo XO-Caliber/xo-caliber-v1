@@ -8,7 +8,7 @@ const MobileWarning: React.FC = () => {
 
       <ul className=" space-y-2 p-6 text-center">
         <li className="tex text-xl font-bold">
-          Please switch to a desktop device to begin your journey
+          Please switch to a desktop device or maximize the screen to begin your journey
         </li>
         <li className="text-sm">
           XO Caliber doesn&apos;t support mobile yet.Head over to the desktop to unlock the complete

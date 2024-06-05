@@ -7,6 +7,7 @@ import {
   ChevronRight,
   Info,
   LinkIcon,
+  Loader,
   MoreHorizontal,
   Save,
   SaveIcon
@@ -139,158 +140,170 @@ const ViewAdminCheckList = ({ userId }: UserProps) => {
         <InstructionVideo videoLink="https://www.youtube.com/embed/zhVdN3XGk78?si=xD8AHf1WjPZ5PwLS" />
       </div>
       <div className=" h-[91vh] p-2 ">
-        <div className="scrollableContainer  ml-60  h-[85vh] overflow-y-scroll font-serif ">
-          <div className="mt-4">
-            <section className="flex w-full flex-col p-8 pt-0 text-black">
-              {checkListData &&
-                checkListData.data?.map((checkList, index) => (
-                  <div
-                    key={checkList.id}
-                    className={`space-y-2  border-2 p-4 ${
-                      index === checkListData.data.length - 1
-                        ? "border-b-2 "
-                        : index % 2 === 0
-                          ? "border-b-0"
-                          : ""
-                    }  bg-white `}
-                  >
-                    <div className="pb-2">
-                      <div
-                        className={`flex items-center justify-start bg-gray-200 ${
-                          openSubMenus[checkList.id] ? "border-b-0" : ""
-                        } rounded-md`}
-                      >
-                        <i className="ml-1">
-                          {openSubMenus[checkList.id] ? (
-                            <ChevronDown
-                              className="duration-800 cursor-pointer  transition-all"
-                              onClick={() => toggleSubMenu(checkList.id)}
-                              size={15}
-                            />
-                          ) : (
-                            <ChevronRight
-                              className="duration-800 cursor-pointer  transition-all"
-                              onClick={() => toggleSubMenu(checkList.id)}
-                              size={15}
-                            />
-                          )}
-                        </i>
-                        <h1 className=" p-2 text-xs  ">{checkList.name}</h1>
-                      </div>
-                      <div
-                        className={`transition-max-height overflow-hidden duration-500 ${
-                          openSubMenus[checkList.id] ? "max-h-[2000px]" : "max-h-0"
-                        }`}
-                      >
-                        {checkList.subHeading &&
-                          checkList.subHeading.map((subHeading) => (
-                            <div key={subHeading.id} className="ml-6 border-2 border-t-0">
-                              <div className="flex items-center justify-between  bg-[#FFE6E0] text-sm">
-                                <h3 className=" p-2  ">{subHeading.name}</h3>
-                                <h3 className="  border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 pl-28 text-xs font-bold text-heading">
-                                  Ref Link
-                                </h3>
-                              </div>
-                              <ul className="space-y-2">
-                                {subHeading.Checklist &&
-                                  subHeading.Checklist.map((item, itemIndex) => (
-                                    <li
-                                      key={item.id}
-                                      className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary ${
-                                        itemIndex === subHeading.Checklist.length - 1
-                                          ? "border-b-0"
-                                          : ""
-                                      }`}
-                                    >
-                                      <Checkbox
-                                        checked={item.UserChecked.some(
-                                          (checked) => checked.isChecked
-                                        )}
-                                        onCheckedChange={() =>
-                                          updateCheck({
-                                            userId: userId,
-                                            checkListId: item.id,
-                                            isChecked: !item.UserChecked.some(
-                                              (checked) => checked.isChecked
-                                            )
-                                          })
-                                        }
-                                      />
-                                      <p className="flex w-full text-xs">{item.name}</p>
-                                      {item.UserChecked.map(
-                                        (checked) =>
-                                          checked.isChecked && (
-                                            <div
-                                              className=" flex flex-row items-center justify-center"
-                                              key={checked.id}
-                                            >
-                                              <div className="mr-2 flex w-[150px] items-center justify-between">
-                                                <DropdownMenu>
-                                                  <span title="add link">
-                                                    <DropdownMenuTrigger asChild>
-                                                      <MoreHorizontal
-                                                        size={14}
-                                                        className="cursor-pointer"
-                                                      />
-                                                    </DropdownMenuTrigger>
-                                                  </span>
-                                                  <DropdownMenuContent>
-                                                    <Input
-                                                      className="h-[30px]  border-gray-500"
-                                                      autoFocus={true}
-                                                      placeholder="Enter the reference link"
-                                                      value={
-                                                        referenceLinks[checked.id] ||
-                                                        item.UserChecked.find(
-                                                          (checked) => checked.referenceLink
-                                                        )?.referenceLink ||
-                                                        ""
-                                                      }
-                                                      onChange={(e) =>
-                                                        setReferenceLinks((prevLinks) => ({
-                                                          ...prevLinks,
-                                                          [checked.id]: e.target.value
-                                                        }))
-                                                      }
-                                                      onKeyDown={(e) => {
-                                                        if (e.key == "Enter") {
-                                                          handleChange(
-                                                            checked.id,
-                                                            referenceLinks[checked.id]
-                                                          );
+        {checkListData.data ? (
+          <div className="scrollableContainer  ml-60  h-[85vh] overflow-y-scroll font-serif ">
+            <div className="mt-4">
+              <section className="flex w-full flex-col p-8 pt-0 text-black">
+                {checkListData &&
+                  checkListData.data?.map((checkList, index) => (
+                    <div
+                      key={checkList.id}
+                      className={`space-y-2  border-2 p-4 ${
+                        index === checkListData.data.length - 1
+                          ? "border-b-2 "
+                          : index % 2 === 0
+                            ? "border-b-0"
+                            : ""
+                      }  bg-white `}
+                    >
+                      <div className="pb-2">
+                        <div
+                          className={`flex items-center justify-start bg-gray-200 ${
+                            openSubMenus[checkList.id] ? "border-b-0" : ""
+                          } rounded-md`}
+                        >
+                          <i className="ml-1">
+                            {openSubMenus[checkList.id] ? (
+                              <ChevronDown
+                                className="duration-800 cursor-pointer  transition-all"
+                                onClick={() => toggleSubMenu(checkList.id)}
+                                size={15}
+                              />
+                            ) : (
+                              <ChevronRight
+                                className="duration-800 cursor-pointer  transition-all"
+                                onClick={() => toggleSubMenu(checkList.id)}
+                                size={15}
+                              />
+                            )}
+                          </i>
+                          <h1 className=" p-2 text-xs  ">{checkList.name}</h1>
+                        </div>
+                        <div
+                          className={`transition-max-height overflow-hidden duration-500 ${
+                            openSubMenus[checkList.id] ? "max-h-[2000px]" : "max-h-0"
+                          }`}
+                        >
+                          {checkList.subHeading &&
+                            checkList.subHeading.map((subHeading) => (
+                              <div key={subHeading.id} className="ml-6 border-2 border-t-0">
+                                <div className="flex items-center justify-between  bg-[#FFE6E0] text-sm">
+                                  <h3 className=" p-2  ">{subHeading.name}</h3>
+                                  <h3 className="  border border-y-0 border-l-2 border-r-0 border-gray-300 p-2 pl-28 text-xs font-bold text-heading">
+                                    Ref Link
+                                  </h3>
+                                </div>
+                                <ul className="space-y-2">
+                                  {subHeading.Checklist &&
+                                    subHeading.Checklist.map((item, itemIndex) => (
+                                      <li
+                                        key={item.id}
+                                        className={`flex items-center justify-between space-x-12 p-2 pl-10 transition-all duration-500 hover:bg-secondary ${
+                                          itemIndex === subHeading.Checklist.length - 1
+                                            ? "border-b-0"
+                                            : ""
+                                        }`}
+                                      >
+                                        <Checkbox
+                                          checked={item.UserChecked.some(
+                                            (checked) => checked.isChecked
+                                          )}
+                                          onCheckedChange={() =>
+                                            updateCheck({
+                                              userId: userId,
+                                              checkListId: item.id,
+                                              isChecked: !item.UserChecked.some(
+                                                (checked) => checked.isChecked
+                                              )
+                                            })
+                                          }
+                                        />
+                                        <p className="flex w-full text-xs">{item.name}</p>
+                                        {item.UserChecked.map(
+                                          (checked) =>
+                                            checked.isChecked && (
+                                              <div
+                                                className=" flex flex-row items-center justify-center"
+                                                key={checked.id}
+                                              >
+                                                <div className="mr-2 flex w-[150px] items-center justify-between">
+                                                  <DropdownMenu>
+                                                    <span title="add link">
+                                                      <DropdownMenuTrigger asChild>
+                                                        <MoreHorizontal
+                                                          size={14}
+                                                          className="cursor-pointer"
+                                                        />
+                                                      </DropdownMenuTrigger>
+                                                    </span>
+                                                    <DropdownMenuContent>
+                                                      <Input
+                                                        className="h-[30px]  border-gray-500"
+                                                        autoFocus={true}
+                                                        placeholder="Enter the reference link"
+                                                        value={
+                                                          referenceLinks[checked.id] ||
+                                                          item.UserChecked.find(
+                                                            (checked) => checked.referenceLink
+                                                          )?.referenceLink ||
+                                                          ""
                                                         }
-                                                      }}
-                                                    />
-                                                  </DropdownMenuContent>
-                                                </DropdownMenu>
-                                                <LinkIcon
-                                                  className="cursor-pointer text-sky-400"
-                                                  onClick={() =>
-                                                    window.open(
-                                                      referenceLinks[checked.id] ||
-                                                        item.UserChecked.find(
-                                                          (checked) => checked.referenceLink
-                                                        )?.referenceLink ||
-                                                        ""
-                                                    )
-                                                  }
-                                                />
+                                                        onChange={(e) =>
+                                                          setReferenceLinks((prevLinks) => ({
+                                                            ...prevLinks,
+                                                            [checked.id]: e.target.value
+                                                          }))
+                                                        }
+                                                        onKeyDown={(e) => {
+                                                          if (e.key == "Enter") {
+                                                            handleChange(
+                                                              checked.id,
+                                                              referenceLinks[checked.id]
+                                                            );
+                                                          }
+                                                        }}
+                                                      />
+                                                    </DropdownMenuContent>
+                                                  </DropdownMenu>
+                                                  <LinkIcon
+                                                    className="cursor-pointer text-sky-400"
+                                                    onClick={() =>
+                                                      window.open(
+                                                        referenceLinks[checked.id] ||
+                                                          item.UserChecked.find(
+                                                            (checked) => checked.referenceLink
+                                                          )?.referenceLink ||
+                                                          ""
+                                                      )
+                                                    }
+                                                  />
+                                                </div>
                                               </div>
-                                            </div>
-                                          )
-                                      )}
-                                    </li>
-                                  ))}
-                              </ul>
-                            </div>
-                          ))}
+                                            )
+                                        )}
+                                      </li>
+                                    ))}
+                                </ul>
+                              </div>
+                            ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-            </section>
+                  ))}
+              </section>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div>
+            {checkListData.isFetching ? (
+              <div className="ml-56 flex h-[70vh] items-center justify-center">
+                <Loader size={45} className="rotate-animation text-gray-600" />
+              </div>
+            ) : (
+              <div className="flex h-[70vh] items-center justify-center">No data</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Image from "next/image";
 import {
   Chart,
   Filler,
@@ -11,6 +12,7 @@ import { trpc } from "@/app/_trpc/client";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import FirmNotes from "./FirmNotes";
 import UserNotes from "./UserNotes";
+import XOCaliber from "../../../../public/images/black Logo@500x8.png";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 
 interface UserAnswer {
@@ -137,7 +139,7 @@ function XOSpiderGraph({ userType }: userProps) {
         scales: {
           r: {
             grid: {
-              color: "gray" // Set the color of the gridlines
+              color: "black" // Set the color of the gridlines
             },
 
             min: 0,
@@ -160,13 +162,29 @@ function XOSpiderGraph({ userType }: userProps) {
     <>
       {/* Radar chart */}
       <ResizablePanelGroup direction="horizontal" className="min-h-[93vh] max-w-full">
-        <ResizablePanel defaultSize={70} className="m-2">
+        <ResizablePanel defaultSize={50} className="m-2">
           <ResizablePanelGroup direction="vertical">
-            <ResizablePanel defaultSize={120} className="m-3 mt-20">
+            <ResizablePanel defaultSize={50} className="m-3 ">
               <main className="flex h-full flex-col p-3">
-                <div className="flex items-center justify-between"></div>
-                <div className="m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
-                  <canvas id="myChart">myChart</canvas>
+                <div className="rounded-md bg-gray-200 p-2 text-center text-xs font-bold">
+                  <p>
+                    Please reach out to your firm to understand the Spider graph if any assistance
+                    required.
+                  </p>
+                  <p>
+                    For privacy and security reasons, no one cannot view your answers to yes or no
+                    questions.
+                  </p>
+                </div>
+                <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
+                  <canvas id="myChart">myChart</canvas>{" "}
+                  <Image
+                    src={XOCaliber}
+                    alt="Overlay"
+                    width={220}
+                    height={50}
+                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-10"
+                  />
                 </div>
               </main>
             </ResizablePanel>

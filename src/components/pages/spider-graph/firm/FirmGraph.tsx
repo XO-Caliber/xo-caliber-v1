@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import XOCaliber from "../../../../../public/images/black Logo@500x-8.png";
 import {
   Chart,
   Filler,
@@ -139,7 +141,7 @@ function FirmGraph({ userType }: userType) {
         scales: {
           r: {
             grid: {
-              color: "gray" // Set the color of the gridlines
+              color: "black" // Set the color of the gridlines
             },
 
             min: 0,
@@ -198,9 +200,15 @@ function FirmGraph({ userType }: userType) {
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={120} className="m-3 mt-24">
               <main className="flex h-full flex-col p-3">
-                <div className="flex items-center justify-between"></div>
-                <div className="m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
+                <div className="relative m-2 flex h-[65vh] items-center justify-center rounded-xl border border-red-600 bg-secondary">
                   <canvas id="myChart">myChart</canvas>
+                  {/* <Image
+                    src={XOCaliber}
+                    alt="Overlay"
+                    width={220}
+                    height={50}
+                    className="pointer-events-none absolute left-0 top-0 mr-12 h-full w-full  opacity-5"
+                  /> */}
                 </div>
               </main>
             </ResizablePanel>
