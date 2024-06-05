@@ -80,6 +80,7 @@ model User {
   isActive             Boolean?  @default(false)
   stripePriceId        String?
   paidDate             DateTime?
+  trialUsed            Boolean   @default(false)
 
   selectedCase  String?
   selectedCase2 String?

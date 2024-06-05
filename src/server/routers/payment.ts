@@ -14,15 +14,26 @@ export const paymentRouter = router({
   createCheckout: publiceProcedure.input(z.boolean()).mutation(async ({ input }) => {
     const hasFirm = input;
     const session = await getAuthSession();
-    console.log("stripeCustomerId", session?.user.stripeCustomerId);
 
     if (!session?.user || !session.user.stripeCustomerId) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
+    const user = await db.user.findUnique({
+      where: {
+        id: session.user.id
+      }
+    });
+
+    if (!user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
     let priceId = hasFirm ? env.PRICE_ID_WITH_FIRM : env.PRICE_ID_WITHOUT_FIRM;
 
-    return stripe.checkout.sessions.create({
+    const trialDays = user.trialUsed ? 0 : 7;
+
+    const checkoutSession = await stripe.checkout.sessions.create({
       mode: "subscription",
       customer: session?.user.stripeCustomerId,
       payment_method_types: ["card"],
@@ -38,9 +49,18 @@ export const paymentRouter = router({
         metadata: {
           payingUserId: session.user.id
         },
-        trial_period_days: 7
+        trial_period_days: trialDays
       }
     });
+
+    if (!user.trialUsed) {
+      await db.user.update({
+        where: { id: session.user.id },
+        data: { trialUsed: true }
+      });
+    }
+
+    return checkoutSession;
   }),
 
   checkCheckout: publiceProcedure.query(async () => {
