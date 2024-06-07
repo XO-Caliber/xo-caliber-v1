@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import { Baseuser } from "@/types/BaseUser";
-import { Download, Info, Loader2 } from "lucide-react";
+import { Download, Info, Loader, Loader2 } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { CoverLetterType } from "@/types/CoverLetter";
 import { trpc } from "@/app/_trpc/client";
@@ -122,7 +122,9 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
           userId={user.id}
           refetchCaseData={refetchData}
         />
-        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
+        <div className="relative flex w-full justify-center">
+          {loading && <Loader size={50} className="animate-spin" />}
+        </div>
       </div>
     </section>
   );

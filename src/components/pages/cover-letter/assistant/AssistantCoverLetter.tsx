@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
-import { Download, Info } from "lucide-react";
+import { Download, Info, Loader } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
@@ -118,7 +118,9 @@ export const AssistantCoverLetter = () => {
           userId={user}
           refetchCaseData={refetchData}
         />
-        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
+        <div className="relative flex w-full justify-center">
+          {loading && <Loader size={50} className="animate-spin" />}
+        </div>
       </div>
     </section>
   );

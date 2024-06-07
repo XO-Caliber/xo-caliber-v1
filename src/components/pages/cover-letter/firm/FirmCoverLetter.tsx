@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
-import { Download, DownloadIcon, Info, UserPlus, X } from "lucide-react";
+import { Download, DownloadIcon, Info, Loader, UserPlus, X } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
 import { Skeleton } from "@/components/ui/Skeleton";
 import InstructionVideo from "../../home/InstructionVideo";
+import Loading from "@/app/workspaces/loading";
 
 export const FirmCoverLetter = () => {
   // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
@@ -139,7 +140,9 @@ export const FirmCoverLetter = () => {
           userId={user}
           refetchCaseData={refetchData}
         />
-        {loading && <Skeleton className="m-2 h-12 rounded-none rounded-t-lg p-3" />}
+        <div className="relative flex w-full justify-center">
+          {loading && <Loader size={50} className="animate-spin" />}
+        </div>
       </div>
     </section>
   );
