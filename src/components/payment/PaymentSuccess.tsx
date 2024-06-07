@@ -4,17 +4,18 @@ import { useSession } from "next-auth/react";
 import { trpc } from "@/app/_trpc/client";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export const PaymentSuccess = () => {
   const { data: session, update } = useSession();
 
   const { data } = trpc.payment.checkCheckout.useQuery();
-  console.log(session?.user.isActive);
-  console.log(session);
+  // console.log(session?.user.isActive);
+  // console.log(session);
   useEffect(() => {
     if (data?.success === true) {
       update({ isActive: true });
-      redirect("/home_page");
+      signOut({ callbackUrl: "/login" });
     }
   }, [data]);
 

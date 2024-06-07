@@ -107,7 +107,7 @@ export const Navbar = async () => {
                   </DropdownMenuItem>
                 </DialogTrigger>
                 <DropdownMenuItem>
-                  <a target="_blank" href="https://billing.stripe.com/p/login/bIY03RePw42f9OM000">
+                  <a target="_blank" href="https://account.xocaliber.com/p/login/bIY03RePw42f9OM000">
                     Manage subscription
                   </a>
                 </DropdownMenuItem>

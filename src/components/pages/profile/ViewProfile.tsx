@@ -119,7 +119,7 @@ const ViewProfile = ({ role }: { role: string | undefined }) => {
           <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
             Save
           </Button>
-          {role === "INDIVIDUAL" && <PaymentCancel />}
+          {role === "Individual/Clinet" /*&& <PaymentCancel />*/}
         </DialogFooter>
       </DialogContent>
     </div>

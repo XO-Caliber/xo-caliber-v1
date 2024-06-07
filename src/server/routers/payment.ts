@@ -49,7 +49,7 @@ export const paymentRouter = router({
         metadata: {
           payingUserId: session.user.id
         },
-        trial_period_days: trialDays
+        ...(trialDays !== 0 && {trial_period_days: trialDays})
       }
     });
 

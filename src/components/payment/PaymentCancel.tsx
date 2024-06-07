@@ -13,7 +13,7 @@ const PaymentCancel = () => {
         toast({
           title: "Subscription canceled successfully",
           description:
-            "Your subscription has been successfully canceled, but you can continue to use it until the expiration date."
+            "Your subscription has been successfully canceled, but you can continue to use it until the trial period."
         });
       }
     },

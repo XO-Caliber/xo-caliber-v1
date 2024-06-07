@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { signOut } from "next-auth/react";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
@@ -46,7 +47,7 @@ export async function POST(req: NextRequest) {
             }
           }
 
-          console.log("User data updated successfully:", response);
+          // console.log("User data updated successfully:", response);
         } catch (error) {
           console.error("Error updating user data:", error);
           throw error;

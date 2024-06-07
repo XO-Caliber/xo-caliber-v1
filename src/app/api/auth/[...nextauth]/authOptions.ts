@@ -44,10 +44,10 @@ export const authOptions: NextAuthOptions = {
       },
       //@ts-expect-error
       async authorize(credentials) {
-        console.log(credentials);
-        console.log("Hello from server");
+        // console.log(credentials);
+        // console.log("Hello from server");
         if (!credentials?.emailAddress || !credentials.password) {
-          console.log("Nothing");
+          // console.log("Nothing");
           throw new Error("Missing credentials");
         }
 
@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          console.log("User does not exist");
+          // console.log("User does not exist");
           throw new Error("user does not exist");
         }
 
@@ -67,7 +67,7 @@ export const authOptions: NextAuthOptions = {
         }
 
         if (!user.isEmailVerified) {
-          console.log("Email is not verified");
+          // console.log("Email is not verified");
           throw new Error("Email is not verified");
         }
         if (user) {
@@ -79,11 +79,11 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!isFirm) {
-              console.log("Firm doesn't exist");
+              // console.log("Firm doesn't exist");
               throw new Error("Firm doesn't exist");
             }
             if (!passwordMatch) {
-              console.log("Wrong password");
+              // console.log("Wrong password");
               throw new Error("Wrong password");
             }
             return user;
@@ -95,21 +95,21 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!isAssistant) {
-              console.log("Assistant doesn't exist");
+              // console.log("Assistant doesn't exist");
               throw new Error("Assistant doesn't exist");
             }
             if (!passwordMatch) {
-              console.log("Wrong password");
+              // console.log("Wrong password");
               throw new Error("Wrong password");
             }
             return user;
           }
 
           if (!passwordMatch) {
-            console.log("Wrong password");
+            // console.log("Wrong password");
             throw new Error("Wrong password");
           }
-          console.log(user);
+          // console.log(user);
           return user;
         }
         return Promise.resolve(null);

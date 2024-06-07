@@ -43,7 +43,7 @@ export function PaymentCard() {
           Unlock Your Immigration Visas Journey through Our User-Friendly Self-Service Web Platform
         </CardTitle>
         <CardDescription className="text-center font-bold text-white">
-          Activate 7 days trial period NOW!!!
+        Try our platform for free!!!!
         </CardDescription>
       </CardHeader>
       <CardContent></CardContent>
