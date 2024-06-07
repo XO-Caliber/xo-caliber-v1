@@ -18,9 +18,7 @@ export const appRouter = router({
   question: questionRouter,
   answer: answerRouter,
   note: noteRouter,
-
   checklist: checkRouter,
-
   coverletter: coverletterRouter,
   payment: paymentRouter
 });

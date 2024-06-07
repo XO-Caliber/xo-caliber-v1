@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Navbar } from "@/components/Navbar";
 import Providers from "@/context/TrpcProviders";
 import { Toaster } from "@/components/ui/Toaster";
 import { NextAuthProvider } from "@/context/NextAuthProviders";
@@ -36,11 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <MobileWarning />
             </div>
             <div className="hidden md:block">
-              {/* <Navbar /> */}
               {children}
-              {/* <main className="absolute grid h-full w-full place-items-center backdrop-blur-md">
-                <PaymentCard />
-              </main> */}
               <Toaster />
             </div>
           </body>

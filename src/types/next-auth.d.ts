@@ -8,6 +8,7 @@ declare module "next-auth/jwt" {
     role: string;
     stripeCustomerId: string;
     isActive: Boolean;
+    expToken: number;
   }
 }
 declare module "next-auth" {

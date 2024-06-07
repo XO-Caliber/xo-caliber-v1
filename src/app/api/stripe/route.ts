@@ -1,7 +1,7 @@
+import { trpc } from "@/app/_trpc/client";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { signOut } from "next-auth/react";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 

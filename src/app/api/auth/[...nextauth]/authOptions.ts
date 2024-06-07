@@ -122,37 +122,56 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login"
   },
+
   callbacks: {
-    async jwt({ token, user, session, trigger }) {
-      if (trigger === "update" && session.isActive) {
-        token.isActive = session.isActive;
-      }
-      // console.log("jwt callbacks", { token, user, session });
-      if (user) {
-        return {
-          ...token,
-          id: user.id,
-          role: user.role,
-          stripeCustomerId: user.stripeCustomerId,
-          isActive: user.isActive
+    async jwt({ token, user }) {
+      const currentTimestamp = Math.floor(new Date().getTime() / 1000); // Current time in seconds
+      const isTokenExpired = currentTimestamp > token.expToken;
+
+      console.log("Before if block:");
+      console.log("Token Object:", token);
+      console.log("Current Timestamp:", currentTimestamp);
+      console.log("EXP Timestamp:", token.expToken);
+      console.log("Is Token Expired:", isTokenExpired);
+      console.log("User Object:", user);
+      console.log(new Date().getTime());
+
+      if (user || isTokenExpired) {
+        console.log("Token is being refreshed");
+        const freshUser = user || (await db.user.findUnique({ where: { id: token.id } }));
+        token = {
+          email: freshUser.email,
+          name: freshUser.name,
+          picture: freshUser.image,
+          id: freshUser.id,
+          role: freshUser.role,
+          stripeCustomerId: freshUser.stripeCustomerId,
+          isActive: freshUser.isActive,
+          expToken: Math.floor(new Date().getTime() / 1000) + 60
         };
-      }
-      return token;
-    },
-    async session({ session, token, user }) {
-      // console.log("session callbacks", { session, token, user });
-      if (token) {
-        session.user.id = token.id;
-        session.user.name = token.name;
-        session.user.email = token.email;
-        session.user.role = token.role;
-        session.user.stripeCustomerId = token.stripeCustomerId;
-        session.user.isActive = token.isActive;
+
+        console.log("After refreshing token:");
+        // console.log("Token Object:", token);
+      } else {
+        console.log("Token is not refreshed:");
       }
 
+      return token;
+    },
+    async session({ session, token }) {
+      console.log("SESSION");
+      session.user = {
+        id: token.id,
+        name: token.name,
+        email: token.email,
+        role: token.role,
+        stripeCustomerId: token.stripeCustomerId,
+        isActive: token.isActive
+      };
       return session;
     }
   },
+
   events: {
     createUser: async (message) => {
       const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
