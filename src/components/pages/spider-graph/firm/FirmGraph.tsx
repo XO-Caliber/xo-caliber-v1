@@ -104,7 +104,6 @@ function FirmGraph({ userType }: userType) {
         (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10 > 10
           ? 10
           : (marks.reduce((sum: number, mark: number) => sum + mark, 0) / questionsCount) * 10;
-      console.log(averageMark);
 
       return { category, averageMark };
     });
@@ -125,10 +124,6 @@ function FirmGraph({ userType }: userType) {
         pointRadius: 4
       }
     ];
-
-    // Log datasets to the console
-    console.log("Datasets:", datasets);
-
     // Radar chart configuration
     const myChart = new Chart(ctx, {
       type: "radar",

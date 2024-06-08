@@ -12,15 +12,7 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/Card";
-import { Checkbox } from "@/components/ui/Checkbox";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
 import Link from "next/link";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
@@ -28,7 +20,6 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
 import { user } from "@/types/user";
 import { GoogleAuth } from "./GoogleAuth";
-import { LinkedinAuth } from "./LinkedinAuth";
 import { useState } from "react";
 
 const formSchema = user.refine(
@@ -74,7 +65,6 @@ export const SignupBox = () => {
   );
   const { mutate: registerUser } = trpc.auth.register.useMutation({
     onSuccess({ success }) {
-      console.log("User created successfully");
       if (success) {
         //Login user here
         router.push("/login");
@@ -97,11 +87,7 @@ export const SignupBox = () => {
             </ToastAction>
           )
         });
-        console.log("User exist");
       } else {
-        console.log(err.message);
-        console.log(err.data);
-        console.log(err.shape);
         toast({
           title: "Something went wrong",
           description: `Error:  ${err.data}`,
@@ -117,10 +103,7 @@ export const SignupBox = () => {
 
   const handleSignup = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    // console.log({ values });
-    // Commented for testing
     try {
-      console.log(values);
       registerUser(values);
     } catch (error) {
       console.error("An unknown error occurred during sign-in.");
@@ -134,7 +117,6 @@ export const SignupBox = () => {
         <form onSubmit={form.handleSubmit(handleSignup)}>
           <CardHeader className="flex items-center justify-center">
             <CardTitle>Seconds to Sign Up !</CardTitle>
-            {/* <CardDescription>Enter your email & password to login</CardDescription> */}
           </CardHeader>
           <div className="flex w-full items-center justify-between px-4">
             <GoogleAuth />
@@ -206,29 +188,8 @@ export const SignupBox = () => {
                 );
               }}
             />
-            {/* Terms and conditions checkbox implement if wanted, IT GIVES SOME BUGS!! 
-            <div className="flex items-center space-x-2 pt-3">
-              <Checkbox id="terms" />
-              <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Accept terms and conditions
-              </label>
-            </div> */}
           </CardContent>
           <CardFooter className="flex justify-between ">
-            {/* <Link href={"/"} className="w-full">
-              <Button type="reset" className="w-full" variant={"secondary"}>
-                Cancel
-              </Button>
-            </Link> */}
-            {/* <button
-              type="submit"
-              className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
-            >
-              Create account
-            </button> */}
             <Button type="submit" variant={"color"} isLoading={isLoading}>
               Start your journey
             </Button>

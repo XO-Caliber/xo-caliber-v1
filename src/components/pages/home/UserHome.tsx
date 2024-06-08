@@ -36,7 +36,6 @@ export const UserHome = async ({ user }: userProps) => {
           </div>
         </li>
       </ul>
-      {/* <div className="ml-8 mt-4 w-[350px] justify-self-center p-4"></div> */}
       <span
         className="border-l-2 border-border pr-4"
         style={{ height: "calc(100vh - 70px)" }}

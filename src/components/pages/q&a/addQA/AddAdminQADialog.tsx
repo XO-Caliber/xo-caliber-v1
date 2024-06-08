@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PlusSquare } from "lucide-react";
 import AdminQADialogContent from "./AdminQADialogContent";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -85,10 +84,8 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
         <Button
           variant={"dark"}
           className="ml-4 border-dashed border-gray-400 font-medium hover:border"
-          // onClick={handleOpen}
           size={"sm"}
         >
-          {/* <PlusSquare size={16} /> */}
           <p className="ml-2">Add Q&A</p>
         </Button>
       </DialogTrigger>
@@ -97,7 +94,6 @@ const AddAdminQADialog = ({ refetchData }: QAProps) => {
           <DialogTitle> Add Yes or No Questions</DialogTitle>
           <DialogDescription>select category and weightage for this question</DialogDescription>
 
-          {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
           <AdminQADialogContent
             question={question}
             mark={mark}

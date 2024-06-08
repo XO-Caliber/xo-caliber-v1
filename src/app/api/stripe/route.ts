@@ -1,4 +1,3 @@
-import { trpc } from "@/app/_trpc/client";
 import { db } from "@/lib/db";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
@@ -46,8 +45,6 @@ export async function POST(req: NextRequest) {
               });
             }
           }
-
-          // console.log("User data updated successfully:", response);
         } catch (error) {
           console.error("Error updating user data:", error);
           throw error;
@@ -65,7 +62,6 @@ export async function POST(req: NextRequest) {
               isActive: false
             }
           });
-          console.log("User data updated successfully:", response);
         } catch (error) {
           console.error("Error updating user data:", error);
           throw error;

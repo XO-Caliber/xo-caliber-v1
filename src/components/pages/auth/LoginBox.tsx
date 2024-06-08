@@ -12,25 +12,15 @@ import {
 } from "@/components/ui/Form";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/Card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/Card";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/Toast";
 import { GoogleAuth } from "./GoogleAuth";
-import { LinkedinAuth } from "./LinkedinAuth";
-import { ReactEventHandler, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { useState } from "react";
 import { InfoIcon } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "@/components/ui/Dialog";
 
 const formSchema = z.object({
   emailAddress: z.string().email(),
@@ -42,7 +32,6 @@ export const LoginBox = () => {
   const router = useRouter();
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [type, setType] = useState<string>("individual");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,7 +44,6 @@ export const LoginBox = () => {
 
   const loginUser = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log("Hello from client");
     try {
       const result = await signIn("credentials", {
         ...data,
@@ -102,53 +90,16 @@ export const LoginBox = () => {
   };
 
   const handleLogin = (values: z.infer<typeof formSchema>) => {
-    console.log("Hello from onclick");
-    console.log({ values });
-
-    // values.type = type;
     loginUser(values);
   };
 
-  // const handleTabChange = (value: string) => {
-  //   console.log(value);
-  //   form.reset();
-  //   setType(value);
-  // };
-
   return (
     <div className="flex flex-col items-center justify-center">
-      {/* <Tabs defaultValue="individual" className=" w-full  pb-2">
-        <TabsList className="w-[302px]">
-          <TabsTrigger
-            className="w-full"
-            value="individual"
-            onClick={() => handleTabChange("individual")}
-          >
-            Individual
-          </TabsTrigger>
-          <TabsTrigger className="w-full" value="firm" onClick={() => handleTabChange("firm")}>
-            Firm
-          </TabsTrigger>
-          <TabsTrigger
-            className="w-full"
-            value="assistant"
-            onClick={() => handleTabChange("assistant")}
-          >
-            Assistant
-          </TabsTrigger>
-        </TabsList>
-      </Tabs> */}
       <Card className="z-50 w-[500px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleLogin)}>
             <CardHeader className="flex items-center justify-center">
-              <CardTitle>
-                {/* {type === "individual" && "Individual Login"}
-                {type === "firm" && "Firm Login"}
-                {type === "assistant" && "Assistant Login"} */}
-                Welcome back !
-              </CardTitle>
-              {/* <CardDescription>Enter your email & password to login</CardDescription> */}
+              <CardTitle>Welcome back !</CardTitle>
             </CardHeader>
             <div className="flex w-full items-center justify-between px-4">
               <GoogleAuth />
@@ -200,15 +151,6 @@ export const LoginBox = () => {
               />
             </CardContent>
             <CardFooter className="flex justify-between ">
-              {/* <Button type="reset" className="w-full" variant={"secondary"}>
-                Cancel
-              </Button> */}
-              {/* <button
-              type="submit"
-              className="mx-2 w-full rounded-md bg-[#F7654B] py-2 font-medium text-white"
-              >
-              Login
-            </button> */}
               <Button type="submit" variant={"color"} isLoading={isLoading}>
                 Resume your journey
               </Button>

@@ -1,6 +1,5 @@
 import React from "react";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import Home from "@/app/page";
 import { CardTitle } from "@/components/ui/Card";
 import Header from "@/components/Header";
 import { PaymentCard } from "@/components/PaymentCard";

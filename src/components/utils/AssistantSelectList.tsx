@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/Select";
-import { Label } from "../ui/Label";
 import { trpc } from "@/app/_trpc/client";
 import { UserProfile } from "./UserProfile";
 

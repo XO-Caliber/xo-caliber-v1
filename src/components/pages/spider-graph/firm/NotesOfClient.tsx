@@ -12,7 +12,6 @@ export function NotesOfClient({ selectedUser, userType }: userProps) {
   const clientNotesData = trpc.note.getFirmClientNotes.useQuery(selectedUser);
   const initialNotes = clientNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes);
-  console.log(initialNotes);
 
   useEffect(() => {
     setNotes(initialNotes || "");
@@ -25,17 +24,6 @@ export function NotesOfClient({ selectedUser, userType }: userProps) {
     return true;
   };
 
-  // function onSubmit() {
-  //   toast({
-  //     title: "You submitted the following values:",
-  //     description: (
-  //       <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-  //         <code className="text-white">{JSON.stringify(notes, null, 2)}</code>
-  //       </pre>
-  //     )
-  //   });
-  // }
-  console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between ">
       <h1 className="text-lg font-semibold text-heading">Client Notes:</h1>

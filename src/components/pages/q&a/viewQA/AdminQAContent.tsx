@@ -35,7 +35,6 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
   question,
   mark,
   id,
-
   handleDelete,
   refetchData
 }) => {
@@ -97,17 +96,6 @@ export const AdminQAContent: React.FC<AddQAProps> = ({
               <li className="flex w-full items-center justify-start gap-x-1 pl-4 text-left text-base">
                 <p>{question}</p>
               </li>
-
-              {/* <XCircle
-                size={24}
-                className={"mr-2 cursor-pointer text-red-500 hover:text-red-400 "}
-                onClick={() => handleDelete(id)}
-              /> */}
-
-              {/* <Info
-                xlinkTitle="Tap to see detailed question overFirm "
-                className="cursor-pointer p-1"
-              /> */}
             </ul>
             <div
               className={`flex justify-between gap-2 rounded-lg border-2 border-border p-2 text-xs 

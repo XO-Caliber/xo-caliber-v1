@@ -169,8 +169,6 @@ const EditDialogContent = ({
     const blocks = await ref.current?.save();
     setLoading(true);
     toggleEdit();
-    console.log(values);
-    console.log(JSON.stringify(blocks));
     switch (contentType) {
       case "Section":
         updateSection({

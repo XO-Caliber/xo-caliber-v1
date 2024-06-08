@@ -1,8 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/Button";
-import UserSelectList from "@/components/utils/UserSelectList";
 import { Baseuser } from "@/types/BaseUser";
-import { Info, UserPlus } from "lucide-react";
+import { Info } from "lucide-react";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { trpc } from "@/app/_trpc/client";
 import { ViewCoverLetter } from "../ViewCoverLetter";

@@ -5,8 +5,7 @@ import {
   CandlestickChart,
   CheckSquare,
   Construction,
-  MoreHorizontal,
-  WorkflowIcon
+  MoreHorizontal
 } from "lucide-react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
@@ -19,11 +18,7 @@ import {
   DropdownMenuTrigger
 } from "@/components/ui/Dropdown-menu";
 import UserSelectList from "@/components/utils/UserSelectList";
-import AllUserSelectList from "../spider-graph/admin/AllUserSelectList";
 
-interface Props {
-  userName?: string;
-}
 export const FirmTimeLine = () => {
   const [user, setUser] = useState("");
   const userName = trpc.home.getUserProfileForTimeLine.useQuery(user);

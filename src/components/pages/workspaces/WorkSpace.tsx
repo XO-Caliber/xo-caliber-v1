@@ -1,17 +1,7 @@
 "use client";
-import {
-  CandlestickChart,
-  CheckSquare,
-  CheckSquare2,
-  DownloadCloud,
-  EyeIcon,
-  FileEdit,
-  User,
-  Wind
-} from "lucide-react";
+import { CandlestickChart, CheckSquare, CheckSquare2, EyeIcon, FileEdit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import ViewProfile from "../profile/ViewProfile";
 
 interface Props {
   userRole?: string;
@@ -43,13 +33,6 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
         >
           Workspace
         </span>
-        {/* <span className="mr-4 text-sm" id="arrow">
-          {isSubMenuHidden ? (
-            <ChevronRight className={`bi bi-chevron-down text-secondary-foreground`} />
-          ) : (
-            <ChevronDown className="bi bi-chevron-down mt-3 text-secondary-foreground" />
-          )}
-        </span> */}
       </div>
 
       <div
@@ -77,15 +60,6 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
           <CandlestickChart size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Assess</h1>
         </div>
-        {/* <div
-          className="flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
-          onClick={() => router.push("/workspaces/xo-mindmap")}
-        >
-          <Wind size={18} className="bi bi-bookmark-fill" />
-          <h1 className="ml-4 text-secondary-foreground hover:text-black">
-            Mind Map<sup className="rounded-md bg-green-400">upcoming</sup>
-          </h1>
-        </div> */}
         {(userRole === "INDIVIDUAL" || userRole === "FIRM" || userRole === "ADMIN") && (
           <div
             className="flex cursor-pointer items-center  rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary"
@@ -111,9 +85,6 @@ const WorkSpace = ({ userRole, userId, isActive }: Props) => {
           <FileEdit size={18} className="bi bi-bookmark-fill" />
           <h1 className="ml-4 text-secondary-foreground hover:text-black">Craft</h1>
         </div>
-        {/* <div className=" flex cursor-pointer items-center rounded-md p-2 px-4 text-secondary-foreground transition-all duration-500 hover:bg-primary">
-          <ViewProfile userId={userId} />
-        </div> */}
       </div>
     </div>
   );

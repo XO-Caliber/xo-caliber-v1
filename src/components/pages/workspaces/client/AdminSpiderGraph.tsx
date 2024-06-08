@@ -35,7 +35,6 @@ function getRandomColor() {
 function AdminSpiderGraph() {
   const { data: answerData, isLoading, isError } = trpc.answer.getAdminSpiderAnswer.useQuery();
   const { data: adminQuestions } = trpc.question.getClientAdminQuestions.useQuery();
-  // console.log(answerData);
 
   useEffect(() => {
     if (isLoading) {
@@ -123,9 +122,6 @@ function AdminSpiderGraph() {
         pointRadius: 4
       }
     ];
-
-    // Log datasets to the console
-    console.log("Datasets:", datasets);
 
     // Radar chart configuration
     const myChart = new Chart(ctx, {

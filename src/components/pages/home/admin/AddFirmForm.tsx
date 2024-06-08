@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,7 +16,7 @@ import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
-import { CardDescription, CardTitle } from "@/components/ui/Card";
+import { CardTitle } from "@/components/ui/Card";
 
 const formSchema = z.object({
   emailAddress: z.string().email()
@@ -37,7 +36,6 @@ export const AddFirmForm = () => {
 
   const { mutate: addfirm } = trpc.home.addFirm.useMutation({
     onSuccess({ success }) {
-      console.log("User created successfully");
       if (success) {
         //Login user here
         router.refresh();
@@ -94,7 +92,6 @@ export const AddFirmForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log({ values });
     // Commented for testing
     try {
       addfirm(values.emailAddress);

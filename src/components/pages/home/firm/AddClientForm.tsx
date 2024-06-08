@@ -95,8 +95,6 @@ export const AddClientForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log({ values });
-    // Commented for testing
     try {
       addClient(values.emailAddress);
     } catch (error) {

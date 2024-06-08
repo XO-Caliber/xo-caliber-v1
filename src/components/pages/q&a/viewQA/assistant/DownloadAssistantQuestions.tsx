@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { trpc } from "@/app/_trpc/client";
-import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import ExcelJS from "exceljs";
 import {
@@ -25,40 +24,6 @@ const DownloadAdminQuestions = () => {
     type === "xlsx" && exportExcelHandler();
     setType("");
   };
-  // const exportHandler = () => {
-  //   if (!categoriesList || categoriesList.length === 0) {
-  //     console.error("No data available to export.");
-  //     return;
-  //   }
-
-  //   const doc = new jsPDF();
-
-  //   const tableData = categoriesList.map((category) => [
-  //     category.name,
-  //     category.questions.map((question) => question.question).join("\n"),
-  //     category.questions.map((question) => question.mark).join("\n")
-  //   ]);
-  //   //@ts-ignore
-  //   doc.autoTable({
-  //     head: [["CATEGORY", "QUESTIONS", "WEIGHTAGE"]],
-  //     body: tableData,
-  //     styles: {
-  //       font: "helvetica",
-  //       fontSize: 12,
-  //       cellPadding: 2,
-  //       textColor: [0, 0, 0], // Black color
-  //       fillColor: [255, 255, 255], // White color
-  //       lineColor: [0, 0, 0], // Black color
-  //       lineWidth: 0.1
-  //     },
-  //     headStyles: {
-  //       fillColor: [192, 192, 192], // Light gray color for header row
-  //       textColor: [0, 0, 0] // Black color for header row text
-  //     }
-  //   });
-
-  //   doc.save("AdminQuestions.pdf");
-  // };
   const exportExcelHandler = () => {
     if (!categoriesList || categoriesList.length === 0) {
       console.error("No data available to export.");
@@ -113,13 +78,6 @@ const DownloadAdminQuestions = () => {
       window.URL.revokeObjectURL(url);
     });
   };
-  //   if (isLoading) {
-  //     return <div>Loading...</div>;
-  //   }
-
-  //   if (isError || !categoriesList) {
-  //     return <div>Error fetching data...</div>;
-  //   }
 
   return (
     <div>
@@ -128,7 +86,6 @@ const DownloadAdminQuestions = () => {
           <SelectValue placeholder="Export as" />
         </SelectTrigger>
         <SelectContent>
-          {/* <SelectItem value="pdf">Pdf</SelectItem> */}
           <SelectItem value="xlsx">Excel sheet</SelectItem>
         </SelectContent>
       </Select>

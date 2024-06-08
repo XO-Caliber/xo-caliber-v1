@@ -27,7 +27,6 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
   const [isLoading, setLoading] = useState(false);
   const categoriesResult = trpc.category.getAdminCategory.useQuery();
   let catLength = categoriesResult.data?.length || 0;
-  console.log(catLength);
 
   const { mutate: deleteCategory } = trpc.category.deleteAdminCategory.useMutation({
     onSuccess({ success }) {
@@ -110,11 +109,6 @@ const AddAdminCategoryDialog = ({ refetchData }: CategoryProps) => {
       <DialogContent className="">
         <DialogHeader className="my-4">
           <DialogDescription>Add upto 10 categories</DialogDescription>
-          {/* 
-          <CategoryPopUp
-            handleCategoryPopOpen={handleCategoryPopOpen}
-            createCategory={createCategory}
-          /> */}
           <Input placeholder="New category" onChange={(e) => setCategory(e.target.value)} />
           {categoriesResult.data && (
             <ul className="grid grid-cols-3 gap-x-1 gap-y-2">

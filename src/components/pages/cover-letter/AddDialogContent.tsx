@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/Button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -169,9 +168,6 @@ const AddDialogContent = ({
   const onSubmit = async (values: z.infer<typeof coverLetterSchema>) => {
     const blocks = await ref.current?.save();
     setLoading(true);
-    console.log(values);
-    console.log(JSON.stringify(blocks));
-    console.log(itemId);
     switch (contentType) {
       case "Section":
         addSection({

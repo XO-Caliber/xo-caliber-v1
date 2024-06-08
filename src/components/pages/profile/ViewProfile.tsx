@@ -1,17 +1,7 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import PaymentCancel from "@/components/payment/PaymentCancel";
-import { Avatar, AvatarImage } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogTitle,
-  DialogTrigger,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogFooter
-} from "@/components/ui/Dialog";
+import { DialogTitle, DialogContent, DialogHeader, DialogFooter } from "@/components/ui/Dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,10 +10,7 @@ import {
 } from "@/components/ui/Dropdown-menu";
 import { Input } from "@/components/ui/Input";
 import { toast } from "@/hooks/use-toast";
-import { user } from "@/types/user";
-import {} from "@radix-ui/react-dialog";
 import { MoreHorizontal, User } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -38,7 +25,6 @@ const ViewProfile = ({ role }: { role: string | undefined }) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [nameDisabled, setNameDisabled] = useState(true);
   const userType = userData.data?.role;
-  console.log(userName, email);
   const { mutate: updateProfile } = trpc.home.updateUserProfile.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -116,10 +102,10 @@ const ViewProfile = ({ role }: { role: string | undefined }) => {
           </ul>
         </section>
         <DialogFooter>
+          {/* {role === "INDIVIDUAL" && <PaymentCancel />} */}
           <Button disabled={buttonDisabled} variant={"dark"} onClick={handleSubmit}>
             Save
           </Button>
-          {role === "Individual/Clinet" /*&& <PaymentCancel />*/}
         </DialogFooter>
       </DialogContent>
     </div>

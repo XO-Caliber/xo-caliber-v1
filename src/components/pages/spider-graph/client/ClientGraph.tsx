@@ -2,13 +2,6 @@
 import React, { useState } from "react";
 import XOSpiderGraph from "@/components/pages/spider-graph/XOSpiderGraph";
 import AdminSpiderGraph from "@/components/pages/workspaces/client/AdminSpiderGraph";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
 import { trpc } from "@/app/_trpc/client";
 import { Info } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
@@ -18,13 +11,6 @@ interface userProps {
 }
 const ClientGraph = ({ user }: userProps) => {
   const { data: hasFirm } = trpc.home.checkHasFirm.useQuery();
-  // const [userType, setUserType] = useState("firm");
-
-  // const handleChange = (userType: string) => {
-  //   setUserType(userType);
-  // };
-
-  // console.log(userType);
 
   return (
     <div>
@@ -59,17 +45,6 @@ const ClientGraph = ({ user }: userProps) => {
           </Dialog>
         </div>
         <InstructionVideo videoLink="https://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriYps://www.youtube.com/embed/JtA_rlMHTIo?si=1KLdD-8vuH6nuriY" />
-        <span className="mr-10 w-32">
-          {/* <Select onValueChange={handleChange}>
-            <SelectTrigger className="bg-black text-white">
-              <SelectValue placeholder="Firm" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="firm">Firm</SelectItem>
-              <SelectItem value="default">Default</SelectItem>
-            </SelectContent>
-          </Select> */}
-        </span>
       </div>
       {hasFirm === false ? <AdminSpiderGraph /> : <XOSpiderGraph userType={user} />}
     </div>

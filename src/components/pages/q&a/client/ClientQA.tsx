@@ -4,19 +4,8 @@ import { Tabs } from "@/components/ui/Tabs";
 import { trpc } from "@/app/_trpc/client";
 import ClientTabsContent from "../viewQA/ClientTabsContent";
 import QATabsList from "../viewQA/QATabsList";
-import { UserProfile } from "@/components/utils/UserProfile";
-import {
-  Select,
-  SelectItem,
-  SelectTrigger,
-  SelectContent,
-  SelectValue
-} from "@/components/ui/Select";
-
-import { ClientQANotes } from "./ClientQANotes";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
+import { ResizablePanel, ResizablePanelGroup } from "@/components/ui/Resizable";
 import { Checkbox } from "@/components/ui/Checkbox";
-import { Toast } from "@/components/ui/Toast";
 import { Info, Loader } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/Dialog";
 import InstructionVideo from "../../home/InstructionVideo";
@@ -30,7 +19,6 @@ interface userProfile {
 
 const ClientQA = ({ userId, name, email, image }: userProfile) => {
   const { data: hasFirm } = trpc.home.checkHasFirm.useQuery();
-  // const [userType, setUserType] = useState("firm");
   const [hidden, setHidden] = useState(false);
   const [catArray, setCatArray] = useState<string[]>([]);
   const [listCat, setListCat] = useState<Set<string>>(new Set());

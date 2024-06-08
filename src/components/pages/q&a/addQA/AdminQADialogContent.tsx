@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/Select";
 import React from "react";
 import { Textarea } from "@/components/ui/Textarea";
-import { Label } from "@/components/ui/Label";
 import { trpc } from "@/app/_trpc/client";
 
 interface AdminQADialogContentProps {
@@ -28,7 +27,6 @@ const AdminQADialogContent = ({
   const categoriesResult = trpc.category.getAdminCategory.useQuery();
 
   return (
-    // <Input className="h-40 w-full " />
     <section className="flex w-[600px] flex-row items-center gap-4">
       <div className="grid w-full gap-1.5 pt-4">
         <Textarea
@@ -41,7 +39,6 @@ const AdminQADialogContent = ({
       </div>
       <div className="flex flex-col gap-4">
         <Select onValueChange={(value) => setMark(value)}>
-          {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
           <SelectTrigger className="">
             <SelectValue placeholder="10" />
           </SelectTrigger>
@@ -61,7 +58,6 @@ const AdminQADialogContent = ({
         </Select>
 
         <Select onValueChange={(value) => setCategoryId(value)}>
-          {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-white text-black"> */}
           <SelectTrigger className="w-[120px]">
             <SelectValue placeholder="select" />
           </SelectTrigger>

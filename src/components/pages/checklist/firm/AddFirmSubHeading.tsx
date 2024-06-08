@@ -10,18 +10,12 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PenBox, Plus, PlusSquare } from "lucide-react";
+import { PenBox, Plus } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
 import { Label } from "@/components/ui/Label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
+import { Select, SelectValue } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 
 interface QAProps {

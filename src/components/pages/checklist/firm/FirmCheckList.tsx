@@ -1,21 +1,9 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
-import {
-  ChevronDown,
-  ChevronRight,
-  Info,
-  Loader,
-  LucideTrash2,
-  Minus,
-  MinusCircle,
-  MoreHorizontal,
-  X,
-  XSquare
-} from "lucide-react";
+import { ChevronDown, ChevronRight, Info, Loader, MoreHorizontal, X } from "lucide-react";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { toast } from "@/hooks/use-toast";
-
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenuContent,
@@ -248,7 +236,7 @@ const FirmCheckList = () => {
                     <div
                       key={checkList.id}
                       className={`mb-1 space-y-2 border-2 bg-white 
-                     p-4`}
+                    p-4`}
                     >
                       <div className="pb-2">
                         <div

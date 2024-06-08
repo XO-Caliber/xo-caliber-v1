@@ -125,10 +125,6 @@ function AssistantGraph({ userType }: userType) {
         pointRadius: 4
       }
     ];
-
-    // Log datasets to the console
-    console.log("Datasets:", datasets);
-
     // Radar chart configuration
     const myChart = new Chart(ctx, {
       type: "radar",

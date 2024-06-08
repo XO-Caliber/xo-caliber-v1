@@ -1,12 +1,5 @@
 "use client";
-import {
-  ChevronDown,
-  ChevronRight,
-  Delete,
-  GripVertical,
-  MessageCircle,
-  MinusCircle
-} from "lucide-react";
+import { ChevronDown, ChevronRight, GripVertical, MessageCircle, MinusCircle } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
 import { trpc } from "@/app/_trpc/client";
@@ -191,8 +184,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   }, [SectionsData, isLoading, error]);
 
   const handleDragDrop = (results: DropResult) => {
-    console.log(results);
-    // setDropData(results);
     const { source, destination, type, draggableId } = results;
     if (!destination) return;
 
@@ -213,15 +204,10 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           position: index
         }));
 
-        console.log("reorderedStore: ", reOrderedStore);
-        console.log("updatedSections: ", updatedSections);
-
         const sectionPositions = updatedSections.map((section) => ({
           id: section.id,
           position: section.position
         }));
-
-        console.log("sectionPositions: ", JSON.stringify(sectionPositions));
 
         setupdatedSectionsPosition(sectionPositions);
         return setSections(updatedSections);
@@ -255,7 +241,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           ...sections[sectionDestinationIndex],
           SubSection: newDestinationItems
         };
-        console.log("newSection: ", newSections);
 
         const subSectionPostions = newSections.flatMap((section) =>
           section.SubSection.map((subsection, index) => ({
@@ -264,7 +249,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
             position: index
           }))
         );
-        console.log("subSectionPostion: ", subSectionPostions);
         setupdatedSubSectionsPosition(subSectionPostions);
         setSections(newSections);
       }
@@ -288,7 +272,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
 
           if (!sourceSubSection || !destinationSubSection) return section;
           if (!sourceSubSection && !destinationSubSection) return section;
-          console.log("after subsection");
 
           // Find the dragged exhibit
           const draggedExhibitIndex = sourceSubSection.Exhibits.findIndex(
@@ -325,7 +308,6 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
           }
           return section;
         });
-        console.log(updatedSections);
         setSections(updatedSections);
         const exhibitPositions = sections.flatMap((section) =>
           section.SubSection.flatMap((subSection) =>
@@ -336,13 +318,10 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
             }))
           )
         );
-        console.log("exhibitPositions: ", exhibitPositions);
         setUpdatedExhibitsPosition(exhibitPositions);
       }
     }
   };
-
-  const updateSectionPostionInDb = () => {};
 
   const updateSubSectionPostionInDb = () => {
     if (updatedSectionsPosition) updateSectionPostion(updatedSectionsPosition);
@@ -358,15 +337,11 @@ const DragNDropSection = ({ userId, coverLetterId }: { userId: string; coverLett
   };
 
   const toggleExhibit = (outerKey: number, innerKey: number) => {
-    console.log("outerKey: ", outerKey);
-    console.log("innerKey: ", innerKey);
     setIsExhibitVisible((prevState) => {
       // Clone the previous state
       const newState = { ...prevState };
-
       // Toggle the boolean value of the inner key
       newState[outerKey] = { ...newState[outerKey], [innerKey]: !newState[outerKey]?.[innerKey] };
-
       // Return the updated state
       return newState;
     });

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Html from "react-pdf-html";
 import { Page, Text, Document, StyleSheet, Font } from "@react-pdf/renderer";
 import dynamic from "next/dynamic";
@@ -22,7 +22,6 @@ const PDFViewer = dynamic(() => import("@react-pdf/renderer").then((mod) => mod.
 });
 
 const ExportPDF = ({ data }: { data: SectionType[] }) => {
-  // console.log(data.map((datas) => datas.SubSection));
   let exno = 0;
   const MyDocument = () => (
     <Document>

@@ -1,8 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
 import { GetUserProfile } from "@/components/utils/GetUserProfile";
-import { useState } from "react";
-
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
 
@@ -34,9 +32,6 @@ export const ClientAssistantList = () => {
           </div>
         ))}
       </div>
-      // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
-      //   Loading...
-      // </div>
     );
   } else {
     return (

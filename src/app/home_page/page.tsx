@@ -3,7 +3,6 @@ import { PaymentCard } from "@/components/PaymentCard";
 import AdminHome from "@/components/pages/home/AdminHome";
 import { AssistantHome } from "@/components/pages/home/AssistantHome";
 import { FirmHome } from "@/components/pages/home/FirmHome";
-import Image from "next/image";
 import React from "react";
 import { getAuthSession } from "../api/auth/[...nextauth]/authOptions";
 import { UserHome } from "@/components/pages/home/UserHome";

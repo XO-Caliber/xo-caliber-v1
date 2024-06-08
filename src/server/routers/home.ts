@@ -362,11 +362,6 @@ export const homeRouter = router({
         email: session.user.email
       }
     });
-    console.log(user);
-
-    console.log(session?.user.email);
-    console.log(makeAssistant?.email);
-
     const isFirmPresent = await db.assistant.findUnique({
       where: {
         email: user.email
@@ -375,7 +370,6 @@ export const homeRouter = router({
         firm: true
       }
     });
-    console.log(isFirmPresent);
     if (makeAssistant) {
       if (isFirmPresent?.firm) {
         throw new TRPCError({ code: "TOO_MANY_REQUESTS" });
@@ -408,7 +402,6 @@ export const homeRouter = router({
       if (!assistant) {
         throw new TRPCError({ code: "NOT_FOUND" });
       }
-      console.log(firm);
 
       await db.firm.update({
         where: {
@@ -479,7 +472,6 @@ export const homeRouter = router({
           Firm: true
         }
       });
-      console.log(isHavingFirm);
 
       if (isHavingFirm?.Firm) {
         throw new TRPCError({ code: "CONFLICT" });

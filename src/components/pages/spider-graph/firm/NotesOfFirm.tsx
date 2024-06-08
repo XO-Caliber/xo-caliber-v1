@@ -11,7 +11,6 @@ export function NotesOfFirm({ selectedUser }: userType) {
   const userNotesData = trpc.note.getFirmNotes.useQuery(selectedUser);
   const initialNotes = userNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes || " ");
-  console.log(initialNotes);
   useEffect(() => {
     setNotes(initialNotes || "");
   }, [initialNotes]);
@@ -36,7 +35,6 @@ export function NotesOfFirm({ selectedUser }: userType) {
     const data = { userId: selectedUser, content: notes };
     addNotes(data);
   }
-  console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
       <h1 className="text-lg font-semibold text-heading">Your Notes:</h1>

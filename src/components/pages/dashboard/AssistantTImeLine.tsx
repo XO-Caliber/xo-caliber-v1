@@ -5,8 +5,7 @@ import {
   CandlestickChart,
   CheckSquare,
   Construction,
-  MoreHorizontal,
-  WorkflowIcon
+  MoreHorizontal
 } from "lucide-react";
 import "react-vertical-timeline-component/style.min.css";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component";
@@ -20,9 +19,6 @@ import {
 } from "@/components/ui/Dropdown-menu";
 import AssistantUserSelect from "../spider-graph/assistant/AssistantUserSelect";
 
-interface Props {
-  userName?: string;
-}
 export const AssistantTimeLine = () => {
   const [user, setUser] = useState("");
   const userName = trpc.home.getUserProfileForTimeLine.useQuery(user);

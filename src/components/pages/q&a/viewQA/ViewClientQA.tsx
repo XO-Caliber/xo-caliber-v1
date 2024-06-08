@@ -40,8 +40,6 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
 }) => {
   const [selectedValue, setSelectedValue] = useState("");
   const router = useRouter();
-  // const getuserAnswer = trpc.getUserAnswer.useQuery({ userId });
-  // const { data: userAnswer } = getuserAnswer;
 
   const { mutate: addUserAnswer } = trpc.answer.addUserAnswer.useMutation({
     onSuccess({ success }) {
@@ -69,7 +67,6 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
 
   const handleChange = (value: string) => {
     setSelectedValue(value);
-    console.log(value);
     if (userId) {
       if (value == "YES") addUserAnswer({ questionId, userId, answer: "YES" });
       else if (value == "NO") addUserAnswer({ questionId, userId, answer: "NO" });
@@ -102,12 +99,6 @@ export const ViewClientQA: React.FC<SingleQAProps> = ({
               </Select>
             </li>
           </ul>
-          {/* <div
-        className={`flex min-w-16 justify-between gap-2 rounded-lg border-2 border-border p-4
-      ${questionNumber % 2 === 0 ? "border-[#E5EBF2] bg-[#F6F6F7]" : "border-border"} shadow-md`}
-      >
-        {mark}
-      </div> */}
         </section>
       </DialogTrigger>
       <DialogContent className="min-w-96 select-none">

@@ -64,7 +64,6 @@ const AddCoverLetterDialog = ({
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     const title = values.title;
     addCategory({ userId, title, role: role });
     setLoading(true);
@@ -73,15 +72,9 @@ const AddCoverLetterDialog = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant={"dark"}>
-          {/* <PlusSquare size={16} className="mr-2" /> */}
-          Add Cover Letter
-        </Button>
+        <Button variant={"dark"}>Add Cover Letter</Button>
       </DialogTrigger>
       <DialogContent>
-        {/* <DialogHeader className=" pb-2 text-left">
-          <DialogTitle>Add Cover Letter</DialogTitle>
-        </DialogHeader> */}
         <section>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

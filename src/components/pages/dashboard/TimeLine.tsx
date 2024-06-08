@@ -50,7 +50,6 @@ export const TimeLine = ({ userId, userName }: Props) => {
   const [editable2, setEditable2] = useState(false);
   const date =
     new Date().getMonth() + 1 + "/" + new Date().getDate() + "/" + new Date().getFullYear();
-  console.log(description, category, date);
 
   useEffect(() => {
     handleSubmit();
@@ -79,7 +78,6 @@ export const TimeLine = ({ userId, userName }: Props) => {
   });
 
   const handleSubmit = () => {
-    console.log("test");
     if (!description.trim() || !category.trim()) {
       // toast({
       //   title: "Error"
@@ -161,8 +159,6 @@ export const TimeLine = ({ userId, userName }: Props) => {
   };
   const handleDelete = (id: string) => {
     try {
-      console.log("delete");
-
       deleteTimeline(id);
     } catch (err) {
       console.log(err);

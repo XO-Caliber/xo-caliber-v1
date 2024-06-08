@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
-
 import {
   Dialog,
   DialogContent,
@@ -11,18 +10,11 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PenBox, Plus, PlusSquare } from "lucide-react";
+import { Plus } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
 import { Label } from "@/components/ui/Label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 interface QAProps {
   refetchData: () => void;
@@ -33,7 +25,6 @@ const AddFirmCheckList = ({ refetchData, subHeadingId }: QAProps) => {
   // const [subHeadingId, setSubHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const subHeadingResult = trpc.checklist.getFirmSubHeading.useQuery();
   const { mutate: addSubHeading } = trpc.checklist.addCheckList.useMutation({
     onSuccess({ success }) {
       if (success) {

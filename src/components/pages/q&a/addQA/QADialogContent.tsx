@@ -28,7 +28,6 @@ const QADialogContent = ({
   const categoriesResult = trpc.category.getFirmCategory.useQuery();
 
   return (
-    // <Input className="h-40 w-full " />
     <section className="flex w-[600px] flex-row items-center gap-4">
       <div className="grid w-full gap-1.5 pt-4">
         <Label htmlFor="message-2">Your Question</Label>
@@ -45,7 +44,6 @@ const QADialogContent = ({
       </div>
       <div className="flex flex-col gap-4">
         <Select onValueChange={(value) => setMark(value)}>
-          {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-muted text-black"> */}
           <SelectTrigger className="">
             <SelectValue placeholder="10" />
           </SelectTrigger>
@@ -65,7 +63,6 @@ const QADialogContent = ({
         </Select>
 
         <Select onValueChange={(value) => setCategoryId(value)}>
-          {/* <SelectTrigger className="h-[45px] w-[70px]  rounded-md bg-white text-black"> */}
           <SelectTrigger className="w-[120px]">
             <SelectValue placeholder="select" />
           </SelectTrigger>

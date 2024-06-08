@@ -45,7 +45,6 @@ const isFirm = middleware(async (opts) => {
   }
 
   if (user.role === "FIRM") {
-    console.log("From middleware FIRM");
     return opts.next({
       ctx: {
         user

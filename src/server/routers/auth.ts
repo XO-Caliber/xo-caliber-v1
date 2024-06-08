@@ -63,9 +63,6 @@ export const authRouter = router({
     )
     .mutation(async (userData) => {
       const { email } = userData.input;
-
-      console.log("Resetting password for ", email);
-
       const user = await db.user.findUnique({
         where: {
           email

@@ -2,7 +2,6 @@ import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { adminProcedure, firmProcedure, publiceProcedure, router } from "@/server/trpc";
 import { TRPCError } from "@trpc/server";
-import { use } from "react";
 import { z } from "zod";
 
 export const checkRouter = router({
@@ -365,7 +364,6 @@ export const checkRouter = router({
         firmId: userId
       }
     });
-    console.log("Deleted firm checklist data");
 
     for (const checkHeading of checkList?.CheckHeading || []) {
       const newHeading = await db.checkHeading.create({

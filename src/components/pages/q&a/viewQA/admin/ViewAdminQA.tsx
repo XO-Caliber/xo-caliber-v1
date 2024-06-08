@@ -4,20 +4,12 @@ import QATabsList from "../QATabsList";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
-
-import { Copyright, Info, Loader } from "lucide-react";
+import { Info, Loader } from "lucide-react";
 import AdminTabsContent from "../AdminTabsContent";
 import AddAdminCategoryDialog from "../../addCategory/AddAdminCategoryDialog";
 import AddAdminQADialog from "../../addQA/AddAdminQADialog";
 import { Checkbox } from "@/components/ui/Checkbox";
 import DownloadAdminQuestions from "../../admin/DownloadAdminQuestions";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
 
 export const ViewAdminQA = () => {
   const year = new Date().getFullYear();

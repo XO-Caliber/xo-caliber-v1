@@ -11,12 +11,10 @@ export function ClientsNote({ selectedUser }: userType) {
   const userNotesData = trpc.note.getClientNotesByAssistant.useQuery(selectedUser);
   const initialNotes = userNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes || " ");
-  console.log(initialNotes);
   useEffect(() => {
     setNotes(initialNotes || "");
   }, [initialNotes]);
 
-  console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
       <h1 className="text-lg font-semibold">Client Notes:</h1>

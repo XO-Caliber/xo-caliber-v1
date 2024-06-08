@@ -9,11 +9,9 @@ import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
-import { Skeleton } from "@/components/ui/Skeleton";
 import InstructionVideo from "../../home/InstructionVideo";
 
 export const AssistantCoverLetter = () => {
-  // const categoriesResult = trpc.coverletter.getAssistantCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState(false);
 

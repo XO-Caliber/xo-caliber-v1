@@ -11,7 +11,6 @@ export function UserNotes({ userType }: userType) {
   const userNotesData = trpc.note.getUserNotes.useQuery();
   const initialNotes = userNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes || " ");
-  console.log(initialNotes);
   useEffect(() => {
     setNotes(initialNotes || "");
   }, [initialNotes]);
@@ -35,7 +34,6 @@ export function UserNotes({ userType }: userType) {
   function onSubmit() {
     addNotes(notes);
   }
-  console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
       <h1 className="text-lg font-semibold text-heading ">Your Notes:</h1>

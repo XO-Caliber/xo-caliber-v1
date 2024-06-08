@@ -182,8 +182,6 @@ export const questionRouter = router({
       })
     );
 
-    console.log("Related categories and questions deleted successfully");
-
     // Fetch admin categories with questions
     const adminCategories = await db.category.findMany({
       where: {
@@ -196,8 +194,6 @@ export const questionRouter = router({
       }
     });
 
-    console.log(adminCategories);
-
     // Create categories and questions for the firm
     await Promise.all(
       adminCategories.map(async (adminCategory) => {
@@ -207,8 +203,6 @@ export const questionRouter = router({
             firmId: session.user.id // Connect category to firm
           }
         });
-
-        console.log(adminCategory.name);
 
         await Promise.all(
           adminCategory.questions.map(async (adminQuestion) => {

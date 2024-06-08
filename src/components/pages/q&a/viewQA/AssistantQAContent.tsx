@@ -35,17 +35,6 @@ export const AssistantQAContent: React.FC<AddQAProps> = ({
             >
               <li>{questionNumber}.</li>
               <li className="w-full pl-4 text-left  ">{question}</li>
-
-              {/* <XCircle
-                size={24}
-                className={"mr-2 cursor-pointer text-red-500 hover:text-red-400 "}
-                onClick={() => handleDelete(id)}
-              /> */}
-
-              {/* <Info
-                xlinkTitle="Tap to see detailed question overview "
-                className="cursor-pointer"
-              /> */}
             </ul>
             <div
               className={`flex justify-between gap-2 rounded-lg border-2 border-border p-2 text-xs 

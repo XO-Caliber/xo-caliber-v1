@@ -1,5 +1,4 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import Header from "@/components/Header";
 import { PaymentCard } from "@/components/PaymentCard";
 import AdminGraph from "@/components/pages/spider-graph/admin/AdminGraph";
 import AssistantGraph from "@/components/pages/spider-graph/assistant/AssistantGraph";

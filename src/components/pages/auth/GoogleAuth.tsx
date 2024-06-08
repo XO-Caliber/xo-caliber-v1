@@ -5,7 +5,6 @@ import googleLogo from "../../../../public/images/google-logo.svg";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 
 export const GoogleAuth = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -15,7 +14,6 @@ export const GoogleAuth = () => {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      console.log("Hello from client");
       const result = await signIn("google", { callbackUrl: "/home_page" });
 
       if (result?.ok) {

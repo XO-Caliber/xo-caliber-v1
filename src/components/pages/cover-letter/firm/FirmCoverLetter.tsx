@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import UserSelectList from "@/components/utils/UserSelectList";
-import { Download, DownloadIcon, Info, Loader, UserPlus, X } from "lucide-react";
+import { Download, Info, Loader, UserPlus, X } from "lucide-react";
 import { CoverLetterType } from "@/types/CoverLetter";
 import AddCoverLetterDialog from "../AddCoverLetterDialog";
 import { ViewCoverLetter } from "../ViewCoverLetter";
@@ -9,12 +9,9 @@ import { useState, useEffect } from "react";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle } from "@/components/ui/Dialog";
-import { Skeleton } from "@/components/ui/Skeleton";
 import InstructionVideo from "../../home/InstructionVideo";
-import Loading from "@/app/workspaces/loading";
 
 export const FirmCoverLetter = () => {
-  // const categoriesResult = trpc.coverletter.getFirmCoverLetter.useQuery(user);
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -60,9 +57,11 @@ export const FirmCoverLetter = () => {
   const getSelectedUser = (userId: string) => {
     setUser(userId);
   };
+
   useEffect(() => {
     CoverLetterData.refetch();
   }, [user]);
+
   return (
     <section className="overflow-x-scroll">
       <div className=" flex h-[68px] items-center justify-between border-2 border-l-0 bg-white">
@@ -105,33 +104,12 @@ export const FirmCoverLetter = () => {
                   ))}
                 </ul>
               )}
-
-              {/* <DialogFooter>
-                <Button variant={"dark"} onClick={onSubmit}>
-                  Yes,continue
-                </Button>
-              </DialogFooter> */}
             </DialogContent>
           </Dialog>
           <UserSelectList getSelectedUser={getSelectedUser} />
           <AddCoverLetterDialog userId={user} role="FIRM" refetchCaseData={refetchData} />
         </div>
       </div>
-      {/* <div className="mt-2 flex items-center justify-around pb-4">
-        <Select>
-          <SelectTrigger>
-            <SelectValue placeholder="Download pdf"></SelectValue>
-          </SelectTrigger>
-          <SelectContent>
-            {CoverLetterData.data &&
-              CoverLetterData.data.map((coverLetter) => (
-                <SelectItem key={coverLetter.id} value={coverLetter.id}>
-                  {coverLetter.title}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select>
-      </div> */}
       <div className="overflow-y-scroll" style={{ height: "calc(100vh - 150px)" }}>
         {/* @ts-ignore */}
         <ViewCoverLetter

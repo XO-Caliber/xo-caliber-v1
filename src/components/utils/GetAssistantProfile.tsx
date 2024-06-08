@@ -19,7 +19,6 @@ interface UserProfile {
 
 export const GetAssistantProfile = ({ name, email, image }: UserProfile) => {
   const userList = trpc.home.getAssistantsUser.useQuery(email);
-  console.log(userList.data);
 
   return (
     <Dialog>

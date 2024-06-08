@@ -1,8 +1,5 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { Card, CardContent, CardHeader } from "@/components/ui/Card";
-import { UserProfile } from "@/components/utils/UserProfile";
-import React from "react";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 import { GetUserProfile } from "@/components/utils/GetUserProfile";
 import LeaveAssistantFirm from "./LeaveAssistantFIrm";

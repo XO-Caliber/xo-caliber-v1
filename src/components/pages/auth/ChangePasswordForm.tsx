@@ -36,8 +36,6 @@ export const ChangePasswordForm = ({ resetPasswordToken }: ChangePasswordFormPro
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle password change logic here
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
     try {
       const message = changePassword({ resetPasswordToken, password });
     } catch (error) {

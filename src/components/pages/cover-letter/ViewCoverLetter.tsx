@@ -1,14 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { ChevronDown, ChevronRight, MinusCircle, MoreHorizontal } from "lucide-react";
+import { ChevronDown, ChevronRight, MoreHorizontal } from "lucide-react";
 import { Input } from "@/components/ui/Input";
 import { CoverLetterType } from "@/types/CoverLetter";
 import DragNDropSection from "./DragNDropSection";
-import AddDialog from "./AddDialog";
-import { DialogType } from "@/types/Dialog";
 import { trpc } from "@/app/_trpc/client";
 import { toast } from "@/hooks/use-toast";
-import ExportPDF from "@/components/reactpdf/ExportPDF";
 
 import {
   DropdownMenu,
@@ -87,10 +84,6 @@ export const ViewCoverLetter = ({
     } catch {}
   };
 
-  // const refetchCaseData = () => {
-  //   console.log();
-  // };
-
   return (
     <main>
       {CoverLetterData?.map((coverLetter, index) => (
@@ -133,24 +126,10 @@ export const ViewCoverLetter = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-
-            {/* <ExportPDF data={coverLetter.Section} /> */}
-            <div className="ml-auto">
-              {/* <AddSectionDialog userId={userId} coverLetterId={coverLetter.id} /> */}
-              {/* <AddDialog
-                userId={userId}
-                itemId={coverLetter.id}
-                dialogType={DialogType.Section}
-                refetchData={refetchCaseData}
-              /> */}
-            </div>
             <p className="ml-auto mr-10 justify-items-end text-xs font-medium  text-black">
               Comments
             </p>
           </div>
-          {/* <Button variant={"ghost"} className="mx-2 w-full">
-            Add section
-          </Button> */}
           <div
             className={`transition-max-height overflow-hidden duration-500 ease-in-out ${
               isSectionVisible[index] ? "h-auto" : "h-0"

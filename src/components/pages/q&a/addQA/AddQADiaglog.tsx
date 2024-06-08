@@ -11,7 +11,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PenBox, PlusSquare } from "lucide-react";
 import QADialogContent from "./QADialogContent";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
@@ -92,8 +91,6 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
         <DialogHeader>
           <DialogTitle> Add Yes or No Questions</DialogTitle>
           <DialogDescription>select category and weightage for this question</DialogDescription>
-
-          {/* <QAPopUp handleOpen={handleOpen} handleData={handleAddData} datas={data.datas} /> */}
           <QADialogContent
             question={question}
             mark={mark}
@@ -102,7 +99,6 @@ const AddQADiaglog = ({ refetchData }: QAProps) => {
             setQuestion={setQuestion}
             categoryId={categoryId}
           />
-
           <DialogFooter>
             <form onSubmit={onSubmit}>
               <Button type="submit" className="mt-4" variant="dark" isLoading={isLoading}>

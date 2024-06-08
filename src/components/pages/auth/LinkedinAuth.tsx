@@ -13,7 +13,6 @@ export const LinkedinAuth = () => {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      console.log("Hello from client");
       await signIn("linkedin");
     } catch (error) {
       // toast notification

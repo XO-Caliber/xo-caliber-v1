@@ -1,12 +1,9 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { GetUserProfile } from "@/components/utils/GetUserProfile";
-import { useState } from "react";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 import { GetAssistantProfile } from "@/components/utils/GetAssistantProfile";
 
 export const AssistantList = () => {
-  const [page, setpage] = useState(1);
   const assistantList = trpc.home.getFirmAssistant.useQuery();
 
   if (assistantList.data) {
@@ -21,28 +18,6 @@ export const AssistantList = () => {
               </div>
             ))}
           </div>
-          {/* <Pagination className="pt-6">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious onClick={() => setpage(page > 1 ? page - 1 : 1)} />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(1)}>1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(2)}>2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(3)}>3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext onClick={() => setpage(page + 1)} />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination> */}
         </div>
       </section>
     );
@@ -56,9 +31,6 @@ export const AssistantList = () => {
           </div>
         ))}
       </div>
-      // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
-      //   Loading...
-      // </div>
     );
   } else {
     return (

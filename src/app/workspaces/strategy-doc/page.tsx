@@ -1,7 +1,5 @@
 import React from "react";
 import { getAuthSession } from "../../api/auth/[...nextauth]/authOptions";
-import ClientStrategy from "@/components/pages/strategy-doc/ClientStrategy";
-
 import StrategyDoc from "@/components/pages/strategy-doc/StrategyDoc";
 import { PaymentCard } from "@/components/PaymentCard";
 

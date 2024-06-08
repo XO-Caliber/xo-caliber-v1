@@ -1,7 +1,6 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
 import { db } from "@/lib/db";
 import { publiceProcedure, router } from "@/server/trpc";
-
 import { z } from "zod";
 
 export const answerRouter = router({
@@ -26,7 +25,6 @@ export const answerRouter = router({
 
       if (existingAnswer) {
         // If an answer exists, update it
-        console.log("update");
         await db.answer.update({
           where: {
             id: existingAnswer.id
@@ -36,7 +34,6 @@ export const answerRouter = router({
           }
         });
       } else {
-        console.log("create");
         // If no answer exists, create a new one
         await db.answer.create({
           data: {
@@ -58,13 +55,11 @@ export const answerRouter = router({
     )
     .query(async ({ input }) => {
       const { userId } = input;
-      console.log("getUserAnswer");
       const userAnswers = await db.answer.findMany({
         where: {
           userId: userId
         }
       });
-      console.log("index.ts" + userAnswers[0].answer);
       return userAnswers;
     }),
   getClientSpiderAnswer: publiceProcedure.input(z.string()).query(async ({ input }) => {

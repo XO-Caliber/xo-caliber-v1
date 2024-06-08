@@ -1,6 +1,5 @@
 import React from "react";
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import Header from "@/components/Header";
 import ClientQA from "@/components/pages/q&a/client/ClientQA";
 import FirmQA from "@/components/pages/q&a/firm/FirmQA";
 import AdminQA from "@/components/pages/q&a/admin/AdminQA";

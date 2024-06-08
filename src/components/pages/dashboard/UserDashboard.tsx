@@ -8,19 +8,17 @@ import {
   SelectValue
 } from "@/components/ui/Select";
 import { toast } from "@/hooks/use-toast";
-import { ChevronDown, ChevronRight, Circle, Plus, Save, Tally1 } from "lucide-react";
+import { ChevronDown, ChevronRight, Plus, Save } from "lucide-react";
 import React, { useState } from "react";
 
 const UserDashboard = ({ userId }: { userId?: string }) => {
   const userTimeLine = trpc.dashboard.getUserTimeLine.useQuery(userId || "");
-  console.log(userTimeLine.data);
 
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({});
   const [showSelects, setShowSelects] = useState<{ [key: string]: boolean }>({});
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const date = new Date().getDate() + "/" + new Date().getMonth() + "/" + new Date().getFullYear();
-  console.log(description, category, date);
 
   const { mutate: addTimeLine } = trpc.dashboard.addUserTimeline.useMutation({
     onSuccess({ success }) {
@@ -38,7 +36,6 @@ const UserDashboard = ({ userId }: { userId?: string }) => {
   });
 
   const handleSubmit = () => {
-    console.log("test");
     if (description === "" && category == "") {
       toast({
         title: "Error"

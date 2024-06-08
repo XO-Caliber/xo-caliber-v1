@@ -42,7 +42,6 @@ export const coverletterRouter = router({
     .mutation(async ({ input }) => {
       const { coverLetterId, title, description, userId, comments } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-      console.log("INFO: ", input);
 
       const lastPosition = await db.section.findFirst({
         where: { coverLetterId },
@@ -77,7 +76,6 @@ export const coverletterRouter = router({
     .mutation(async ({ input }) => {
       const { sectionId, title, description, userId, comments } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-      console.log("INFO: ", input);
 
       const lastPosition = await db.subSection.findFirst({
         where: { sectionId },
@@ -113,7 +111,6 @@ export const coverletterRouter = router({
     .mutation(async ({ input }) => {
       const { subSectionId, title, description, userId, comments, coverletterId } = input;
       if (!userId) throw new TRPCError({ code: "UNAUTHORIZED" });
-      console.log("INFO: ", input);
 
       const lastPosition = await db.exhibits.findFirst({
         where: { subSectionId },
@@ -163,11 +160,6 @@ export const coverletterRouter = router({
             Section: true
           }
         });
-        console.log(
-          "cover letter: ",
-          coverLetters.map((coverLetter) => coverLetter.title)
-        );
-
         return coverLetters;
       } else {
         const coverLetters = await db.coverLetter.findMany({
@@ -178,18 +170,12 @@ export const coverletterRouter = router({
             Section: true
           }
         });
-        console.log(
-          "cover letter: ",
-          coverLetters.map((coverLetter) => coverLetter.title)
-        );
-
         return coverLetters;
       }
     }),
 
   getSections: publiceProcedure.input(z.string()).query(async ({ input }) => {
     const coverLetterId = input;
-    console.log("COVERLETTER ID: ", coverLetterId);
     if (!coverLetterId) throw new TRPCError({ code: "UNAUTHORIZED" });
 
     const sections = await db.section.findMany({
@@ -214,12 +200,6 @@ export const coverletterRouter = router({
         position: "asc"
       }
     });
-
-    console.log(
-      "subsection: ",
-      sections.map((section) => section.SubSection)
-    );
-
     return sections;
   }),
 
@@ -416,9 +396,6 @@ export const coverletterRouter = router({
       if (!sourceCoverLetter) {
         throw new Error("Source cover letter not found");
       }
-
-      console.log("Source cover letter:", sourceCoverLetter);
-
       // Retrieve target user by ID
       const targetUser = await db.user.findUnique({
         where: { id: userId }
@@ -428,29 +405,12 @@ export const coverletterRouter = router({
       if (!targetUser) {
         throw new Error("Target user not found");
       }
-
-      console.log("Target user:", targetUser);
-
-      // Delete existing cover letters of the target user with the same title
-      // const deletedCoverLetters = await db.coverLetter.deleteMany({
-      //   where: {
-      //     title: sourceCoverLetter.title,
-      //     userId: userId
-      //   }
-      // });
-
-      // console.log("Deleted cover letters:", deletedCoverLetters);
-
-      // Create new cover letter for the target user based on source cover letter
-      console.log("Creating new cover letter...");
       const newCoverLetter = await db.coverLetter.create({
         data: {
           title: sourceCoverLetter.title,
           User: { connect: { id: userId } }
         }
       });
-
-      console.log("New cover letter:", newCoverLetter);
 
       // Copy sections, subsections, and exhibits
       await Promise.all(
@@ -465,8 +425,6 @@ export const coverletterRouter = router({
             }
           });
 
-          console.log("New section:", newSection);
-
           await Promise.all(
             (sourceSection.SubSection || []).map(async (sourceSubSection) => {
               const newSubSection = await db.subSection.create({
@@ -478,8 +436,6 @@ export const coverletterRouter = router({
                   Section: { connect: { id: newSection.id } }
                 }
               });
-
-              console.log("New sub section:", newSubSection);
 
               await Promise.all(
                 (sourceSubSection.Exhibits || []).map(async (sourceExhibit) => {

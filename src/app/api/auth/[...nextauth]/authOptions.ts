@@ -44,10 +44,7 @@ export const authOptions: NextAuthOptions = {
       },
       //@ts-expect-error
       async authorize(credentials) {
-        // console.log(credentials);
-        // console.log("Hello from server");
         if (!credentials?.emailAddress || !credentials.password) {
-          // console.log("Nothing");
           throw new Error("Missing credentials");
         }
 
@@ -58,7 +55,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          // console.log("User does not exist");
           throw new Error("user does not exist");
         }
 
@@ -67,7 +63,6 @@ export const authOptions: NextAuthOptions = {
         }
 
         if (!user.isEmailVerified) {
-          // console.log("Email is not verified");
           throw new Error("Email is not verified");
         }
         if (user) {
@@ -79,11 +74,9 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!isFirm) {
-              // console.log("Firm doesn't exist");
               throw new Error("Firm doesn't exist");
             }
             if (!passwordMatch) {
-              // console.log("Wrong password");
               throw new Error("Wrong password");
             }
             return user;
@@ -95,21 +88,16 @@ export const authOptions: NextAuthOptions = {
               }
             });
             if (!isAssistant) {
-              // console.log("Assistant doesn't exist");
               throw new Error("Assistant doesn't exist");
             }
             if (!passwordMatch) {
-              // console.log("Wrong password");
               throw new Error("Wrong password");
             }
             return user;
           }
-
           if (!passwordMatch) {
-            // console.log("Wrong password");
             throw new Error("Wrong password");
           }
-          // console.log(user);
           return user;
         }
         return Promise.resolve(null);
@@ -128,14 +116,6 @@ export const authOptions: NextAuthOptions = {
       const currentTimestamp = Math.floor(new Date().getTime() / 1000); // Current time in seconds
       const isTokenExpired = currentTimestamp > token.expToken;
 
-      console.log("Before if block:");
-      console.log("Token Object:", token);
-      console.log("Current Timestamp:", currentTimestamp);
-      console.log("EXP Timestamp:", token.expToken);
-      console.log("Is Token Expired:", isTokenExpired);
-      console.log("User Object:", user);
-      console.log(new Date().getTime());
-
       if (user || isTokenExpired) {
         console.log("Token is being refreshed");
         const freshUser = user || (await db.user.findUnique({ where: { id: token.id } }));
@@ -149,9 +129,6 @@ export const authOptions: NextAuthOptions = {
           isActive: freshUser.isActive,
           expToken: Math.floor(new Date().getTime() / 1000) + 60
         };
-
-        console.log("After refreshing token:");
-        // console.log("Token Object:", token);
       } else {
         console.log("Token is not refreshed:");
       }
@@ -159,7 +136,6 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      console.log("SESSION");
       session.user = {
         id: token.id,
         name: token.name,

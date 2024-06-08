@@ -9,9 +9,6 @@ export const ClientQANotes = () => {
   const initialNotes = notes.data || "";
   const [Note, setNote] = useState(initialNotes);
 
-  console.log("initialNotes:" + initialNotes);
-  console.log("Notes:" + Note);
-
   useEffect(() => {
     setNote(initialNotes || "");
   }, [initialNotes]);
@@ -45,7 +42,7 @@ export const ClientQANotes = () => {
       <span className="block w-full border-[1px] border-border "></span>
       <Textarea
         value={Note}
-        className="my-2 h-full resize-none text-base text-sm font-semibold italic focus-visible:ring-0"
+        className="my-2 h-full resize-none text-sm font-semibold italic focus-visible:ring-0"
         placeholder="If Yes response:- Provide two cents on the topic"
         onChange={(e) => setNote(e.target.value)}
       />

@@ -17,7 +17,6 @@ interface SubMenuState {
 
 const ClientStrategy = ({ userId }: UserProps) => {
   const checkListData = trpc.checklist.getClientCheckList.useQuery(userId);
-  // const userData = trpc.checklist.getClientAnswer.useQuery(userId);
   const [openSubMenus, setOpenSubMenus] = useState<SubMenuState>({});
   const [referenceLinks, setReferenceLinks] = useState<{ [key: string]: string }>(() => {
     const links: { [key: string]: string } = {};

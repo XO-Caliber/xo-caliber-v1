@@ -1,9 +1,6 @@
 import { trpc } from "@/app/_trpc/client";
-import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
-import { toast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
-import { boolean } from "zod";
 interface userType {
   userType: string;
 }
@@ -11,7 +8,6 @@ export function FirmNotes({ userType }: userType) {
   const firmNotesData = trpc.note.getClientFirmNotes.useQuery();
   const initialNotes = firmNotesData.data?.content;
   const [notes, setNotes] = useState(initialNotes);
-  console.log(initialNotes);
 
   useEffect(() => {
     setNotes(initialNotes || "");
@@ -24,13 +20,6 @@ export function FirmNotes({ userType }: userType) {
     return true;
   };
 
-  // function onSubmit() {
-  //   toast({
-  //     title: "Your notes was saved successfully",
-  //     description: `${JSON.stringify(notes, null, 2)}`
-  //   });
-  // }
-  console.log(notes);
   return (
     <section className="flex h-full w-full flex-col justify-between">
       <h1 className="text-lg font-semibold text-heading">Firm Notes:</h1>

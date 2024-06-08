@@ -1,5 +1,4 @@
 import { getAuthSession } from "@/app/api/auth/[...nextauth]/authOptions";
-import Header from "@/components/Header";
 import { PaymentCard } from "@/components/PaymentCard";
 import AdminCoverLetter from "@/components/pages/cover-letter/admin/AdminCoverLetter";
 import AssistantCoverLetter from "@/components/pages/cover-letter/assistant/AssistantCoverLetter";

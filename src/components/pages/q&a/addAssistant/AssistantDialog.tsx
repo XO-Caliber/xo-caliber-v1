@@ -1,20 +1,10 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
 import { Button } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/Dialog";
 import { Label } from "@/components/ui/Label";
 import AssistantSelectList from "@/components/utils/AssistantSelectList";
 import UserSelectList from "@/components/utils/UserSelectList";
 import { toast } from "@/hooks/use-toast";
-import { UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -51,11 +41,9 @@ export const AssistantDialog = () => {
     }
   });
   const onSubmit = () => {
-    console.log(user, assistant);
     try {
       setLoading(true);
       assignAssistant({ user, assistant });
-      console.log("Assigned successfully");
     } catch (err) {
       console.log("Somthing went wrong");
     }
@@ -68,14 +56,12 @@ export const AssistantDialog = () => {
           <Label htmlFor="name" className="text-center">
             Pick Client:
           </Label>
-          {/* <Input id="name" defaultValue="Pedro Duarte" className="col-span-3" /> */}
           <UserSelectList getSelectedUser={getSelectedUser} />
         </div>
         <div className="flex min-w-96 items-center justify-start py-4">
           <Label htmlFor="username" className="text-right">
             Pick Assistant:
           </Label>
-          {/* <Input id="username" defaultValue="@peduarte" className="col-span-3" /> */}
           <AssistantSelectList getSelectedAssistant={getSelectedAssistant} />
         </div>
       </div>

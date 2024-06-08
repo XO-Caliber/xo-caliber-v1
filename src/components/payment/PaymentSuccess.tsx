@@ -10,8 +10,6 @@ export const PaymentSuccess = () => {
   const { data: session, update } = useSession();
 
   const { data } = trpc.payment.checkCheckout.useQuery();
-  // console.log(session?.user.isActive);
-  // console.log(session);
   useEffect(() => {
     if (data?.success === true) {
       update({ isActive: true });

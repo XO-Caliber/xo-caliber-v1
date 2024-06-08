@@ -36,9 +36,7 @@ export const AddAssistantForm = () => {
 
   const { mutate: addAssistant } = trpc.home.addAssistant.useMutation({
     onSuccess({ success }) {
-      console.log("User created successfully");
       if (success) {
-        //Login user here
         router.refresh();
         form.reset();
         toast({
@@ -103,7 +101,6 @@ export const AddAssistantForm = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setIsLoading(true);
-    console.log({ values });
     // Commented for testing
     try {
       addAssistant(values.emailAddress);

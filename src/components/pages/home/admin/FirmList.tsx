@@ -1,21 +1,9 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
-import { UserProfile } from "@/components/utils/UserProfile";
-import { useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious
-} from "@/components/ui/Pagination";
 import { UserProfileLoading } from "@/components/utils/UserProfileLoading";
 import { GetFirmProfile } from "@/components/utils/GetFirmProfile";
 
 export const FirmList = () => {
-  const [page, setpage] = useState(1);
   const firmList = trpc.home.getAllFirm.useQuery();
   const refetchData = () => {
     firmList.refetch();
@@ -38,28 +26,6 @@ export const FirmList = () => {
               </div>
             ))}
           </div>
-          {/* <Pagination className="pt-6">
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious onClick={() => setpage(page > 1 ? page - 1 : 1)} />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(1)}>1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(2)}>2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink onClick={() => setpage(3)}>3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationEllipsis />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext onClick={() => setpage(page + 1)} />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination> */}
         </div>
       </section>
     );
@@ -73,9 +39,6 @@ export const FirmList = () => {
           </div>
         ))}
       </div>
-      // <div className="flex flex-col items-center justify-center rounded-3xl border-2 border-border bg-white p-20">
-      //   Loading...
-      // </div>
     );
   }
 };

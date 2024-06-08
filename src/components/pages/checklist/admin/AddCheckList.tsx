@@ -1,29 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/Button";
 import React, { useState } from "react";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/Dialog";
-import { PenBox, Plus, PlusSquare } from "lucide-react";
+import { Plus } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { trpc } from "@/app/_trpc/client";
-import { Label } from "@/components/ui/Label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/Select";
-import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 interface QAProps {
   refetchData: () => void;
@@ -34,7 +15,6 @@ const AddCheckList = ({ refetchData, subHeadingId }: QAProps) => {
   // const [subHeadingId, setSubHeadingId] = useState("");
   const [isLoading, setLoading] = useState(false);
   const router = useRouter();
-  const subHeadingResult = trpc.checklist.getSubHeading.useQuery();
   const { mutate: addSubHeading } = trpc.checklist.addCheckList.useMutation({
     onSuccess({ success }) {
       if (success) {
@@ -88,10 +68,6 @@ const AddCheckList = ({ refetchData, subHeadingId }: QAProps) => {
   };
   return (
     <div>
-      {" "}
-      {/* <li className="flex cursor-pointer items-center justify-center rounded-md border border-dashed border-gray-500 hover:bg-secondary">
-        <Plus className="text-secondary-foreground" />
-      </li> */}
       <section className="flex  flex-row items-center gap-4">
         <form onSubmit={onSubmit}>
           <div className="flex w-full items-center justify-center gap-1.5 ">

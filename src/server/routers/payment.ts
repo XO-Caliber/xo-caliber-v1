@@ -58,7 +58,6 @@ export const paymentRouter = router({
 
   checkCheckout: publiceProcedure.query(async () => {
     const session = await getAuthSession();
-    console.log(session?.user.stripeCustomerId, session?.user.id);
     const dbData = await db.user.findUnique({
       where: {
         id: session?.user.id

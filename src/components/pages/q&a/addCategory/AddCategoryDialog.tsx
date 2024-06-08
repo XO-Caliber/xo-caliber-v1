@@ -9,7 +9,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from "@/components/ui/Dialog";
-import { PlusSquare, X } from "lucide-react";
+import { X } from "lucide-react";
 import { trpc } from "@/app/_trpc/client";
 import { useRouter } from "next/navigation";
 import { toast } from "@/hooks/use-toast";
@@ -97,11 +97,6 @@ const AddCategoryDialog = ({ refetchData }: CategoryProps) => {
         <DialogHeader>
           <DialogTitle>Add Category</DialogTitle>
           <DialogDescription>Add upto 10 categories</DialogDescription>
-          {/* 
-          <CategoryPopUp
-            handleCategoryPopOpen={handleCategoryPopOpen}
-            createCategory={createCategory}
-          /> */}
           <Input placeholder="New category" onChange={(e) => setCategory(e.target.value)} />
           {categoriesResult.data && (
             <ul className="grid grid-cols-3 gap-x-1 gap-y-2">

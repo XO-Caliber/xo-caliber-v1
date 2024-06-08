@@ -1,7 +1,6 @@
 import React from "react";
 import { getAuthSession } from "../../api/auth/[...nextauth]/authOptions";
 import AdminCheckList from "@/components/pages/checklist/admin/AdminCheckList";
-import Header from "@/components/Header";
 import FirmCheckList from "@/components/pages/checklist/firm/FirmCheckList";
 import Checklist from "@/components/pages/checklist/Checklist";
 import { PaymentCard } from "@/components/PaymentCard";

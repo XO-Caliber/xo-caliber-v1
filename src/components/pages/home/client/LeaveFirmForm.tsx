@@ -11,9 +11,7 @@ import {
   DialogTrigger
 } from "@/components/ui/Dialog";
 import { toast } from "@/hooks/use-toast";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
-import { Input } from "postcss";
 import React, { useState } from "react";
 
 interface LeaveFirmProps {

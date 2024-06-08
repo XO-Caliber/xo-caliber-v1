@@ -2,9 +2,7 @@ import React from "react";
 import { AddFirmForm } from "./admin/AddFirmForm";
 import { FirmList } from "./admin/FirmList";
 import { AllUserList } from "./admin/AllUserList";
-import { CandlestickChart, CheckSquare, FileEdit, Wind } from "lucide-react";
 import { HomeLink } from "./HomeLink";
-
 interface userProps {
   user: {
     id: string;
