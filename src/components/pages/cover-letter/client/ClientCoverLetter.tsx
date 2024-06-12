@@ -83,7 +83,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
               <Button variant={"dark"}>Pull Default Template</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogTitle className="mt-4">Select your template and click to pull</DialogTitle>
+              <DialogTitle className="mt-4">Click download icon to pull</DialogTitle>
               <DialogClose>
                 {defaultTemplate.data && (
                   <ul className="grid grid-cols-3 gap-x-1 gap-y-2">

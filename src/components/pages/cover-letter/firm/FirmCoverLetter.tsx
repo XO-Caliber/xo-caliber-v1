@@ -81,7 +81,7 @@ export const FirmCoverLetter = () => {
               <Button variant={"dark"}> Pull Default Template</Button>
             </DialogTrigger>
             <DialogContent>
-              <DialogTitle className="mt-4">Select your template and click to pull</DialogTitle>
+              <DialogTitle className="mt-4">Click download icon to pull</DialogTitle>
               {defaultTemplate.data && (
                 <ul className="grid grid-cols-3 gap-x-1 gap-y-2">
                   {defaultTemplate.data.map((coverletter, index) => (
@@ -94,9 +94,8 @@ export const FirmCoverLetter = () => {
                       : "border-muted bg-secondary"
                   }`}
                     >
-                     /* {/* {coverletter.title} */}
+                      {coverletter.title}
                       <Download
-                        {coverletter.title}
                         className="ml-1 cursor-pointer text-primary"
                         size={16}
                         onClick={() => onSubmit(coverletter.id)}
