@@ -94,8 +94,9 @@ export const FirmCoverLetter = () => {
                       : "border-muted bg-secondary"
                   }`}
                     >
-                      {coverletter.title}
+                     /* {/* {coverletter.title} */}
                       <Download
+                        {coverletter.title}
                         className="ml-1 cursor-pointer text-primary"
                         size={16}
                         onClick={() => onSubmit(coverletter.id)}
