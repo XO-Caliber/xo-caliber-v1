@@ -90,6 +90,7 @@ export const ClientCoverLetter = ({ user }: { user: Baseuser }) => {
                     {defaultTemplate.data.map((coverletter, index) => (
                       <li
                         key={coverletter.id}
+                        onClick={() => onSubmit(coverletter.id)}
                         className={`flex w-fit items-center justify-center 
                     rounded-md border p-1 px-3 text-sm ${
                       index % 2 === 0
